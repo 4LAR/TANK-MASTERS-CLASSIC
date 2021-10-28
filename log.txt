@@ -1,0 +1,5 @@
+[20:59:05|28-10-21] FATAL ERROR: Traceback (most recent call last):
+  File "main.py", line 278, in <module>
+    file_objects = open('objects/' + files[i][0], 'r', encoding="utf-8") #
+FileNotFoundError: [Errno 2] No such file or directory: 'objects/console.py'
+
