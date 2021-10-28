@@ -1,1 +1,0 @@
-разархивируй 3 архива в img, maps и sound (img.rar, maps.rar, sound.rar)
