@@ -29,6 +29,7 @@ class setings_game(): # класс который содержит себе ин
                 engine_settings.on_mouse_press_bool    = False
                 engine_settings.on_mouse_release_bool  = False
 
+        '''
         if symbol == key.F3: # если мы нажали F2, то изменяем показ полигонов
             if self.draw_poligons:
                 self.draw_poligons = False
@@ -46,6 +47,7 @@ class setings_game(): # класс который содержит себе ин
                 self.draw_rain = False
             else:
                 self.draw_rain = True
+        '''
 
 class Console(): # класс игровой консоли
     def __init__(self):
@@ -82,79 +84,7 @@ class Console(): # класс игровой консоли
             else:
                 settings.show_fps = True
 
-        elif command == 'health_m': # команда для показа фпс
-            try:
-                get_obj_display('player').health -= 10
-            except:
-                print('NO GAME')
 
-        elif command == 'test_tank':
-            main_tank_editor_menu(selected = -1, select_mission=True, arg='"test", motherbase=False, tank=True, spec=False')
-            #main_game()
-
-        elif command == 'test_human':
-            main_game('base1', motherbase=False, tank=False, spec=False)
-
-        elif command.split(' ')[0] == 'connect':
-            #global host
-            #global port
-            global addr
-
-            host = command.split(' ')[1]
-            port = 777
-
-            global online_mode
-            global id_player
-            global spawn_id
-
-            online_mode = True
-
-            addr = (host, port)
-
-            print('-'*10)
-
-            tcp_socket = socket(AF_INET, SOCK_STREAM)
-            tcp_socket.connect(addr)
-            tcp_socket.send(bytes('get_map', encoding='utf8'))
-            map_name = tcp_socket.recv(4096).decode("utf-8")
-            print('MAP NAME: ' + str(map_name))
-            tcp_socket.close()
-
-            tcp_socket = socket(AF_INET, SOCK_STREAM)
-            tcp_socket.connect(addr)
-            tcp_socket.send(bytes('get_id', encoding='utf8'))
-            id_player = int(tcp_socket.recv(4096).decode("utf-8"))
-            print('PLAYER ID: ' + str(id_player))
-            tcp_socket.close()
-
-            tcp_socket = socket(AF_INET, SOCK_STREAM)
-            tcp_socket.connect(addr)
-            tcp_socket.send(bytes('get_spawn', encoding='utf8'))
-            spawn_id = int(tcp_socket.recv(4096).decode("utf-8"))
-            print('SPAWN ID: ' + str(spawn_id))
-            tcp_socket.close()
-
-            print('-'*10)
-
-
-
-
-            main_game(map_name=map_name)
-            #from multiprocessing import Process
-            #pool = Pool()
-            thread_1 = threading.Thread(target=thread_multiplayer)
-            thread_1.start()
-
-
-            '''
-            from multiprocessing import Process
-            thread_1 = Process(target=thread_multiplayer)
-            thread_1.start()
-            thread_2 = Process(target=thread_multiplayer_replace)
-            thread_2.start()
-            thread_3 = Process(target=thread_multiplayer_send)
-            thread_3.start()
-            '''
 
     def on_key_press(self, symbol, modifiers):
         if objects_other[0].draw_console: # если мы выводим консоль, разрешаем пользователя нажимать на backspace и enter
@@ -245,12 +175,12 @@ class save_game():
             ['tank_b', 'bgun', True, ''],
             ['tank_b', 'bgun', True, '']
         ]
-
+'''
 if not os.path.exists('save/user.pkl'):
     save_obj(save_game(), 'save/user')
     add_objects_other(load_obj('save/user'))
 else:
     add_objects_other(load_obj('save/user'))
-
+'''
 def save_game_in_file():
     save_obj(objects_other[2], 'save/user')

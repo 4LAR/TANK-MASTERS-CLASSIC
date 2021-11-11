@@ -19,3 +19,34 @@ IndentationError: expected an indented block
     ^
 IndentationError: unexpected indent
 
+[21:20:42|11-11-21] FATAL ERROR: Traceback (most recent call last):
+  File "main.py", line 284, in <module>
+    exec(code) # запуск всего кода который мы прочитали из файлов
+  File "<string>", line 857, in <module>
+  File "<string>", line 26, in save_obj
+FileNotFoundError: [Errno 2] No such file or directory: 'save/user.pkl'
+
+[21:34:49|11-11-21] FATAL ERROR: Traceback (most recent call last):
+  File "main.py", line 284, in <module>
+    exec(code) # запуск всего кода который мы прочитали из файлов
+  File "<string>", line 823
+SyntaxError: positional argument follows keyword argument
+
+[21:35:03|11-11-21] FATAL ERROR: Traceback (most recent call last):
+  File "main.py", line 284, in <module>
+    exec(code) # запуск всего кода который мы прочитали из файлов
+  File "<string>", line 823
+SyntaxError: positional argument follows keyword argument
+
+[21:36:07|11-11-21] FATAL ERROR: Traceback (most recent call last):
+  File "main.py", line 284, in <module>
+    exec(code) # запуск всего кода который мы прочитали из файлов
+  File "<string>", line 823
+SyntaxError: positional argument follows keyword argument
+
+[21:36:41|11-11-21] FATAL ERROR: Traceback (most recent call last):
+  File "main.py", line 284, in <module>
+    exec(code) # запуск всего кода который мы прочитали из файлов
+  File "<string>", line 823
+SyntaxError: positional argument follows keyword argument
+
