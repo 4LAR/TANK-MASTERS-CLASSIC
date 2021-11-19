@@ -182,5 +182,8 @@ if not os.path.exists('save/user.pkl'):
 else:
     add_objects_other(load_obj('save/user'))
 '''
+
 def save_game_in_file():
     save_obj(objects_other[2], 'save/user')
+
+add_objects_other(os_world())

@@ -50,3 +50,16 @@ SyntaxError: positional argument follows keyword argument
   File "<string>", line 823
 SyntaxError: positional argument follows keyword argument
 
+[15:35:28|16-11-21] FATAL ERROR: Traceback (most recent call last):
+  File "main.py", line 284, in <module>
+    exec(code) # запуск всего кода который мы прочитали из файлов
+  File "<string>", line 797, in <module>
+NameError: name 'os_world' is not defined
+
+[15:36:29|16-11-21] FATAL ERROR: Traceback (most recent call last):
+  File "main.py", line 284, in <module>
+    exec(code) # запуск всего кода который мы прочитали из файлов
+  File "<string>", line 1178, in <module>
+  File "<string>", line 667, in __init__
+FileNotFoundError: [WinError 3] Системе не удается найти указанный путь: 'img/world/other_up'
+

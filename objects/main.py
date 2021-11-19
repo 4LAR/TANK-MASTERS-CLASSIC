@@ -26,5 +26,5 @@ engine_settings.on_update_bool         = True
 def main():
     print('HELLO WORLD')
     
-    menu()
-    #play()
+    #menu()
+    play()
