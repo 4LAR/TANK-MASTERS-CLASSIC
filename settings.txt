@@ -5,9 +5,12 @@ height = 720
 full-screen = 0
 
 [User_interface]
-show-fps = True
-console = False
+show-fps = False
+console = true
 
 [Sound]
-volume = 0.001
+volume = 0.0001
+
+[Engine]
+use_numba = false
 

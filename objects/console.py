@@ -13,41 +13,42 @@ class setings_game(): # класс который содержит себе ин
         self.draw_rain = False # разрешение на прорисовку дождя
 
     def on_key_press(self, symbol, modifiers): #
-        if symbol == key.F1: # если мы нажали F1, то мы включаем консоль или выключаем (запрещаем движку всё кроме прорисовки и считывание нажатие клавиш)
-            if self.draw_console:
-                self.draw_console = False
-                engine_settings.on_text_bool = False
-                engine_settings.on_mouse_motion_bool   = True
-                engine_settings.on_mouse_drag_bool     = True
-                engine_settings.on_mouse_press_bool    = True
-                engine_settings.on_mouse_release_bool  = True
-            else:
-                self.draw_console = True
-                engine_settings.on_text_bool = True
-                engine_settings.on_mouse_motion_bool   = False
-                engine_settings.on_mouse_drag_bool     = False
-                engine_settings.on_mouse_press_bool    = False
-                engine_settings.on_mouse_release_bool  = False
+        if settings.console:
+            if symbol == key.F1: # если мы нажали F1, то мы включаем консоль или выключаем (запрещаем движку всё кроме прорисовки и считывание нажатие клавиш)
+                if self.draw_console:
+                    self.draw_console = False
+                    engine_settings.on_text_bool = False
+                    engine_settings.on_mouse_motion_bool   = True
+                    engine_settings.on_mouse_drag_bool     = True
+                    engine_settings.on_mouse_press_bool    = True
+                    engine_settings.on_mouse_release_bool  = True
+                else:
+                    self.draw_console = True
+                    engine_settings.on_text_bool = True
+                    engine_settings.on_mouse_motion_bool   = False
+                    engine_settings.on_mouse_drag_bool     = False
+                    engine_settings.on_mouse_press_bool    = False
+                    engine_settings.on_mouse_release_bool  = False
 
-        '''
-        if symbol == key.F3: # если мы нажали F2, то изменяем показ полигонов
-            if self.draw_poligons:
-                self.draw_poligons = False
-            else:
-                self.draw_poligons = True
+            '''
+            if symbol == key.F3: # если мы нажали F2, то изменяем показ полигонов
+                if self.draw_poligons:
+                    self.draw_poligons = False
+                else:
+                    self.draw_poligons = True
 
-        if symbol == key.F2: # если мы нажали F3, то изменяем показ информации о игроке
-            if self.draw_info_text:
-                self.draw_info_text = False
-            else:
-                self.draw_info_text = True
+            if symbol == key.F2: # если мы нажали F3, то изменяем показ информации о игроке
+                if self.draw_info_text:
+                    self.draw_info_text = False
+                else:
+                    self.draw_info_text = True
 
-        if symbol == key.F4: # если мы нажали F4, то изменяем показ дождя
-            if self.draw_rain:
-                self.draw_rain = False
-            else:
-                self.draw_rain = True
-        '''
+            if symbol == key.F4: # если мы нажали F4, то изменяем показ дождя
+                if self.draw_rain:
+                    self.draw_rain = False
+                else:
+                    self.draw_rain = True
+            '''
 
 class Console(): # класс игровой консоли
     def __init__(self):

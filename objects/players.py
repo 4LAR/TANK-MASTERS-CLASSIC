@@ -3,7 +3,7 @@ class player():
         self.id = id
         self.pos = [settings.width//2, settings.height//2]
 
-        self.scale_tank = settings.height/160
+        self.scale_tank = get_obj_display('world').scale
 
         self.def_speed = [settings.height/60]
         self.speed_tick = self.def_speed[0]/10
@@ -34,19 +34,19 @@ class player():
 
     def update(self):
         if keyboard[key.A]:
-            #self.pos[0] -= self.speed_tick
+            self.pos[0] -= self.speed_tick
             self.rotation = -90
             self.anim_tick()
         elif keyboard[key.D]:
-            #self.pos[0] += self.speed_tick
+            self.pos[0] += self.speed_tick
             self.rotation = 90
             self.anim_tick()
         elif keyboard[key.W]:
-            #self.pos[1] += self.speed_tick
+            self.pos[1] += self.speed_tick
             self.rotation = 0
             self.anim_tick()
         elif keyboard[key.S]:
-            #self.pos[1] -= self.speed_tick
+            self.pos[1] -= self.speed_tick
             self.rotation = 180
             self.anim_tick()
 

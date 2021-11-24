@@ -4,7 +4,7 @@
 #           15.03.2021
 #
 
-version_engine = 'STONE ENGINE 2.4.1' # версия движка
+version_engine = 'STONE ENGINE 2.4.2' # версия движка
 
 import time
 import os
@@ -76,8 +76,6 @@ try:
     import copy
     import time
     import copy
-
-    import numba # типо оптимизация
 
     from socket import *
 
@@ -193,21 +191,31 @@ try:
 
             self.use_window = True # False для включения только консольного режима (не используется)
 
+            self.use_numba = False # Использовать библиотку numba для более быстрых рассчётов
+
             self.read_settings() # читаем настроки
 
         def read_settings(self):
             if not os.path.exists("settings.txt"): # проверка файла с настройками
                 config = configparser.ConfigParser()
+
                 config.add_section("Screen")
                 config.set("Screen", "use_window", str(self.use_window)) # хз как делать
                 config.set("Screen", "width", str(self.width))
                 config.set("Screen", "height", str(self.height))
                 config.set("Screen", "full-screen", str(self.full_screen))
+
                 config.add_section("User_interface")
                 config.set("User_interface", "show-fps", str(self.show_fps))
                 config.set("User_interface", "console", str(self.console))
+
                 config.add_section("Sound")
                 config.set("Sound", "volume", str(self.sound_volume))
+
+                config.add_section("Engine")
+                config.set("Engine", "use_numba", str(self.use_numba))
+
+
                 with open("settings.txt", "w") as config_file: # запись файла с настройками
                     config.write(config_file)
                 self.read_settings()
@@ -224,6 +232,10 @@ try:
                 self.console = True if (config.get("User_interface", "console")).lower() == 'true' else False
 
                 self.sound_volume = float(config.get("Sound", "volume"))
+
+                self.use_numba = True if (config.get("Engine", "use_numba")).lower() == 'true' else False
+                if self.use_numba:
+                    import numba # типо оптимизация
 
     settings = settings() # инициализация класса с настройками
 
