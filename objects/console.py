@@ -85,6 +85,9 @@ class Console(): # класс игровой консоли
             else:
                 settings.show_fps = True
 
+        else:
+            exec(command + '()')
+
 
 
     def on_key_press(self, symbol, modifiers):

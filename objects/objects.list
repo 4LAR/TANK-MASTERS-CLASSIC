@@ -2,6 +2,8 @@ lib.py
 os_world.py
 main.py
 console.py
+editor/map_editor.py
+editor/map_editor_inventory.py
 menu.py
 world.py
 players.py

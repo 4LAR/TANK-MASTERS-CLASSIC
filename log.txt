@@ -1,0 +1,8 @@
+[15:50:25|29-11-21] FATAL ERROR: Traceback (most recent call last):
+  File "main.py", line 296, in <module>
+    exec(code) # запуск всего кода который мы прочитали из файлов
+  File "<string>", line 19
+    3image_pyglet.anchor_x = image_pyglet.width // 2
+                ^
+SyntaxError: invalid syntax
+

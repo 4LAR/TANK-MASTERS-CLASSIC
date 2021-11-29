@@ -206,131 +206,43 @@ class os_world():
         # код для генерации мира (всё что закомментировано - это старая герерация мира), оспользуется для создания новых карт
         print("GENERATE WORLD")
         print("SPAWN FLOOR")
-        self.map_floor = np.full(self.world_size[0] * self.world_size[1], 'none', dtype='<U32')#grass.0
+        self.map_floor = np.full(self.world_size[0] * self.world_size[1], 'grass.0', dtype='<U32')#grass.0
         #self.map_floor = generate_grass(self.world_size[0], self.world_size[1])
-        '''
-        blocks_floor = ['grass.0', 'dirt.0']
-        for y in range(self.world_size[1]):
-            print(y)
-            for x in range(self.world_size[0]):
-                #print(x, y)
-                block = blocks_floor[0]#random.randint(0, len(blocks_floor)-1)]
-                self.map_floor = np.append(self.map_floor, block)
-        '''
+
         print("SPAWN WALLS")
         self.map_wall = np.full(self.world_size[0] * self.world_size[1], 'none', dtype='<U32')
         #self.map_wall = generate_none(self.world_size[0], self.world_size[1])
-        '''
-        blocks_wall = ['stone_bricks', 'mossy_stone_bricks', 'cracked_stone_bricks', 'chiseled_stone_bricks']
-        for y in range(self.world_size[1]):
-            print(y)
-            for x in range(self.world_size[0]):
-                if (y == 1 or y == self.world_size[1]-2):
-                    self.map_wall = np.append(self.map_wall, 'stone_bricks.0')
-                else:
-                    self.map_wall = np.append(self.map_wall, 'none')
-                    self.map_wall = np.append(self.map_wall, 'stone_bricks.0')
-                    for i in range(self.world_size[0]-4):
-                        self.map_wall = np.append(self.map_wall, 'none')
-                    self.map_wall = np.append(self.map_wall, 'stone_bricks.0')
-                    self.map_wall = np.append(self.map_wall, 'none')
-                    break
-        '''
 
         print("SPAWN WATER")
         self.map_water = np.full(self.world_size[0] * self.world_size[1], 'none', dtype='<U32')
         #self.map_water = generate_none(self.world_size[0], self.world_size[1])
-        '''
-        #blocks_ceiling = ['grass', 'dirt']
-        for y in range(self.world_size[1]):
-            print(y)
-            for x in range(self.world_size[0]):
-                #print(x, y)
-                block = 'none'
-                self.map_water = np.append(self.map_water, block)
-        '''
 
         print("SPAWN VEGETATION")
         self.map_vegetation = np.full(self.world_size[0] * self.world_size[1], 'none', dtype='<U32')
         #self.map_vegetation = generate_none(self.world_size[0], self.world_size[1])
-        '''
-        #blocks_ceiling = ['grass', 'dirt']
-        for y in range(self.world_size[1]):
-            print(y)
-            for x in range(self.world_size[0]):
-                #print(x, y)
-                block = 'none'
-                self.map_vegetation = np.append(self.map_vegetation, block)
-        '''
+
 
         print("SPAWN CEILING")
-        self.map_ceiling = np.full(self.world_size[0] * self.world_size[1], 'slate.0', dtype='<U32')
+        self.map_ceiling = np.full(self.world_size[0] * self.world_size[1], 'none', dtype='<U32')
         #self.map_ceiling = generate_none(self.world_size[0], self.world_size[1])
-        '''
-        #blocks_ceiling = ['grass', 'dirt']
-        for y in range(self.world_size[1]):
-            print(y)
-            for x in range(self.world_size[0]):
-                #print(x, y)
-                block = 'none'
-                self.map_ceiling = np.append(self.map_ceiling, block)
-        '''
+
         print("SPAWN MIDDLE")
         self.map_middle = np.full(self.world_size[0] * self.world_size[1], 'none', dtype='<U32')
         #self.map_middle = generate_none(self.world_size[0], self.world_size[1])
-        '''
-        #blocks_ceiling = ['grass', 'dirt']
-        for y in range(self.world_size[1]):
-            print(y)
-            for x in range(self.world_size[0]):
-                #print(x, y)
-                block = 'none'
-                self.map_middle = np.append(self.map_middle, block)
-        '''
+
         #
         print("SPAWN OTHER")
         self.map_other_up = np.full(self.world_size[0] * self.world_size[1], 'none', dtype='<U32')
         self.map_other_down = np.full(self.world_size[0] * self.world_size[1], 'none', dtype='<U32')
         #self.map_other_up = generate_none(self.world_size[0], self.world_size[1])
         #self.map_other_down = generate_none(self.world_size[0], self.world_size[1])
-        '''
-        for y in range(self.world_size[1]):
-            print(y)
-            for x in range(self.world_size[0]):
-                #print(x, y)
-                block = 'none'
-                self.map_other_up = np.append(self.map_other_up, block)
 
-
-        for y in range(self.world_size[1]):
-            print(y)
-            for x in range(self.world_size[0]):
-                #print(x, y)
-                block = 'none'
-                self.map_other_down = np.append(self.map_other_down, block)
-        '''
         print("SPAWN EFFECT")
         self.map_effect_up = np.full(self.world_size[0] * self.world_size[1], 'none', dtype='<U32')
         self.map_effect_down = np.full(self.world_size[0] * self.world_size[1], 'none', dtype='<U32')
         #self.map_effect_up = generate_none(self.world_size[0], self.world_size[1])
         #self.map_effect_down = generate_none(self.world_size[0], self.world_size[1])
-        '''
-        for y in range(self.world_size[1]):
-            print(y)
-            for x in range(self.world_size[0]):
-                #print(x, y)
-                block = 'none'
-                self.map_effect_up = np.append(self.map_effect_up, block)
 
-        for y in range(self.world_size[1]):
-            print(y)
-            for x in range(self.world_size[0]):
-                #print(x, y)
-                block = 'none'
-                self.map_effect_down = np.append(self.map_effect_down, block)
-
-        #
-        '''
 
         # записываем всё что сгенерировали в класс os_world
         self.save_world_obj.write_world(self.world_size, self.map_floor, self.map_wall, self.map_water, self.map_vegetation, self.map_ceiling, self.map_middle, self.map_other_up, self.map_other_down, self.map_effect_up, self.map_effect_down)

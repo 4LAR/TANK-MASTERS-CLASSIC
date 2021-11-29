@@ -16,8 +16,8 @@ def get_font_size(font, size=14):
 def PIL_to_pyglet(image_pil, scale=1):
     raw_image = image_pil.tobytes()
     image_pyglet = pyglet.image.ImageData(image_pil.width, image_pil.height, 'RGBA', raw_image, pitch=-image_pil.width * 4)
-    image_pyglet.anchor_x = image_pyglet.width // 2
-    image_pyglet.anchor_y = image_pyglet.height // 2
+    #image_pyglet.anchor_x = image_pyglet.width // 2
+    #image_pyglet.anchor_y = image_pyglet.height // 2
     image_pyglet = pyglet.sprite.Sprite(image_pyglet, settings.width//4, settings.height//2)
     image_pyglet.scale = scale
     return image_pyglet

@@ -24,7 +24,7 @@ class player():
 
     def anim_tick(self):
         self.anim_ticks += 1
-        if self.anim_ticks >= 10:
+        if self.anim_ticks >= 5:
             if len(self.obj_tanks[0]) > self.anim_body_state + 1:
                 self.anim_body_state += 1
             else:
