@@ -12,7 +12,7 @@ class world():
 
         self.shadow_alpha = 84
 
-        self.offs_shadows = [-settings.width//80, settings.width//200]
+        self.offs_shadows = [-settings.width//180, settings.width//300]#[-settings.width//80, settings.width//200]
 
 
 
@@ -32,7 +32,7 @@ class world():
         self.size_poligon = self.size * self.scale
         self.poligons_wall = [] # список полигонов блоков
 
-
+        self.spawn = get_obj_other('os_world').save_world_obj.spawn
 
         self.floor_blocks_img = get_obj_other('os_world').floor_blocks_img
         self.wall_block_img = get_obj_other('os_world').wall_block_img

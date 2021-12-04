@@ -13,11 +13,12 @@ def get_font_size(font, size=14):
     selected_font = pyglet.font.load('font/' + font, size)
     return (selected_font.ascent - selected_font.descent, size)
 
-def PIL_to_pyglet(image_pil, scale=1):
+def PIL_to_pyglet(image_pil, scale=1, anchor_bool = False):
     raw_image = image_pil.tobytes()
     image_pyglet = pyglet.image.ImageData(image_pil.width, image_pil.height, 'RGBA', raw_image, pitch=-image_pil.width * 4)
-    #image_pyglet.anchor_x = image_pyglet.width // 2
-    #image_pyglet.anchor_y = image_pyglet.height // 2
+    if anchor_bool:
+        image_pyglet.anchor_x = image_pyglet.width // 2
+        image_pyglet.anchor_y = image_pyglet.height // 2
     image_pyglet = pyglet.sprite.Sprite(image_pyglet, settings.width//4, settings.height//2)
     image_pyglet.scale = scale
     return image_pyglet

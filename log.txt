@@ -6,3 +6,155 @@
                 ^
 SyntaxError: invalid syntax
 
+[18:54:29|04-12-21] FATAL ERROR: Traceback (most recent call last):
+  File "main.py", line 263, in <module>
+    file = load_obj('objects')
+  File "main.py", line 261, in load_obj
+    return pickle.load(f)
+AttributeError: Can't get attribute 'File' on <module '__main__' (built-in)>
+
+[18:55:25|04-12-21] FATAL ERROR: Traceback (most recent call last):
+  File "main.py", line 263, in <module>
+    file = load_obj('objects')
+  File "main.py", line 261, in load_obj
+    return pickle.load(f)
+AttributeError: Can't get attribute 'File' on <module '__main__' (built-in)>
+
+[18:56:11|04-12-21] FATAL ERROR: Traceback (most recent call last):
+  File "main.py", line 263, in <module>
+    file = load_obj('objects')
+  File "main.py", line 261, in load_obj
+    return pickle.load(f)
+AttributeError: Can't get attribute 'File' on <module '__main__' from 'main.py'>
+
+[18:57:56|04-12-21] FATAL ERROR: Traceback (most recent call last):
+  File "main.py", line 263, in <module>
+    file = load_obj('objects')
+  File "main.py", line 261, in load_obj
+    return pickle.load(f)
+AttributeError: Can't get attribute 'File' on <module '__main__' from 'main.py'>
+
+[18:58:46|04-12-21] FATAL ERROR: Traceback (most recent call last):
+  File "main.py", line 263, in <module>
+    file = load_obj('objects')
+  File "main.py", line 261, in load_obj
+    return pickle.load(f)
+AttributeError: Can't get attribute 'File' on <module '__main__' from 'main.py'>
+
+[18:59:09|04-12-21] FATAL ERROR: Traceback (most recent call last):
+  File "main.py", line 263, in <module>
+    file = load_obj('objects')
+  File "main.py", line 261, in load_obj
+    return pickle.load(f)
+AttributeError: Can't get attribute 'File' on <module '__main__' from 'main.py'>
+
+[19:01:39|04-12-21] FATAL ERROR: Traceback (most recent call last):
+  File "main.py", line 263, in <module>
+    file = load_obj('objects')
+  File "main.py", line 261, in load_obj
+    return pickle.load(f)
+AttributeError: Can't get attribute 'File' on <module '__main__' from 'main.py'>
+
+[19:04:42|04-12-21] FATAL ERROR: Traceback (most recent call last):
+  File "main.py", line 263, in <module>
+    file = load_obj('objects')
+  File "main.py", line 261, in load_obj
+    return pickle.load(f)
+AttributeError: Can't get attribute 'File' on <module '__main__' from 'main.py'>
+
+[19:04:51|04-12-21] FATAL ERROR: Traceback (most recent call last):
+  File "main.py", line 263, in <module>
+    file = load_obj('objects')
+  File "main.py", line 261, in load_obj
+    return pickle.load(f)
+AttributeError: Can't get attribute 'File' on <module '__main__' from 'main.py'>
+
+[19:05:00|04-12-21] FATAL ERROR: Traceback (most recent call last):
+  File "main.py", line 263, in <module>
+    file1 = load_obj('objects')
+  File "main.py", line 261, in load_obj
+    return pickle.load(f)
+AttributeError: Can't get attribute 'File' on <module '__main__' from 'main.py'>
+
+[19:05:23|04-12-21] FATAL ERROR: Traceback (most recent call last):
+  File "main.py", line 263, in <module>
+    file = load_obj('objects')
+  File "main.py", line 261, in load_obj
+    return pickle.load(f)
+AttributeError: Can't get attribute 'file_code' on <module '__main__' from 'main.py'>
+
+[19:05:54|04-12-21] FATAL ERROR: Traceback (most recent call last):
+  File "main.py", line 263, in <module>
+    file = load_obj('objects')
+  File "main.py", line 261, in load_obj
+    return pickle.load(f)
+AttributeError: Can't get attribute 'file_code' on <module '__main__' from 'main.py'>
+
+[19:06:25|04-12-21] FATAL ERROR: Traceback (most recent call last):
+  File "main.py", line 264, in <module>
+    file = load_obj('objects')
+  File "main.py", line 262, in load_obj
+    return pickle.load(f)
+AttributeError: Can't get attribute 'file_code' on <module '__main__' from 'main.py'>
+
+[19:06:51|04-12-21] FATAL ERROR: Traceback (most recent call last):
+  File "main.py", line 263, in <module>
+    file = load_obj('objects')
+  File "main.py", line 261, in load_obj
+    return pickle.load(f)
+AttributeError: Can't get attribute 'file_code' on <module '__main__' from 'main.py'>
+
+[19:07:08|04-12-21] FATAL ERROR: Traceback (most recent call last):
+  File "main.py", line 263, in <module>
+    print(file = load_obj('objects'))
+  File "main.py", line 261, in load_obj
+    return pickle.load(f)
+AttributeError: Can't get attribute 'file_code' on <module '__main__' from 'main.py'>
+
+[19:07:24|04-12-21] FATAL ERROR: Traceback (most recent call last):
+  File "main.py", line 265, in <module>
+    file = load_obj_file('objects')
+  File "main.py", line 244, in load_obj_file
+    return pickle.load(f)
+AttributeError: Can't get attribute 'file_code' on <module '__main__' from 'main.py'>
+
+[19:08:22|04-12-21] FATAL ERROR: Traceback (most recent call last):
+  File "main.py", line 264, in <module>
+    file = load_obj_file('objects')
+  File "main.py", line 245, in load_obj_file
+    return pickle.load(f)
+AttributeError: Can't get attribute 'file_code' on <module '__main__' from 'main.py'>
+
+[19:08:39|04-12-21] FATAL ERROR: Traceback (most recent call last):
+  File "main.py", line 263, in <module>
+    file = load_obj_file('objects')
+  File "main.py", line 244, in load_obj_file
+    return pickle.load(f)
+AttributeError: Can't get attribute 'file_code' on <module '__main__' from 'main.py'>
+
+[19:13:55|04-12-21] FATAL ERROR: Traceback (most recent call last):
+  File "main.py", line 263, in <module>
+    file = load_obj_file('objects')
+  File "main.py", line 244, in load_obj_file
+    return pickle.load(f)
+AttributeError: Can't get attribute 'file_code' on <module '__main__' from 'main.py'>
+
+[19:14:02|04-12-21] FATAL ERROR: Traceback (most recent call last):
+  File "main.py", line 263, in <module>
+    file = load_obj_file('objects')
+  File "main.py", line 244, in load_obj_file
+    return pickle.load(f)
+AttributeError: Can't get attribute 'file_code' on <module '__main__' from 'main.py'>
+
+[19:16:17|04-12-21] FATAL ERROR: Traceback (most recent call last):
+  File "main.py", line 263, in <module>
+    for i in range(len(files)): #
+  File "main.py", line 261, in load_obj
+AttributeError: Can't get attribute 'file_code' on <module '__main__' (built-in)>
+
+[19:16:21|04-12-21] FATAL ERROR: Traceback (most recent call last):
+  File "main.py", line 263, in <module>
+    for i in range(len(files)): #
+  File "main.py", line 261, in load_obj
+AttributeError: Can't get attribute 'file_code' on <module '__main__' (built-in)>
+

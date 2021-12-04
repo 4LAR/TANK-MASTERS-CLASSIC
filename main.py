@@ -4,7 +4,7 @@
 #           15.03.2021
 #
 
-version_engine = 'STONE ENGINE 2.4.2' # версия движка
+version_engine = 'STONE ENGINE 2.4.3' # версия движка
 
 import time
 import os
@@ -239,10 +239,37 @@ try:
 
     settings = settings() # инициализация класса с настройками
 
+    class file_code():
+        def __init__(self):
+            self.files = []
+            self.code = ''
+
+
+    def load_obj_file(name ):
+        with open(name + '.pkl', 'rb') as f:
+            return pickle.load(f)
+
     # получение названия файла с объектами (если на задано то будет <<objects.list>>)
     file_list_objects = 'objects' #
     if len(sys.argv) > 1:
         file_list_objects = sys.argv[1]
+        # получаем названия файлов с нужными объктами
+        file_objects = (open('objects/'+file_list_objects+'.list', 'r', encoding="utf-8").read()).split('\n') #
+        for i in range(len(file_objects)-1): #
+            files.append([file_objects[i], 0])
+            print('IMPORT: ' + file_objects[i])
+
+        # чтение файлов содержащих в себе классы
+        for i in range(len(files)): #
+            file_objects = open('objects/' + files[i][0], 'r', encoding="utf-8") #
+            code += file_objects.read() + '\n' #
+            files[i][1] = len(code.split('\n')) #
+            file_objects.close() #
+    else:
+        file = load_obj_file('objects')
+
+        code = file.code
+        files = file.files
 
     if len(sys.argv) > 2:
         settings.use_window = True if sys.argv[2].lower() == 'true' else False
@@ -279,18 +306,7 @@ try:
 
 
 
-    # получаем названия файлов с нужными объктами
-    file_objects = (open('objects/'+file_list_objects+'.list', 'r', encoding="utf-8").read()).split('\n') #
-    for i in range(len(file_objects)-1): #
-        files.append([file_objects[i], 0])
-        print('IMPORT: ' + file_objects[i])
 
-    # чтение файлов содержащих в себе классы
-    for i in range(len(files)): #
-        file_objects = open('objects/' + files[i][0], 'r', encoding="utf-8") #
-        code += file_objects.read() + '\n' #
-        files[i][1] = len(code.split('\n')) #
-        file_objects.close() #
 
     print('STRING: '  +str(len(code.split('\n')))) #
     exec(code) # запуск всего кода который мы прочитали из файлов
