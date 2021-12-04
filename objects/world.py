@@ -3,7 +3,7 @@ SHADOWS = True
 class world():
 
     def get_block_num(self, x, y):
-        return y * self.world_size[1] + x
+        return y * self.world_size[0] + x
 
     def __init__(self):
 
@@ -192,6 +192,14 @@ class world():
         self.image_wall.x = (settings.width - self.image_wall.width) / 2
         self.image_wall.y = (settings.height - self.image_wall.height) / 2
 
+        self.image_water = PIL_to_pyglet(self.temp_image_water, self.scale)
+        self.image_water.x = (settings.width - self.image_wall.width) / 2
+        self.image_water.y = (settings.height - self.image_wall.height) / 2
+
+        self.image_vegetation = PIL_to_pyglet(self.temp_image_vegetation, self.scale)
+        self.image_vegetation.x = (settings.width - self.image_wall.width) / 2
+        self.image_vegetation.y = (settings.height - self.image_wall.height) / 2
+
         self.image_shadows = PIL_to_pyglet(self.temp_image_shadows, self.scale)
         self.image_shadows.x = (settings.width - self.image_wall.width) / 2
         self.image_shadows.y = (settings.height - self.image_wall.height) / 2
@@ -205,6 +213,8 @@ class world():
 
     def draw(self):
         drawp(self.image_floor)
+        drawp(self.image_water)
+        drawp(self.image_shadows_down)
 
 class walls():
     def __init__(self):
@@ -213,3 +223,5 @@ class walls():
     def draw(self):
         drawp(get_obj_display('world').image_shadows)
         drawp(get_obj_display('world').image_wall)
+
+        drawp(get_obj_display('world').image_vegetation)

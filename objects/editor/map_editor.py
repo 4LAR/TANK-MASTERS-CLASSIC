@@ -1,6 +1,6 @@
 class map(object):
     def get_block_num(self, x, y):
-        return y * self.world_size[1] + x
+        return y * self.world_size[0] + x
 
     def __init__(self):
 
@@ -131,13 +131,13 @@ class map(object):
         self.update_render()
 
     def get_floor(self, x, y):
-        return self.map_floor[y * self.world_size[1] + x]
+        return self.map_floor[self.get_block_num(x, y)]
 
     def get_wall(self, x, y):
-        return self.map_wall[y * self.world_size[1] + x]
+        return self.map_wall[self.get_block_num(x, y)]
 
     def get_wall_poligon(self, x, y):
-        return self.poligons_wall[y * self.world_size[1] + x]
+        return self.poligons_wall[self.get_block_num(x, y)]
 
     def update_render(self):
         self.update_render_floor()
@@ -203,7 +203,7 @@ class map(object):
     def update_render_grid(self):
         temp_image_grid = Image.new('RGBA', (self.world_size[0] * self.size, self.world_size[1] * self.size))
         print("UPDATE GRID")
-        resize = (32, 32)
+        resize = (8, 8)
         grid_image = Image.open('img/editor/grid.png').resize(resize, Image.NEAREST).convert("RGBA")
         for y in range(self.world_size[1]):
             for x in range(self.world_size[0]):
@@ -520,38 +520,39 @@ class map(object):
                 _y_ = self.world_size[1] - int(math.sqrt(y_ ** 2))
 
                 print(_x_, _y_)
-
+                print(self.get_block_num(_x_, _y_))
+                # [_x_, _y_]
                 if objects_display[2].selected_type == 0:
                     self.map_floor[self.get_block_num(_x_, _y_)] = objects_display[2].selected_block + '.' + str(objects_display[2].current_rot)
-                    self.update_render_floor([_x_, _y_])
+                    self.update_render_floor()
 
                 elif objects_display[2].selected_type == 1:
                     self.map_wall[self.get_block_num(_x_, _y_)] = objects_display[2].selected_block + '.' + str(objects_display[2].current_rot)
-                    self.update_render_wall([_x_, _y_])
+                    self.update_render_wall()
 
                 elif objects_display[2].selected_type == 2:
                     self.map_water[self.get_block_num(_x_, _y_)] = objects_display[2].selected_block + '.' + str(objects_display[2].current_rot)
-                    self.update_render_water([_x_, _y_])
+                    self.update_render_water()
 
                 elif objects_display[2].selected_type == 3:
                     self.map_vegetation[self.get_block_num(_x_, _y_)] = objects_display[2].selected_block + '.' + str(objects_display[2].current_rot)
-                    self.update_render_vegetation([_x_, _y_])
+                    self.update_render_vegetation()
 
                 elif objects_display[2].selected_type == 4:
                     self.map_ceiling[self.get_block_num(_x_, _y_)] = objects_display[2].selected_block + '.' + str(objects_display[2].current_rot)
-                    self.update_render_ceiling([_x_, _y_])
+                    self.update_render_ceiling()
                 #####
                 elif objects_display[2].selected_type == 5:
                     self.map_other_up[self.get_block_num(_x_, _y_)] = objects_display[2].selected_block + '.' + str(objects_display[2].current_rot)
-                    self.update_render_other_up([_x_, _y_])
+                    self.update_render_other_up()
 
                 elif objects_display[2].selected_type == 6:
                     self.map_other_down[self.get_block_num(_x_, _y_)] = objects_display[2].selected_block + '.' + str(objects_display[2].current_rot)
-                    self.update_render_other_down([_x_, _y_])
+                    self.update_render_other_down()
 
                 elif objects_display[2].selected_type == 7:
                     self.map_effect_up[self.get_block_num(_x_, _y_)] = objects_display[2].selected_block + '.' + str(objects_display[2].current_rot)
-                    self.update_render_effect_up([_x_, _y_])
+                    self.update_render_effect_up()
 
                 elif objects_display[2].selected_type == -1:
                     #self.map_other_down[self.get_block_num(_x_, _y_)] = objects_display[2].selected_block + '.' + str(objects_display[2].current_rot)
@@ -655,4 +656,5 @@ class map(object):
             #self.circle_spawn.draw()
 
         if self.show_grid:
+            drawp(self.image_grid)
             drawp(self.image_grid)
