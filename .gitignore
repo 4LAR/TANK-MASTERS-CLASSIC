@@ -3,3 +3,7 @@ log.txt
 settings.txt
 *.pyc
 main.spec
+log.txt
+main.exe
+objects.pkl
+objects.pkl

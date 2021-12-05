@@ -1,9 +1,44 @@
+KEY_BINDS = {
+    'P1': {
+        'up': 'W',
+        'left': 'A',
+        'down': 'S',
+        'right': 'D',
+        'shoot_a': 'SPACE'
+    },
+
+    'P2': {
+        'up': 'UP',
+        'left': 'LEFT',
+        'down': 'DOWN',
+        'right': 'RIGHT',
+        'shoot_a': 'RCTRL'
+    },
+
+    'P3': {
+        'up': 'U',
+        'left': 'H',
+        'down': 'J',
+        'right': 'K',
+        'shoot_a': 'B'
+    },
+
+    'P4': {
+        'up': 'NUM_8',
+        'left': 'NUM_4',
+        'down': 'NUM_5',
+        'right': 'NUM_6',
+        'shoot_a': 'NUM_0'
+    }
+}
+
 def play():
     clear_display()
     add_display(world())
-    #for i in range(4):
-    #    add_display(player(i))
-    add_display(player(0))
+    for i in range(4):
+        add_display(player(i))
+    #add_display(player(0))
+    add_display(bullets())
     add_display(walls())
 
 def editor():

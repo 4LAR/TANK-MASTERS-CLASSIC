@@ -7,5 +7,6 @@ editor/map_editor_inventory.py
 menu.py
 world.py
 players.py
+bullets.py
 game.py
 logo.py

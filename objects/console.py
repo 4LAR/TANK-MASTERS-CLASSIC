@@ -12,6 +12,8 @@ class setings_game(): # класс который содержит себе ин
 
         self.draw_rain = False # разрешение на прорисовку дождя
 
+        self.pause = False
+
     def on_key_press(self, symbol, modifiers): #
         if settings.console:
             if symbol == key.F1: # если мы нажали F1, то мы включаем консоль или выключаем (запрещаем движку всё кроме прорисовки и считывание нажатие клавиш)
@@ -30,14 +32,23 @@ class setings_game(): # класс который содержит себе ин
                     engine_settings.on_mouse_press_bool    = False
                     engine_settings.on_mouse_release_bool  = False
 
-            '''
-            if symbol == key.F3: # если мы нажали F2, то изменяем показ полигонов
+
+            if symbol == key.F3: # если мы нажали F3, то изменяем показ полигонов
                 if self.draw_poligons:
                     self.draw_poligons = False
                 else:
                     self.draw_poligons = True
 
-            if symbol == key.F2: # если мы нажали F3, то изменяем показ информации о игроке
+            if symbol == key.F5:
+                if self.pause:
+                    self.pause = False
+                    engine_settings.on_update_bool = True
+
+                else:
+                    self.pause = True
+                    engine_settings.on_update_bool = False
+
+            '''if symbol == key.F2: # если мы нажали F2, то изменяем показ информации о игроке
                 if self.draw_info_text:
                     self.draw_info_text = False
                 else:
@@ -47,8 +58,8 @@ class setings_game(): # класс который содержит себе ин
                 if self.draw_rain:
                     self.draw_rain = False
                 else:
-                    self.draw_rain = True
-            '''
+                    self.draw_rain = True'''
+
 
 class Console(): # класс игровой консоли
     def __init__(self):

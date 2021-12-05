@@ -9,6 +9,7 @@ class world():
 
         self.size = 8
 
+        self.range = 3
 
         self.shadow_alpha = 84
 
@@ -73,9 +74,13 @@ class world():
         self.set_vegetation()
         self.set_other_up()
         self.set_other_down()
-        self.generate_wall_polygons()
 
         self.import_images()
+
+        self.generate_wall_polygons()
+
+    def get_wall_poligon(self, x, y):
+        return self.poligons_wall[self.get_block_num(x, y)]
 
     def set_floor(self):
         print("SET FLOOR")
@@ -158,7 +163,7 @@ class world():
         for y in range(self.world_size[1]):
             #print(y)
             for x in range(self.world_size[0]):
-                block = self.map_wall[self.get_block_num(x, y)]
+                block = self.map_wall[self.get_block_num(x, (self.world_size[1] - 1) - y)]
                 if block != 'none':
                     array_pol = []
                     if os.path.isfile('img/world/wall/'+block.split('.')[0]+'.info'):
@@ -173,8 +178,13 @@ class world():
                             v(self.size_poligon/2, self.size_poligon/2),
                             v(-self.size_poligon/2, self.size_poligon/2)
                         ]
-                    poligon_block = collision.Poly(v(x * self.size_poligon + self.size_poligon/2, y * self.size_poligon + self.size_poligon/2), array_pol)
+                    poligon_block = collision.Poly(v(((settings.width - self.image_wall.width) / 2) + x * self.size_poligon + self.size_poligon/2,
+                    ((settings.height - self.image_wall.height) / 2) + y * self.size_poligon + self.size_poligon/2), array_pol)
                     poligon_block.angle = math.radians(int(block.split('.')[1]) - 180)
+
+                    poligon_block.x = ((settings.width - self.image_wall.width) / 2) + (x * self.size * self.scale)
+                    poligon_block.y = ((settings.height - self.image_wall.height) / 2) + (y * self.size * self.scale)
+
                     self.poligons_wall.append(poligon_block)
                 else:
                     self.poligons_wall.append('none')

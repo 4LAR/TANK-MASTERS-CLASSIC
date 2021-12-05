@@ -158,3 +158,137 @@ AttributeError: Can't get attribute 'file_code' on <module '__main__' (built-in)
   File "main.py", line 261, in load_obj
 AttributeError: Can't get attribute 'file_code' on <module '__main__' (built-in)>
 
+[13:26:32|05-12-21] FATAL ERROR: Traceback (most recent call last):
+  File "main.py", line 312, in <module>
+    exec(code) # запуск всего кода который мы прочитали из файлов
+  File "<string>", line 2304
+    if bullet[3] == -90
+                      ^
+SyntaxError: invalid syntax
+
+[13:40:53|05-12-21] FATAL ERROR: Traceback (most recent call last):
+  File "main.py", line 312, in <module>
+    exec(code) # запуск всего кода который мы прочитали из файлов
+  File "<string>", line 2319
+SyntaxError: can't assign to function call
+
+[13:41:10|05-12-21] FATAL ERROR: Traceback (most recent call last):
+  File "main.py", line 312, in <module>
+    exec(code) # запуск всего кода который мы прочитали из файлов
+  File "<string>", line 2319
+SyntaxError: can't assign to function call
+
+[13:45:28|05-12-21] FATAL ERROR: Traceback (most recent call last):
+  File "main.py", line 312, in <module>
+    exec(code) # запуск всего кода который мы прочитали из файлов
+  File "<string>", line 2319
+SyntaxError: can't assign to function call
+
+[20:32:49|05-12-21] FATAL ERROR: Traceback (most recent call last):
+  File "main.py", line 312, in <module>
+    exec(code) # запуск всего кода который мы прочитали из файлов
+  File "<string>", line 2319
+SyntaxError: can't assign to function call
+
+[20:34:41|05-12-21] FATAL ERROR: Traceback (most recent call last):
+  File "main.py", line 312, in <module>
+    exec(code) # запуск всего кода который мы прочитали из файлов
+  File "<string>", line 2319
+SyntaxError: can't assign to function call
+
+[20:37:04|05-12-21] FATAL ERROR: Traceback (most recent call last):
+  File "main.py", line 312, in <module>
+    exec(code) # запуск всего кода который мы прочитали из файлов
+  File "<string>", line 2318
+    if get_obj_display('world').map_wall[get_obj_display('world').get_block_num(0, 0] != 'none':
+                                                                                    ^
+SyntaxError: invalid syntax
+
+[20:41:05|05-12-21] FATAL ERROR: Traceback (most recent call last):
+  File "main.py", line 312, in <module>
+    exec(code) # запуск всего кода который мы прочитали из файлов
+  File "<string>", line 2318
+    if (bullet[1] > settings.width)
+                                  ^
+SyntaxError: invalid syntax
+
+[20:41:23|05-12-21] FATAL ERROR: Traceback (most recent call last):
+  File "main.py", line 312, in <module>
+    exec(code) # запуск всего кода который мы прочитали из файлов
+  File "<string>", line 2318
+    if (bullet[1] > settings.width) or
+                                     ^
+SyntaxError: invalid syntax
+
+[20:41:30|05-12-21] FATAL ERROR: Traceback (most recent call last):
+  File "main.py", line 312, in <module>
+    exec(code) # запуск всего кода который мы прочитали из файлов
+  File "<string>", line 2318
+    if (bullet[1] > settings.width) or
+                                     ^
+SyntaxError: invalid syntax
+
+[20:41:36|05-12-21] FATAL ERROR: Traceback (most recent call last):
+  File "main.py", line 312, in <module>
+    exec(code) # запуск всего кода который мы прочитали из файлов
+  File "<string>", line 2318
+    if (bullet[1] > settings.width) or
+                                     ^
+SyntaxError: invalid syntax
+
+[21:24:27|05-12-21] FATAL ERROR: Traceback (most recent call last):
+  File "main.py", line 312, in <module>
+    exec(code) # запуск всего кода который мы прочитали из файлов
+  File "<string>", line 2231
+    class player():
+        ^
+SyntaxError: invalid syntax
+
+[21:24:51|05-12-21] FATAL ERROR: Traceback (most recent call last):
+  File "main.py", line 312, in <module>
+    exec(code) # запуск всего кода который мы прочитали из файлов
+  File "<string>", line 2231
+    class player():
+        ^
+SyntaxError: invalid syntax
+
+[21:25:56|05-12-21] FATAL ERROR: Traceback (most recent call last):
+  File "main.py", line 312, in <module>
+    exec(code) # запуск всего кода который мы прочитали из файлов
+  File "<string>", line 2231
+    class player():
+        ^
+SyntaxError: invalid syntax
+
+[21:45:53|05-12-21] FATAL ERROR: Traceback (most recent call last):
+  File "main.py", line 312, in <module>
+    exec(code) # запуск всего кода который мы прочитали из файлов
+  File "<string>", line 2150
+    (settings.height - self.image_wall.height) / 2) + y * self.size_poligon + self.size_poligon/2), array_pol)
+                                                                                                 ^
+SyntaxError: invalid syntax
+
+[21:46:01|05-12-21] FATAL ERROR: Traceback (most recent call last):
+  File "main.py", line 312, in <module>
+    exec(code) # запуск всего кода который мы прочитали из файлов
+  File "<string>", line 2150
+    y * self.size_poligon + self.size_poligon/2), array_pol)
+                                                           ^
+SyntaxError: invalid syntax
+
+[22:16:47|05-12-21] FATAL ERROR: Traceback (most recent call last):
+  File "main.py", line 312, in <module>
+    exec(code) # запуск всего кода который мы прочитали из файлов
+  File "<string>", line 2324
+    try:
+      ^
+IndentationError: expected an indented block
+
+[22:27:17|05-12-21] FATAL ERROR: Traceback (most recent call last):
+  File "main.py", line 312, in <module>
+    exec(code) # запуск всего кода который мы прочитали из файлов
+  File "<string>", line 2355
+    except except as e:
+                ^
+SyntaxError: invalid syntax
+
