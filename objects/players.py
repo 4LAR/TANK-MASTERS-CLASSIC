@@ -129,19 +129,19 @@ class player():
                             break
                         else:
                             pass
-                        #t = 1.0
-                        #while True:
-                        #    #print('rr: ', send_return_bool)
-                        #    poligon_body = self.poligon_body if self.tank else self.poligon_human
+                        t = 1.0
+                        while True:
+                            #print('rr: ', send_return_bool)
+                            #poligon_body = self.poligon_body
 
 
-                        #    if collision.collide(poligon_body, poligon):
-                        #        self.pos = [pos_[0] - (x_ * t), pos_[1] - (y_ * t)]
-                        #        detect = True
-                        #        t += 0.05
-                        #
-                        #    else:
-                        #        break
+                            if collision.collide(self.poligon_body, poligon):
+                                self.pos = [pos_[0] - (x_ * t), pos_[1] - (y_ * t)]
+                                detect = True
+                                t += 0.05
+
+                            else:
+                                break
                 except:
                     pass
 

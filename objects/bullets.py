@@ -37,14 +37,16 @@ class bullets():
             or (bullet[2] > settings.height)
             or (bullet[2] < 0)):
                 self.bullets.pop(i)
-            #else:
-            #    pos = [bullet[1] + ((settings.width - get_obj_display('world').image_wall.width) / 2), bullet[1] - ((settings.height - get_obj_display('world').image_wall.height) / 2)]
-            #    pos = [int(math.sqrt(pos[0] ** 2)//get_obj_display('world').size_poligon), int(math.sqrt(pos[1] ** 2)//get_obj_display('world').size_poligon)]
 
-            #    block = get_obj_display('world').get_wall_poligon(pos[1], pos[2])
-            #    if block != 'none':
-            #        if collision.collide(self.bullet_poly, block):
-            #            self.bullets.pop(i)
+            '''else:
+                pos = [bullet[1] + ((settings.width - get_obj_display('world').image_wall.width) / 2), bullet[2] - ((settings.height - get_obj_display('world').image_wall.height) / 2)]
+                pos = [int(math.sqrt(pos[0] ** 2)//get_obj_display('world').size_poligon), int(math.sqrt(pos[1] ** 2)//get_obj_display('world').size_poligon)]
+                #print(pos)
+                block = get_obj_display('world').get_wall_poligon(pos[1], pos[2])
+                print(block)
+                if block != 'none':
+                    if collision.collide(self.bullet_poly, block):
+                        self.bullets.pop(i)'''
 
             #if get_obj_display('world').map_wall[get_obj_display('world').get_block_num(0, 0)] != 'none':
             #    get_obj_display('world').map_wall[get_obj_display('world').get_block_num(0, 0)] = 'none'

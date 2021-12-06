@@ -9,7 +9,7 @@ class world():
 
         self.size = 8
 
-        self.range = 3
+        self.range = 2
 
         self.shadow_alpha = 84
 
@@ -194,9 +194,14 @@ class world():
         #self.image_floor = pyglet.image.ImageData(self.temp_image_floor.width, self.temp_image_floor.height, 'RGBA', raw_image, pitch=-self.temp_image_floor.width * 4)
         #self.image_floor = pyglet.sprite.Sprite(self.image_floor, settings.width, settings.height)
         #self.image_floor.scale = self.scale
+
         self.image_floor = PIL_to_pyglet(self.temp_image_floor, self.scale)
         self.image_floor.x = (settings.width - self.image_floor.width) / 2
         self.image_floor.y = (settings.height - self.image_floor.height) / 2
+
+        self.image_other_down = PIL_to_pyglet(self.temp_image_other_down, self.scale)
+        self.image_other_down.x = (settings.width - self.image_other_down.width) / 2
+        self.image_other_down.y = (settings.height - self.image_other_down.height) / 2
 
         self.image_wall = PIL_to_pyglet(self.temp_image_wall, self.scale)
         self.image_wall.x = (settings.width - self.image_wall.width) / 2
@@ -210,6 +215,11 @@ class world():
         self.image_vegetation.x = (settings.width - self.image_wall.width) / 2
         self.image_vegetation.y = (settings.height - self.image_wall.height) / 2
 
+        self.image_other_up = PIL_to_pyglet(self.temp_image_other_up, self.scale)
+        self.image_other_up.x = (settings.width - self.image_other_up.width) / 2
+        self.image_other_up.y = (settings.height - self.image_other_up.height) / 2
+
+        # тени
         self.image_shadows = PIL_to_pyglet(self.temp_image_shadows, self.scale)
         self.image_shadows.x = (settings.width - self.image_wall.width) / 2
         self.image_shadows.y = (settings.height - self.image_wall.height) / 2
@@ -225,6 +235,7 @@ class world():
         drawp(self.image_floor)
         drawp(self.image_water)
         drawp(self.image_shadows_down)
+        drawp(self.image_other_down)
 
 class walls():
     def __init__(self):
@@ -235,3 +246,4 @@ class walls():
         drawp(get_obj_display('world').image_wall)
 
         drawp(get_obj_display('world').image_vegetation)
+        drawp(get_obj_display('world').image_other_up)
