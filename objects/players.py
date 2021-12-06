@@ -1,6 +1,10 @@
 class player():
     def __init__(self, id):
         self.id = id
+
+        self.check_fps = 60
+        self.norm_fps = 75
+
         try:
             self.pos = [
                 get_obj_display('world').image_floor.x + (get_obj_display('world').spawn[self.id][0] * get_obj_display('world').size * get_obj_display('world').scale),
@@ -54,24 +58,25 @@ class player():
 
 
     def update(self):
+        speed_tick = (self.check_fps/pyglet.clock.get_fps() if pyglet.clock.get_fps()<= self.norm_fps else 1) * self.speed_tick
         if eval('keyboard[key.' + KEY_BINDS['P' + str(self.id+1)]['left'] + ']'):
             #self.pos[0] -= self.speed_tick
-            self.set_pos_body(-self.speed_tick, 0)
+            self.set_pos_body(-speed_tick, 0)
             self.rotation = -90
             self.anim_tick()
         elif eval('keyboard[key.' + KEY_BINDS['P' + str(self.id+1)]['right'] + ']'):
             #self.pos[0] += self.speed_tick
-            self.set_pos_body(self.speed_tick, 0)
+            self.set_pos_body(speed_tick, 0)
             self.rotation = 90
             self.anim_tick()
         elif eval('keyboard[key.' + KEY_BINDS['P' + str(self.id+1)]['up'] + ']'):
             #self.pos[1] += self.speed_tick
-            self.set_pos_body(0, self.speed_tick)
+            self.set_pos_body(0, speed_tick)
             self.rotation = 0
             self.anim_tick()
         elif eval('keyboard[key.' + KEY_BINDS['P' + str(self.id+1)]['down'] + ']'):
             #self.pos[1] -= self.speed_tick
-            self.set_pos_body(0, -self.speed_tick)
+            self.set_pos_body(0, -speed_tick)
             self.rotation = 180
             self.anim_tick()
 
