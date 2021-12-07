@@ -83,6 +83,7 @@ class player():
         self.poligon_body.pos.x = self.pos[0]
         self.poligon_body.pos.y = self.pos[1]
 
+        get_obj_display('bullets').players_polygons[self.id] = self.poligon_body
 
         if (eval('keyboard[key.' + KEY_BINDS['P' + str(self.id+1)]['shoot_a'] + ']') and (self.time_shoot_a <= time.perf_counter())):
             get_obj_display('bullets').spawn(self.id, self.pos[0], self.pos[1], self.rotation, self.speed_tick * 10)
