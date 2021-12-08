@@ -15,7 +15,7 @@ class bullets():
             v(-self.bullet.sprite.width/2, self.bullet.sprite.height/2)
         ])
 
-        self.players_polygons = ['', '', '', '']
+        #self.players_polygons = ['', '', '', '']
 
     def spawn(self, id, x, y, rot, speed):
         self.bullets.append([id, x, y, rot, speed])
@@ -50,9 +50,11 @@ class bullets():
                 self.bullet_poly.angle = math.radians(bullet[3])
 
                 dead = False
-                for j in range(len(self.players_polygons)):
-                    if bullet[0] != j and collision.collide(self.bullet_poly, self.players_polygons[j]):
+                for j in range(len(get_obj_display('players').tanks)):
+                    if bullet[0] != j and collision.collide(self.bullet_poly, get_obj_display('players').tanks[j].poligon_body):
                         dead = True
+                        get_obj_display('players').tanks[j].health -= get_obj_display('players').tanks[bullet[0]].demage_a
+                        #print(get_obj_display('players').tanks[j].health)
                         self.bullets.pop(i)
 
                 if not dead:

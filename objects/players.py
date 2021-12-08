@@ -1,10 +1,19 @@
+class players():
+    def __init__(self):
+        self.tanks = []
+        for i in range(4):
+            self.tanks.append(player(i))
+
+    def update(self):
+        for tank in self.tanks:
+            tank.update()
+
+    def draw(self):
+        for tank in self.tanks:
+            tank.draw()
+
 class player():
-    def __init__(self, id):
-        self.id = id
-
-        self.check_fps = 60
-        self.norm_fps = 75
-
+    def go_spawn(self):
         try:
             self.pos = [
                 get_obj_display('world').image_floor.x + (get_obj_display('world').spawn[self.id][0] * get_obj_display('world').size * get_obj_display('world').scale),
@@ -15,9 +24,23 @@ class player():
         except:
             self.pos = [settings.width//2, settings.height//2]
 
+    def __init__(self, id):
+        self.id = id
+
+        self.check_fps = 60
+        self.norm_fps = 75
+
+        self.pos = [0, 0]
+        self.go_spawn()
+
         print('PLAYER ' + str(id) + ' SPAWN: ', self.pos)
 
         self.scale_tank = get_obj_display('world').scale
+
+        self.default_health = 100
+        self.health = 100
+
+        self.demage_a = 100
 
         self.def_speed = [settings.height/60]
         self.speed_tick = self.def_speed[0]/10
@@ -58,6 +81,11 @@ class player():
 
 
     def update(self):
+
+        if self.health <= 0:
+            self.health = self.default_health
+            self.go_spawn()
+
         speed_tick = (self.check_fps/pyglet.clock.get_fps() if pyglet.clock.get_fps()<= self.norm_fps else 1) * self.speed_tick
         if eval('keyboard[key.' + KEY_BINDS['P' + str(self.id+1)]['left'] + ']'):
             #self.pos[0] -= self.speed_tick
@@ -83,7 +111,7 @@ class player():
         self.poligon_body.pos.x = self.pos[0]
         self.poligon_body.pos.y = self.pos[1]
 
-        get_obj_display('bullets').players_polygons[self.id] = self.poligon_body
+        #get_obj_display('bullets').players_polygons[self.id] = self.poligon_body
 
         if (eval('keyboard[key.' + KEY_BINDS['P' + str(self.id+1)]['shoot_a'] + ']') and (self.time_shoot_a <= time.perf_counter())):
             get_obj_display('bullets').spawn(self.id, self.pos[0], self.pos[1], self.rotation, self.speed_tick * 10)
