@@ -1,8 +1,9 @@
 class players():
     def __init__(self):
         self.tanks = []
+
         for i in range(4):
-            self.tanks.append(player(i))
+            self.tanks.append(player(i, [False, True, True, True][i]))
 
     def update(self):
         for tank in self.tanks:
@@ -24,8 +25,9 @@ class player():
         except:
             self.pos = [settings.width//2, settings.height//2]
 
-    def __init__(self, id):
+    def __init__(self, id, bot=False):
         self.id = id
+        self.bot = bot
 
         self.check_fps = 60
         self.norm_fps = 75
@@ -46,6 +48,12 @@ class player():
         self.speed_tick = self.def_speed[0]/10
         self.speed = 0
         self.rotation = 0
+
+        self.bot_rotation = 0
+        self.time_random_rotation = 0
+        self.bot_shoot_a = True
+
+        self.wall_collision_bool = False
 
         self.anim_ticks = 0
         self.anim_body_state = 0
@@ -81,42 +89,52 @@ class player():
 
 
     def update(self):
-
+        # респавн при смерти
         if self.health <= 0:
             self.health = self.default_health
             self.go_spawn()
 
-        speed_tick = (self.check_fps/pyglet.clock.get_fps() if pyglet.clock.get_fps()<= self.norm_fps else 1) * self.speed_tick
-        if eval('keyboard[key.' + KEY_BINDS['P' + str(self.id+1)]['left'] + ']'):
-            #self.pos[0] -= self.speed_tick
-            self.set_pos_body(-speed_tick, 0)
+        # подстройка скорости игрока под FPS
+        speed_tick = (self.check_fps / pyglet.clock.get_fps() if pyglet.clock.get_fps() <= self.norm_fps else 1) * self.speed_tick
+
+        # логика бота
+        if self.bot:
+
+            #for player in get_obj_display('players').tanks:
+            #    if self.id != player.id:
+            #        if self.pos[0] <= player.pos[0]
+
+            if (self.wall_collision_bool or (self.time_random_rotation <= time.perf_counter())):
+                self.bot_rotation = [-90, 0, 90, 180][random.randint(0, 3)]
+                self.time_random_rotation = time.perf_counter() + random.randrange(1, 4)
+
+        # передвижение
+        if (eval('keyboard[key.' + KEY_BINDS['P' + str(self.id + 1)]['left'] + ']') and not self.bot) or (self.bot and self.bot_rotation == -90):
+            self.wall_collision_bool = self.set_pos_body(-speed_tick, 0, self.bot)
             self.rotation = -90
             self.anim_tick()
-        elif eval('keyboard[key.' + KEY_BINDS['P' + str(self.id+1)]['right'] + ']'):
-            #self.pos[0] += self.speed_tick
-            self.set_pos_body(speed_tick, 0)
+        elif (eval('keyboard[key.' + KEY_BINDS['P' + str(self.id + 1)]['right'] + ']') and not self.bot) or (self.bot and self.bot_rotation == 90):
+            self.wall_collision_bool = self.set_pos_body(speed_tick, 0, self.bot)
             self.rotation = 90
             self.anim_tick()
-        elif eval('keyboard[key.' + KEY_BINDS['P' + str(self.id+1)]['up'] + ']'):
-            #self.pos[1] += self.speed_tick
-            self.set_pos_body(0, speed_tick)
+        elif (eval('keyboard[key.' + KEY_BINDS['P' + str(self.id + 1)]['up'] + ']') and not self.bot) or (self.bot and self.bot_rotation == 0):
+            self.wall_collision_bool = self.set_pos_body(0, speed_tick, self.bot)
             self.rotation = 0
             self.anim_tick()
-        elif eval('keyboard[key.' + KEY_BINDS['P' + str(self.id+1)]['down'] + ']'):
-            #self.pos[1] -= self.speed_tick
-            self.set_pos_body(0, -speed_tick)
+        elif (eval('keyboard[key.' + KEY_BINDS['P' + str(self.id + 1)]['down'] + ']') and not self.bot) or (self.bot and self.bot_rotation == 180):
+            self.wall_collision_bool = self.set_pos_body(0, -speed_tick, self.bot)
             self.rotation = 180
             self.anim_tick()
 
         self.poligon_body.pos.x = self.pos[0]
         self.poligon_body.pos.y = self.pos[1]
 
-        #get_obj_display('bullets').players_polygons[self.id] = self.poligon_body
-
-        if (eval('keyboard[key.' + KEY_BINDS['P' + str(self.id+1)]['shoot_a'] + ']') and (self.time_shoot_a <= time.perf_counter())):
+        # стрельба
+        if (((eval('keyboard[key.' + KEY_BINDS['P' + str(self.id+1)]['shoot_a'] + ']') and not self.bot) or (self.bot and self.bot_shoot_a) ) and (self.time_shoot_a <= time.perf_counter())):
             get_obj_display('bullets').spawn(self.id, self.pos[0], self.pos[1], self.rotation, self.speed_tick * 10)
             self.time_shoot_a = time.perf_counter() + self.delay_shoot_a
 
+        # перемещение стпрайтов и полигонов по карте
         for i in range(len(self.obj_tanks)):
             if i != 1:
                 try:
@@ -139,8 +157,8 @@ class player():
                 self.obj_tanks[i][self.anim_body_state].y = self.pos[1]
                 self.obj_tanks[i][self.anim_body_state].update_image(True)
 
-    def set_pos_body(self, x_, y_):
-
+    def set_pos_body(self, x_, y_, send_return_bool = False):
+        self.detect = False
         pos_ = [self.pos[0], self.pos[1]]
         self.pos = [self.pos[0] + x_, self.pos[1] + y_]
         pos = [self.pos[0] + ((settings.width - get_obj_display('world').image_wall.width) / 2), self.pos[1] - ((settings.height - get_obj_display('world').image_wall.height) / 2)]
@@ -154,6 +172,9 @@ class player():
                         self.poligon_body.pos.y = self.pos[1]
                         if collision.collide(self.poligon_body, poligon):
                             #
+
+                            self.detect = True
+                            #print(self.detect)
                             self.pos = pos_
                             break
                         else:
@@ -166,13 +187,31 @@ class player():
 
                             if collision.collide(self.poligon_body, poligon):
                                 self.pos = [pos_[0] - (x_ * t), pos_[1] - (y_ * t)]
-                                detect = True
+                                self.detect = True
                                 t += 0.05
 
                             else:
                                 break
                 except:
                     pass
+
+        '''for i in range(len(get_obj_display('players').tanks)):
+            t = 1.0
+            while True:
+                if self.id != i and collision.collide(self.poligon_body, get_obj_display('players').tanks[i].poligon_body):
+
+                    self.pos = [pos_[0] - (x_ * t), pos_[1] - (y_ * t)]
+                    self.poligon_body.pos.x = self.pos[0]
+                    self.poligon_body.pos.y = self.pos[1]
+
+                    t += 0.05
+                else:
+                    break
+                self.detect = True'''
+
+        if send_return_bool:
+            #print(self.detect)
+            return self.detect
 
     def draw(self):
         for i in range(len(self.obj_tanks)):
