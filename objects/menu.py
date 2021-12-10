@@ -23,12 +23,32 @@ class background_menu():
 class main_menu_buttons():
     pass
 
+first_breath_menu = True
+
 def menu():
+    global first_breath_menu
     clear_display()
     add_display(background_menu())
-    add_display(image_button(0, settings.height - settings.height/3, 'buttons/button_clear.png', scale=settings.height/120, center=False, function=play, image_selected='buttons/button_clear_selected.png', text='play', text_indent= settings.height//100))
-    add_display(image_button(0, settings.height - settings.height/2, 'buttons/button_clear.png', scale=settings.height/120, center=False, function=exit, image_selected='buttons/button_clear_selected.png', text='editor', text_indent= settings.height//100))
-    add_display(image_button(0, settings.height - settings.height/1.5, 'buttons/button_clear.png', scale=settings.height/120, center=False, function=exit, image_selected='buttons/button_clear_selected.png', text='settings', text_indent= settings.height//100))
+    add_display(image_button(0, settings.height - settings.height/3, 'buttons/button_clear.png', scale=settings.height/120, center=False, function=play_menu, image_selected='buttons/button_clear_selected.png', text='play', text_indent= settings.height//100))
+    add_display(image_button(0, settings.height - settings.height/2, 'buttons/button_clear.png', scale=settings.height/120, center=False, arg='select_map(editor=True)', image_selected='buttons/button_clear_selected.png', text='editor', text_indent= settings.height//100))
+    add_display(image_button(0, settings.height - settings.height/1.5, 'buttons/button_clear.png', scale=settings.height/120, center=False, function=settings_menu, image_selected='buttons/button_clear_selected.png', text='settings', text_indent= settings.height//100))
     add_display(image_button(0, settings.height/10, 'buttons/button_clear.png', scale=settings.height/120, center=False, function=exit, image_selected='buttons/button_clear_selected.png', text='exit', text_indent= settings.height//100))
-    add_display(text_label(settings.width/100, settings.height/20, version_engine + ' | TANK MASTERS: CLASSIC (0.0.1)', load_font=True, font='pixel.ttf', size=settings.height//48, anchor_x='left', color = (20, 20, 20, 255)))
-    add_display(breathing_label(0, 0, settings.width, settings.height, (0, 0, 0), 0, delay=0.01, for_from=255, for_before=0, tick=-5))
+    add_display(text_label(settings.width/100, settings.height/20, version_engine + ' | ' + version, load_font=True, font='pixel.ttf', size=settings.height//48, anchor_x='left', color = (20, 20, 20, 255)))
+    if first_breath_menu:
+        add_display(breathing_label(0, 0, settings.width, settings.height, (0, 0, 0), 0, delay=0.01, for_from=255, for_before=0, tick=-5))
+        first_breath_menu = False
+
+def select_map(editor=False):
+    clear_display()
+    add_display(background_menu())
+    add_display(image_button(0, settings.height/10, 'buttons/button_clear.png', scale=settings.height/120, center=False, function=menu, image_selected='buttons/button_clear_selected.png', text='back', text_indent= settings.height//100))
+
+def play_menu():
+    clear_display()
+    add_display(background_menu())
+    add_display(image_button(0, settings.height/10, 'buttons/button_clear.png', scale=settings.height/120, center=False, function=menu, image_selected='buttons/button_clear_selected.png', text='back', text_indent= settings.height//100))
+
+def settings_menu():
+    clear_display()
+    add_display(background_menu())
+    add_display(image_button(0, settings.height/10, 'buttons/button_clear.png', scale=settings.height/120, center=False, function=menu, image_selected='buttons/button_clear_selected.png', text='back', text_indent= settings.height//100))

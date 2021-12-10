@@ -52,7 +52,7 @@ def add_timer_text_logo():
 
 def text_logo():
 	clear_display()
-	add_display(skip(1))
+	add_display(skip())
 	add_display(label(settings.width, settings.height, settings.width, settings.height, (0, 0, 0)))
 	add_display(text_label(settings.width//2, settings.height//2, 'This project is under development.', load_font=True, font='pixel.ttf', size=settings.height//20, anchor_x='center', color = (180, 180, 180, 255)))
 	add_display(text_label(settings.width//2, settings.height//2 - settings.height//19, 'It will improve with each update.', load_font=True, font='pixel.ttf', size=settings.height//20, anchor_x='center', color = (180, 180, 180, 255)))

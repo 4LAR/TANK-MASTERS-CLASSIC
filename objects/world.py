@@ -188,6 +188,19 @@ class world():
                     self.poligons_wall.append(poligon_block)
                 else:
                     self.poligons_wall.append('none')
+    
+    def clear_images_wall(self):
+        self.temp_image_shadows_up = Image.new('RGBA', (self.world_size[0] * self.size, self.world_size[1] * self.size))
+        self.temp_image_wall = Image.new('RGBA', (self.world_size[0] * self.size, self.world_size[1] * self.size))
+
+    def update_images_wall(self):
+        self.image_wall = PIL_to_pyglet(self.temp_image_wall, self.scale)
+        self.image_wall.x = (settings.width - self.image_wall.width) / 2
+        self.image_wall.y = (settings.height - self.image_wall.height) / 2
+
+        self.image_shadows = PIL_to_pyglet(self.temp_image_shadows, self.scale)
+        self.image_shadows.x = (settings.width - self.image_wall.width) / 2
+        self.image_shadows.y = (settings.height - self.image_wall.height) / 2
 
     def import_images(self):
         print('IMPORT IMAGES')

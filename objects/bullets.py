@@ -66,11 +66,13 @@ class bullets():
                         if collision.collide(self.bullet_poly, block):
                             self.bullets.pop(i)
 
-            #if get_obj_display('world').map_wall[get_obj_display('world').get_block_num(0, 0)] != 'none':
-            #    get_obj_display('world').map_wall[get_obj_display('world').get_block_num(0, 0)] = 'none'
-            #    get_obj_display('world').set_wall()
-            #    get_obj_display('world').import_images()
-            #    self.bullets.pop(i)
+                            # попытка сделать разрушемость
+                            #get_obj_display('world').map_wall[get_obj_display('world').get_block_num(pos[0], get_obj_display('world').world_size[1] - pos[1])] = 'none'
+                            #get_obj_display('world').clear_images_wall()
+                            #get_obj_display('world').set_wall()
+                            #get_obj_display('world').update_images_wall()
+
+
 
 
     def draw(self):
