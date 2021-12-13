@@ -29,7 +29,7 @@ def menu():
     global first_breath_menu
     clear_display()
     add_display(background_menu())
-    add_display(image_button(0, settings.height - settings.height/3, 'buttons/button_clear.png', scale=settings.height/120, center=False, function=play_menu, image_selected='buttons/button_clear_selected.png', text='play', text_indent= settings.height//100))
+    add_display(image_button(0, settings.height - settings.height/3, 'buttons/button_clear.png', scale=settings.height/120, center=False, arg='select_map(editor=True)', function=play_menu, image_selected='buttons/button_clear_selected.png', text='play', text_indent= settings.height//100))
     add_display(image_button(0, settings.height - settings.height/2, 'buttons/button_clear.png', scale=settings.height/120, center=False, arg='select_map(editor=True)', image_selected='buttons/button_clear_selected.png', text='editor', text_indent= settings.height//100))
     add_display(image_button(0, settings.height - settings.height/1.5, 'buttons/button_clear.png', scale=settings.height/120, center=False, function=settings_menu, image_selected='buttons/button_clear_selected.png', text='settings', text_indent= settings.height//100))
     add_display(image_button(0, settings.height/10, 'buttons/button_clear.png', scale=settings.height/120, center=False, function=exit, image_selected='buttons/button_clear_selected.png', text='exit', text_indent= settings.height//100))
@@ -42,6 +42,9 @@ def select_map(editor=False):
     clear_display()
     add_display(background_menu())
     add_display(image_button(0, settings.height/10, 'buttons/button_clear.png', scale=settings.height/120, center=False, function=menu, image_selected='buttons/button_clear_selected.png', text='back', text_indent= settings.height//100))
+    add_display(select_map_buttons())
+    add_display(image_button(500, settings.height/10, 'buttons/button_left_small.png', image_selected='buttons/button_left_small_selected.png', scale=settings.height/120, center=False, function=menu))
+    
 
 def play_menu():
     clear_display()

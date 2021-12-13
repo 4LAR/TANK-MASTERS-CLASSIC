@@ -289,4 +289,4 @@ class os_world():
             self.save_world_obj.map_effect_up = self.map_effect_up
             self.save_world_obj.map_effect_down = self.map_effect_down
 
-        print(self.map_other_up)
+        #print(self.map_other_up)

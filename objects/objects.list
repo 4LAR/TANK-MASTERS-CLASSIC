@@ -5,6 +5,7 @@ console.py
 editor/map_editor.py
 editor/map_editor_inventory.py
 menu.py
+select_map.py
 world.py
 players.py
 bullets.py

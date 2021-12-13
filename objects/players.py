@@ -166,7 +166,7 @@ class player():
         for y in range(pos[1] - get_obj_display('world').range, pos[1] + get_obj_display('world').range, 1):
             for x in range(pos[0] - get_obj_display('world').range, pos[0] + get_obj_display('world').range, 1):
                 try:
-                    poligon = get_obj_display('world').get_wall_poligon(x, y)
+                    poligon = get_obj_display('world').get_wall_poligon(x, y) if (get_obj_display('world').get_wall_poligon(x, y) != 'none') else get_obj_display('world').get_water_poligon(x, y)
                     if poligon != 'none':
                         self.poligon_body.pos.x = self.pos[0]
                         self.poligon_body.pos.y = self.pos[1]

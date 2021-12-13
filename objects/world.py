@@ -22,7 +22,7 @@ class world():
         #    self.map_floor[i] = 'dirt.0'
 
         print("READ WORLD FILE")
-        get_obj_other('os_world').read_file('test') # открываем карту
+        get_obj_other('os_world').read_file('Castle') # открываем карту
 
         self.world_size = get_obj_other('os_world').world_size
         if self.world_size[0] > self.world_size[1]:
@@ -32,6 +32,7 @@ class world():
 
         self.size_poligon = self.size * self.scale
         self.poligons_wall = [] # список полигонов блоков
+        self.poligons_water = [] # список полигонов блоков
 
         self.spawn = get_obj_other('os_world').save_world_obj.spawn
 
@@ -78,9 +79,13 @@ class world():
         self.import_images()
 
         self.generate_wall_polygons()
+        self.generate_water_polygons()
 
     def get_wall_poligon(self, x, y):
         return self.poligons_wall[self.get_block_num(x, y)]
+
+    def get_water_poligon(self, x, y):
+        return self.poligons_water[self.get_block_num(x, y)]
 
     def set_floor(self):
         print("SET FLOOR")
@@ -188,7 +193,38 @@ class world():
                     self.poligons_wall.append(poligon_block)
                 else:
                     self.poligons_wall.append('none')
-    
+
+    def generate_water_polygons(self):
+        print("GENERATE WATER POLYGONS")
+        for y in range(self.world_size[1]):
+            #print(y)
+            for x in range(self.world_size[0]):
+                block = self.map_water[self.get_block_num(x, (self.world_size[1] - 1) - y)]
+                if block != 'none':
+                    array_pol = []
+                    if os.path.isfile('img/world/wall/'+block.split('.')[0]+'.info'):
+                        f = open('img/world/wall/'+block.split('.')[0]+'.info', 'r')
+                        arr_info = f.read().split('\n')
+                        for info in arr_info:
+                            array_pol.append(v(int(info.split(' ')[0]) * (self.size_poligon/8)-self.size_poligon/2, int(info.split(' ')[1]) * (self.size_poligon/8)-self.size_poligon/2))
+                    else:
+                        array_pol = [
+                            v(-self.size_poligon/2, -self.size_poligon/2),
+                            v(self.size_poligon/2, -self.size_poligon/2),
+                            v(self.size_poligon/2, self.size_poligon/2),
+                            v(-self.size_poligon/2, self.size_poligon/2)
+                        ]
+                    poligon_block = collision.Poly(v(((settings.width - self.image_wall.width) / 2) + x * self.size_poligon + self.size_poligon/2,
+                    ((settings.height - self.image_wall.height) / 2) + y * self.size_poligon + self.size_poligon/2), array_pol)
+                    poligon_block.angle = math.radians(int(block.split('.')[1]) - 180)
+
+                    poligon_block.x = ((settings.width - self.image_wall.width) / 2) + (x * self.size * self.scale)
+                    poligon_block.y = ((settings.height - self.image_wall.height) / 2) + (y * self.size * self.scale)
+
+                    self.poligons_water.append(poligon_block)
+                else:
+                    self.poligons_water.append('none')
+
     def clear_images_wall(self):
         self.temp_image_shadows_up = Image.new('RGBA', (self.world_size[0] * self.size, self.world_size[1] * self.size))
         self.temp_image_wall = Image.new('RGBA', (self.world_size[0] * self.size, self.world_size[1] * self.size))

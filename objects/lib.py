@@ -435,7 +435,7 @@ class image_button():
         self.text = text
 
         if self.text != None:
-            size = settings.height/200 * self.scale
+            size = settings.height/150 * self.scale
             #print(size)
             self.text = text_label(self.x + text_indent, self.y + size*1.6, self.text, load_font=True, font=font, size=int(size), anchor_x='left', color=text_color)
 
