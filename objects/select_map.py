@@ -8,7 +8,7 @@ class select_map_buttons():
         for file in files:
             try:
                 if file.split('.')[1] == 'map':
-                    maps_names.append(file)
+                    maps_names.append(file.split('.')[0])
                     if os.path.exists('maps/' + file + '/logo.png'):
                         maps_logos.append('maps/' + file + '/logo.png')
                     else:
@@ -21,7 +21,7 @@ class select_map_buttons():
         self.buttons = []
         self.image_maps = []
 
-        self.maps_in_page = 2 * 4
+        self.maps_in_page = 3 * 2
         self.page = 1
         self.map_names, self.map_logos = self.mapList()
 
@@ -35,7 +35,7 @@ class select_map_buttons():
                     image_button((x * settings.width/2.8) + settings.width/50 + settings.width/3.8,
                         (settings.height - settings.height/3.5) - (y * settings.height/4.5),
                         'buttons/button_map.png', scale=settings.height/160,
-                        center=False, function=settings_menu,
+                        center=False, arg='play(\'' + self.map_names[i] + '\')',
                         image_selected='buttons/button_map_selected.png'
                         #text='settings',
                         #text_indent= settings.height//100)

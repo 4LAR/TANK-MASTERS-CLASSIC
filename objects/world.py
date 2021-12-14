@@ -5,7 +5,8 @@ class world():
     def get_block_num(self, x, y):
         return y * self.world_size[0] + x
 
-    def __init__(self):
+    def __init__(self, map_name='test'):
+        self.map_name = map_name
 
         self.size = 8
 
@@ -22,7 +23,7 @@ class world():
         #    self.map_floor[i] = 'dirt.0'
 
         print("READ WORLD FILE")
-        get_obj_other('os_world').read_file('Castle') # открываем карту
+        get_obj_other('os_world').read_file(self.map_name) # открываем карту
 
         self.world_size = get_obj_other('os_world').world_size
         if self.world_size[0] > self.world_size[1]:
@@ -285,6 +286,12 @@ class world():
         drawp(self.image_water)
         drawp(self.image_shadows_down)
         drawp(self.image_other_down)
+
+    def on_key_press(self, symbol, modifiers):
+        if symbol == pyglet.window.key.ESCAPE:
+            menu()
+
+        return pyglet.event.EVENT_HANDLED
 
 class walls():
     def __init__(self):

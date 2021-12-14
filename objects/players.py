@@ -87,7 +87,6 @@ class player():
                 self.anim_body_state = 0
             self.anim_ticks = 0
 
-
     def update(self):
         # респавн при смерти
         if self.health <= 0:

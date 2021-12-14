@@ -35,9 +35,9 @@ KEY_BINDS = {
     }
 }
 
-def play():
+def play(map_name='test'):
     clear_display()
-    add_display(world())
+    add_display(world(map_name))
     add_display(players())
     #add_display(player(0))
     add_display(bullets())
