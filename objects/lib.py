@@ -203,7 +203,7 @@ class image_label(): # класс для проприсвки картинки
         self.update_image()
         #print(self.rotation)
 
-    def __init__(self, image, x, y, scale_x = 1, scale_y = 1, scale = 1, visible=True, rotation=0, alpha=255, pixel=False, center=False, black_mask=False, alpha_mask=0, batch=None, group=None):
+    def __init__(self, image, x, y, scale_x = 1, scale_y = 1, scale = 1, visible=True, rotation=0, alpha=255, pixel=False, center=False, black_mask=False, alpha_mask=0, batch=None, group=None, no_image=False):
         self.x = x
         self.y = y
         self.size_x = scale_y
@@ -216,13 +216,19 @@ class image_label(): # класс для проприсвки картинки
         #self.image = open('img/' + image, 'rb')
         #self.image = pyglet.image.load(image, file=self.image)
         if black_mask:
-            image = Image.open('img/' + image).convert("RGBA")
+            if no_image:
+                image = Image.open('img/' + image).convert("RGBA")
+            else:
+                image = Image.open(image).convert("RGBA")
             image = get_pil_black_mask(image, alpha_mask)
             raw_image = image.tobytes()
             self.image = pyglet.image.ImageData(image.width, image.height, 'RGBA', raw_image, pitch=-image.width * 4)
 
         else:
-            self.image = pyglet.image.load('img/' + image)
+            if no_image:
+                self.image = pyglet.image.load(image)
+            else:
+                self.image = pyglet.image.load('img/' + image)
         if center:
             self.image.anchor_x = self.image.width // 2
             self.image.anchor_y = self.image.height // 2
