@@ -20,6 +20,7 @@ class select_map_buttons():
     def __init__(self):
         self.buttons = []
         self.image_maps = []
+        self.text_maps = []
 
         self.maps_in_page = 3 * 2
         self.page = 1
@@ -45,8 +46,19 @@ class select_map_buttons():
                 self.image_maps.append(
                     image_label(self.map_logos[i],
                         (x * settings.width/2.8) + settings.width/50 + settings.width/3.8 + settings.width/300,
-                            (settings.height - settings.height/3.5) - (y * settings.height/4.5) + settings.height/160,
+                        (settings.height - settings.height/3.5) - (y * settings.height/4.5) + settings.height/160,
                         scale=settings.height/170, pixel=True, no_image=True
+                    )
+                )
+
+                self.text_maps.append(
+                    text_label(
+                        (x * settings.width/2.8) + settings.width/50 + settings.width/3.8 + settings.width/8,
+                        (settings.height - settings.height/3.5) - (y * settings.height/4.5) + settings.height/6,
+                        self.map_names[i],
+                        load_font=True, font='pixel.ttf',
+                        size=settings.height//48, anchor_x='left',
+                        color = (150, 150, 150, 255)
                     )
                 )
 
@@ -63,3 +75,5 @@ class select_map_buttons():
             drawp(b)
         for b in self.buttons:
             drawp(b)
+        for b in self.text_maps:
+            b.draw()

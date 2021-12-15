@@ -287,12 +287,6 @@ class world():
         drawp(self.image_shadows_down)
         drawp(self.image_other_down)
 
-    def on_key_press(self, symbol, modifiers):
-        if symbol == pyglet.window.key.ESCAPE:
-            menu()
-
-        return pyglet.event.EVENT_HANDLED
-
 class walls():
     def __init__(self):
         pass

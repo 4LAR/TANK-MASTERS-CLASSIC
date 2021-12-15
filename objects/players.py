@@ -9,6 +9,12 @@ class players():
         for tank in self.tanks:
             tank.update()
 
+    def on_key_press(self, symbol, modifiers):
+        if symbol == pyglet.window.key.ESCAPE:
+            menu()
+
+            return pyglet.event.EVENT_HANDLED
+
     def draw(self):
         for tank in self.tanks:
             tank.draw()

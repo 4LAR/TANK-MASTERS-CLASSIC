@@ -67,7 +67,7 @@ def select_map(editor=False):
         settings.width/2.5, settings.height/10,
         scale=settings.height/120, pixel=True
     ))
-    add_display(text_label(settings.width/2.3, settings.height/6, 'page: 1/2', load_font=True, font='pixel.ttf', size=settings.height//24, anchor_x='left', color = (150, 150, 150, 255)))
+    add_display(text_label(settings.width/2.3, settings.height/6, 'page: 1/1', load_font=True, font='pixel.ttf', size=settings.height//24, anchor_x='left', color = (150, 150, 150, 255)))
     add_display(image_button(settings.width/3, settings.height/10, 'buttons/button_left_page.png', image_selected='buttons/button_left_page_selected.png', scale=settings.height/120, center=False, function=menu))
     add_display(image_button(settings.width/3 + settings.width/3.5, settings.height/10, 'buttons/button_right_page.png', image_selected='buttons/button_right_page_selected.png', scale=settings.height/120, center=False, function=menu))
 
