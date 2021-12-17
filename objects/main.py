@@ -1,4 +1,4 @@
-version = 'TANK MASTERS:CLASSIC 0.0.1'
+version = 'TANK MASTERS:CLASSIC 0.3.0'
 
 import math, random
 import numpy as np
