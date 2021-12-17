@@ -46,7 +46,7 @@ class select_map_buttons():
                 self.image_maps.append(
                     image_label(self.map_logos[i],
                         (x * settings.width/2.8) + settings.width/50 + settings.width/3.8 + settings.width/300,
-                        (settings.height - settings.height/3.5) - (y * settings.height/4.5) + settings.height/160,
+                        (settings.height - settings.height/3.5) - (y * settings.height/4.5) + settings.height/200,
                         scale=settings.height/170, pixel=True, no_image=True
                     )
                 )

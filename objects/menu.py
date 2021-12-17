@@ -20,11 +20,8 @@ class background_menu():
         drawp(self.image_background)
         drawp(self.image_background)
 
-class main_menu_buttons():
-    pass
-
 class head_menu():
-    def __init__(self, text):
+    def __init__(self, text='', align_top=True):
 
         self.text = text_label(settings.width/2, settings.height - settings.height/35, text, load_font=True, font='pixel.ttf', size=settings.height//24, anchor_x='center', color = (150, 150, 150, 255))
 
@@ -33,7 +30,7 @@ class head_menu():
         self.image = pyglet.image.ImageData(image.width, image.height, 'RGBA', raw_image, pitch=-image.width * 4)
         self.sprite = pyglet.sprite.Sprite(
             self.image,
-            x = 0, y = settings.height - settings.height/15
+            x = -10, y = (settings.height - settings.height/15) if align_top else (-settings.height/15)
         )
         self.sprite.scale = settings.height/130
 
@@ -47,11 +44,16 @@ def menu():
     global first_breath_menu
     clear_display()
     add_display(background_menu())
+    add_display(head_menu())
     add_display(image_button(0, settings.height - settings.height/3, 'buttons/button_clear.png', scale=settings.height/120, center=False, arg='select_map(editor=True)', function=play_menu, image_selected='buttons/button_clear_selected.png', text='play', text_indent= settings.height//100))
     add_display(image_button(0, settings.height - settings.height/2, 'buttons/button_clear.png', scale=settings.height/120, center=False, arg='select_map(editor=True)', image_selected='buttons/button_clear_selected.png', text='editor', text_indent= settings.height//100))
     add_display(image_button(0, settings.height - settings.height/1.5, 'buttons/button_clear.png', scale=settings.height/120, center=False, function=settings_menu, image_selected='buttons/button_clear_selected.png', text='settings', text_indent= settings.height//100))
     add_display(image_button(0, settings.height/10, 'buttons/button_clear.png', scale=settings.height/120, center=False, function=exit, image_selected='buttons/button_clear_selected.png', text='exit', text_indent= settings.height//100))
-    add_display(text_label(settings.width/100, settings.height/20, version_engine + ' | ' + version, load_font=True, font='pixel.ttf', size=settings.height//48, anchor_x='left', color = (20, 20, 20, 255)))
+    add_display(head_menu(align_top=False))
+    add_display(text_label(settings.width/100, settings.height - settings.height/10, 'TANK MASTERS', load_font=True, font='pixel.ttf', size=settings.height//20, anchor_x='left', color = (150, 150, 150, 255), shadow=True, color_shadow=(20, 20, 20, 122), shadow_size=settings.height//20))
+    add_display(text_label(settings.width/5, settings.height - settings.height/6.5, 'CLASSIC', load_font=True, font='pixel.ttf', size=settings.height//20, anchor_x='left', color = (150, 150, 150, 255), shadow=True, color_shadow=(20, 20, 20, 122), shadow_size=settings.height//20))
+
+    add_display(text_label(settings.width/100, settings.height/40, version_engine + ' | ' + version, load_font=True, font='pixel.ttf', size=settings.height//48, anchor_x='left', color = (150, 150, 150, 255)))
     if first_breath_menu:
         add_display(breathing_label(0, 0, settings.width, settings.height, (0, 0, 0), 0, delay=0.01, for_from=255, for_before=0, tick=-5))
         first_breath_menu = False

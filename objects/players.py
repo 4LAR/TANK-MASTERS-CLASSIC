@@ -43,7 +43,7 @@ class player():
 
         print('PLAYER ' + str(id) + ' SPAWN: ', self.pos)
 
-        self.scale_tank = get_obj_display('world').scale
+        self.scale_tank = get_obj_display('world').scale / 1.2
 
         self.default_health = 100
         self.health = 100
@@ -67,12 +67,14 @@ class player():
         self.delay_shoot_a = 1
         self.time_shoot_a = time.perf_counter() + self.delay_shoot_a
 
+        self.teams = ['red', 'green', 'blue', 'yellow', 'no_team']
         self.obj_tanks = []
 
         self.obj_tanks.append(PIL_to_pyglet(get_pil_black_mask(Image.open('img/tanks/body/no_team/tank_base.png').convert("RGBA"), get_obj_display('world').shadow_alpha), self.scale_tank, True))
         self.obj_tanks.append([])
         self.obj_tanks[1].append(image_label('tanks/body/no_team/tank_base.png', settings.width//2, settings.height//2, scale=self.scale_tank, pixel=False, center=True))
         self.obj_tanks[1].append(image_label('tanks/body/no_team/tank_base_1.png', settings.width//2, settings.height//2, scale=self.scale_tank, pixel=False, center=True))
+        self.obj_tanks.append(image_label('tanks/body/' + self.teams[self.id] + '/tank_base.png', settings.width//2, settings.height//2, scale=self.scale_tank, pixel=False, center=True))
         self.obj_tanks.append(PIL_to_pyglet(get_pil_black_mask(Image.open('img/tanks/tower/gun.png').convert("RGBA"), get_obj_display('world').shadow_alpha), self.scale_tank, True))
         self.obj_tanks.append(image_label('tanks/tower/gun.png', settings.width//2, settings.height//2, scale=self.scale_tank, pixel=False, center=True))
 
@@ -146,7 +148,7 @@ class player():
                     self.obj_tanks[i].update_rotation(self.rotation)
                 except:
                     self.obj_tanks[i].rotation = self.rotation
-                if i in [0, 2]:
+                if i in [0, 3]:
                     self.obj_tanks[i].x = self.pos[0] + get_obj_display('world').offs_shadows[0] / 3#6
                     self.obj_tanks[i].y = self.pos[1] - get_obj_display('world').offs_shadows[0] / 3#6
                     #self.obj_tanks[i].update_image(True)
