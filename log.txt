@@ -380,3 +380,11 @@ SyntaxError: invalid syntax
     ^
 SyntaxError: invalid syntax
 
+[18:06:27|18-12-21] FATAL ERROR: Traceback (most recent call last):
+  File "main.py", line 312, in <module>
+    exec(code) # запуск всего кода который мы прочитали из файлов
+  File "<string>", line 2100
+    i = ((self.page - 1) * self.maps_in_page) - 1
+    ^
+IndentationError: expected an indented block
+

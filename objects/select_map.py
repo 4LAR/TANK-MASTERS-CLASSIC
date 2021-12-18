@@ -37,6 +37,23 @@ class select_map_buttons():
         self.image_maps = []
         self.text_maps = []
 
+        self.world_size = []
+        self.game_mode = []
+
+        for i in range(len(self.map_names)):
+
+            #read_bool = self.os_world.read_file(self.map_names[i])
+            #if read_bool:
+            self.world_size.append(self.os_world.world_size)
+            self.game_mode.append('death match')
+            #else:
+
+            #    print(self.map_names)
+            #    self.map_names.pop(i)
+            #    self.map_logos.pop(i)
+                #self.text_maps.pop(i)
+
+
         i = ((self.page - 1) * self.maps_in_page) - 1
         for y in range(3):
             for x in range(2):
@@ -44,6 +61,8 @@ class select_map_buttons():
                     i += 1
                     if i >= len(self.map_names) or (i >= self.page * self.maps_in_page):
                         break
+
+                    # button
                     self.buttons.append(
                         image_button((x * settings.width/2.8) + settings.width/50 + settings.width/3.8,
                             (settings.height - settings.height/3.5) - (y * settings.height/4.5),
@@ -53,6 +72,7 @@ class select_map_buttons():
                         )
                     )
 
+                    # image
                     self.image_maps.append(
                         image_label(self.map_logos[i],
                             (x * settings.width/2.8) + settings.width/50 + settings.width/3.8 + settings.width/300,
@@ -61,11 +81,33 @@ class select_map_buttons():
                         )
                     )
 
+                    # text
                     self.text_maps.append(
                         text_label(
                             (x * settings.width/2.8) + settings.width/50 + settings.width/3.8 + settings.width/8,
                             (settings.height - settings.height/3.5) - (y * settings.height/4.5) + settings.height/6,
-                            self.map_names[i],
+                            'name: ' + self.map_names[i],
+                            load_font=True, font='pixel.ttf',
+                            size=settings.height//48, anchor_x='left',
+                            color = (150, 150, 150, 255)
+                        )
+                    )
+
+                    self.text_maps.append(
+                        text_label(
+                            (x * settings.width/2.8) + settings.width/50 + settings.width/3.8 + settings.width/8,
+                            (settings.height - settings.height/3.5) - (y * settings.height/4.5) + settings.height/6 - settings.height/40 - settings.height/40,
+                            'size: ' + str(self.world_size[i][0]) + '/' + str(self.world_size[i][1]),
+                            load_font=True, font='pixel.ttf',
+                            size=settings.height//48, anchor_x='left',
+                            color = (150, 150, 150, 255)
+                        )
+                    )
+                    self.text_maps.append(
+                        text_label(
+                            (x * settings.width/2.8) + settings.width/50 + settings.width/3.8 + settings.width/8,
+                            (settings.height - settings.height/3.5) - (y * settings.height/4.5) + settings.height/6 - settings.height/40 - settings.height/40 - settings.height/40,
+                            'game mode: ' + self.game_mode[i],
                             load_font=True, font='pixel.ttf',
                             size=settings.height//48, anchor_x='left',
                             color = (150, 150, 150, 255)
@@ -76,17 +118,22 @@ class select_map_buttons():
 
                     break
 
+    def update_map_list(self):
+        self.page = 1
+        self.map_names, self.map_logos = self.mapList()
+
     def __init__(self):
         self.buttons = []
         self.image_maps = []
         self.text_maps = []
 
+        self.os_world = os_world()
+
         self.text_page = text_label(settings.width/2.3, settings.height/6, 'page: 1/1', load_font=True, font='pixel.ttf', size=settings.height//24, anchor_x='left', color = (150, 150, 150, 255))
 
         self.maps_in_page = 3 * 2
-        self.page = 1
-        self.map_names, self.map_logos = self.mapList()
 
+        self.update_map_list()
         self.update_page()
         self.update_page_text()
 

@@ -67,6 +67,10 @@ def select_map(editor=False):
         settings.width/2.5, settings.height/10,
         scale=settings.height/120, pixel=True
     ))
+    add_display(image_label('select_maps_panel_flags.png',
+        0, (settings.height - settings.height/3.5) - (2 * settings.height/4.5),
+        scale=settings.height/120, pixel=True
+    ))
     add_display(select_map_buttons())
     add_display(image_button(settings.width/3, settings.height/10, 'buttons/button_left_page.png', image_selected='buttons/button_left_page_selected.png', scale=settings.height/120, center=False, function=get_obj_display('select_map_buttons').page_down))
     add_display(image_button(settings.width/3 + settings.width/3.5, settings.height/10, 'buttons/button_right_page.png', image_selected='buttons/button_right_page_selected.png', scale=settings.height/120, center=False, function=get_obj_display('select_map_buttons').page_up))

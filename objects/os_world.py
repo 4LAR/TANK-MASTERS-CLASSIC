@@ -259,34 +259,39 @@ class os_world():
 
     # функция для открытия карты
     def read_file(self, file, old=False):
-        self.save_world_obj = load_obj('maps/'+file+'.map/save')
+        try:
+            self.save_world_obj = load_obj('maps/'+file+'.map/save')
 
-        self.world_size = self.save_world_obj.world_size
+            self.world_size = self.save_world_obj.world_size
 
-        self.map_floor = self.save_world_obj.map_floor
+            self.map_floor = self.save_world_obj.map_floor
 
-        self.map_wall = self.save_world_obj.map_wall
+            self.map_wall = self.save_world_obj.map_wall
 
-        self.map_middle = self.save_world_obj.map_middle
+            self.map_middle = self.save_world_obj.map_middle
 
-        self.map_water = self.save_world_obj.map_water
+            self.map_water = self.save_world_obj.map_water
 
-        self.map_vegetation = self.save_world_obj.map_vegetation
+            self.map_vegetation = self.save_world_obj.map_vegetation
 
-        self.map_ceiling = self.save_world_obj.map_ceiling
+            self.map_ceiling = self.save_world_obj.map_ceiling
 
-        # для переноса карт с версии 43 в 44 (в данный момен уже не используется)
-        if not old:
-            self.map_other_up = self.save_world_obj.map_other_up
-            self.map_other_down = self.save_world_obj.map_other_down
+            # для переноса карт с версии 43 в 44 (в данный момен уже не используется)
+            if not old:
+                self.map_other_up = self.save_world_obj.map_other_up
+                self.map_other_down = self.save_world_obj.map_other_down
 
-            self.map_effect_up = self.save_world_obj.map_effect_up
-            self.map_effect_down = self.save_world_obj.map_effect_down
-        else:
-            self.save_world_obj.map_other_up = self.map_other_up
-            self.save_world_obj.map_other_down = self.map_other_down
+                self.map_effect_up = self.save_world_obj.map_effect_up
+                self.map_effect_down = self.save_world_obj.map_effect_down
+            else:
+                self.save_world_obj.map_other_up = self.map_other_up
+                self.save_world_obj.map_other_down = self.map_other_down
 
-            self.save_world_obj.map_effect_up = self.map_effect_up
-            self.save_world_obj.map_effect_down = self.map_effect_down
+                self.save_world_obj.map_effect_up = self.map_effect_up
+                self.save_world_obj.map_effect_down = self.map_effect_down
+
+            return True
+        except:
+            return False
 
         #print(self.map_other_up)
