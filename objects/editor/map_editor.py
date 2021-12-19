@@ -2,7 +2,7 @@ class map(object):
     def get_block_num(self, x, y):
         return y * self.world_size[0] + x
 
-    def __init__(self):
+    def __init__(self, name, new=False):
 
         self.inventory_bool = False
 
@@ -65,7 +65,18 @@ class map(object):
 
         self.world_file_name = ''
 
-        inp = input('1 - generate (test.map)\n2 - open (test.map)\n3 - update map (43 to 44)\n>')
+        self.world_file_name = name
+        print("READ WORLD FILE")
+        if len(name) < 1:
+            select_map(editor=True)
+        if new:
+            width = 64
+            height = 32
+            objects_display[0].generate_world([width, height])
+        else:
+            objects_display[0].read_file(self.world_file_name, False)
+
+        '''inp = input('1 - generate (test.map)\n2 - open (test.map)\n3 - update map (43 to 44)\n>')
         if inp == '1':
             self.world_file_name = input('WRITE WORLD NAME: ')
             print("START GENERATE")
@@ -85,7 +96,7 @@ class map(object):
             print("READ WORLD FILE")
             objects_display[0].read_file(self.world_file_name, True)
             print("SAVE WORLD")
-            objects_display[0].save_file(self.world_file_name_new)
+            objects_display[0].save_file(self.world_file_name_new)'''
 
         self.spawn = objects_display[0].save_world_obj.spawn
         print(self.spawn)
@@ -499,6 +510,9 @@ class map(object):
         objects_display[2].text.label.text = ((objects_display[2].selected_block + '.' +  str(objects_display[2].current_rot)) if not self.cut else 'cut') + '\n' + ('press' if self.press_or_line else 'line')
 
         if symbol == pyglet.window.key.ESCAPE:
+            print("SAVE WORLD")
+            objects_display[0].save_file(self.world_file_name)
+            menu()
             return pyglet.event.EVENT_HANDLED
 
     def on_mouse_press(self, x, y, button, modifiers):

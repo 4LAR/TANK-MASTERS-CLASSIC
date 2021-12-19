@@ -40,18 +40,15 @@ class select_map_buttons():
         self.world_size = []
         self.game_mode = []
 
-        for i in range(len(self.map_names)):
-
-            #read_bool = self.os_world.read_file(self.map_names[i])
-            #if read_bool:
-            self.world_size.append(self.os_world.world_size)
-            self.game_mode.append('death match')
-            #else:
-
-            #    print(self.map_names)
-            #    self.map_names.pop(i)
-            #    self.map_logos.pop(i)
-                #self.text_maps.pop(i)
+        for i in range(len(self.map_names)-1, -1, -1):
+            read_bool = self.os_world.read_file(self.map_names[i])
+            #print(self.map_names[i], read_bool, i)
+            if read_bool:
+                self.world_size.append(self.os_world.world_size)
+                self.game_mode.append('death match')
+            else:
+                self.map_names.pop(i)
+                self.map_logos.pop(i)
 
 
         i = ((self.page - 1) * self.maps_in_page) - 1
@@ -67,7 +64,7 @@ class select_map_buttons():
                         image_button((x * settings.width/2.8) + settings.width/50 + settings.width/3.8,
                             (settings.height - settings.height/3.5) - (y * settings.height/4.5),
                             'buttons/button_map.png', scale=settings.height/160,
-                            center=False, arg='play(\'' + self.map_names[i] + '\')',
+                            center=False, arg=('editor(\'' + self.map_names[i] + '\')') if self.editor else ('play(\'' + self.map_names[i] + '\')'),
                             image_selected='buttons/button_map_selected.png'
                         )
                     )
@@ -115,14 +112,15 @@ class select_map_buttons():
                     )
 
                 except:
-
                     break
 
     def update_map_list(self):
         self.page = 1
         self.map_names, self.map_logos = self.mapList()
 
-    def __init__(self):
+    def __init__(self, editor=False):
+        self.editor = editor
+
         self.buttons = []
         self.image_maps = []
         self.text_maps = []

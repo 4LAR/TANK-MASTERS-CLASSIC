@@ -42,9 +42,9 @@ def play(map_name='test'):
     add_display(bullets())
     add_display(walls())
 
-def editor():
+def editor(map_name='test', new=False):
     engine_settings.on_mouse_scroll_bool = True
     clear_display()
     add_display(os_world())
-    add_display(map())
+    add_display(map(map_name, new))
     add_display(map_inventory())

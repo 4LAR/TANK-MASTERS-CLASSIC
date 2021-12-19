@@ -45,24 +45,45 @@ def menu():
     clear_display()
     add_display(background_menu())
     add_display(head_menu())
-    add_display(image_button(0, settings.height - settings.height/3, 'buttons/button_clear.png', scale=settings.height/120, center=False, arg='select_map(editor=True)', function=play_menu, image_selected='buttons/button_clear_selected.png', text='play', text_indent= settings.height//100))
+    add_display(image_button(0, settings.height - settings.height/3, 'buttons/button_clear.png', scale=settings.height/120, center=False, arg='select_map(editor=False)', function=play_menu, image_selected='buttons/button_clear_selected.png', text='play', text_indent= settings.height//100))
     add_display(image_button(0, settings.height - settings.height/2, 'buttons/button_clear.png', scale=settings.height/120, center=False, arg='select_map(editor=True)', image_selected='buttons/button_clear_selected.png', text='editor', text_indent= settings.height//100))
     add_display(image_button(0, settings.height - settings.height/1.5, 'buttons/button_clear.png', scale=settings.height/120, center=False, function=settings_menu, image_selected='buttons/button_clear_selected.png', text='settings', text_indent= settings.height//100))
     add_display(image_button(0, settings.height/10, 'buttons/button_clear.png', scale=settings.height/120, center=False, function=exit, image_selected='buttons/button_clear_selected.png', text='exit', text_indent= settings.height//100))
     add_display(head_menu(align_top=False))
     add_display(text_label(settings.width/100, settings.height - settings.height/10, 'TANK MASTERS', load_font=True, font='pixel.ttf', size=settings.height//20, anchor_x='left', color = (150, 150, 150, 255), shadow=True, color_shadow=(20, 20, 20, 122), shadow_size=settings.height//20))
     add_display(text_label(settings.width/5, settings.height - settings.height/6.5, 'CLASSIC', load_font=True, font='pixel.ttf', size=settings.height//20, anchor_x='left', color = (150, 150, 150, 255), shadow=True, color_shadow=(20, 20, 20, 122), shadow_size=settings.height//20))
-
+    #add_display(input_label(1000, 100, 500, 40, color_background=(0, 0, 0, 128), color_background_selected=(0, 0, 0, 180)))
     add_display(text_label(settings.width/100, settings.height/40, version_engine + ' | ' + version, load_font=True, font='pixel.ttf', size=settings.height//48, anchor_x='left', color = (150, 150, 150, 255)))
     if first_breath_menu:
         add_display(breathing_label(0, 0, settings.width, settings.height, (0, 0, 0), 0, delay=0.01, for_from=255, for_before=0, tick=-5))
         first_breath_menu = False
 
+def create_new_map():
+
+    def create_map():
+        editor(get_obj_display('input_label').text, True)
+
+    clear_display()
+    add_display(background_menu())
+    add_display(head_menu('editor: new map'))
+    add_display(image_button(0, settings.height/10, 'buttons/button_clear.png', scale=settings.height/120, center=False, arg='select_map(editor=True)', image_selected='buttons/button_clear_selected.png', text='back', text_indent= settings.height//100))
+
+    add_display(text_label(settings.width/25, settings.height - settings.height/5, 'MAP NAME: ', load_font=True, font='pixel.ttf', size=settings.height//20, anchor_x='left', color = (150, 150, 150, 255), shadow=True, color_shadow=(20, 20, 20, 122), shadow_size=settings.height//20))
+    add_display(input_label(settings.width/4, settings.height - settings.height/4.4, settings.width/3.5, settings.height/18, size=settings.height//20, font='pixel.ttf', text='NEW MAP', color_text=(150, 150, 150, 255), color_background=(0, 0, 0, 128), color_background_selected=(0, 0, 0, 180)))
+
+    add_display(image_button(settings.width - (settings.height/120 * 48), settings.height/10, 'buttons/button_clear_left.png', scale=settings.height/120, center=False, function=create_map, image_selected='buttons/button_clear_left_selected.png', text='create', text_indent= settings.height//25))
+
+    add_display(head_menu(align_top=False))
+
+
 def select_map(editor=False):
     clear_display()
     add_display(background_menu())
-    add_display(head_menu('select map'))
+    add_display(head_menu(('editor: select map') if editor else ('select map')))
     add_display(image_button(0, settings.height/10, 'buttons/button_clear.png', scale=settings.height/120, center=False, function=menu, image_selected='buttons/button_clear_selected.png', text='back', text_indent= settings.height//100))
+    if editor:
+        add_display(image_button(settings.width - (settings.height/120 * 48), settings.height/10, 'buttons/button_clear_left.png', scale=settings.height/120, center=False, function=create_new_map, image_selected='buttons/button_clear_left_selected.png', text='create map', text_indent= settings.height//25))
+
     add_display(image_label('buttons/page_indicator.png',
         settings.width/2.5, settings.height/10,
         scale=settings.height/120, pixel=True
@@ -71,7 +92,7 @@ def select_map(editor=False):
         0, (settings.height - settings.height/3.5) - (2 * settings.height/4.5),
         scale=settings.height/120, pixel=True
     ))
-    add_display(select_map_buttons())
+    add_display(select_map_buttons(editor))
     add_display(image_button(settings.width/3, settings.height/10, 'buttons/button_left_page.png', image_selected='buttons/button_left_page_selected.png', scale=settings.height/120, center=False, function=get_obj_display('select_map_buttons').page_down))
     add_display(image_button(settings.width/3 + settings.width/3.5, settings.height/10, 'buttons/button_right_page.png', image_selected='buttons/button_right_page_selected.png', scale=settings.height/120, center=False, function=get_obj_display('select_map_buttons').page_up))
 

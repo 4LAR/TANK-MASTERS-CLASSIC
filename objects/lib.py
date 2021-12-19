@@ -116,6 +116,117 @@ class timer():
                 exec(self.arg)
             self.stop = True
 
+class input_label():
+    def __init__(self, x, y, width, height, text='', size=18, font='default.ttf', color_text=(255, 255, 255, 255), color_background=(255, 255, 255, 255), color_background_selected=(255, 255, 255, 255)):
+        self.x = x
+        self.y = y
+        self.size = size
+        self.color_text = color_text
+        self.color_background = color_background
+        self.color_background_selected = color_background_selected
+        self.font = font
+
+        self.symbol_list = '1234567890!@$%^&*()-=_+qwertyuiop[]asdfghjkl;zxcvbnm,.QWERTYUIOPASDFGHJKL:"ZXCVBNM<>? йцукенгшщзхъфывапролджэячсмитьбюЙЦУКЕНГШЩЗХЪФЫВАПРОЛДЖЭЯЧСМИТЬБЮ'
+
+        self.selected = False
+        self.hover = False
+        self.text = text
+
+        self.width = width
+        self.height = height
+
+        #def __init__(self, x, y, size_x, size_y, color=(255, 255, 255), rotation=0, alpha=255)
+        self.background_label = label(
+            self.x, self.y,
+            self.width, self.height,
+            color=(color_background[0], color_background[1], color_background[2]),
+            alpha=color_background[3]
+        )
+
+        self.background_label_selected = label(
+            self.x, self.y,
+            self.width, self.height,
+            color=(color_background_selected[0], color_background_selected[1], color_background_selected[2]),
+            alpha=color_background_selected[3]
+        )
+
+        self.text_label = text_label(
+            self.x, self.y + self.height/2,
+            self.text,
+            load_font=True, font=self.font,
+            size=self.size, anchor_x='left',
+            color = self.color_text
+        )
+
+        # полигон для кнопки
+
+        self.poligon = collision.Poly(v(self.x, self.y),
+        [
+            v(0, self.height),
+            v(self.width, self.height),
+            v(self.width, 0),
+            v(0, 0)
+        ])
+
+        self.cursor_poligon = collision.Poly(v(0, 0),
+        [
+            v(-1, 1),
+            v(1, 1),
+            v(-1, -1),
+            v(1, -1)
+        ])
+
+    def on_mouse_motion(self, x, y, dx, dy):
+        self.cursor_poligon.pos.x = x
+        self.cursor_poligon.pos.y = y
+        if collision.collide(self.poligon, self.cursor_poligon):
+            self.hover = True
+        else:
+            self.hover = False
+
+    def on_mouse_press(self, x, y, button, modifiers):
+        #engine_settings.on_mouse_press_bool = True
+        self.cursor_poligon.pos.x = x
+        self.cursor_poligon.pos.y = y
+        if collision.collide(self.poligon, self.cursor_poligon):
+            #engine_settings.on_mouse_press_bool = False
+            engine_settings.on_text_bool = True
+            self.selected = True
+            return True
+        else:
+            self.selected = False
+        return False
+
+    def on_key_press(self, symbol, modifiers):
+        if self.selected: # если мы выводим консоль, разрешаем пользователя нажимать на backspace и enter
+            if symbol == key.BACKSPACE:
+                self.text = self.text[:len(self.text)-1]
+                self.text_label.label.text = self.text
+
+            elif symbol == key.ENTER:
+                self.selected = False
+                engine_settings.on_text_bool = False
+
+    def on_text(self, text): # функция для получения символов которые мы вводим с клавиатуры
+        if self.selected:
+            try:
+                if text in self.symbol_list: # сравниваем символ со списком разрешённых символов, если такого символа нет, то просто не добавляем его в комманду
+                    self.text += text
+                    self.text_label.label.text = self.text
+                    if self.text_label.label.content_width > self.width:
+                        self.text = self.text[:len(self.text)-1]
+                        self.text_label.label.text = self.text
+            except:
+                pass
+
+    def draw(self):
+        if self.selected or self.hover:
+            self.background_label_selected.draw()
+        else:
+            self.background_label.draw()
+
+        self.text_label.draw()
+
 class text_label(): # класс для прорисовки текста
     def __init__(self, x, y, text, size=18, color=(255, 255, 255, 255), anchor_x='left', anchor_y='center', load_font=False, font='pixel.ttf', shadow=False, color_shadow=(255, 255, 255, 255), shadow_size=20, type_shadow=0, rotation=0, multiline=False):
         if load_font: # использовать ли свой шрифт
