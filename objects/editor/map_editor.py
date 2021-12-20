@@ -4,6 +4,8 @@ class map(object):
 
     def __init__(self, name, new=False):
 
+        self.mouse_pos = [0, 0]
+
         self.inventory_bool = False
 
         self.show_celling = True
@@ -389,16 +391,24 @@ class map(object):
                 else:
                     self.poligons_wall.append('none')
 
+    def update_camera_pos(self, x=0, y=0):
+        self.pos = [self.pos[0] + x, self.pos[1] + y]
+
     def update(self):
         if not self.inventory_bool:
+            speed = self.speed * 2 if keyboard[key.LSHIFT] else self.speed
             if keyboard[key.W]:
-                self.pos[1] -= self.speed
+                self.update_camera_pos(y=-speed)
+                #self.pos[1] -= self.speed
             elif keyboard[key.S]:
-                self.pos[1] += self.speed
+                self.update_camera_pos(y=speed)
+                #self.pos[1] += self.speed
             if keyboard[key.A]:
-                self.pos[0] += self.speed
+                self.update_camera_pos(x=speed)
+                #self.pos[0] += self.speed
             elif keyboard[key.D]:
-                self.pos[0] -= self.speed
+                self.update_camera_pos(x=-speed)
+                #self.pos[0] -= self.speed
 
         #if keyboard[key.Q]:
         #    self.map_floor[0] = self.floor_blocks_img['grass']
@@ -619,9 +629,16 @@ class map(object):
     def on_mouse_scroll(self, x, y, scroll_x, scroll_y):
         self.scale_map(scroll_y)
 
+    def on_mouse_motion(self, x, y, dx, dy):
+        self.mouse_pos = [x, y]
+
     def scale_map(self, scroll_y):
         if not self.inventory_bool:
-            self.scale += self.tick_scale * scroll_y
+            if scroll_y > 0:
+                self.pos = [self.pos[0] - self.mouse_pos[0]/(scroll_y * 10), self.pos[1] - self.mouse_pos[1]/(scroll_y * 10)]
+            else:
+                self.pos = [self.pos[0] + self.mouse_pos[0]/(abs(scroll_y) * 10), self.pos[1] + self.mouse_pos[1]/(abs(scroll_y) * 10)]
+            self.scale += self.tick_scale * (scroll_y * 10)
             self.image_wall.scale = self.scale
             self.image_floor.scale = self.scale
             self.image_water.scale = self.scale

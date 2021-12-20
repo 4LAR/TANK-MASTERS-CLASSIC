@@ -101,6 +101,19 @@ def PIL_resize_image(input_image_path,
     width, height = resized_image.size
     return resized_image
 
+pyglet.options['audio'] = ('openal', 'pulse', 'directsound', 'silent')
+class sound():
+    def __init__(self):
+        self.sound = pyglet.media.Player()
+        self.sound.volume = settings.sound_volume
+
+    def play(self, music):
+        self.sound.next_source()
+        self.sound.queue(pyglet.media.load('sound/' + music) )
+        self.sound.play()
+
+sound = sound()
+
 class timer():
     def __init__(self, delay, func, arg=None):
         self.time = time.perf_counter() + delay
@@ -115,6 +128,94 @@ class timer():
             else:
                 exec(self.arg)
             self.stop = True
+
+class input_label_image():
+
+
+    def __init__(self, x, y, image='', image_selected='', scale=1, font='default.ttf', color_text=(255, 255, 255, 255), text='', pre_text='', alpha=255, text_indent=0, text_input_indent=20):
+
+        self.x = x
+        self.y = y
+        self.image = image
+        self.image_selected = image_selected
+        self.scale = scale
+        self.font = font
+        self.color_text = color_text
+
+        self.text = text
+        self.pre_text = pre_text
+
+        self.selected = False
+        self.hover = False
+
+        size = self.scale * 5.5
+        self.text_button = text_label(self.x + text_indent, self.y + size*1.6, self.text, load_font=True, font=font, size=int(size), anchor_x='left', color=color_text)
+
+
+        self.image_obj = image_label(self.image, x, y, scale=scale, center=False)
+        self.image_selected_obj = image_label(self.image_selected, x, y, scale=scale, center=False)
+
+        self.text_obj = input_label(
+            x + text_indent + self.text_button.label.content_width + text_input_indent, y + self.image_obj.sprite.height/35,
+            self.image_obj.sprite.width - (text_indent + self.text_button.label.content_width + text_input_indent), self.image_obj.sprite.height,
+            size=int(self.scale * 5.5), font='pixel.ttf', text=pre_text, color_text=color_text,
+            color_background=(0, 0, 0, 0), color_background_selected=(0, 0, 0, 0)
+        )
+
+        self.image_poligon = collision.Poly(v(x, y),
+        [
+            v(0, self.image_obj.sprite.height),
+            v(self.image_obj.sprite.width, self.image_obj.sprite.height),
+            v(self.image_obj.sprite.width, 0),
+            v(0, 0)
+        ])
+
+
+        self.cursor_poligon = collision.Poly(v(0, 0),
+        [
+            v(-1, 1),
+            v(1, 1),
+            v(-1, -1),
+            v(1, -1)
+        ])
+
+    def on_mouse_motion(self, x, y, dx, dy):
+        self.cursor_poligon.pos.x = x
+        self.cursor_poligon.pos.y = y
+        if collision.collide(self.image_poligon, self.cursor_poligon):
+            if not self.hover and not self.selected:
+                sound.play('select.wav')
+            self.hover = True
+        else:
+            self.hover = False
+
+    def on_mouse_press(self, x, y, button, modifiers):
+        self.cursor_poligon.pos.x = x
+        self.cursor_poligon.pos.y = y
+        if collision.collide(self.image_poligon, self.cursor_poligon):
+            engine_settings.on_text_bool = True
+            self.selected = True
+            self.text_obj.selected = True
+            sound.play('upgrade.wav')
+            return True
+        else:
+            self.selected = False
+        return False
+
+    def on_key_press(self, symbol, modifiers):
+        self.text_obj.on_key_press(symbol, modifiers)
+
+    def on_text(self, text): # функция для получения символов которые мы вводим с клавиатуры
+        self.text_obj.on_text(text)
+
+    def draw(self):
+        if self.selected or self.hover:
+            self.image_selected_obj.draw()
+        else:
+            self.image_obj.draw()
+
+        self.text_button.draw()
+        self.text_obj.draw()
 
 class input_label():
     def __init__(self, x, y, width, height, text='', size=18, font='default.ttf', color_text=(255, 255, 255, 255), color_background=(255, 255, 255, 255), color_background_selected=(255, 255, 255, 255)):
@@ -538,7 +639,6 @@ class image_flag():
 
 class image_button():
     def __init__(self, x, y, image, scale=1, rotation=0, alpha=255, center=False, function=None, arg=None, image_selected=None, poligon=False, text=None, text_color=(180, 180, 180, 255), font='pixel.ttf', text_indent=0):
-
         self.x = x
         self.y = y
         self.image = image
@@ -597,6 +697,7 @@ class image_button():
         self.cursor_poligon.pos.y = y
         if collision.collide(self.image_poligon, self.cursor_poligon):
             #engine_settings.on_mouse_press_bool = False
+            sound.play('upgrade.wav')
             if self.arg == None:
                 self.function()
             else:
@@ -608,6 +709,8 @@ class image_button():
         self.cursor_poligon.pos.x = x
         self.cursor_poligon.pos.y = y
         if collision.collide(self.image_poligon, self.cursor_poligon):
+            if not self.selected:
+                sound.play('select.wav')
             self.selected = True
         else:
             self.selected = False

@@ -9,7 +9,7 @@ show-fps = False
 console = true
 
 [Sound]
-volume = 0.0001
+volume = 0.01
 
 [Engine]
 use_numba = false

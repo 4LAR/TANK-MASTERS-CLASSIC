@@ -53,6 +53,7 @@ def menu():
     add_display(text_label(settings.width/100, settings.height - settings.height/10, 'TANK MASTERS', load_font=True, font='pixel.ttf', size=settings.height//20, anchor_x='left', color = (150, 150, 150, 255), shadow=True, color_shadow=(20, 20, 20, 122), shadow_size=settings.height//20))
     add_display(text_label(settings.width/5, settings.height - settings.height/6.5, 'CLASSIC', load_font=True, font='pixel.ttf', size=settings.height//20, anchor_x='left', color = (150, 150, 150, 255), shadow=True, color_shadow=(20, 20, 20, 122), shadow_size=settings.height//20))
     #add_display(input_label(1000, 100, 500, 40, color_background=(0, 0, 0, 128), color_background_selected=(0, 0, 0, 180)))
+    #add_display(input_label_image(500, 100, 'buttons/input_world_name.png', 'buttons/input_world_name_selected.png', scale=settings.height/120, color_text=(150, 150, 150, 255), text='world name', pre_text='new world', font='pixel.ttf', text_indent= settings.height/35))
     add_display(text_label(settings.width/100, settings.height/40, version_engine + ' | ' + version, load_font=True, font='pixel.ttf', size=settings.height//48, anchor_x='left', color = (150, 150, 150, 255)))
     if first_breath_menu:
         add_display(breathing_label(0, 0, settings.width, settings.height, (0, 0, 0), 0, delay=0.01, for_from=255, for_before=0, tick=-5))
@@ -61,15 +62,16 @@ def menu():
 def create_new_map():
 
     def create_map():
-        editor(get_obj_display('input_label').text, True)
+        editor(get_obj_display('input_label_image').text_obj.text, True)
 
     clear_display()
     add_display(background_menu())
     add_display(head_menu('editor: new map'))
     add_display(image_button(0, settings.height/10, 'buttons/button_clear.png', scale=settings.height/120, center=False, arg='select_map(editor=True)', image_selected='buttons/button_clear_selected.png', text='back', text_indent= settings.height//100))
 
-    add_display(text_label(settings.width/25, settings.height - settings.height/5, 'MAP NAME: ', load_font=True, font='pixel.ttf', size=settings.height//20, anchor_x='left', color = (150, 150, 150, 255), shadow=True, color_shadow=(20, 20, 20, 122), shadow_size=settings.height//20))
-    add_display(input_label(settings.width/4, settings.height - settings.height/4.4, settings.width/3.5, settings.height/18, size=settings.height//20, font='pixel.ttf', text='NEW MAP', color_text=(150, 150, 150, 255), color_background=(0, 0, 0, 128), color_background_selected=(0, 0, 0, 180)))
+    #add_display(text_label(settings.width/25, settings.height - settings.height/5, 'MAP NAME: ', load_font=True, font='pixel.ttf', size=settings.height//20, anchor_x='left', color = (150, 150, 150, 255), shadow=True, color_shadow=(20, 20, 20, 122), shadow_size=settings.height//20))
+    #add_display(input_label(settings.width/4, settings.height - settings.height/4.4, settings.width/3.5, settings.height/18, size=settings.height//20, font='pixel.ttf', text='NEW MAP', color_text=(150, 150, 150, 255), color_background=(0, 0, 0, 128), color_background_selected=(0, 0, 0, 180)))
+    add_display(input_label_image(settings.width/25, settings.height - settings.height/4.4, 'buttons/input_world_name.png', 'buttons/input_world_name_selected.png', scale=settings.height/120, color_text=(150, 150, 150, 255), text='map name', pre_text='new world', font='pixel.ttf', text_indent=settings.height/15, text_input_indent=settings.height/10))
 
     add_display(image_button(settings.width - (settings.height/120 * 48), settings.height/10, 'buttons/button_clear_left.png', scale=settings.height/120, center=False, function=create_map, image_selected='buttons/button_clear_left_selected.png', text='create', text_indent= settings.height//25))
 
