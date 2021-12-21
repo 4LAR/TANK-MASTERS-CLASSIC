@@ -54,7 +54,6 @@ class bullets():
                     if bullet[0] != j and collision.collide(self.bullet_poly, get_obj_display('players').tanks[j].poligon_body):
                         dead = True
                         get_obj_display('players').tanks[j].health -= get_obj_display('players').tanks[bullet[0]].demage_a
-                        #print(get_obj_display('players').tanks[j].health)
                         self.bullets.pop(i)
 
                 if not dead:

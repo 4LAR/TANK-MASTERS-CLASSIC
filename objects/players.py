@@ -48,6 +48,11 @@ class player():
         self.default_health = 100
         self.health = 100
 
+        self.death = False
+
+        self.death_delay = 2
+        self.death_time = time.perf_counter() + self.death_delay
+
         self.demage_a = 100
 
         self.def_speed = [settings.height/60]
@@ -69,6 +74,8 @@ class player():
 
         self.teams = ['red', 'green', 'blue', 'yellow', 'no_team']
         self.obj_tanks = []
+
+        self.death_tank_image = image_label('tanks/tank_dead.png', settings.width//2, settings.height//2, scale=self.scale_tank, pixel=False, center=True)
 
         self.obj_tanks.append(PIL_to_pyglet(get_pil_black_mask(Image.open('img/tanks/body/no_team/tank_base.png').convert("RGBA"), get_obj_display('world').shadow_alpha), self.scale_tank, True))
         self.obj_tanks.append([])
@@ -97,51 +104,64 @@ class player():
 
     def update(self):
         # респавн при смерти
-        if self.health <= 0:
+        if self.health <= 0 and not self.death:
             self.health = self.default_health
+            self.death_time = time.perf_counter() + self.death_delay
+            self.death = True
+
+        if self.death and self.death_time <= time.perf_counter():
+            self.death = False
             self.go_spawn()
 
         # подстройка скорости игрока под FPS
         speed_tick = (self.check_fps / pyglet.clock.get_fps() if pyglet.clock.get_fps() <= self.norm_fps else 1) * self.speed_tick
 
-        # логика бота
-        if self.bot:
+        if not self.death:
 
-            #for player in get_obj_display('players').tanks:
-            #    if self.id != player.id:
-            #        if self.pos[0] <= player.pos[0]
+            # логика бота
+            if self.bot:
 
-            if (self.wall_collision_bool or (self.time_random_rotation <= time.perf_counter())):
-                self.bot_rotation = [-90, 0, 90, 180][random.randint(0, 3)]
-                self.time_random_rotation = time.perf_counter() + random.randrange(1, 4)
+                #for player in get_obj_display('players').tanks:
+                #    if self.id != player.id:
+                #        if self.pos[0] <= player.pos[0]
 
-        # передвижение
-        if (eval('keyboard[key.' + KEY_BINDS['P' + str(self.id + 1)]['left'] + ']') and not self.bot) or (self.bot and self.bot_rotation == -90):
-            self.wall_collision_bool = self.set_pos_body(-speed_tick, 0, self.bot)
-            self.rotation = -90
-            self.anim_tick()
-        elif (eval('keyboard[key.' + KEY_BINDS['P' + str(self.id + 1)]['right'] + ']') and not self.bot) or (self.bot and self.bot_rotation == 90):
-            self.wall_collision_bool = self.set_pos_body(speed_tick, 0, self.bot)
-            self.rotation = 90
-            self.anim_tick()
-        elif (eval('keyboard[key.' + KEY_BINDS['P' + str(self.id + 1)]['up'] + ']') and not self.bot) or (self.bot and self.bot_rotation == 0):
-            self.wall_collision_bool = self.set_pos_body(0, speed_tick, self.bot)
-            self.rotation = 0
-            self.anim_tick()
-        elif (eval('keyboard[key.' + KEY_BINDS['P' + str(self.id + 1)]['down'] + ']') and not self.bot) or (self.bot and self.bot_rotation == 180):
-            self.wall_collision_bool = self.set_pos_body(0, -speed_tick, self.bot)
-            self.rotation = 180
-            self.anim_tick()
+                if (self.wall_collision_bool or (self.time_random_rotation <= time.perf_counter())):
+                    self.bot_rotation = [-90, 0, 90, 180][random.randint(0, 3)]
+                    self.time_random_rotation = time.perf_counter() + random.randrange(1, 4)
 
-        self.poligon_body.pos.x = self.pos[0]
-        self.poligon_body.pos.y = self.pos[1]
+            # передвижение
+            if (eval('keyboard[key.' + KEY_BINDS['P' + str(self.id + 1)]['left'] + ']') and not self.bot) or (self.bot and self.bot_rotation == -90):
+                self.wall_collision_bool = self.set_pos_body(-speed_tick, 0, self.bot)
+                self.rotation = -90
+                self.anim_tick()
+            elif (eval('keyboard[key.' + KEY_BINDS['P' + str(self.id + 1)]['right'] + ']') and not self.bot) or (self.bot and self.bot_rotation == 90):
+                self.wall_collision_bool = self.set_pos_body(speed_tick, 0, self.bot)
+                self.rotation = 90
+                self.anim_tick()
+            elif (eval('keyboard[key.' + KEY_BINDS['P' + str(self.id + 1)]['up'] + ']') and not self.bot) or (self.bot and self.bot_rotation == 0):
+                self.wall_collision_bool = self.set_pos_body(0, speed_tick, self.bot)
+                self.rotation = 0
+                self.anim_tick()
+            elif (eval('keyboard[key.' + KEY_BINDS['P' + str(self.id + 1)]['down'] + ']') and not self.bot) or (self.bot and self.bot_rotation == 180):
+                self.wall_collision_bool = self.set_pos_body(0, -speed_tick, self.bot)
+                self.rotation = 180
+                self.anim_tick()
 
-        # стрельба
-        if (((eval('keyboard[key.' + KEY_BINDS['P' + str(self.id+1)]['shoot_a'] + ']') and not self.bot) or (self.bot and self.bot_shoot_a) ) and (self.time_shoot_a <= time.perf_counter())):
-            get_obj_display('bullets').spawn(self.id, self.pos[0], self.pos[1], self.rotation, self.speed_tick * 10)
-            self.time_shoot_a = time.perf_counter() + self.delay_shoot_a
+            self.poligon_body.pos.x = self.pos[0]
+            self.poligon_body.pos.y = self.pos[1]
+
+            # стрельба
+            if (((eval('keyboard[key.' + KEY_BINDS['P' + str(self.id+1)]['shoot_a'] + ']') and not self.bot) or (self.bot and self.bot_shoot_a) ) and (self.time_shoot_a <= time.perf_counter())):
+                get_obj_display('bullets').spawn(self.id, self.pos[0], self.pos[1], self.rotation, self.speed_tick * 10)
+                self.time_shoot_a = time.perf_counter() + self.delay_shoot_a
 
         # перемещение стпрайтов и полигонов по карте
+        if self.death:
+            self.death_tank_image.x = self.pos[0]
+            self.death_tank_image.y = self.pos[1]
+            self.death_tank_image.update_rotation(self.rotation)
+            self.death_tank_image.update_image(True)
+
         for i in range(len(self.obj_tanks)):
             if i != 1:
                 try:
@@ -178,20 +198,13 @@ class player():
                         self.poligon_body.pos.x = self.pos[0]
                         self.poligon_body.pos.y = self.pos[1]
                         if collision.collide(self.poligon_body, poligon):
-                            #
-
                             self.detect = True
-                            #print(self.detect)
                             self.pos = pos_
                             break
                         else:
                             pass
                         t = 1.0
                         while True:
-                            #print('rr: ', send_return_bool)
-                            #poligon_body = self.poligon_body
-
-
                             if collision.collide(self.poligon_body, poligon):
                                 self.pos = [pos_[0] - (x_ * t), pos_[1] - (y_ * t)]
                                 self.detect = True
@@ -217,15 +230,19 @@ class player():
                 self.detect = True'''
 
         if send_return_bool:
-            #print(self.detect)
             return self.detect
 
     def draw(self):
-        for i in range(len(self.obj_tanks)):
-            if i != 1:
-                drawp(self.obj_tanks[i])
-            else:
-                drawp(self.obj_tanks[i][self.anim_body_state])
+        if not self.death:
+            for i in range(len(self.obj_tanks)):
+                if i != 1:
+                    drawp(self.obj_tanks[i])
+                else:
+                    drawp(self.obj_tanks[i][self.anim_body_state])
+
+        if self.death:
+            drawp(self.obj_tanks[0])
+            drawp(self.death_tank_image)
 
         if objects_other[0].draw_poligons:
             points = (
