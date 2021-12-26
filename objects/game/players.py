@@ -72,18 +72,26 @@ class player():
         self.delay_shoot_a = 1
         self.time_shoot_a = time.perf_counter() + self.delay_shoot_a
 
+        self.tank_settings = [1, 1]
+
         self.teams = ['red', 'green', 'blue', 'yellow', 'no_team']
+        self.bases = ['tank_base', 'tank_quadrocopter_base', 'tank_wheels_base']
+        self.towers = ['bgun', 'gun', 'mgun', 'rgun', 'rmgun']
+
+
+
         self.obj_tanks = []
 
-        self.death_tank_image = image_label('tanks/tank_dead.png', settings.width//2, settings.height//2, scale=self.scale_tank, pixel=False, center=True)
 
-        self.obj_tanks.append(PIL_to_pyglet(get_pil_black_mask(Image.open('img/tanks/body/no_team/tank_base.png').convert("RGBA"), get_obj_display('world').shadow_alpha), self.scale_tank, True))
+        self.death_tank_image = image_label('tanks/body/no_team/' + self.bases[self.tank_settings[0]] + '.png', settings.width//2, settings.height//2, scale=self.scale_tank, pixel=False, center=True)
+
+        self.obj_tanks.append(PIL_to_pyglet(get_pil_black_mask(Image.open('img/tanks/body/no_team/' + self.bases[self.tank_settings[0]] + '.png').convert("RGBA"), get_obj_display('world').shadow_alpha), self.scale_tank, True))
         self.obj_tanks.append([])
-        self.obj_tanks[1].append(image_label('tanks/body/no_team/tank_base.png', settings.width//2, settings.height//2, scale=self.scale_tank, pixel=False, center=True))
-        self.obj_tanks[1].append(image_label('tanks/body/no_team/tank_base_1.png', settings.width//2, settings.height//2, scale=self.scale_tank, pixel=False, center=True))
-        self.obj_tanks.append(image_label('tanks/body/' + self.teams[self.id] + '/tank_base.png', settings.width//2, settings.height//2, scale=self.scale_tank, pixel=False, center=True))
-        self.obj_tanks.append(PIL_to_pyglet(get_pil_black_mask(Image.open('img/tanks/tower/gun.png').convert("RGBA"), get_obj_display('world').shadow_alpha), self.scale_tank, True))
-        self.obj_tanks.append(image_label('tanks/tower/gun.png', settings.width//2, settings.height//2, scale=self.scale_tank, pixel=False, center=True))
+        self.obj_tanks[1].append(image_label('tanks/body/no_team/' + self.bases[self.tank_settings[0]] + '.png', settings.width//2, settings.height//2, scale=self.scale_tank, pixel=False, center=True))
+        self.obj_tanks[1].append(image_label('tanks/body/no_team/' + self.bases[self.tank_settings[0]] + '_1.png', settings.width//2, settings.height//2, scale=self.scale_tank, pixel=False, center=True))
+        self.obj_tanks.append(image_label('tanks/body/' + self.teams[self.id] + '/' + self.bases[self.tank_settings[0]] + '.png', settings.width//2, settings.height//2, scale=self.scale_tank, pixel=False, center=True))
+        self.obj_tanks.append(PIL_to_pyglet(get_pil_black_mask(Image.open('img/tanks/tower/' + self.towers[self.tank_settings[1]] + '.png').convert("RGBA"), get_obj_display('world').shadow_alpha), self.scale_tank, True))
+        self.obj_tanks.append(image_label('tanks/tower/' + self.towers[self.tank_settings[1]] + '.png', settings.width//2, settings.height//2, scale=self.scale_tank, pixel=False, center=True))
 
         self.poligon_body = collision.Poly(v(100, 100),
         [
@@ -130,21 +138,25 @@ class player():
                     self.time_random_rotation = time.perf_counter() + random.randrange(1, 4)
 
             # передвижение
+            move_bool = False # для анимации
             if (eval('keyboard[key.' + KEY_BINDS['P' + str(self.id + 1)]['left'] + ']') and not self.bot) or (self.bot and self.bot_rotation == -90):
                 self.wall_collision_bool = self.set_pos_body(-speed_tick, 0, self.bot)
                 self.rotation = -90
-                self.anim_tick()
+                move_bool = True
             elif (eval('keyboard[key.' + KEY_BINDS['P' + str(self.id + 1)]['right'] + ']') and not self.bot) or (self.bot and self.bot_rotation == 90):
                 self.wall_collision_bool = self.set_pos_body(speed_tick, 0, self.bot)
                 self.rotation = 90
-                self.anim_tick()
+                move_bool = True
             elif (eval('keyboard[key.' + KEY_BINDS['P' + str(self.id + 1)]['up'] + ']') and not self.bot) or (self.bot and self.bot_rotation == 0):
                 self.wall_collision_bool = self.set_pos_body(0, speed_tick, self.bot)
                 self.rotation = 0
-                self.anim_tick()
+                move_bool = True
             elif (eval('keyboard[key.' + KEY_BINDS['P' + str(self.id + 1)]['down'] + ']') and not self.bot) or (self.bot and self.bot_rotation == 180):
                 self.wall_collision_bool = self.set_pos_body(0, -speed_tick, self.bot)
                 self.rotation = 180
+                move_bool = True
+
+            if move_bool or self.tank_settings[0] == 1:
                 self.anim_tick()
 
             self.poligon_body.pos.x = self.pos[0]
@@ -193,7 +205,7 @@ class player():
         for y in range(pos[1] - get_obj_display('world').range, pos[1] + get_obj_display('world').range, 1):
             for x in range(pos[0] - get_obj_display('world').range, pos[0] + get_obj_display('world').range, 1):
                 try:
-                    poligon = get_obj_display('world').get_wall_poligon(x, y) if (get_obj_display('world').get_wall_poligon(x, y) != 'none') else get_obj_display('world').get_water_poligon(x, y)
+                    poligon = get_obj_display('world').get_wall_poligon(x, y) if (get_obj_display('world').get_wall_poligon(x, y) != 'none' or self.tank_settings[0] == 1) else get_obj_display('world').get_water_poligon(x, y)
                     if poligon != 'none':
                         self.poligon_body.pos.x = self.pos[0]
                         self.poligon_body.pos.y = self.pos[1]

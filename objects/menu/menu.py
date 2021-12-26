@@ -78,6 +78,18 @@ def create_new_map():
     add_display(head_menu(align_top=False))
 
 
+def select_tank(map_name='test'):
+    #('play(\'' + self.map_names[i] + '\')')
+    clear_display()
+    add_display(background_menu())
+    add_display(head_menu('select machine'))
+    add_display(image_button(0, settings.height/10, 'buttons/button_clear.png', scale=settings.height/120, center=False, function=select_map, image_selected='buttons/button_clear_selected.png', text='back', text_indent= settings.height//100))
+    add_display(image_button(settings.width - (settings.height/120 * 48), settings.height/10, 'buttons/button_clear_left.png', scale=settings.height/120, center=False, arg='play(\'' + map_name + '\')', image_selected='buttons/button_clear_left_selected.png', text='start', text_indent= settings.height//25))
+
+    add_display(select_tank_buttons())
+
+    add_display(head_menu(align_top=False))
+
 def select_map(editor=False):
     clear_display()
     add_display(background_menu())
