@@ -23,8 +23,8 @@ class player():
     def go_spawn(self):
         try:
             self.pos = [
-                get_obj_display('world').image_floor.x + (get_obj_display('world').spawn[self.id][0] * get_obj_display('world').size * get_obj_display('world').scale),
-                get_obj_display('world').image_floor.y + ((get_obj_display('world').world_size[1] - get_obj_display('world').spawn[self.id][1]) * get_obj_display('world').size * get_obj_display('world').scale)
+                get_obj_display('world').image_floor.x + (get_obj_display('world').spawn[self.id][0] * get_obj_display('world').size * get_obj_display('world').scale) - get_obj_display('world').map_offs[0],
+                get_obj_display('world').image_floor.y + ((get_obj_display('world').world_size[1] - get_obj_display('world').spawn[self.id][1]) * get_obj_display('world').size * get_obj_display('world').scale) - get_obj_display('world').map_offs[1]
                 #get_obj_display('world').spawn[self.id][0] * get_obj_display('world').size * get_obj_display('world').scale,
                 #settings.height - get_obj_display('world').image_wall.height - (get_obj_display('world').spawn[self.id][1] * get_obj_display('world').size * get_obj_display('world').scale)
             ]
@@ -32,6 +32,9 @@ class player():
             self.pos = [settings.width//2, settings.height//2]
 
     def __init__(self, id, bot=False):
+
+        self.sound = Sound()
+
         self.id = id
         self.bot = bot
 
@@ -48,8 +51,24 @@ class player():
         self.default_health = 100
         self.health = 100
 
-        self.death = False
+        self.protection = True
+        self.protection_delay = 2
+        self.protection_time = time.perf_counter() + self.protection_delay
 
+        self.protection_ticks = 0
+        self.protection_image_num = 0
+        self.protection_images = []
+        for i in range(4):
+            self.protection_images.append(
+                image_label(
+                    'tanks/protection/protection_' + str(i + 1) + '.png',
+                    settings.width//2, settings.height//2,
+                    scale=self.scale_tank * 1.2, pixel=False,
+                    center=True
+                )
+            )
+
+        self.death = False
         self.death_delay = 2
         self.death_time = time.perf_counter() + self.death_delay
 
@@ -78,10 +97,7 @@ class player():
         self.bases = ['tank_base', 'tank_quadrocopter_base', 'tank_wheels_base']
         self.towers = ['bgun', 'gun', 'mgun', 'rgun', 'rmgun']
 
-
-
         self.obj_tanks = []
-
 
         self.death_tank_image = image_label('tanks/body/no_team/' + self.bases[self.tank_settings[0]] + '.png', settings.width//2, settings.height//2, scale=self.scale_tank, pixel=False, center=True)
 
@@ -110,15 +126,28 @@ class player():
                 self.anim_body_state = 0
             self.anim_ticks = 0
 
+    def anim_protection_tick(self):
+        self.protection_ticks += 1
+        if self.protection_ticks >= 5:
+            if len(self.protection_images) > self.protection_image_num + 1:
+                self.protection_image_num += 1
+            else:
+                self.protection_image_num = 0
+            self.protection_ticks = 0
+
     def update(self):
         # респавн при смерти
         if self.health <= 0 and not self.death:
             self.health = self.default_health
             self.death_time = time.perf_counter() + self.death_delay
             self.death = True
+            get_obj_display('world').shaking(delay=0.2, power=settings.height/150)
+            self.sound.play('death.wav')
 
         if self.death and self.death_time <= time.perf_counter():
             self.death = False
+            self.protection_time = time.perf_counter() + self.protection_delay
+            self.protection = True
             self.go_spawn()
 
         # подстройка скорости игрока под FPS
@@ -164,15 +193,25 @@ class player():
 
             # стрельба
             if (((eval('keyboard[key.' + KEY_BINDS['P' + str(self.id+1)]['shoot_a'] + ']') and not self.bot) or (self.bot and self.bot_shoot_a) ) and (self.time_shoot_a <= time.perf_counter())):
+                self.sound.play('shoot.wav')
                 get_obj_display('bullets').spawn(self.id, self.pos[0], self.pos[1], self.rotation, self.speed_tick * 10)
                 self.time_shoot_a = time.perf_counter() + self.delay_shoot_a
 
         # перемещение стпрайтов и полигонов по карте
         if self.death:
-            self.death_tank_image.x = self.pos[0]
-            self.death_tank_image.y = self.pos[1]
+            self.death_tank_image.x = self.pos[0] + get_obj_display('world').map_offs[1]
+            self.death_tank_image.y = self.pos[1] + get_obj_display('world').map_offs[0]
             self.death_tank_image.update_rotation(self.rotation)
             self.death_tank_image.update_image(True)
+
+        if self.protection:
+            if self.protection_time <= time.perf_counter():
+                self.protection = False
+            else:
+                self.anim_protection_tick()
+                self.protection_images[self.protection_image_num].x = self.pos[0] + get_obj_display('world').map_offs[0]
+                self.protection_images[self.protection_image_num].y = self.pos[1] + get_obj_display('world').map_offs[1]
+                self.protection_images[self.protection_image_num].update_image(True)
 
         for i in range(len(self.obj_tanks)):
             if i != 1:
@@ -181,19 +220,19 @@ class player():
                 except:
                     self.obj_tanks[i].rotation = self.rotation
                 if i in [0, 3]:
-                    self.obj_tanks[i].x = self.pos[0] + get_obj_display('world').offs_shadows[0] / 3#6
-                    self.obj_tanks[i].y = self.pos[1] - get_obj_display('world').offs_shadows[0] / 3#6
+                    self.obj_tanks[i].x = self.pos[0] + get_obj_display('world').offs_shadows[0] / 3 + get_obj_display('world').map_offs[0]#6
+                    self.obj_tanks[i].y = self.pos[1] - get_obj_display('world').offs_shadows[0] / 3 + get_obj_display('world').map_offs[1]#6
                     #self.obj_tanks[i].update_image(True)
                 else:
-                    self.obj_tanks[i].x = self.pos[0]
-                    self.obj_tanks[i].y = self.pos[1]
+                    self.obj_tanks[i].x = self.pos[0] + get_obj_display('world').map_offs[0]
+                    self.obj_tanks[i].y = self.pos[1] + get_obj_display('world').map_offs[1]
                     self.obj_tanks[i].update_image(True)
 
             else:
                 self.obj_tanks[i][self.anim_body_state].update_rotation(self.rotation)
 
-                self.obj_tanks[i][self.anim_body_state].x = self.pos[0]
-                self.obj_tanks[i][self.anim_body_state].y = self.pos[1]
+                self.obj_tanks[i][self.anim_body_state].x = self.pos[0] + get_obj_display('world').map_offs[0]
+                self.obj_tanks[i][self.anim_body_state].y = self.pos[1] + get_obj_display('world').map_offs[1]
                 self.obj_tanks[i][self.anim_body_state].update_image(True)
 
     def set_pos_body(self, x_, y_, send_return_bool = False):
@@ -255,6 +294,9 @@ class player():
         if self.death:
             drawp(self.obj_tanks[0])
             drawp(self.death_tank_image)
+
+        if self.protection:
+            drawp(self.protection_images[self.protection_image_num])
 
         if objects_other[0].draw_poligons:
             points = (

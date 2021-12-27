@@ -102,7 +102,7 @@ def PIL_resize_image(input_image_path,
     return resized_image
 
 pyglet.options['audio'] = ('openal', 'pulse', 'directsound', 'silent')
-class sound():
+class Sound():
     def __init__(self):
         self.sound = pyglet.media.Player()
         self.sound.volume = settings.sound_volume
@@ -112,7 +112,7 @@ class sound():
         self.sound.queue(pyglet.media.load('sound/' + music) )
         self.sound.play()
 
-sound = sound()
+sound = Sound()
 
 class timer():
     def __init__(self, delay, func, arg=None):

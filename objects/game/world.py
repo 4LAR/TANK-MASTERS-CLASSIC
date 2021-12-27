@@ -5,7 +5,15 @@ class world():
     def get_block_num(self, x, y):
         return y * self.world_size[0] + x
 
+    def shaking(self, delay = 0.5, power=10):
+        self.shaking_time = time.perf_counter() + delay
+        self.shaking_power = power
+
     def __init__(self, map_name='test'):
+
+        self.shaking_time = 0
+        self.shaking_power = 10
+
         self.map_name = map_name
 
         self.size = 8
@@ -16,11 +24,7 @@ class world():
 
         self.offs_shadows = [-settings.width//180, settings.width//300]#[-settings.width//80, settings.width//200]
 
-
-
-        #self.map_floor = np.full(self.world_size[0] * self.world_size[1], 'grass.0', dtype='<U32')
-        #for i in range(32):
-        #    self.map_floor[i] = 'dirt.0'
+        self.map_offs = [0, 0]
 
         print("READ WORLD FILE")
         get_obj_other('os_world').read_file(self.map_name) # открываем карту
@@ -239,47 +243,55 @@ class world():
         self.image_shadows.x = (settings.width - self.image_wall.width) / 2
         self.image_shadows.y = (settings.height - self.image_wall.height) / 2
 
+    def update(self):
+        if self.shaking_time > time.perf_counter():
+            self.map_offs[0] = random.randint(-10, 10)
+            self.map_offs[1] = random.randint(-10, 10)
+            self.update_offs()
+        else:
+            self.map_offs[0] = 0
+            self.map_offs[1] = 0
+            self.update_offs()
+
+    def update_offs(self):
+
+        self.image_floor.x = (settings.width - self.image_floor.width) / 2 + self.map_offs[0]
+        self.image_floor.y = (settings.height - self.image_floor.height) / 2 + self.map_offs[1]
+
+        self.image_other_down.x = (settings.width - self.image_other_down.width) / 2 + self.map_offs[0]
+        self.image_other_down.y = (settings.height - self.image_other_down.height) / 2 + self.map_offs[1]
+
+        self.image_wall.x = (settings.width - self.image_wall.width) / 2 + self.map_offs[0]
+        self.image_wall.y = (settings.height - self.image_wall.height) / 2 + self.map_offs[1]
+
+        self.image_water.x = (settings.width - self.image_wall.width) / 2 + self.map_offs[0]
+        self.image_water.y = (settings.height - self.image_wall.height) / 2 + self.map_offs[1]
+
+        self.image_vegetation.x = (settings.width - self.image_wall.width) / 2 + self.map_offs[0]
+        self.image_vegetation.y = (settings.height - self.image_wall.height) / 2 + self.map_offs[1]
+
+        self.image_other_up.x = (settings.width - self.image_other_up.width) / 2 + self.map_offs[0]
+        self.image_other_up.y = (settings.height - self.image_other_up.height) / 2 + self.map_offs[1]
+
+        self.image_shadows.x = (settings.width - self.image_wall.width) / 2 + self.map_offs[0]
+        self.image_shadows.y = (settings.height - self.image_wall.height) / 2 + self.map_offs[1]
+
+        self.image_shadows_down.x = (settings.width - self.image_wall.width) / 2 + self.map_offs[0]
+        self.image_shadows_down.y = (settings.height - self.image_wall.height) / 2 + self.map_offs[1]
+
     def import_images(self):
         print('IMPORT IMAGES')
-        #self.image_floor = pyglet.image.ImageData(self.temp_image_floor.width, self.temp_image_floor.height, 'RGBA', raw_image, pitch=-self.temp_image_floor.width * 4)
-        #self.image_floor = pyglet.sprite.Sprite(self.image_floor, settings.width, settings.height)
-        #self.image_floor.scale = self.scale
-
         self.image_floor = PIL_to_pyglet(self.temp_image_floor, self.scale)
-        self.image_floor.x = (settings.width - self.image_floor.width) / 2
-        self.image_floor.y = (settings.height - self.image_floor.height) / 2
-
         self.image_other_down = PIL_to_pyglet(self.temp_image_other_down, self.scale)
-        self.image_other_down.x = (settings.width - self.image_other_down.width) / 2
-        self.image_other_down.y = (settings.height - self.image_other_down.height) / 2
-
         self.image_wall = PIL_to_pyglet(self.temp_image_wall, self.scale)
-        self.image_wall.x = (settings.width - self.image_wall.width) / 2
-        self.image_wall.y = (settings.height - self.image_wall.height) / 2
-
         self.image_water = PIL_to_pyglet(self.temp_image_water, self.scale)
-        self.image_water.x = (settings.width - self.image_wall.width) / 2
-        self.image_water.y = (settings.height - self.image_wall.height) / 2
-
         self.image_vegetation = PIL_to_pyglet(self.temp_image_vegetation, self.scale)
-        self.image_vegetation.x = (settings.width - self.image_wall.width) / 2
-        self.image_vegetation.y = (settings.height - self.image_wall.height) / 2
-
         self.image_other_up = PIL_to_pyglet(self.temp_image_other_up, self.scale)
-        self.image_other_up.x = (settings.width - self.image_other_up.width) / 2
-        self.image_other_up.y = (settings.height - self.image_other_up.height) / 2
 
-        # тени
         self.image_shadows = PIL_to_pyglet(self.temp_image_shadows, self.scale)
-        self.image_shadows.x = (settings.width - self.image_wall.width) / 2
-        self.image_shadows.y = (settings.height - self.image_wall.height) / 2
-
         self.image_shadows_down = PIL_to_pyglet(self.temp_image_shadows_down, self.scale)
-        self.image_shadows_down.x = (settings.width - self.image_wall.width) / 2
-        self.image_shadows_down.y = (settings.height - self.image_wall.height) / 2
 
-        #self.image_floor.width = 1280
-        #self.image_floor.height = 720
+        self.update_offs()
 
     def draw(self):
         drawp(self.image_floor)

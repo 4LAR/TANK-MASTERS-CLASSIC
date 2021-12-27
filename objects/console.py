@@ -39,6 +39,9 @@ class setings_game(): # класс который содержит себе ин
                 else:
                     self.draw_poligons = True
 
+            if symbol == key.F4:
+                get_obj_display('world').shaking()
+
             if symbol == key.F5:
                 if self.pause:
                     self.pause = False

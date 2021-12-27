@@ -53,7 +53,7 @@ class bullets():
                 for j in range(len(get_obj_display('players').tanks)):
                     if bullet[0] != j and collision.collide(self.bullet_poly, get_obj_display('players').tanks[j].poligon_body):
                         dead = True
-                        if not get_obj_display('players').tanks[j].death:
+                        if not get_obj_display('players').tanks[j].death and not get_obj_display('players').tanks[j].protection:
                             get_obj_display('players').tanks[j].health -= get_obj_display('players').tanks[bullet[0]].demage_a
                         self.bullets.pop(i)
 
@@ -78,8 +78,8 @@ class bullets():
     def draw(self):
 
         for bullet in self.bullets:
-            self.bullet.sprite.x = bullet[1]
-            self.bullet.sprite.y = bullet[2]
+            self.bullet.sprite.x = bullet[1] + get_obj_display('world').map_offs[0]
+            self.bullet.sprite.y = bullet[2] + get_obj_display('world').map_offs[1]
             self.bullet.sprite.rotation = bullet[3]
             drawp(self.bullet)
 
