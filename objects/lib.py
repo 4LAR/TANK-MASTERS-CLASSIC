@@ -580,6 +580,7 @@ class image_flag():
         self.cursor_poligon.pos.x = x
         self.cursor_poligon.pos.y = y
         if collision.collide(self.image_poligon, self.cursor_poligon):
+            sound.play('upgrade.wav')
             if self.flag:
                 self.flag = False
             else:
@@ -592,7 +593,9 @@ class image_flag():
         self.cursor_poligon.pos.x = x
         self.cursor_poligon.pos.y = y
         if collision.collide(self.image_poligon, self.cursor_poligon):
-            self.selected = True
+            if not self.selected:
+                self.selected = True
+                sound.play('select.wav')
         else:
             self.selected = False
 

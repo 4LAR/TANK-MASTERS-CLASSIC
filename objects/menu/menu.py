@@ -80,11 +80,28 @@ def create_new_map():
 
 def select_tank(map_name='test'):
     #('play(\'' + self.map_names[i] + '\')')
+    def play_with_select_tank():
+        play(
+            map_name,
+            [
+                get_obj_display('select_tank_buttons').buttons_bot[0].flag,
+                get_obj_display('select_tank_buttons').buttons_bot[1].flag,
+                get_obj_display('select_tank_buttons').buttons_bot[2].flag,
+                get_obj_display('select_tank_buttons').buttons_bot[3].flag
+            ],
+            [
+                get_obj_display('select_tank_buttons').buttons[0].flag,
+                get_obj_display('select_tank_buttons').buttons[1].flag,
+                get_obj_display('select_tank_buttons').buttons[2].flag,
+                get_obj_display('select_tank_buttons').buttons[3].flag
+            ],
+            get_obj_display('select_tank_buttons').tank_settings
+        )
     clear_display()
     add_display(background_menu())
     add_display(head_menu('select machine'))
     add_display(image_button(0, settings.height/10, 'buttons/button_clear.png', scale=settings.height/120, center=False, function=select_map, image_selected='buttons/button_clear_selected.png', text='back', text_indent= settings.height//100))
-    add_display(image_button(settings.width - (settings.height/120 * 48), settings.height/10, 'buttons/button_clear_left.png', scale=settings.height/120, center=False, arg='play(\'' + map_name + '\')', image_selected='buttons/button_clear_left_selected.png', text='start', text_indent= settings.height//25))
+    add_display(image_button(settings.width - (settings.height/120 * 48), settings.height/10, 'buttons/button_clear_left.png', scale=settings.height/120, center=False, function=play_with_select_tank, image_selected='buttons/button_clear_left_selected.png', text='start', text_indent= settings.height//25))
 
     add_display(select_tank_buttons())
 
