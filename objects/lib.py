@@ -1,3 +1,14 @@
+def norm_deg(deg):
+    #while True:
+    if deg <= 180:
+        deg = 180 - (180 + deg)
+    elif deg > 180:
+        deg = -180 + (deg - 180)
+        #else:
+        #    break
+
+    return deg
+
 def draw_text_cursor(pos_cursor_x, pos_cursor_y, align='left', text='test', length=settings.width//15):
     if align == 'left':
         draw_line(

@@ -45,7 +45,9 @@ class tanks():
 
         self.towers = ['gun', 'bgun', 'mgun', 'rgun', 'rmgun']
         self.towers_damage = [60, 100, 10, 100, 60]
-        self.towers_delay = [1, 1.5, 0.16, 1.5, 1]
+        self.towers_delay = [1, 1.5, 0.12, 1.5, 1]
+        self.towers_scatter = [0, 0, 4, 0, 0]
+
 
 tanks = tanks()
 
@@ -56,6 +58,7 @@ def play(
             tank_settings=[[0, 0], [0, 0], [0, 0], [0, 0]]
         ):
     clear_display()
+    add_display(game_settings())
     add_display(world(map_name))
     add_display(players(bot, tanks, tank_settings))
     add_display(bullets())

@@ -1,4 +1,16 @@
 class bullets():
+
+    def get_speed_by_deg_sp(self, deg, speed):
+        #deg += 90
+        if deg < 0:
+            deg = 180 + (180 + deg)
+        if deg >= 360:
+            deg = 0
+        a = speed/math.sin(math.radians(90))
+        x = a * math.sin(math.radians(deg))
+        y = a * math.sin(math.radians(180 - 90 - deg))
+        return x, y
+
     def __init__(self):
 
         self.check_fps = 60
@@ -17,25 +29,32 @@ class bullets():
 
         #self.players_polygons = ['', '', '', '']
 
-    def spawn(self, id, x, y, rot, speed):
-        self.bullets.append([id, x, y, rot, speed])
+    def spawn(self, id, x, y, rot, speed, scatter=0):
+        self.bullets.append([id, x, y, rot + ((random.randrange(-scatter, scatter)) if scatter > 0 else 0), speed])
 
     def update(self):
         i = -1
         for bullet in self.bullets:
             speed_tick = (self.check_fps / pyglet.clock.get_fps() if pyglet.clock.get_fps() <= self.norm_fps else 1) * bullet[4]
             i += 1
-            if bullet[3] == -90:
-                bullet[1] -= speed_tick
 
-            elif bullet[3] == 90:
-                bullet[1] += speed_tick
+            if get_obj_display('game_settings').wind_bool:
+                #print(( ((speed_tick * math.sin(math.radians(get_obj_display('game_settings').wind_deg))) + (speed_tick * math.sin(math.radians(bullet[3])))) / (math.sqrt(speed_tick ** 2 + speed_tick ** 2)) ))
+                #bullet[3] = math.degrees(math.asin( ((speed_tick * math.sin(math.radians(get_obj_display('game_settings').wind_deg))) + (speed_tick * math.sin(math.radians(bullet[3])))) / (math.sqrt(speed_tick ** 2 + speed_tick ** 2)) ))#speed_tick/100
+                #bullet[3] += norm_deg(speed_tick)
 
-            elif bullet[3] == 0:
-                bullet[2] += speed_tick
+                #if bullet[3] < get_obj_display('game_settings').wind_deg:
+                #    bullet[3] -= norm_deg(speed_tick/8)
+                #elif bullet[3] > get_obj_display('game_settings').wind_deg:
+                #    bullet[3] += norm_deg(speed_tick/8)
 
-            elif bullet[3] == 180:
-                bullet[2] -= speed_tick
+                #bullet[3] += norm_deg( (bullet[3] - get_obj_display('game_settings').wind_deg) / 300 )
+                #bullet[3] += ((speed_tick/8) / (speed_tick/8)) * math.degrees(math.sin(math.radians(get_obj_display('game_settings').wind_deg)))
+                pass
+                
+            x, y = self.get_speed_by_deg_sp(bullet[3], speed_tick)
+            bullet[1] += x
+            bullet[2] += y
 
             #print(bullet[1], bullet[2])
             if ((bullet[1] > settings.width)

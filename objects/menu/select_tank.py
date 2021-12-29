@@ -60,14 +60,6 @@ class select_tank_buttons():
         self.buttons_tower_up = []
         self.buttons_tower_down = []
 
-        #self.obj_tanks.append(PIL_to_pyglet(get_pil_black_mask(Image.open('img/tanks/body/no_team/' + tanks.bases[self.tank_settings[0]] + '.png').convert("RGBA"), get_obj_display('world').shadow_alpha), self.scale_tank, True))
-        #self.obj_tanks.append([])
-        #self.obj_tanks[1].append(image_label('tanks/body/no_team/' + tanks.bases[self.tank_settings[0]] + '.png', settings.width//2, settings.height//2, scale=self.scale_tank, pixel=False, center=True))
-        #self.obj_tanks[1].append(image_label('tanks/body/no_team/' + tanks.bases[self.tank_settings[0]] + '_1.png', settings.width//2, settings.height//2, scale=self.scale_tank, pixel=False, center=True))
-        #self.obj_tanks.append(image_label('tanks/body/' + tanks.teams[self.id] + '/' + tanks.bases[self.tank_settings[0]] + '.png', settings.width//2, settings.height//2, scale=self.scale_tank, pixel=False, center=True))
-        #self.obj_tanks.append(PIL_to_pyglet(get_pil_black_mask(Image.open('img/tanks/tower/' + tanks.towers[self.tank_settings[1]] + '.png').convert("RGBA"), get_obj_display('world').shadow_alpha), self.scale_tank, True))
-        #self.obj_tanks.append(image_label('tanks/tower/' + tanks.towers[self.tank_settings[1]] + '.png', settings.width//2, settings.height//2, scale=self.scale_tank, pixel=False, center=True))
-
         self.update_tanks()
         for i in range(4):
             # фон настроек танка
@@ -178,6 +170,8 @@ class select_tank_buttons():
                     color = (150, 150, 150, 255)
                 )
             )
+
+        self.buttons[0].flag = True
 
     def on_mouse_press(self, x, y, button, modifiers):
         for i in range(len(self.buttons)):
