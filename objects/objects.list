@@ -10,6 +10,9 @@ menu/select_tank.py
 game/world.py
 game/players.py
 game/bullets.py
+game/smoke.py
+game/gui.py
+game/weather.py
 game/game_settings.py
 game/game.py
 logo.py

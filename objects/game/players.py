@@ -117,6 +117,15 @@ class player():
             v(-self.obj_tanks[0].width/2 + self.obj_tanks[0].width/50, self.obj_tanks[0].height/2 - self.obj_tanks[0].height/50)
         ])
 
+        self.traces_list = []
+        self.traces_delay = 0.5
+        self.trace_image = image_label('tanks/traces/' + tanks.bases[self.tank_settings[0]] + '.png', settings.width//2, settings.height//2, scale=self.scale_tank, pixel=False, center=True, rotation=0, alpha=10)
+
+    def add_trace(self, x, y, rotation):
+        self.traces_list.append([x, y, rotation, time.perf_counter() + self.traces_delay])
+        if len(self.traces_list) > get_obj_display('graphics_settings').max_traces:
+            self.traces_list.pop(0)
+
     def anim_tick(self):
         self.anim_ticks += 1
         if self.anim_ticks >= 5:
@@ -188,6 +197,8 @@ class player():
 
                 if move_bool or self.tank_settings[0] == 1:
                     self.anim_tick()
+                    if get_obj_display('graphics_settings').draw_traces:
+                        self.add_trace(self.pos[0], self.pos[1], self.rotation)
 
                 self.poligon_body.pos.x = self.pos[0]
                 self.poligon_body.pos.y = self.pos[1]
@@ -240,6 +251,11 @@ class player():
                     self.obj_tanks[i][self.anim_body_state].y = self.pos[1] + get_obj_display('world').map_offs[1]
                     self.obj_tanks[i][self.anim_body_state].update_image(True)
 
+            # удаление следов
+            for i in range(len(self.traces_list)-1, -1, -1):
+                if self.traces_list[i][3] <= time.perf_counter():
+                    self.traces_list.pop(i)
+
     def set_pos_body(self, x_, y_, send_return_bool = False):
         self.detect = False
         pos_ = [self.pos[0], self.pos[1]]
@@ -290,6 +306,12 @@ class player():
 
     def draw(self):
         if self.use:
+            for trace in self.traces_list:
+                self.trace_image.sprite.x = trace[0] + get_obj_display('world').map_offs[0]
+                self.trace_image.sprite.y = trace[1] + get_obj_display('world').map_offs[1]
+                self.trace_image.sprite.rotation = trace[2]
+                drawp(self.trace_image)
+
             if not self.death:
                 for i in range(len(self.obj_tanks)):
                     if i != 1:

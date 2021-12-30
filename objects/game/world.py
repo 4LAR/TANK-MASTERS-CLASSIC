@@ -296,7 +296,8 @@ class world():
     def draw(self):
         drawp(self.image_floor)
         drawp(self.image_water)
-        drawp(self.image_shadows_down)
+        if get_obj_display('graphics_settings').draw_shadows:
+            drawp(self.image_shadows_down)
         drawp(self.image_other_down)
 
 class walls():
@@ -304,7 +305,8 @@ class walls():
         pass
 
     def draw(self):
-        drawp(get_obj_display('world').image_shadows)
+        if get_obj_display('graphics_settings').draw_shadows:
+            drawp(get_obj_display('world').image_shadows)
         drawp(get_obj_display('world').image_wall)
 
         drawp(get_obj_display('world').image_vegetation)

@@ -39,19 +39,14 @@ class bullets():
             i += 1
 
             if get_obj_display('game_settings').wind_bool:
-                #print(( ((speed_tick * math.sin(math.radians(get_obj_display('game_settings').wind_deg))) + (speed_tick * math.sin(math.radians(bullet[3])))) / (math.sqrt(speed_tick ** 2 + speed_tick ** 2)) ))
-                #bullet[3] = math.degrees(math.asin( ((speed_tick * math.sin(math.radians(get_obj_display('game_settings').wind_deg))) + (speed_tick * math.sin(math.radians(bullet[3])))) / (math.sqrt(speed_tick ** 2 + speed_tick ** 2)) ))#speed_tick/100
-                #bullet[3] += norm_deg(speed_tick)
 
-                #if bullet[3] < get_obj_display('game_settings').wind_deg:
-                #    bullet[3] -= norm_deg(speed_tick/8)
-                #elif bullet[3] > get_obj_display('game_settings').wind_deg:
-                #    bullet[3] += norm_deg(speed_tick/8)
+                wind_deg = get_obj_display('game_settings').wind_deg
+                if bullet[3] + wind_deg < 0:
+                    bullet[3] -= norm_deg(speed_tick/300)
+                elif bullet[3] + wind_deg > 0:
+                    bullet[3] += norm_deg(speed_tick/300)
 
-                #bullet[3] += norm_deg( (bullet[3] - get_obj_display('game_settings').wind_deg) / 300 )
-                #bullet[3] += ((speed_tick/8) / (speed_tick/8)) * math.degrees(math.sin(math.radians(get_obj_display('game_settings').wind_deg)))
-                pass
-                
+
             x, y = self.get_speed_by_deg_sp(bullet[3], speed_tick)
             bullet[1] += x
             bullet[2] += y
