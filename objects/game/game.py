@@ -37,7 +37,7 @@ KEY_BINDS = {
 
 class tanks():
     def __init__(self):
-        self.teams = ['red', 'green', 'blue', 'yellow', 'no_team']
+        self.teams = ['red', 'blue', 'green', 'yellow', 'no_team']
 
         self.bases = ['tank_base', 'tank_quadrocopter_base', 'tank_wheels_base']
         self.bases_speed = [settings.height/60, settings.height/60, settings.height/50]

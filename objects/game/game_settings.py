@@ -7,6 +7,8 @@ class game_settings():
 
         self.rain = True
 
+        self.snow = True
+
 class graphics_settings():
     def __init__(self):
         self.draw_traces = False

@@ -42,12 +42,22 @@ class world():
         self.spawn = get_obj_other('os_world').save_world_obj.spawn
 
         self.floor_blocks_img = get_obj_other('os_world').floor_blocks_img
+        self.floor_snow_blocks_img = get_obj_other('os_world').floor_snow_blocks_img
+
         self.wall_block_img = get_obj_other('os_world').wall_block_img
+
         self.water_block_img = get_obj_other('os_world').water_block_img
+        self.water_snow_block_img = get_obj_other('os_world').water_snow_block_img
+
         self.vegetation_block_img = get_obj_other('os_world').vegetation_block_img
+        self.vegetation_snow_block_img = get_obj_other('os_world').vegetation_snow_block_img
+
         self.ceiling_block_img = get_obj_other('os_world').ceiling_block_img
         self.other_up_block_img = get_obj_other('os_world').other_up_block_img
+
         self.other_down_block_img = get_obj_other('os_world').other_down_block_img
+        self.other_down_snow_block_img = get_obj_other('os_world').other_down_snow_block_img
+
 
         # создаём пустые изображения для слоёв карты
         self.temp_image_floor = Image.new('RGBA', (self.world_size[0] * self.size, self.world_size[1] * self.size))
@@ -99,7 +109,13 @@ class world():
             for x in range(self.world_size[0]):
                 block = self.map_floor[self.get_block_num(x, y)].split('.')
                 if block[0] != 'none':
-                    self.temp_image_floor.paste(self.floor_blocks_img[block[0]].rotate(int(block[1])), (x * self.size, y * self.size))
+                    if get_obj_display('game_settings').snow:
+                        try:
+                            self.temp_image_floor.paste(self.floor_snow_blocks_img[block[0]].rotate(int(block[1])), (x * self.size, y * self.size))
+                        except:
+                            self.temp_image_floor.paste(self.floor_blocks_img[block[0]].rotate(int(block[1])), (x * self.size, y * self.size))
+                    else:
+                        self.temp_image_floor.paste(self.floor_blocks_img[block[0]].rotate(int(block[1])), (x * self.size, y * self.size))
 
     def set_wall(self):
         print("SET WALL")
@@ -123,7 +139,14 @@ class world():
             for x in range(self.world_size[0]):
                 block = self.map_water[self.get_block_num(x, y)].split('.')
                 if block[0] != 'none':
-                    self.temp_image_water.paste(self.water_block_img[block[0]].rotate(int(block[1])), (x * self.size, y * self.size))
+                    if get_obj_display('game_settings').snow:
+                        try:
+                            self.temp_image_water.paste(self.water_snow_block_img[block[0]].rotate(int(block[1])), (x * self.size, y * self.size))
+                        except:
+                            self.temp_image_water.paste(self.water_block_img[block[0]].rotate(int(block[1])), (x * self.size, y * self.size))
+                    else:
+                        self.temp_image_water.paste(self.water_block_img[block[0]].rotate(int(block[1])), (x * self.size, y * self.size))
+
 
     def set_vegetation(self):
         print("SET VEGETATION")
@@ -132,7 +155,14 @@ class world():
             for x in range(self.world_size[0]):
                 block = self.map_vegetation[self.get_block_num(x, y)].split('.')
                 if block[0] != 'none':
-                    self.temp_image_vegetation.paste(self.vegetation_block_img[block[0]].rotate(int(block[1])), (x * self.size, y * self.size))
+                    if get_obj_display('game_settings').snow:
+                        try:
+                            self.temp_image_vegetation.paste(self.vegetation_snow_block_img[block[0]].rotate(int(block[1])), (x * self.size, y * self.size))
+                        except:
+                            self.temp_image_vegetation.paste(self.vegetation_block_img[block[0]].rotate(int(block[1])), (x * self.size, y * self.size))
+                    else:
+                        self.temp_image_vegetation.paste(self.vegetation_block_img[block[0]].rotate(int(block[1])), (x * self.size, y * self.size))
+
                     if SHADOWS:
                         image = self.vegetation_block_img[block[0]].rotate(int(block[1]))
                         image_vegetation_other = get_pil_black_mask(image, self.shadow_alpha)
@@ -161,7 +191,14 @@ class world():
             for x in range(self.world_size[0]):
                 block = self.map_other_down[self.get_block_num(x, y)].split('.')
                 if block[0] != 'none':
-                    self.temp_image_other_down.paste(self.other_down_block_img[block[0]].rotate(int(block[1])), (x * self.size, y * self.size))
+                    if get_obj_display('game_settings').snow:
+                        try:
+                            self.temp_image_other_down.paste(self.other_down_snow_block_img[block[0]].rotate(int(block[1])), (x * self.size, y * self.size))
+                        except:
+                            self.temp_image_other_down.paste(self.other_down_block_img[block[0]].rotate(int(block[1])), (x * self.size, y * self.size))
+                    else:
+                        self.temp_image_other_down.paste(self.other_down_block_img[block[0]].rotate(int(block[1])), (x * self.size, y * self.size))
+
                     if SHADOWS:
                         image = self.other_down_block_img[block[0]].rotate(int(block[1]))
                         image_shadow_other = get_pil_black_mask(image, self.shadow_alpha)

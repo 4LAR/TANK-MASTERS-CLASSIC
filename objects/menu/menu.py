@@ -38,11 +38,27 @@ class head_menu():
         drawp(self.sprite)
         self.text.draw()
 
+class back():
+    def __init__(self, function=None, arg=None):
+        self.function = function
+        self.arg = arg
+
+    def on_key_press(self, symbol, modifiers):
+        if symbol == pyglet.window.key.ESCAPE:
+            if self.arg == None:
+                self.function()
+            else:
+                exec(self.arg)
+
+            return pyglet.event.EVENT_HANDLED
+
+
 first_breath_menu = True
 
 def menu():
     global first_breath_menu
     clear_display()
+    #add_display(back())
     add_display(background_menu())
     add_display(head_menu())
     add_display(image_button(0, settings.height - settings.height/3, 'buttons/button_clear.png', scale=settings.height/120, center=False, arg='select_map(editor=False)', function=play_menu, image_selected='buttons/button_clear_selected.png', text='play', text_indent= settings.height//100))
@@ -65,6 +81,7 @@ def create_new_map():
         editor(get_obj_display('input_label_image').text_obj.text, True)
 
     clear_display()
+    add_display(back(arg='select_map(editor=True)'))
     add_display(background_menu())
     add_display(head_menu('editor: new map'))
     add_display(image_button(0, settings.height/10, 'buttons/button_clear.png', scale=settings.height/120, center=False, arg='select_map(editor=True)', image_selected='buttons/button_clear_selected.png', text='back', text_indent= settings.height//100))
@@ -78,7 +95,7 @@ def create_new_map():
     add_display(head_menu(align_top=False))
 
 
-def select_tank(map_name='test'):
+def select_tank(map_name='test', map_settings=[]):
     #('play(\'' + self.map_names[i] + '\')')
     def play_with_select_tank():
         play(
@@ -97,7 +114,9 @@ def select_tank(map_name='test'):
             ],
             get_obj_display('select_tank_buttons').tank_settings
         )
+
     clear_display()
+    add_display(back(function=select_map))
     add_display(background_menu())
     add_display(head_menu('select machine'))
     add_display(image_button(0, settings.height/10, 'buttons/button_clear.png', scale=settings.height/120, center=False, function=select_map, image_selected='buttons/button_clear_selected.png', text='back', text_indent= settings.height//100))
@@ -107,8 +126,18 @@ def select_tank(map_name='test'):
 
     add_display(head_menu(align_top=False))
 
+def game_setup(map_name='test'):
+    clear_display()
+    add_display(back(function=select_map))
+    add_display(background_menu())
+    add_display(head_menu('game setup'))
+    add_display(image_button(0, settings.height/10, 'buttons/button_clear.png', scale=settings.height/120, center=False, function=select_map, image_selected='buttons/button_clear_selected.png', text='back', text_indent= settings.height//100))
+
+    add_display(head_menu(align_top=False))
+
 def select_map(editor=False):
     clear_display()
+    add_display(back(function=menu))
     add_display(background_menu())
     add_display(head_menu(('editor: select map') if editor else ('select map')))
     add_display(image_button(0, settings.height/10, 'buttons/button_clear.png', scale=settings.height/120, center=False, function=menu, image_selected='buttons/button_clear_selected.png', text='back', text_indent= settings.height//100))
@@ -119,10 +148,25 @@ def select_map(editor=False):
         settings.width/2.5, settings.height/10,
         scale=settings.height/120, pixel=True
     ))
+
     add_display(image_label('select_maps_panel_flags.png',
         0, (settings.height - settings.height/3.5) - (2 * settings.height/4.5),
         scale=settings.height/120, pixel=True
     ))
+
+    '''add_display(
+        image_flag(
+            0,
+            (settings.height - settings.height/3.5),
+            image='menu/select tank/flag.png',
+            image_flag='menu/select tank/flag_selected.png',
+            image_selected_flag='menu/select tank/flag_hover_selected.png',
+            image_selected='menu/select tank/flag_hover.png',
+            scale=settings.height/160,
+
+        )
+    )'''
+
     add_display(select_map_buttons(editor))
     add_display(image_button(settings.width/3, settings.height/10, 'buttons/button_left_page.png', image_selected='buttons/button_left_page_selected.png', scale=settings.height/120, center=False, function=get_obj_display('select_map_buttons').page_down))
     add_display(image_button(settings.width/3 + settings.width/3.5, settings.height/10, 'buttons/button_right_page.png', image_selected='buttons/button_right_page_selected.png', scale=settings.height/120, center=False, function=get_obj_display('select_map_buttons').page_up))
@@ -138,6 +182,7 @@ def play_menu():
 
 def settings_menu():
     clear_display()
+    add_display(back(function=menu))
     add_display(background_menu())
     add_display(head_menu('settings'))
     add_display(image_button(0, settings.height/10, 'buttons/button_clear.png', scale=settings.height/120, center=False, function=menu, image_selected='buttons/button_clear_selected.png', text='back', text_indent= settings.height//100))
