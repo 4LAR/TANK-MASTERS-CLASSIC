@@ -11,7 +11,10 @@ class players():
 
     def on_key_press(self, symbol, modifiers):
         if symbol == pyglet.window.key.ESCAPE:
-            menu()
+            if get_obj_display('game_settings').pause:
+                get_obj_display('game_settings').pause = False
+            else:
+                get_obj_display('game_settings').pause = True
 
             return pyglet.event.EVENT_HANDLED
 
@@ -35,6 +38,13 @@ class player():
             self.pos = [-settings.width, -settings.height]
 
     def __init__(self, id, bot=False, tank_settings=[0, 0], use=True):
+
+        # info
+        self.score = 0
+        self.kills = 0
+        self.death = 0
+
+        self.ping = 0
 
         self.tank_settings = tank_settings
         self.use = use
@@ -74,7 +84,7 @@ class player():
                 )
             )
 
-        self.death = False
+        self.death_bool = False
         self.death_delay = 2
         self.death_time = time.perf_counter() + self.death_delay
 
@@ -121,6 +131,13 @@ class player():
         self.traces_delay = 0.5
         self.trace_image = image_label('tanks/traces/' + tanks.bases[self.tank_settings[0]] + '.png', settings.width//2, settings.height//2, scale=self.scale_tank, pixel=False, center=True, rotation=0, alpha=10)
 
+        self.offs = {
+            -90: [-self.obj_tanks[0].width/2, 0], # -90
+            0: [0, self.obj_tanks[0].height/2], # 0
+            90: [self.obj_tanks[0].width/2, 0], # 90
+            180: [0, -self.obj_tanks[0].height/2]  # 180
+        }
+
     def add_trace(self, x, y, rotation):
         self.traces_list.append([x, y, rotation, time.perf_counter() + self.traces_delay])
         if len(self.traces_list) > get_obj_display('graphics_settings').max_traces:
@@ -145,17 +162,19 @@ class player():
             self.protection_ticks = 0
 
     def update(self):
-        if self.use:
+        if self.use and not get_obj_display('game_settings').pause:
             # респавн при смерти
-            if self.health <= 0 and not self.death:
+            if self.health <= 0 and not self.death_bool:
+                get_obj_display('smoke').add_smoke(self.pos[0], self.pos[1])
                 self.health = self.default_health
                 self.death_time = time.perf_counter() + self.death_delay
-                self.death = True
+                #print(time.strftime('%H:%M:%S', ((time.perf_counter() + self.death_delay) - self.death_time)))
+                self.death_bool = True
                 get_obj_display('world').shaking(delay=0.2, power=settings.height/150)
                 self.sound.play('death.wav')
 
-            if self.death and self.death_time <= time.perf_counter():
-                self.death = False
+            if self.death_bool and self.death_time <= time.perf_counter():
+                self.death_bool = False
                 self.protection_time = time.perf_counter() + self.protection_delay
                 self.protection = True
                 self.go_spawn()
@@ -163,7 +182,7 @@ class player():
             # подстройка скорости игрока под FPS
             speed_tick = (self.check_fps / pyglet.clock.get_fps() if pyglet.clock.get_fps() <= self.norm_fps else 1) * self.speed_tick
 
-            if not self.death:
+            if not self.death_bool:
 
                 # логика бота
                 if self.bot:
@@ -211,10 +230,13 @@ class player():
                         self.speed_tick * 10,
                         ((tanks.towers_scatter[self.tank_settings[1]] + 1) * 2 if move_bool else (tanks.towers_scatter[self.tank_settings[1]])) if get_obj_display('game_settings').scatter_bool else 0
                     )
+
+                    get_obj_display('smoke').add_smoke(self.pos[0] + self.offs[self.rotation][0], self.pos[1] + self.offs[self.rotation][1], 9)
+
                     self.time_shoot_a = time.perf_counter() + self.delay_shoot_a
 
             # перемещение стпрайтов и полигонов по карте
-            if self.death:
+            if self.death_bool:
                 self.death_tank_image.x = self.pos[0] + get_obj_display('world').map_offs[1]
                 self.death_tank_image.y = self.pos[1] + get_obj_display('world').map_offs[0]
                 self.death_tank_image.update_rotation(self.rotation)
@@ -312,14 +334,14 @@ class player():
                 self.trace_image.sprite.rotation = trace[2]
                 drawp(self.trace_image)
 
-            if not self.death:
+            if not self.death_bool:
                 for i in range(len(self.obj_tanks)):
                     if i != 1:
                         drawp(self.obj_tanks[i])
                     else:
                         drawp(self.obj_tanks[i][self.anim_body_state])
 
-            if self.death:
+            if self.death_bool:
                 drawp(self.obj_tanks[0])
                 drawp(self.death_tank_image)
 

@@ -58,14 +58,16 @@ def play(
             tank_settings=[[0, 0], [0, 0], [0, 0], [0, 0]]
         ):
     clear_display()
-    add_display(game_settings())
-    add_display(graphics_settings())
+    add_display(game_settings)
+    add_display(graphics_settings)
     add_display(world(map_name))
     add_display(players(bot, tanks, tank_settings))
     add_display(bullets())
     add_display(walls())
+    add_display(smoke())
     add_display(weather())
     add_display(gui())
+    add_display(pause())
 
 def editor(map_name='test', new=False):
     engine_settings.on_mouse_scroll_bool = True

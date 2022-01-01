@@ -36,7 +36,7 @@ class weather():
             print("FATAL ERROR: " + str(traceback.format_exc()))
 
     def update(self):
-        if get_obj_display('game_settings').rain:
+        if get_obj_display('game_settings').rain and not get_obj_display('game_settings').pause:
             if self.time <= time.perf_counter():
                 for i in range(len(self.rain_arr)):
                     self.rain_arr[i][1] -= self.speed

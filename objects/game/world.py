@@ -281,14 +281,15 @@ class world():
         self.image_shadows.y = (settings.height - self.image_wall.height) / 2
 
     def update(self):
-        if self.shaking_time > time.perf_counter():
-            self.map_offs[0] = random.randint(-10, 10)
-            self.map_offs[1] = random.randint(-10, 10)
-            self.update_offs()
-        else:
-            self.map_offs[0] = 0
-            self.map_offs[1] = 0
-            self.update_offs()
+        if not get_obj_display('game_settings').pause:
+            if self.shaking_time > time.perf_counter():
+                self.map_offs[0] = random.randint(-10, 10)
+                self.map_offs[1] = random.randint(-10, 10)
+                self.update_offs()
+            else:
+                self.map_offs[0] = 0
+                self.map_offs[1] = 0
+                self.update_offs()
 
     def update_offs(self):
 

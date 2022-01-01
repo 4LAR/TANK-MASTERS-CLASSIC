@@ -55,11 +55,30 @@ class back():
 
 first_breath_menu = True
 
+game_in_menu = None
+game_in_menu_bool = False
+def add_game_in_menu():
+    global game_in_menu
+    global game_in_menu_bool
+
+    add_display(game_settings)
+    if not game_in_menu_bool:
+        game_in_menu = world('Castle 2')
+        game_in_menu_bool = True
+
+    add_display(graphics_settings)
+    add_display(game_in_menu)
+    add_display(walls())
+    add_display(weather())
+
 def menu():
     global first_breath_menu
     clear_display()
     #add_display(back())
     add_display(background_menu())
+    if graphics_settings.game_in_menu:
+        add_game_in_menu()
+
     add_display(head_menu())
     add_display(image_button(0, settings.height - settings.height/3, 'buttons/button_clear.png', scale=settings.height/120, center=False, arg='select_map(editor=False)', function=play_menu, image_selected='buttons/button_clear_selected.png', text='play', text_indent= settings.height//100))
     add_display(image_button(0, settings.height - settings.height/2, 'buttons/button_clear.png', scale=settings.height/120, center=False, arg='select_map(editor=True)', image_selected='buttons/button_clear_selected.png', text='editor', text_indent= settings.height//100))
@@ -95,7 +114,7 @@ def create_new_map():
     add_display(head_menu(align_top=False))
 
 
-def select_tank(map_name='test', map_settings=[]):
+def select_tank(map_name='test'):
     #('play(\'' + self.map_names[i] + '\')')
     def play_with_select_tank():
         play(
@@ -130,8 +149,10 @@ def game_setup(map_name='test'):
     clear_display()
     add_display(back(function=select_map))
     add_display(background_menu())
+    if graphics_settings.game_in_menu:
+        add_game_in_menu()
     add_display(head_menu('game setup'))
-    add_display(image_button(0, settings.height/10, 'buttons/button_clear.png', scale=settings.height/120, center=False, function=select_map, image_selected='buttons/button_clear_selected.png', text='back', text_indent= settings.height//100))
+    add_display(image_button(0, settings.height/10, 'buttons/button_clear.png', scale=settings.height/120, center=False, arg='select_tank(\'' + map_name + '\')', image_selected='buttons/button_clear_selected.png', text='back', text_indent= settings.height//100))
 
     add_display(head_menu(align_top=False))
 
@@ -139,6 +160,8 @@ def select_map(editor=False):
     clear_display()
     add_display(back(function=menu))
     add_display(background_menu())
+    if graphics_settings.game_in_menu:
+        add_game_in_menu()
     add_display(head_menu(('editor: select map') if editor else ('select map')))
     add_display(image_button(0, settings.height/10, 'buttons/button_clear.png', scale=settings.height/120, center=False, function=menu, image_selected='buttons/button_clear_selected.png', text='back', text_indent= settings.height//100))
     if editor:
@@ -154,7 +177,7 @@ def select_map(editor=False):
         scale=settings.height/120, pixel=True
     ))
 
-    '''add_display(
+    add_display(
         image_flag(
             0,
             (settings.height - settings.height/3.5),
@@ -165,7 +188,7 @@ def select_map(editor=False):
             scale=settings.height/160,
 
         )
-    )'''
+    )
 
     add_display(select_map_buttons(editor))
     add_display(image_button(settings.width/3, settings.height/10, 'buttons/button_left_page.png', image_selected='buttons/button_left_page_selected.png', scale=settings.height/120, center=False, function=get_obj_display('select_map_buttons').page_down))
@@ -176,6 +199,8 @@ def select_map(editor=False):
 def play_menu():
     clear_display()
     add_display(background_menu())
+    if graphics_settings.game_in_menu:
+        add_game_in_menu()
     add_display(image_button(0, settings.height/10, 'buttons/button_clear.png', scale=settings.height/120, center=False, function=menu, image_selected='buttons/button_clear_selected.png', text='back', text_indent= settings.height//100))
 
     add_display(head_menu(align_top=False))
@@ -184,6 +209,8 @@ def settings_menu():
     clear_display()
     add_display(back(function=menu))
     add_display(background_menu())
+    if graphics_settings.game_in_menu:
+        add_game_in_menu()
     add_display(head_menu('settings'))
     add_display(image_button(0, settings.height/10, 'buttons/button_clear.png', scale=settings.height/120, center=False, function=menu, image_selected='buttons/button_clear_selected.png', text='back', text_indent= settings.height//100))
 

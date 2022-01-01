@@ -7,12 +7,14 @@ editor/map_editor_inventory.py
 menu/menu.py
 menu/select_map.py
 menu/select_tank.py
+menu/settings.py
 game/world.py
 game/players.py
 game/bullets.py
 game/smoke.py
 game/gui.py
 game/weather.py
+game/pause.py
 game/game_settings.py
 game/game.py
 logo.py
