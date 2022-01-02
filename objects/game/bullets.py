@@ -40,11 +40,17 @@ class bullets():
                 if get_obj_display('game_settings').wind_bool:
 
                     wind_deg = get_obj_display('game_settings').wind_deg
-                    if bullet[3] + wind_deg < 0:
-                        bullet[3] -= norm_deg(speed_tick/300)
-                    elif bullet[3] + wind_deg > 0:
-                        bullet[3] += norm_deg(speed_tick/300)
+                    wind_power = speed_tick / get_obj_display('game_settings').wind_power
+                    wind = bullet[3] + wind_deg
+                    if wind > 180:
+                        wind = wind - 360
+                    if wind < -180:
+                        wind = wind + 360
 
+                    if wind < 0:
+                        bullet[3] -= wind_power
+                    elif wind > 0:
+                        bullet[3] += wind_power
 
                 x, y = self.get_speed_by_deg_sp(bullet[3], speed_tick)
                 bullet[1] += x

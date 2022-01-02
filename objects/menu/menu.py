@@ -214,4 +214,6 @@ def settings_menu():
     add_display(head_menu('settings'))
     add_display(image_button(0, settings.height/10, 'buttons/button_clear.png', scale=settings.height/120, center=False, function=menu, image_selected='buttons/button_clear_selected.png', text='back', text_indent= settings.height//100))
 
+    add_display(game_settings_page())
+
     add_display(head_menu(align_top=False))

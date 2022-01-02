@@ -1,0 +1,7 @@
+[Graphics]
+draw_traces = False
+max_traces = 20
+draw_shadows = True
+draw_smoke = True
+game_in_menu = False
+

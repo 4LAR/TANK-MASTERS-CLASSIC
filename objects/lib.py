@@ -538,7 +538,7 @@ class breathing_label(): # класс для прорисовки 4х уголь
         self.rec.draw()
 
 class image_flag():
-    def __init__(self, x, y, image, image_flag, scale=1, rotation=0, alpha=255, center=False, image_selected_flag=None, image_selected=None, poligon=False):
+    def __init__(self, x, y, image, image_flag, scale=1, rotation=0, alpha=255, center=False, image_selected_flag=None, image_selected=None, poligon=False, function_bool = False, function=None, arg=None, text=None, text_color=(0, 0, 0, 0), text_indent=0, font='default.ttf'):
         self.x = x
         self.y = y
         self.image = image
@@ -549,6 +549,25 @@ class image_flag():
         self.scale = scale
         self.center = center
         self.rotation = rotation
+
+        self.function_bool = function_bool
+        self.function = function
+        self.arg = arg
+
+        self.text = text
+        self.text_color = text_color
+        self.text_indent = text_indent
+        self.font = font
+
+        if self.text != None:
+            size = self.scale * 5.5
+            self.text_label = text_label(
+                self.x + text_indent,
+                self.y + size * 1.6,
+                self.text,
+                load_font=True, font=font, size=int(size),
+                anchor_x='left', color=text_color
+            )
 
         self.poligon = poligon
 
@@ -592,10 +611,18 @@ class image_flag():
         self.cursor_poligon.pos.y = y
         if collision.collide(self.image_poligon, self.cursor_poligon):
             sound.play('upgrade.wav')
+
             if self.flag:
                 self.flag = False
             else:
                 self.flag = True
+
+            if self.function_bool:
+                if self.arg == None:
+                    self.function()
+                else:
+                    exec(self.arg)
+
 
             return True
         return False
@@ -635,6 +662,9 @@ class image_flag():
             self.image_selected_obj.draw()
         elif not self.selected and not self.flag:
             self.image_obj.draw()
+
+        if self.text != None:
+            self.text_label.draw()
 
         if self.poligon:
             poligon = self.image_poligon

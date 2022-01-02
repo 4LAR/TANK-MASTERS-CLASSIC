@@ -9,6 +9,7 @@ menu/select_map.py
 menu/select_tank.py
 menu/settings.py
 game/world.py
+game/wind.py
 game/players.py
 game/bullets.py
 game/smoke.py
