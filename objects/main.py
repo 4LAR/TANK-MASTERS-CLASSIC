@@ -1,4 +1,6 @@
-version = 'TANK MASTERS:CLASSIC 0.4.0'
+version = 'TANK MASTERS:CLASSIC 0.5.0'
+
+window.set_caption(version_engine + ' | ' + version)
 
 import math, random
 import numpy as np

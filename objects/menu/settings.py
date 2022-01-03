@@ -6,25 +6,76 @@ class game_settings_page():
             if i != id:
                 self.settings_page_buttons[i].flag = False
 
+    def select_screen(self, id):
+        self.settings_buttons[0][id].flag = True
+        for i in range(len(self.settings_buttons[0])):
+            if i != id:
+                self.settings_buttons[0][i].flag = False
+
     def read_settings(self):
-        self.settings_buttons[2][0].flag = graphics_settings.game_in_menu
+        # display
+        self.settings_buttons[0][settings.full_screen].flag = True
+
+
+        self.settings_buttons[0][3].change_text(str(settings.width))
+        self.settings_buttons[0][4].change_text(str(settings.height))
+
+        # graphics
+        self.settings_buttons[2][0].flag = graphics_settings.draw_leaf
         self.settings_buttons[2][1].flag = graphics_settings.draw_traces
         self.settings_buttons[2][2].flag = graphics_settings.draw_shadows
         self.settings_buttons[2][3].flag = graphics_settings.draw_smoke
+        self.settings_buttons[2][4].flag = graphics_settings.game_in_menu
+
+        #settings.save_settings()
 
     def save_settings(self):
+
+        reboot_bool = False
 
         # 0 - game in menu
         # 1 - draw_traces
         # 2 - draw shadows
         # 3 - draw smoke
+        # 4 - draw leaf
 
-        graphics_settings.game_in_menu = self.settings_buttons[2][0].flag
+        # display
+        if self.settings_buttons[0][0].flag:
+            full_screen = 0
+        elif self.settings_buttons[0][1].flag:
+            full_screen = 1
+        elif self.settings_buttons[0][2].flag:
+            full_screen = 2
+
+        width = int(self.settings_buttons[0][3].text_obj.text_label.label.text)
+        height = int(self.settings_buttons[0][4].text_obj.text_label.label.text)
+
+        if (full_screen != settings.full_screen
+        or width != settings.width
+        or height != settings.height):
+            reboot_bool = True
+
+            settings.full_screen = full_screen
+            settings.width = width
+            settings.height = height
+
+
+        # проверка на
+
+        # graphics
+        graphics_settings.draw_leaf = self.settings_buttons[2][0].flag
         graphics_settings.draw_traces = self.settings_buttons[2][1].flag
         graphics_settings.draw_shadows = self.settings_buttons[2][2].flag
         graphics_settings.draw_smoke = self.settings_buttons[2][3].flag
+        graphics_settings.game_in_menu = self.settings_buttons[2][4].flag
 
         graphics_settings.save_settings()
+        settings.save_settings()
+
+        if reboot_bool:
+            #reboot()
+            change_window_settings()
+            #pass
 
     def __init__(self):
 
@@ -160,11 +211,93 @@ class game_settings_page():
 
         # display
         self.settings_buttons.append([])
-        #self.settings_buttons[0].append()
+
+        # left
+        self.settings_buttons[0].append(
+            image_flag(
+                settings.width/100,
+                settings.height - settings.height/3.5 - (settings.height/8) * 0,
+                image='buttons/flag/flag.png',
+                image_flag='buttons/flag/flag_selected.png',
+                image_selected_flag='buttons/flag/flag_hover_selected.png',
+                image_selected='buttons/flag/flag_hover.png',
+                scale=settings.height/160,
+
+                text='windowed',
+                text_color = (150, 150, 150, 255),
+                font='pixel.ttf',
+                text_indent=settings.height/8,
+
+                function_bool = True,
+                arg='get_obj_display("game_settings_page").select_screen(0)'
+
+            )
+        )
+        self.settings_buttons[0].append(
+            image_flag(
+                settings.width/100,
+                settings.height - settings.height/3.5 - (settings.height/8) * 1,
+                image='buttons/flag/flag.png',
+                image_flag='buttons/flag/flag_selected.png',
+                image_selected_flag='buttons/flag/flag_hover_selected.png',
+                image_selected='buttons/flag/flag_hover.png',
+                scale=settings.height/160,
+
+                text='windowed no frames',
+                text_color = (150, 150, 150, 255),
+                font='pixel.ttf',
+                text_indent=settings.height/8,
+
+                function_bool = True,
+                arg='get_obj_display("game_settings_page").select_screen(1)'
+
+            )
+        )
+        self.settings_buttons[0].append(
+            image_flag(
+                settings.width/100,
+                settings.height - settings.height/3.5 - (settings.height/8) * 2,
+                image='buttons/flag/flag.png',
+                image_flag='buttons/flag/flag_selected.png',
+                image_selected_flag='buttons/flag/flag_hover_selected.png',
+                image_selected='buttons/flag/flag_hover.png',
+                scale=settings.height/160,
+
+                text='Full Screen',
+                text_color = (150, 150, 150, 255),
+                font='pixel.ttf',
+                text_indent=settings.height/8,
+
+                function_bool = True,
+                arg='get_obj_display("game_settings_page").select_screen(2)'
+
+            )
+        )
+
+        # right
+        self.settings_buttons[0].append(
+            input_label_image(
+            settings.width/100 + settings.width/2,
+            settings.height - settings.height/2.5 - (settings.height/8) * 0,
+            'buttons/button_clear_2_reverse.png', 'buttons/button_clear_selected_2_reverse.png',
+            scale=settings.height/160, color_text=(150, 150, 150, 255),
+            text='width', pre_text='1600', font='pixel.ttf',
+            text_indent=settings.height/12, text_input_indent=settings.height/6)
+        )
+
+        self.settings_buttons[0].append(
+            input_label_image(
+            settings.width/100 + settings.width/2,
+            settings.height - settings.height/2.5 - (settings.height/8) * 1,
+            'buttons/button_clear_2_reverse.png', 'buttons/button_clear_selected_2_reverse.png',
+            scale=settings.height/160, color_text=(150, 150, 150, 255),
+            text='height', pre_text='900', font='pixel.ttf',
+            text_indent=settings.height/12, text_input_indent=settings.height/6)
+        )
 
         # sound
         self.settings_buttons.append([])
-        self.settings_buttons[1].append(
+        '''self.settings_buttons[1].append(
             image_flag(
                 settings.width/100,
                 settings.height - settings.height/3.5,
@@ -175,11 +308,12 @@ class game_settings_page():
                 scale=settings.height/160,
 
             )
-        )
+        )'''
 
         # graphics
         self.settings_buttons.append([])
 
+        # left page
         self.settings_buttons[2].append(
             image_flag(
                 settings.width/100,
@@ -190,7 +324,7 @@ class game_settings_page():
                 image_selected='buttons/flag/flag_hover.png',
                 scale=settings.height/160,
 
-                text='game in menu',
+                text='draw leaf',
                 text_color = (150, 150, 150, 255),
                 font='pixel.ttf',
                 text_indent=settings.height/8
@@ -252,6 +386,25 @@ class game_settings_page():
             )
         )
 
+        # right page
+        self.settings_buttons[2].append(
+            image_flag(
+                settings.width/100 + settings.width/2,
+                settings.height - settings.height/3.5 - (settings.height/8) * 0,
+                image='buttons/flag/flag.png',
+                image_flag='buttons/flag/flag_selected.png',
+                image_selected_flag='buttons/flag/flag_hover_selected.png',
+                image_selected='buttons/flag/flag_hover.png',
+                scale=settings.height/160,
+
+                text='game in menu',
+                text_color = (150, 150, 150, 255),
+                font='pixel.ttf',
+                text_indent=settings.height/8
+
+            )
+        )
+
         # keyboard
         self.settings_buttons.append([])
 
@@ -273,6 +426,20 @@ class game_settings_page():
         for s in self.settings_buttons[self.page]:
             #for b in s:
             s.on_mouse_motion(x, y, dx, dy)
+
+    def on_key_press(self, symbol, modifiers):
+        for s in self.settings_buttons[self.page]:
+            try:
+                s.on_key_press(symbol, modifiers)
+            except:
+                pass
+
+    def on_text(self, text):
+        for s in self.settings_buttons[self.page]:
+            try:
+                s.on_text(text)
+            except:
+                pass
 
     def draw(self):
         for s in self.settings_page_buttons:

@@ -68,6 +68,7 @@ def add_game_in_menu():
 
     add_display(graphics_settings)
     add_display(game_in_menu)
+    add_display(wind())
     add_display(walls())
     add_display(weather())
 
@@ -83,7 +84,7 @@ def menu():
     add_display(image_button(0, settings.height - settings.height/3, 'buttons/button_clear.png', scale=settings.height/120, center=False, arg='select_map(editor=False)', function=play_menu, image_selected='buttons/button_clear_selected.png', text='play', text_indent= settings.height//100))
     add_display(image_button(0, settings.height - settings.height/2, 'buttons/button_clear.png', scale=settings.height/120, center=False, arg='select_map(editor=True)', image_selected='buttons/button_clear_selected.png', text='editor', text_indent= settings.height//100))
     add_display(image_button(0, settings.height - settings.height/1.5, 'buttons/button_clear.png', scale=settings.height/120, center=False, function=settings_menu, image_selected='buttons/button_clear_selected.png', text='settings', text_indent= settings.height//100))
-    add_display(image_button(0, settings.height/10, 'buttons/button_clear.png', scale=settings.height/120, center=False, function=exit, image_selected='buttons/button_clear_selected.png', text='exit', text_indent= settings.height//100))
+    add_display(image_button(0, settings.height/10, 'buttons/button_clear.png', scale=settings.height/120, center=False, text='exit', image_selected='buttons/button_clear_selected.png', arg='exit()', text_indent= settings.height//100))
     add_display(head_menu(align_top=False))
     add_display(text_label(settings.width/100, settings.height - settings.height/10, 'TANK MASTERS', load_font=True, font='pixel.ttf', size=settings.height//20, anchor_x='left', color = (150, 150, 150, 255), shadow=True, color_shadow=(20, 20, 20, 122), shadow_size=settings.height//20))
     add_display(text_label(settings.width/5, settings.height - settings.height/6.5, 'CLASSIC', load_font=True, font='pixel.ttf', size=settings.height//20, anchor_x='left', color = (150, 150, 150, 255), shadow=True, color_shadow=(20, 20, 20, 122), shadow_size=settings.height//20))
@@ -115,7 +116,6 @@ def create_new_map():
 
 
 def select_tank(map_name='test'):
-    #('play(\'' + self.map_names[i] + '\')')
     def play_with_select_tank():
         play(
             map_name,
@@ -145,14 +145,23 @@ def select_tank(map_name='test'):
 
     add_display(head_menu(align_top=False))
 
-def game_setup(map_name='test'):
+def game_setup():
     clear_display()
     add_display(back(function=select_map))
     add_display(background_menu())
     if graphics_settings.game_in_menu:
         add_game_in_menu()
     add_display(head_menu('game setup'))
-    add_display(image_button(0, settings.height/10, 'buttons/button_clear.png', scale=settings.height/120, center=False, arg='select_tank(\'' + map_name + '\')', image_selected='buttons/button_clear_selected.png', text='back', text_indent= settings.height//100))
+    add_display(image_button(0, settings.height/10, 'buttons/button_clear.png', scale=settings.height/120, center=False, arg='get_obj_display(\'game_setup_flags\').save_settings(); select_map()', image_selected='buttons/button_clear_selected.png', text='back', text_indent= settings.height//100))
+    image_button(
+        settings.width - (settings.height/120 * 48), settings.height/10,
+        'buttons/button_clear_left.png', scale=settings.height/120,
+        center=False, arg='get_obj_display("game_settings_page").save_settings(); menu()',
+        image_selected='buttons/button_clear_left_selected.png',
+        text='save', text_indent= settings.height/20
+    )
+
+    add_display(game_setup_flags())
 
     add_display(head_menu(align_top=False))
 
@@ -172,12 +181,15 @@ def select_map(editor=False):
         scale=settings.height/120, pixel=True
     ))
 
-    add_display(image_label('select_maps_panel_flags.png',
+    '''add_display(image_label('select_maps_panel_flags.png',
         0, (settings.height - settings.height/3.5) - (2 * settings.height/4.5),
         scale=settings.height/120, pixel=True
-    ))
+    ))'''
 
-    add_display(
+    if not editor:
+        add_display(image_button(0, settings.height/3.5, 'buttons/button_clear.png', scale=settings.height/120, center=False, function=game_setup, image_selected='buttons/button_clear_selected.png', text='game setup', text_indent= settings.height//100))
+
+    '''add_display(
         image_flag(
             0,
             (settings.height - settings.height/3.5),
@@ -188,7 +200,7 @@ def select_map(editor=False):
             scale=settings.height/160,
 
         )
-    )
+    )'''
 
     add_display(select_map_buttons(editor))
     add_display(image_button(settings.width/3, settings.height/10, 'buttons/button_left_page.png', image_selected='buttons/button_left_page_selected.png', scale=settings.height/120, center=False, function=get_obj_display('select_map_buttons').page_down))

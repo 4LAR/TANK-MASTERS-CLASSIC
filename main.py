@@ -4,7 +4,7 @@
 #           15.03.2021
 #
 
-version_engine = 'STONE ENGINE 2.4.3' # версия движка
+version_engine = 'STONE ENGINE 2.5.0' # версия движка
 
 import time
 import os
@@ -12,9 +12,6 @@ import sys
 import traceback
 
 # функции
-def exit(): # заставляет закрыть программу
-    sys.exit(0)
-
 def get_time(): # получить текущее время
     return time.strftime("%H:%M:%S|%d-%m-%y", time.localtime())
 
@@ -53,7 +50,22 @@ class Engine_settings(): #
 
 engine_settings = Engine_settings()
 
+engine_run = True
+
+def exit(): # заставляет закрыть программу
+    global engine_run
+    engine_run = False
+    sys.exit(0)
+
+'''def reboot():
+    global engine_run
+    engine_run = True
+    pyglet.app.stop()
+    window.close()'''
+
+#while engine_run:
 try:
+    engine_run = False
     # библиотеки которые использует движок
     from collections import deque
     import pyglet
@@ -195,29 +207,33 @@ try:
 
             self.read_settings() # читаем настроки
 
+        def save_settings(self):
+            config = configparser.ConfigParser()
+
+            config.add_section("Screen")
+            config.set("Screen", "use_window", str(self.use_window)) # хз как делать
+            config.set("Screen", "width", str(self.width))
+            config.set("Screen", "height", str(self.height))
+            config.set("Screen", "full-screen", str(self.full_screen))
+
+            config.add_section("User_interface")
+            config.set("User_interface", "show-fps", str(self.show_fps))
+            config.set("User_interface", "console", str(self.console))
+
+            config.add_section("Sound")
+            config.set("Sound", "volume", str(self.sound_volume))
+
+            config.add_section("Engine")
+            config.set("Engine", "use_numba", str(self.use_numba))
+
+
+            with open("settings.txt", "w") as config_file: # запись файла с настройками
+                config.write(config_file)
+
+
         def read_settings(self):
             if not os.path.exists("settings.txt"): # проверка файла с настройками
-                config = configparser.ConfigParser()
-
-                config.add_section("Screen")
-                config.set("Screen", "use_window", str(self.use_window)) # хз как делать
-                config.set("Screen", "width", str(self.width))
-                config.set("Screen", "height", str(self.height))
-                config.set("Screen", "full-screen", str(self.full_screen))
-
-                config.add_section("User_interface")
-                config.set("User_interface", "show-fps", str(self.show_fps))
-                config.set("User_interface", "console", str(self.console))
-
-                config.add_section("Sound")
-                config.set("Sound", "volume", str(self.sound_volume))
-
-                config.add_section("Engine")
-                config.set("Engine", "use_numba", str(self.use_numba))
-
-
-                with open("settings.txt", "w") as config_file: # запись файла с настройками
-                    config.write(config_file)
+                self.save_settings()
                 self.read_settings()
             else:
                 config = configparser.ConfigParser()
@@ -238,6 +254,7 @@ try:
                     import numba # типо оптимизация
 
     settings = settings() # инициализация класса с настройками
+
 
     class file_code():
         def __init__(self):
@@ -284,6 +301,12 @@ try:
 
         window.set_caption(version_engine) # изменение названия окна
 
+        def change_window_settings():
+            #window.width = settings.width
+            #window.height = settings.height
+            window.set_fullscreen(fullscreen=(True if settings.full_screen == 2 else False), width=settings.width, height=settings.height)
+
+
         width = settings.width # ширина окна
         height = settings.height # высота окна
 
@@ -304,14 +327,8 @@ try:
         keyboard = pyglet.window.key.KeyStateHandler() #
         window.push_handlers(keyboard) #
 
-
-
-
-
     print('STRING: '  +str(len(code.split('\n')))) #
     exec(code) # запуск всего кода который мы прочитали из файлов
-
-
 
     class FPS_label(): # класс для показа fps в левом верхнем угле
         def __init__(self, x, y, size, color):

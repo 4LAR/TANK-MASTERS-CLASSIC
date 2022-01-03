@@ -141,7 +141,10 @@ class timer():
             self.stop = True
 
 class input_label_image():
-
+    def change_text(self, text):
+        self.text = text
+        self.text_obj.text = text
+        self.text_obj.text_label.label.text = text
 
     def __init__(self, x, y, image='', image_selected='', scale=1, font='default.ttf', color_text=(255, 255, 255, 255), text='', pre_text='', alpha=255, text_indent=0, text_input_indent=20):
 
@@ -211,6 +214,7 @@ class input_label_image():
             return True
         else:
             self.selected = False
+            self.text_obj.selected = False
         return False
 
     def on_key_press(self, symbol, modifiers):

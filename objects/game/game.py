@@ -63,6 +63,7 @@ def play(
     add_display(world(map_name))
     add_display(players(bot, tanks, tank_settings))
     add_display(bullets())
+    add_display(wind())
     add_display(walls())
     add_display(smoke())
     add_display(weather())
