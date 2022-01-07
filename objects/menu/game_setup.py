@@ -36,7 +36,7 @@ class game_setup_flags():
                 text='scatter',
                 text_color = (150, 150, 150, 255),
                 font='pixel.ttf',
-                text_indent=settings.height/8
+                text_indent=settings.height/8, shadow=graphics_settings.shadows_buttons
 
             )
         )
@@ -54,7 +54,7 @@ class game_setup_flags():
                 text='wind',
                 text_color = (150, 150, 150, 255),
                 font='pixel.ttf',
-                text_indent=settings.height/8
+                text_indent=settings.height/8, shadow=graphics_settings.shadows_buttons
 
             )
         )
@@ -72,7 +72,7 @@ class game_setup_flags():
                 text='rain',
                 text_color = (150, 150, 150, 255),
                 font='pixel.ttf',
-                text_indent=settings.height/8
+                text_indent=settings.height/8, shadow=graphics_settings.shadows_buttons
 
             )
         )
@@ -90,7 +90,7 @@ class game_setup_flags():
                 text='snow',
                 text_color = (150, 150, 150, 255),
                 font='pixel.ttf',
-                text_indent=settings.height/8
+                text_indent=settings.height/8, shadow=graphics_settings.shadows_buttons
 
             )
         )

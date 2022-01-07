@@ -119,7 +119,7 @@ class select_tank_buttons():
                     image_flag='menu/select tank/flag_selected.png',
                     image_selected_flag='menu/select tank/flag_hover_selected.png',
                     image_selected='menu/select tank/flag_hover.png',
-                    scale=settings.height/160,
+                    scale=settings.height/160, shadow=graphics_settings.shadows_buttons
 
                 )
             )
@@ -133,7 +133,7 @@ class select_tank_buttons():
                     image_flag='menu/select tank/flag_selected.png',
                     image_selected_flag='menu/select tank/flag_hover_selected.png',
                     image_selected='menu/select tank/flag_hover.png',
-                    scale=settings.height/160,
+                    scale=settings.height/160, shadow=graphics_settings.shadows_buttons
 
                 )
             )
@@ -144,7 +144,7 @@ class select_tank_buttons():
                     'menu/select tank/background.png',
                     settings.width/100 + (i * settings.width/4),
                     settings.height - settings.height/1.45,
-                    scale=settings.height/160, pixel=True
+                    scale=settings.height/160, pixel=True, shadow=graphics_settings.shadows_buttons
                 )
             )
 
@@ -199,8 +199,7 @@ class select_tank_buttons():
         for i in range(len(self.buttons)):
             if self.buttons[i].flag:
                 drawp(self.background[i])
-            drawp(self.buttons[i])
-            drawp(self.text[i])
+
             if self.buttons[i].flag:
                 drawp(self.buttons_bot[i])
                 drawp(self.text_bot[i])
@@ -215,3 +214,6 @@ class select_tank_buttons():
                 drawp(self.buttons_body_up[i])
                 drawp(self.buttons_tower_down[i])
                 drawp(self.buttons_tower_up[i])
+
+            drawp(self.buttons[i])
+            drawp(self.text[i])

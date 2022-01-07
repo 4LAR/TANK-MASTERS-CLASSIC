@@ -95,18 +95,38 @@ class player():
         self.speed = 0
         self.rotation = 0
 
+        # bot
         self.bot_rotation = 0
         self.time_random_rotation = 0
         self.bot_shoot_a = True
 
         self.wall_collision_bool = False
 
+        # for animations
         self.anim_ticks = 0
         self.anim_body_state = 0
 
+        self.anim_ticks_tower = 0
+        self.anim_tower_state = 0
+
+        self.shoot_a_bool = False
+        # for minigun
+        self.temperature_gun = 0
+        self.temperature_gun_in_Shoot = 1
+        self.max_temperature_gun = 10
+        self.gun_overheat = False
+
+        self.gun_overheat_delay = 0.2
+        self.gun_overheat_time = time.perf_counter() + self.gun_overheat_delay
+
+        self.gun_twist_delay = 0.5
+        self.gun_twist_time = time.perf_counter() + self.gun_twist_delay
+
+        # for shoot
         self.delay_shoot_a = tanks.towers_delay[self.tank_settings[1]]
         self.time_shoot_a = time.perf_counter() + self.delay_shoot_a
 
+        # tanks
         self.obj_tanks = []
 
         self.death_tank_image = image_label('tanks/body/no_team/' + tanks.bases[self.tank_settings[0]] + '.png', settings.width//2, settings.height//2, scale=self.scale_tank, pixel=False, center=True)
@@ -117,7 +137,19 @@ class player():
         self.obj_tanks[1].append(image_label('tanks/body/no_team/' + tanks.bases[self.tank_settings[0]] + '_1.png', settings.width//2, settings.height//2, scale=self.scale_tank, pixel=False, center=True))
         self.obj_tanks.append(image_label('tanks/body/' + tanks.teams[self.id] + '/' + tanks.bases[self.tank_settings[0]] + '.png', settings.width//2, settings.height//2, scale=self.scale_tank, pixel=False, center=True))
         self.obj_tanks.append(PIL_to_pyglet(get_pil_black_mask(Image.open('img/tanks/tower/' + tanks.towers[self.tank_settings[1]] + '.png').convert("RGBA"), get_obj_display('world').shadow_alpha), self.scale_tank, True))
-        self.obj_tanks.append(image_label('tanks/tower/' + tanks.towers[self.tank_settings[1]] + '.png', settings.width//2, settings.height//2, scale=self.scale_tank, pixel=False, center=True))
+
+        if self.tank_settings[1] in [0, 1]:
+            self.obj_tanks.append([image_label('tanks/tower/' + tanks.towers[self.tank_settings[1]] + '.png', settings.width//2, settings.height//2, scale=self.scale_tank, pixel=False, center=True)])
+
+        elif self.tank_settings[1] in [2]:
+            self.obj_tanks.append([])
+            self.obj_tanks[4].append(image_label('tanks/tower/' + tanks.towers[self.tank_settings[1]] + '.png', settings.width//2, settings.height//2, scale=self.scale_tank, pixel=False, center=True))
+            self.obj_tanks[4].append(image_label('tanks/tower/' + tanks.towers[self.tank_settings[1]] + '_1.png', settings.width//2, settings.height//2, scale=self.scale_tank, pixel=False, center=True))
+            self.obj_tanks.append(image_label('tanks/tower/mgun_heat.png', settings.width//2, settings.height//2, scale=self.scale_tank, pixel=False, center=True))
+
+        elif self.tank_settings[1] in [3, 4]:
+            self.obj_tanks.append([])
+            self.obj_tanks[4].append(image_label('tanks/tower/' + tanks.towers[self.tank_settings[1]] + '.png', settings.width//2, settings.height//2, scale=self.scale_tank, pixel=False, center=True))
 
         self.poligon_body = collision.Poly(v(100, 100),
         [
@@ -152,6 +184,15 @@ class player():
                 self.anim_body_state = 0
             self.anim_ticks = 0
 
+    def anim_tick_tower(self):
+        #self.anim_ticks += 1
+        #if self.anim_ticks >= 5:
+        if len(self.obj_tanks[4]) > self.anim_tower_state + 1:
+            self.anim_tower_state += 1
+        else:
+            self.anim_tower_state = 0
+            #self.anim_ticks = 0
+
     def anim_protection_tick(self):
         self.protection_ticks += 1
         if self.protection_ticks >= 5:
@@ -160,6 +201,24 @@ class player():
             else:
                 self.protection_image_num = 0
             self.protection_ticks = 0
+
+    def shoot(self, move_bool, type='bullet'):
+        if type == 'bullet':
+            self.sound.play('shoot.wav')
+            get_obj_display('bullets').spawn(
+                self.id, self.pos[0], self.pos[1], self.rotation,
+                self.speed_tick * 10,
+                ((tanks.towers_scatter[self.tank_settings[1]] + 1) * 2 if move_bool else (tanks.towers_scatter[self.tank_settings[1]])) if get_obj_display('game_settings').scatter_bool else 0
+            )
+            get_obj_display('smoke').add_smoke(self.pos[0] + self.offs[self.rotation][0], self.pos[1] + self.offs[self.rotation][1], 9)
+
+        elif type == 'rail':
+            self.sound.play('shoot.wav')
+            get_obj_display('bullets').spawn(
+                self.id, self.pos[0], self.pos[1], self.rotation,
+                self.speed_tick * 10,
+                ((tanks.towers_scatter[self.tank_settings[1]] + 1) * 2 if move_bool else (tanks.towers_scatter[self.tank_settings[1]])) if get_obj_display('game_settings').scatter_bool else 0
+            )
 
     def update(self):
         if self.use and not get_obj_display('game_settings').pause:
@@ -223,17 +282,48 @@ class player():
                 self.poligon_body.pos.y = self.pos[1]
 
                 # стрельба
-                if (((eval('keyboard[key.' + KEY_BINDS['P' + str(self.id+1)]['shoot_a'] + ']') and not self.bot) or (self.bot and self.bot_shoot_a) ) and (self.time_shoot_a <= time.perf_counter())):
-                    self.sound.play('shoot.wav')
-                    get_obj_display('bullets').spawn(
-                        self.id, self.pos[0], self.pos[1], self.rotation,
-                        self.speed_tick * 10,
-                        ((tanks.towers_scatter[self.tank_settings[1]] + 1) * 2 if move_bool else (tanks.towers_scatter[self.tank_settings[1]])) if get_obj_display('game_settings').scatter_bool else 0
-                    )
+                if ( (eval('keyboard[key.' + KEY_BINDS['P' + str(self.id+1)]['shoot_a'] + ']') and not self.bot) or (self.bot and self.bot_shoot_a) ):
+                    self.shoot_a_bool = True
+                    if self.time_shoot_a <= time.perf_counter():
+                        # Обычные пушки
+                        if self.tank_settings[1] in [0, 1]:
+                            self.shoot(move_bool)
 
-                    get_obj_display('smoke').add_smoke(self.pos[0] + self.offs[self.rotation][0], self.pos[1] + self.offs[self.rotation][1], 9)
+                        # пулемёт
+                        elif self.tank_settings[1] in [2]:
+                            if self.gun_twist_time <= time.perf_counter():
+                                if (self.temperature_gun < self.max_temperature_gun) and not self.gun_overheat:
+                                    self.temperature_gun += self.temperature_gun_in_Shoot
+                                    if self.temperature_gun >= self.max_temperature_gun:
+                                        self.gun_overheat = True
+                                    self.shoot(move_bool)
 
-                    self.time_shoot_a = time.perf_counter() + self.delay_shoot_a
+                            self.anim_tick_tower()
+
+                        # рельса
+                        elif self.tank_settings[1] in [3, 4]:
+                            self.shoot(move_bool, type='rail')
+
+                        self.time_shoot_a = time.perf_counter() + self.delay_shoot_a
+                else:
+                    if self.tank_settings[1] in [2]:
+                        self.gun_twist_time = time.perf_counter() + self.gun_twist_delay
+
+                    self.shoot_a_bool = False
+
+                if self.tank_settings[1] in [2]:
+                    if (self.temperature_gun > 0) and (self.gun_overheat_time <= time.perf_counter()):
+                        self.temperature_gun -= self.temperature_gun_in_Shoot
+                        if self.temperature_gun <= self.max_temperature_gun / 4:
+                            self.gun_overheat = False
+
+                        self.gun_overheat_time = time.perf_counter() + self.gun_overheat_delay
+
+                        if self.gun_overheat:
+                            get_obj_display('smoke').add_smoke(self.pos[0] + self.offs[self.rotation][0], self.pos[1] + self.offs[self.rotation][1], 9)
+
+                    self.obj_tanks[5].alpha = (200 / self.max_temperature_gun) * self.temperature_gun
+                    self.obj_tanks[5].update_image(True)
 
             # перемещение стпрайтов и полигонов по карте
             if self.death_bool:
@@ -252,7 +342,20 @@ class player():
                     self.protection_images[self.protection_image_num].update_image(True)
 
             for i in range(len(self.obj_tanks)):
-                if i != 1:
+
+                if i == 1:
+                    self.obj_tanks[i][self.anim_body_state].update_rotation(self.rotation)
+
+                    self.obj_tanks[i][self.anim_body_state].x = self.pos[0] + get_obj_display('world').map_offs[0]
+                    self.obj_tanks[i][self.anim_body_state].y = self.pos[1] + get_obj_display('world').map_offs[1]
+                    self.obj_tanks[i][self.anim_body_state].update_image(True)
+                elif i == 4:
+                    self.obj_tanks[i][self.anim_tower_state].x = self.pos[0] + get_obj_display('world').map_offs[0]
+                    self.obj_tanks[i][self.anim_tower_state].y = self.pos[1] + get_obj_display('world').map_offs[1]
+                    self.obj_tanks[i][self.anim_tower_state].update_image(True)
+                    self.obj_tanks[i][self.anim_tower_state].update_rotation(self.rotation)
+
+                else:
                     try:
                         self.obj_tanks[i].update_rotation(self.rotation)
                     except:
@@ -265,13 +368,6 @@ class player():
                         self.obj_tanks[i].x = self.pos[0] + get_obj_display('world').map_offs[0]
                         self.obj_tanks[i].y = self.pos[1] + get_obj_display('world').map_offs[1]
                         self.obj_tanks[i].update_image(True)
-
-                else:
-                    self.obj_tanks[i][self.anim_body_state].update_rotation(self.rotation)
-
-                    self.obj_tanks[i][self.anim_body_state].x = self.pos[0] + get_obj_display('world').map_offs[0]
-                    self.obj_tanks[i][self.anim_body_state].y = self.pos[1] + get_obj_display('world').map_offs[1]
-                    self.obj_tanks[i][self.anim_body_state].update_image(True)
 
             # удаление следов
             for i in range(len(self.traces_list)-1, -1, -1):
@@ -336,10 +432,13 @@ class player():
 
             if not self.death_bool:
                 for i in range(len(self.obj_tanks)):
-                    if i != 1:
-                        drawp(self.obj_tanks[i])
-                    else:
+                    if i == 1:
                         drawp(self.obj_tanks[i][self.anim_body_state])
+                    elif i == 4:
+                        drawp(self.obj_tanks[i][self.anim_tower_state])
+                    else:
+                        drawp(self.obj_tanks[i])
+
 
             if self.death_bool:
                 drawp(self.obj_tanks[0])

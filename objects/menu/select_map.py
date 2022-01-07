@@ -65,7 +65,7 @@ class select_map_buttons():
                             (settings.height - settings.height/3.5) - (y * settings.height/4.5),
                             'buttons/button_map.png', scale=settings.height/160,
                             center=False, arg=('editor(\'' + self.map_names[i] + '\')') if self.editor else ('select_tank(\'' + self.map_names[i] + '\')'), #('play(\'' + self.map_names[i] + '\')'),
-                            image_selected='buttons/button_map_selected.png'
+                            image_selected='buttons/button_map_selected.png', shadow=graphics_settings.shadows_buttons
                         )
                     )
 

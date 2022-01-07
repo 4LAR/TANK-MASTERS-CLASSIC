@@ -29,6 +29,7 @@ class Graphics_settings():
         self.draw_smoke = True
 
         self.game_in_menu = False
+        self.shadows_buttons = False
 
 
         self.read_settings()
@@ -48,6 +49,7 @@ class Graphics_settings():
             self.draw_smoke = True if (config.get("Graphics", "draw_smoke")).lower() == 'true' else False
 
             self.game_in_menu = True if (config.get("Graphics", "game_in_menu")).lower() == 'true' else False
+            self.shadows_buttons = True if (config.get("Graphics", "shadows_buttons")).lower() == 'true' else False
         else:
             self.save_settings()
 
@@ -65,6 +67,7 @@ class Graphics_settings():
         config.set("Graphics", "draw_smoke", str(self.draw_smoke))
 
         config.set("Graphics", "game_in_menu", str(self.game_in_menu))
+        config.set("Graphics", "shadows_buttons", str(self.shadows_buttons))
 
         with open(self.path, "w") as config_file: # запись файла с настройками
             config.write(config_file)

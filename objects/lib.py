@@ -146,7 +146,7 @@ class input_label_image():
         self.text_obj.text = text
         self.text_obj.text_label.label.text = text
 
-    def __init__(self, x, y, image='', image_selected='', scale=1, font='default.ttf', color_text=(255, 255, 255, 255), text='', pre_text='', alpha=255, text_indent=0, text_input_indent=20):
+    def __init__(self, x, y, image='', image_selected='', scale=1, font='default.ttf', color_text=(255, 255, 255, 255), text='', pre_text='', alpha=255, text_indent=0, text_input_indent=20, shadow=False, color_shadow=(0, 0, 0, 128)):
 
         self.x = x
         self.y = y
@@ -164,6 +164,13 @@ class input_label_image():
 
         size = self.scale * 5.5
         self.text_button = text_label(self.x + text_indent, self.y + size*1.6, self.text, load_font=True, font=font, size=int(size), anchor_x='left', color=color_text)
+
+        self.shadow = shadow
+        self.color_shadow = color_shadow
+
+        self.image_shadow_obj = PIL_to_pyglet(get_pil_color_mask(Image.open('img/' + self.image).convert("RGBA"), self.color_shadow), scale, False)
+        self.image_shadow_obj.x = x - scale
+        self.image_shadow_obj.y = y + scale
 
 
         self.image_obj = image_label(self.image, x, y, scale=scale, center=False)
@@ -224,10 +231,15 @@ class input_label_image():
         self.text_obj.on_text(text)
 
     def draw(self):
+        if self.shadow:
+            drawp(self.image_shadow_obj)
+
         if self.selected or self.hover:
-            self.image_selected_obj.draw()
+            drawp(self.image_selected_obj)
+            #self.image_selected_obj.draw()
         else:
-            self.image_obj.draw()
+            drawp(self.image_obj)
+            #self.image_obj.draw()
 
         self.text_button.draw()
         self.text_obj.draw()
@@ -430,7 +442,7 @@ class image_label(): # класс для проприсвки картинки
         self.update_image()
         #print(self.rotation)
 
-    def __init__(self, image, x, y, scale_x = 1, scale_y = 1, scale = 1, visible=True, rotation=0, alpha=255, pixel=False, center=False, black_mask=False, alpha_mask=0, batch=None, group=None, no_image=False):
+    def __init__(self, image, x, y, scale_x = 1, scale_y = 1, scale = 1, visible=True, rotation=0, alpha=255, pixel=False, center=False, black_mask=False, alpha_mask=0, batch=None, group=None, no_image=False, shadow=False, color_shadow=(0, 0, 0, 128)):
         self.x = x
         self.y = y
         self.size_x = scale_y
@@ -440,8 +452,15 @@ class image_label(): # класс для проприсвки картинки
         self.scale = scale
         self.visible = visible
         self.alpha = alpha
-        #self.image = open('img/' + image, 'rb')
-        #self.image = pyglet.image.load(image, file=self.image)
+
+        self.shadow = shadow
+        self.color_shadow = color_shadow
+
+        if self.shadow:
+            self.image_shadow_obj = PIL_to_pyglet(get_pil_color_mask(Image.open('img/' + str(image)).convert("RGBA"), self.color_shadow), scale, False)
+            self.image_shadow_obj.x = x - scale
+            self.image_shadow_obj.y = y + scale
+
         if black_mask:
             if no_image:
                 image = Image.open('img/' + image).convert("RGBA")
@@ -467,6 +486,7 @@ class image_label(): # класс для проприсвки картинки
                 self.sprite = pyglet.sprite.Sprite(self.image, x = self.x, y = self.y, batch=batch)
         else:
             self.sprite = pyglet.sprite.Sprite(self.image, x = self.x, y = self.y)
+
         self.center = center
         self.sprite.visible = self.visible
         self.sprite.opacity = self.alpha
@@ -474,13 +494,15 @@ class image_label(): # класс для проприсвки картинки
 
         self.update_image()
 
-
-
     def draw(self):
+        if self.shadow:
+            drawp(self.image_shadow_obj)
+
         if self.pixel:
             self.image.blit(self.x, self.y)
         else:
-            self.sprite.draw()
+            #self.sprite.draw()
+            drawp(self.sprite)
 
 class label(): # класс для прорисовки 4х угольника
     def __init__(self, x, y, size_x, size_y, color=(255, 255, 255), rotation=0, alpha=255):
@@ -542,7 +564,7 @@ class breathing_label(): # класс для прорисовки 4х уголь
         self.rec.draw()
 
 class image_flag():
-    def __init__(self, x, y, image, image_flag, scale=1, rotation=0, alpha=255, center=False, image_selected_flag=None, image_selected=None, poligon=False, function_bool = False, function=None, arg=None, text=None, text_color=(0, 0, 0, 0), text_indent=0, font='default.ttf'):
+    def __init__(self, x, y, image, image_flag, scale=1, rotation=0, alpha=255, center=False, image_selected_flag=None, image_selected=None, poligon=False, function_bool = False, function=None, arg=None, text=None, text_color=(0, 0, 0, 0), text_indent=0, font='default.ttf', shadow=False, color_shadow=(0, 0, 0, 128)):
         self.x = x
         self.y = y
         self.image = image
@@ -577,6 +599,17 @@ class image_flag():
 
         self.selected = False
         self.flag = False
+
+        self.shadow = shadow
+        self.color_shadow = color_shadow
+
+        self.image_shadow_obj = PIL_to_pyglet(get_pil_color_mask(Image.open('img/' + self.image).convert("RGBA"), self.color_shadow), scale, False)
+        self.image_shadow_obj.x = x - scale
+        self.image_shadow_obj.y = y + scale
+
+        self.image_flag_shadow_obj = PIL_to_pyglet(get_pil_color_mask(Image.open('img/' + self.image_flag).convert("RGBA"), self.color_shadow), scale, False)
+        self.image_flag_shadow_obj.x = x - scale
+        self.image_flag_shadow_obj.y = y + scale
 
         self.image_obj = image_label(self.image, x, y, scale=scale, alpha=alpha, rotation=rotation, center=center)
         self.image_flag_obj = image_label(self.image_flag, x, y, scale=scale, alpha=alpha, rotation=rotation, center=center)
@@ -658,14 +691,23 @@ class image_flag():
         self.image_selected_flag_obj.sprite.y = y_im
 
     def draw(self):
+        if self.shadow and not self.flag:
+            drawp(self.image_shadow_obj)
+        elif self.shadow and self.flag:
+            drawp(self.image_flag_shadow_obj)
+
         if self.selected and self.flag and self.image_selected_flag != None:
-            self.image_selected_flag_obj.draw()
+            drawp(self.image_selected_flag_obj)
+            #self.image_selected_flag_obj.draw()
         elif not self.selected and self.flag:
-            self.image_flag_obj.draw()
+            drawp(self.image_flag_obj)
+            #self.image_flag_obj.draw()
         elif self.selected and not self.flag and self.image_selected != None:
-            self.image_selected_obj.draw()
+            drawp(self.image_selected_obj)
+            #self.image_selected_obj.draw()
         elif not self.selected and not self.flag:
-            self.image_obj.draw()
+            drawp(self.image_obj)
+            #self.image_obj.draw()
 
         if self.text != None:
             self.text_label.draw()
@@ -686,7 +728,7 @@ class image_flag():
 
 
 class image_button():
-    def __init__(self, x, y, image, scale=1, rotation=0, alpha=255, center=False, function=None, arg=None, image_selected=None, poligon=False, text=None, text_color=(180, 180, 180, 255), font='pixel.ttf', text_indent=0):
+    def __init__(self, x, y, image, scale=1, rotation=0, alpha=255, center=False, function=None, arg=None, image_selected=None, poligon=False, text=None, text_color=(180, 180, 180, 255), font='pixel.ttf', text_indent=0, shadow=False, color_shadow=(0, 0, 0, 128)):
         self.x = x
         self.y = y
         self.image = image
@@ -710,7 +752,13 @@ class image_button():
 
         self.selected = False
 
-        #def __init__(self, image, x, y, scale_x = 1, scale_y = 1, scale = 1, visible=True, rotation=0, alpha=255, pixel=False, center=False):
+        self.shadow = shadow
+        self.color_shadow = color_shadow
+
+        self.image_shadow_obj = PIL_to_pyglet(get_pil_color_mask(Image.open('img/' + self.image).convert("RGBA"), self.color_shadow), scale, False)
+        self.image_shadow_obj.x = x - scale
+        self.image_shadow_obj.y = y + scale
+
         self.image_obj = image_label(self.image, x, y, scale=scale, alpha=alpha, rotation=rotation, center=center)
         if self.image_selected != None:
             self.image_selected_obj = image_label(self.image_selected, x, y, scale=scale, alpha=alpha, rotation=rotation, center=center)
@@ -774,10 +822,14 @@ class image_button():
         self.image_selected_obj.sprite.y = y_im
 
     def draw(self):
+        if self.shadow:
+            drawp(self.image_shadow_obj)
         if not self.selected:
-            self.image_obj.draw()
+            drawp(self.image_obj)
+            #self.image_obj.draw()
         elif self.image_selected != None:
-            self.image_selected_obj.draw()
+            drawp(self.image_selected_obj)
+            #self.image_selected_obj.draw()
 
         if self.text != None:
             self.text.draw()

@@ -19,4 +19,6 @@ game/weather.py
 game/pause.py
 game/game_settings.py
 game/game.py
+netCode/client.py
+netCode/server.py
 logo.py

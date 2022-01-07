@@ -25,7 +25,9 @@ class game_settings_page():
         self.settings_buttons[2][1].flag = graphics_settings.draw_traces
         self.settings_buttons[2][2].flag = graphics_settings.draw_shadows
         self.settings_buttons[2][3].flag = graphics_settings.draw_smoke
+
         self.settings_buttons[2][4].flag = graphics_settings.game_in_menu
+        self.settings_buttons[2][5].flag = graphics_settings.shadows_buttons
 
         #settings.save_settings()
 
@@ -68,6 +70,7 @@ class game_settings_page():
         graphics_settings.draw_shadows = self.settings_buttons[2][2].flag
         graphics_settings.draw_smoke = self.settings_buttons[2][3].flag
         graphics_settings.game_in_menu = self.settings_buttons[2][4].flag
+        graphics_settings.shadows_buttons = self.settings_buttons[2][5].flag
 
         graphics_settings.save_settings()
         settings.save_settings()
@@ -85,7 +88,7 @@ class game_settings_page():
                 'buttons/button_clear_left.png', scale=settings.height/120,
                 center=False, arg='get_obj_display("game_settings_page").save_settings(); menu()',
                 image_selected='buttons/button_clear_left_selected.png',
-                text='save', text_indent= settings.height/20
+                text='save', text_indent= settings.height/20, shadow=graphics_settings.shadows_buttons
             )
         )
 
@@ -229,7 +232,7 @@ class game_settings_page():
                 text_indent=settings.height/8,
 
                 function_bool = True,
-                arg='get_obj_display("game_settings_page").select_screen(0)'
+                arg='get_obj_display("game_settings_page").select_screen(0)', shadow=graphics_settings.shadows_buttons
 
             )
         )
@@ -249,7 +252,7 @@ class game_settings_page():
                 text_indent=settings.height/8,
 
                 function_bool = True,
-                arg='get_obj_display("game_settings_page").select_screen(1)'
+                arg='get_obj_display("game_settings_page").select_screen(1)', shadow=graphics_settings.shadows_buttons
 
             )
         )
@@ -269,7 +272,7 @@ class game_settings_page():
                 text_indent=settings.height/8,
 
                 function_bool = True,
-                arg='get_obj_display("game_settings_page").select_screen(2)'
+                arg='get_obj_display("game_settings_page").select_screen(2)', shadow=graphics_settings.shadows_buttons
 
             )
         )
@@ -277,22 +280,24 @@ class game_settings_page():
         # right
         self.settings_buttons[0].append(
             input_label_image(
-            settings.width/100 + settings.width/2,
-            settings.height - settings.height/2.5 - (settings.height/8) * 0,
-            'buttons/button_clear_2_reverse.png', 'buttons/button_clear_selected_2_reverse.png',
-            scale=settings.height/160, color_text=(150, 150, 150, 255),
-            text='width', pre_text='1600', font='pixel.ttf',
-            text_indent=settings.height/12, text_input_indent=settings.height/6)
+                settings.width/100 + settings.width/2,
+                settings.height - settings.height/2.5 - (settings.height/8) * 0,
+                'buttons/button_clear_2_reverse.png', 'buttons/button_clear_selected_2_reverse.png',
+                scale=settings.height/160, color_text=(150, 150, 150, 255),
+                text='width', pre_text='1600', font='pixel.ttf',
+                text_indent=settings.height/12, text_input_indent=settings.height/6, shadow=graphics_settings.shadows_buttons
+            )
         )
 
         self.settings_buttons[0].append(
             input_label_image(
-            settings.width/100 + settings.width/2,
-            settings.height - settings.height/2.5 - (settings.height/8) * 1,
-            'buttons/button_clear_2_reverse.png', 'buttons/button_clear_selected_2_reverse.png',
-            scale=settings.height/160, color_text=(150, 150, 150, 255),
-            text='height', pre_text='900', font='pixel.ttf',
-            text_indent=settings.height/12, text_input_indent=settings.height/6)
+                settings.width/100 + settings.width/2,
+                settings.height - settings.height/2.5 - (settings.height/8) * 1,
+                'buttons/button_clear_2_reverse.png', 'buttons/button_clear_selected_2_reverse.png',
+                scale=settings.height/160, color_text=(150, 150, 150, 255),
+                text='height', pre_text='900', font='pixel.ttf',
+                text_indent=settings.height/12, text_input_indent=settings.height/6, shadow=graphics_settings.shadows_buttons
+            )
         )
 
         # sound
@@ -327,7 +332,7 @@ class game_settings_page():
                 text='draw leaf',
                 text_color = (150, 150, 150, 255),
                 font='pixel.ttf',
-                text_indent=settings.height/8
+                text_indent=settings.height/8, shadow=graphics_settings.shadows_buttons
 
             )
         )
@@ -345,7 +350,7 @@ class game_settings_page():
                 text='draw traces',
                 text_color = (150, 150, 150, 255),
                 font='pixel.ttf',
-                text_indent=settings.height/8
+                text_indent=settings.height/8, shadow=graphics_settings.shadows_buttons
 
             )
         )
@@ -363,7 +368,7 @@ class game_settings_page():
                 text='draw shadows',
                 text_color = (150, 150, 150, 255),
                 font='pixel.ttf',
-                text_indent=settings.height/8
+                text_indent=settings.height/8, shadow=graphics_settings.shadows_buttons
 
             )
         )
@@ -381,7 +386,7 @@ class game_settings_page():
                 text='draw smoke',
                 text_color = (150, 150, 150, 255),
                 font='pixel.ttf',
-                text_indent=settings.height/8
+                text_indent=settings.height/8, shadow=graphics_settings.shadows_buttons
 
             )
         )
@@ -400,7 +405,25 @@ class game_settings_page():
                 text='game in menu',
                 text_color = (150, 150, 150, 255),
                 font='pixel.ttf',
-                text_indent=settings.height/8
+                text_indent=settings.height/8, shadow=graphics_settings.shadows_buttons
+
+            )
+        )
+
+        self.settings_buttons[2].append(
+            image_flag(
+                settings.width/100 + settings.width/2,
+                settings.height - settings.height/3.5 - (settings.height/8) * 1,
+                image='buttons/flag/flag.png',
+                image_flag='buttons/flag/flag_selected.png',
+                image_selected_flag='buttons/flag/flag_hover_selected.png',
+                image_selected='buttons/flag/flag_hover.png',
+                scale=settings.height/160,
+
+                text='buttons shadow',
+                text_color = (150, 150, 150, 255),
+                font='pixel.ttf',
+                text_indent=settings.height/8, shadow=graphics_settings.shadows_buttons
 
             )
         )

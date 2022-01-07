@@ -70,11 +70,12 @@ class bullets():
                     dead = False
                     for j in range(len(get_obj_display('players').tanks)):
                         if bullet[0] != j and collision.collide(self.bullet_poly, get_obj_display('players').tanks[j].poligon_body):
-                            dead = True
-                            if not get_obj_display('players').tanks[j].death_bool and not get_obj_display('players').tanks[j].protection:
-                                get_obj_display('players').tanks[j].health -= get_obj_display('players').tanks[bullet[0]].demage_a
-                            self.bullets.pop(i)
-                            #get_obj_display('smoke').add_smoke(bullet[1], bullet[2], 9)
+                            if get_obj_display('players').tanks[j].use:
+                                dead = True
+                                if not get_obj_display('players').tanks[j].death_bool and not get_obj_display('players').tanks[j].protection:
+                                    get_obj_display('players').tanks[j].health -= get_obj_display('players').tanks[bullet[0]].demage_a
+                                self.bullets.pop(i)
+                                #get_obj_display('smoke').add_smoke(bullet[1], bullet[2], 9)
 
                     if not dead:
                         pos = [bullet[1] + ((settings.width - get_obj_display('world').image_wall.width) / 2), bullet[2] - ((settings.height - get_obj_display('world').image_wall.height) / 2)]
