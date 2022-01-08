@@ -44,8 +44,9 @@ class tanks():
         self.bases_health = [100, 60, 60]
 
         self.towers = ['gun', 'bgun', 'mgun', 'rgun', 'rmgun']
+        self.towers_speed = [settings.height/60, settings.height/60, settings.height/60, settings.height/60 * 1.5, settings.height/60 * 1.5]
         self.towers_damage = [60, 100, 10, 100, 60]
-        self.towers_delay = [1, 1.5, 0.1, 1.5, 1]
+        self.towers_delay = [1, 1.5, 0.1, 0.5, 0.5]
         self.towers_scatter = [0, 0, 4, 0, 0]
 
 
@@ -57,6 +58,7 @@ def play(
             tanks=[True, False, False, False],
             tank_settings=[[0, 0], [0, 0], [0, 0], [0, 0]]
         ):
+    hide_cursor()
     clear_display()
     add_display(game_settings)
     add_display(graphics_settings)
@@ -71,6 +73,7 @@ def play(
     add_display(pause())
 
 def editor(map_name='test', new=False):
+    show_cursor()
     engine_settings.on_mouse_scroll_bool = True
     clear_display()
     add_display(os_world())

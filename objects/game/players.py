@@ -13,8 +13,10 @@ class players():
         if symbol == pyglet.window.key.ESCAPE:
             if get_obj_display('game_settings').pause:
                 get_obj_display('game_settings').pause = False
+                hide_cursor()
             else:
                 get_obj_display('game_settings').pause = True
+                show_cursor()
 
             return pyglet.event.EVENT_HANDLED
 
@@ -122,6 +124,10 @@ class player():
         self.gun_twist_delay = 0.5
         self.gun_twist_time = time.perf_counter() + self.gun_twist_delay
 
+        # for laser
+        self.gun_laser_count = 0
+        self.gun_laser_max_count = 8 if (self.tank_settings[1] == 3) else 4
+
         # for shoot
         self.delay_shoot_a = tanks.towers_delay[self.tank_settings[1]]
         self.time_shoot_a = time.perf_counter() + self.delay_shoot_a
@@ -150,7 +156,7 @@ class player():
         elif self.tank_settings[1] in [3, 4]:
             self.obj_tanks.append([])
             self.obj_tanks[4].append(image_label('tanks/tower/' + tanks.towers[self.tank_settings[1]] + '.png', settings.width//2, settings.height//2, scale=self.scale_tank, pixel=False, center=True))
-
+            
         self.poligon_body = collision.Poly(v(100, 100),
         [
             v(-self.obj_tanks[0].width/2 + self.obj_tanks[0].width/50, -self.obj_tanks[0].height/2 + self.obj_tanks[0].height/50),
@@ -207,17 +213,19 @@ class player():
             self.sound.play('shoot.wav')
             get_obj_display('bullets').spawn(
                 self.id, self.pos[0], self.pos[1], self.rotation,
-                self.speed_tick * 10,
-                ((tanks.towers_scatter[self.tank_settings[1]] + 1) * 2 if move_bool else (tanks.towers_scatter[self.tank_settings[1]])) if get_obj_display('game_settings').scatter_bool else 0
+                tanks.towers_speed[self.tank_settings[1]],
+                ((tanks.towers_scatter[self.tank_settings[1]] + 1) * 2 if move_bool else (tanks.towers_scatter[self.tank_settings[1]])) if get_obj_display('game_settings').scatter_bool else 0,
+                type=type
             )
             get_obj_display('smoke').add_smoke(self.pos[0] + self.offs[self.rotation][0], self.pos[1] + self.offs[self.rotation][1], 9)
 
-        elif type == 'rail':
-            self.sound.play('shoot.wav')
+        elif type == 'laser':
+            self.sound.play('laser.wav')
             get_obj_display('bullets').spawn(
                 self.id, self.pos[0], self.pos[1], self.rotation,
-                self.speed_tick * 10,
-                ((tanks.towers_scatter[self.tank_settings[1]] + 1) * 2 if move_bool else (tanks.towers_scatter[self.tank_settings[1]])) if get_obj_display('game_settings').scatter_bool else 0
+                tanks.towers_speed[self.tank_settings[1]],
+                ((tanks.towers_scatter[self.tank_settings[1]] + 1) * 2 if move_bool else (tanks.towers_scatter[self.tank_settings[1]])) if get_obj_display('game_settings').scatter_bool else 0,
+                type=type
             )
 
     def update(self):
@@ -300,9 +308,12 @@ class player():
 
                             self.anim_tick_tower()
 
-                        # рельса
+                        # лазер
                         elif self.tank_settings[1] in [3, 4]:
-                            self.shoot(move_bool, type='rail')
+                            self.gun_laser_count += 1
+                            if self.gun_laser_count >= self.gun_laser_max_count:
+                                self.shoot(move_bool, type='laser')
+                                self.gun_laser_count = 0
 
                         self.time_shoot_a = time.perf_counter() + self.delay_shoot_a
                 else:

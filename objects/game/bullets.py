@@ -17,18 +17,31 @@ class bullets():
         self.norm_fps = 75
 
         self.bullets = []
-        self.bullet = image_label('tanks/bullets/bullet.png', settings.width//2, settings.height//2, scale=get_obj_display('world').scale/2, pixel=False, center=True)
+        self.bullet = [
+            image_label('tanks/bullets/bullet.png', settings.width//2, settings.height//2, scale=get_obj_display('world').scale/2, pixel=False, center=True),
+            [
+                image_label('tanks/bullets/laser/laser_red.png', settings.width//2, settings.height//2, scale=get_obj_display('world').scale/2, pixel=False, center=True),
+                image_label('tanks/bullets/laser/laser_blue.png', settings.width//2, settings.height//2, scale=get_obj_display('world').scale/2, pixel=False, center=True),
+                image_label('tanks/bullets/laser/laser_green.png', settings.width//2, settings.height//2, scale=get_obj_display('world').scale/2, pixel=False, center=True),
+                image_label('tanks/bullets/laser/laser_yellow.png', settings.width//2, settings.height//2, scale=get_obj_display('world').scale/2, pixel=False, center=True)
+            ]
+        ]
+
 
         self.bullet_poly = collision.Poly(v(100, 100),
         [
-            v(-self.bullet.sprite.width/2, -self.bullet.sprite.height/2),
-            v(self.bullet.sprite.width/2, -self.bullet.sprite.height/2),
-            v(self.bullet.sprite.width/2, self.bullet.sprite.height/2),
-            v(-self.bullet.sprite.width/2, self.bullet.sprite.height/2)
+            v(-self.bullet[0].sprite.width/2, -self.bullet[0].sprite.height/2),
+            v(self.bullet[0].sprite.width/2, -self.bullet[0].sprite.height/2),
+            v(self.bullet[0].sprite.width/2, self.bullet[0].sprite.height/2),
+            v(-self.bullet[0].sprite.width/2, self.bullet[0].sprite.height/2)
         ])
 
-    def spawn(self, id, x, y, rot, speed, scatter=0):
-        self.bullets.append([id, x, y, rot + ((random.randrange(-scatter, scatter)) if scatter > 0 else 0), speed])
+    def spawn(self, id, x, y, rot, speed, scatter=0, type='bullet'):
+        types = {
+            'bullet': 0,
+            'laser': 1
+        }
+        self.bullets.append([id, x, y, rot + ((random.randrange(-scatter, scatter)) if scatter > 0 else 0), speed, types[type]])
 
     def update(self):
         if not get_obj_display('game_settings').pause:
@@ -37,7 +50,7 @@ class bullets():
                 speed_tick = (self.check_fps / pyglet.clock.get_fps() if pyglet.clock.get_fps() <= self.norm_fps else 1) * bullet[4]
                 i += 1
 
-                if get_obj_display('game_settings').wind_bool:
+                if get_obj_display('game_settings').wind_bool and bullet[5] != 1:
 
                     wind_deg = get_obj_display('game_settings').wind_deg
                     wind_power = speed_tick / get_obj_display('game_settings').wind_power
@@ -93,12 +106,16 @@ class bullets():
                                 #get_obj_display('world').update_images_wall()
 
     def draw(self):
-
         for bullet in self.bullets:
-            self.bullet.sprite.x = bullet[1] + get_obj_display('world').map_offs[0]
-            self.bullet.sprite.y = bullet[2] + get_obj_display('world').map_offs[1]
-            self.bullet.sprite.rotation = bullet[3]
-            drawp(self.bullet)
+            if bullet[5] == 0:
+                image_bullet = self.bullet[0]
+            elif bullet[5] == 1:
+                image_bullet = self.bullet[1][bullet[0]]
+
+            image_bullet.sprite.x = bullet[1] + get_obj_display('world').map_offs[0]
+            image_bullet.sprite.y = bullet[2] + get_obj_display('world').map_offs[1]
+            image_bullet.sprite.rotation = bullet[3]
+            drawp(image_bullet)
 
             if objects_other[0].draw_poligons:
                 self.bullet_poly.pos.x = bullet[1]

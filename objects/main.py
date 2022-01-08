@@ -25,5 +25,20 @@ engine_settings.on_mouse_release_bool  = True
 engine_settings.on_draw_bool           = True
 engine_settings.on_update_bool         = True
 
+def menu_cursor():
+    image = pyglet.image.load('img/cursor/cursor_menu.png')
+    texture = image.get_texture()
+    texture.width = settings.height//50
+    texture.height = settings.height//50
+
+    cursor = pyglet.window.ImageMouseCursor(texture, 9, 9)
+    window.set_mouse_cursor(cursor)
+
+def show_cursor():
+    window.set_mouse_visible(True)
+
+def hide_cursor():
+    window.set_mouse_visible(False)
+
 def main():
     menu()

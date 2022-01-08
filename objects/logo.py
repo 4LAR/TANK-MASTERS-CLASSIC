@@ -37,6 +37,8 @@ def logo_text():
     add_display(text_label(settings.width//2, settings.height//4, '100LAR STUDIO', load_font=True, font='pixel.ttf', size=settings.height//10, anchor_x='center', color = (180, 180, 180, 255)))
     add_display(breathing_label(0, settings.height//6, settings.width, settings.height//6, (0, 0, 0), 0, delay=0.04, function=logo_stop))
 #main()
+
+hide_cursor()
 add_display(skip())
 add_display(label(settings.width, settings.height, settings.width, settings.height, (0, 0, 0)))
 add_display(image_label('logo_studio.png', settings.width//2.5, settings.height//3, scale=settings.height//180, pixel=True))

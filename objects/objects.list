@@ -5,6 +5,8 @@ console.py
 editor/map_editor.py
 editor/map_editor_inventory.py
 menu/menu.py
+menu/single.py
+menu/multiplayer.py
 menu/select_map.py
 menu/select_tank.py
 menu/game_setup.py
