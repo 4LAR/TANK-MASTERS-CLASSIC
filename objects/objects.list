@@ -10,6 +10,7 @@ menu/multiplayer.py
 menu/select_map.py
 menu/select_tank.py
 menu/game_setup.py
+game/game_settings.py
 menu/settings.py
 game/world.py
 game/wind.py
@@ -19,7 +20,6 @@ game/smoke.py
 game/gui.py
 game/weather.py
 game/pause.py
-game/game_settings.py
 game/game.py
 netCode/client.py
 netCode/server.py

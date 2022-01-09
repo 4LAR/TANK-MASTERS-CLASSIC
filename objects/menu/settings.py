@@ -82,15 +82,14 @@ class game_settings_page():
 
     def __init__(self):
 
-        self.save_settings_button = add_display(
-            image_button(
-                settings.width - (settings.height/120 * 48), settings.height/10,
-                'buttons/button_clear_left.png', scale=settings.height/120,
-                center=False, arg='get_obj_display("game_settings_page").save_settings(); menu()',
-                image_selected='buttons/button_clear_left_selected.png',
-                text='save', text_indent= settings.height/20, shadow=graphics_settings.shadows_buttons
-            )
+        self.save_settings_button = image_button(
+            settings.width - (settings.height/120 * 48), settings.height/10,
+            'buttons/button_clear_left.png', scale=settings.height/120,
+            center=False, arg='get_obj_display("game_settings_page").save_settings(); menu()',
+            image_selected='buttons/button_clear_left_selected.png',
+            text='save', text_indent= settings.height/20, shadow=graphics_settings.shadows_buttons
         )
+
 
         self.page = 0
         # 0 - display
@@ -442,6 +441,8 @@ class game_settings_page():
             #for b in s:
             s.on_mouse_press(x, y, button, modifiers)
 
+        return self.save_settings_button.on_mouse_press(x, y, button, modifiers)
+
     def on_mouse_motion(self, x, y, dx, dy):
         for s in self.settings_page_buttons:
             s.on_mouse_motion(x, y, dx, dy)
@@ -449,6 +450,8 @@ class game_settings_page():
         for s in self.settings_buttons[self.page]:
             #for b in s:
             s.on_mouse_motion(x, y, dx, dy)
+
+        self.save_settings_button.on_mouse_motion(x, y, dx, dy)
 
     def on_key_press(self, symbol, modifiers):
         for s in self.settings_buttons[self.page]:
@@ -465,6 +468,7 @@ class game_settings_page():
                 pass
 
     def draw(self):
+        drawp(self.save_settings_button)
         for s in self.settings_page_buttons:
             drawp(s)
 
@@ -473,3 +477,5 @@ class game_settings_page():
 
         for s in self.settings_buttons[self.page]:
             drawp(s)
+
+#game_settings_page = game_settings_page()

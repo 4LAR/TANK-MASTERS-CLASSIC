@@ -46,8 +46,14 @@ class tanks():
         self.towers = ['gun', 'bgun', 'mgun', 'rgun', 'rmgun']
         self.towers_speed = [settings.height/60, settings.height/60, settings.height/60, settings.height/60 * 1.5, settings.height/60 * 1.5]
         self.towers_damage = [60, 100, 10, 100, 60]
-        self.towers_delay = [1, 1.5, 0.1, 0.5, 0.5]
+        self.towers_delay = [1, 1.5, 0.1, 0.2, 0.2]
         self.towers_scatter = [0, 0, 4, 0, 0]
+        self.towers_laser_color = [
+            (200, 0, 0),
+            (0, 0, 200),
+            (0, 200, 0),
+            (200, 200, 0)
+        ]
 
 
 tanks = tanks()

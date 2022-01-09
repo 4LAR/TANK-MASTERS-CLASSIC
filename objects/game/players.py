@@ -126,7 +126,10 @@ class player():
 
         # for laser
         self.gun_laser_count = 0
-        self.gun_laser_max_count = 8 if (self.tank_settings[1] == 3) else 4
+        self.gun_laser_max_count = 6 if (self.tank_settings[1] == 3) else 3
+
+        self.reload_laser_delay = 0.2
+        self.reload_laser_time = time.perf_counter() + self.reload_laser_delay
 
         # for shoot
         self.delay_shoot_a = tanks.towers_delay[self.tank_settings[1]]
@@ -156,7 +159,12 @@ class player():
         elif self.tank_settings[1] in [3, 4]:
             self.obj_tanks.append([])
             self.obj_tanks[4].append(image_label('tanks/tower/' + tanks.towers[self.tank_settings[1]] + '.png', settings.width//2, settings.height//2, scale=self.scale_tank, pixel=False, center=True))
-            
+            self.obj_tanks.append([])
+            for i in range(self.gun_laser_max_count):
+                #self.obj_tanks[5].append(image_label('tanks/tower/' + tanks.towers[self.tank_settings[1]] + '/' + str(i) + '.png', settings.width//2, settings.height//2, scale=self.scale_tank, pixel=False, center=True))
+                self.obj_tanks[5].append(PIL_to_pyglet(get_pil_color_mask(Image.open('img/tanks/tower/' + tanks.towers[self.tank_settings[1]] + '/' + str(i) + '.png').convert("RGBA"), tanks.towers_laser_color[id]), self.scale_tank, True))
+                #self.obj_tanks[5][i] =
+
         self.poligon_body = collision.Poly(v(100, 100),
         [
             v(-self.obj_tanks[0].width/2 + self.obj_tanks[0].width/50, -self.obj_tanks[0].height/2 + self.obj_tanks[0].height/50),
@@ -244,6 +252,11 @@ class player():
                 self.death_bool = False
                 self.protection_time = time.perf_counter() + self.protection_delay
                 self.protection = True
+
+                self.gun_laser_count = 0
+                self.temperature_gun = 0
+                self.gun_overheat = False
+                
                 self.go_spawn()
 
             # подстройка скорости игрока под FPS
@@ -310,13 +323,21 @@ class player():
 
                         # лазер
                         elif self.tank_settings[1] in [3, 4]:
-                            self.gun_laser_count += 1
-                            if self.gun_laser_count >= self.gun_laser_max_count:
-                                self.shoot(move_bool, type='laser')
-                                self.gun_laser_count = 0
+                            if self.gun_laser_count < self.gun_laser_max_count:
+                                self.gun_laser_count += 1
+
+                            if (self.bot and self.bot_shoot_a):
+                                if self.gun_laser_count >= self.gun_laser_max_count:
+                                    self.shoot(move_bool, type='laser')
+                                    self.gun_laser_count = 0
 
                         self.time_shoot_a = time.perf_counter() + self.delay_shoot_a
                 else:
+                    if self.tank_settings[1] in [3, 4]:
+                        if self.gun_laser_count >= self.gun_laser_max_count:
+                            self.shoot(move_bool, type='laser')
+                        self.gun_laser_count = 0
+
                     if self.tank_settings[1] in [2]:
                         self.gun_twist_time = time.perf_counter() + self.gun_twist_delay
 
@@ -360,21 +381,29 @@ class player():
                     self.obj_tanks[i][self.anim_body_state].x = self.pos[0] + get_obj_display('world').map_offs[0]
                     self.obj_tanks[i][self.anim_body_state].y = self.pos[1] + get_obj_display('world').map_offs[1]
                     self.obj_tanks[i][self.anim_body_state].update_image(True)
+
                 elif i == 4:
                     self.obj_tanks[i][self.anim_tower_state].x = self.pos[0] + get_obj_display('world').map_offs[0]
                     self.obj_tanks[i][self.anim_tower_state].y = self.pos[1] + get_obj_display('world').map_offs[1]
                     self.obj_tanks[i][self.anim_tower_state].update_image(True)
                     self.obj_tanks[i][self.anim_tower_state].update_rotation(self.rotation)
 
+                elif i == 5 and self.tank_settings[1] in [3, 4]:
+                    if self.gun_laser_count > 0:
+                        self.obj_tanks[i][self.gun_laser_count - 1].x = self.pos[0] + get_obj_display('world').map_offs[0]
+                        self.obj_tanks[i][self.gun_laser_count - 1].y = self.pos[1] + get_obj_display('world').map_offs[1]
+                        self.obj_tanks[i][self.gun_laser_count - 1].rotation = self.rotation
+
                 else:
                     try:
                         self.obj_tanks[i].update_rotation(self.rotation)
                     except:
                         self.obj_tanks[i].rotation = self.rotation
+
                     if i in [0, 3]:
                         self.obj_tanks[i].x = self.pos[0] + get_obj_display('world').offs_shadows[0] / 3 + get_obj_display('world').map_offs[0]#6
                         self.obj_tanks[i].y = self.pos[1] - get_obj_display('world').offs_shadows[0] / 3 + get_obj_display('world').map_offs[1]#6
-                        #self.obj_tanks[i].update_image(True)
+
                     else:
                         self.obj_tanks[i].x = self.pos[0] + get_obj_display('world').map_offs[0]
                         self.obj_tanks[i].y = self.pos[1] + get_obj_display('world').map_offs[1]
@@ -447,6 +476,9 @@ class player():
                         drawp(self.obj_tanks[i][self.anim_body_state])
                     elif i == 4:
                         drawp(self.obj_tanks[i][self.anim_tower_state])
+                    elif i == 5 and self.tank_settings[1] in [3, 4]:
+                        if self.gun_laser_count > 0:
+                            drawp(self.obj_tanks[i][self.gun_laser_count - 1])
                     else:
                         drawp(self.obj_tanks[i])
 

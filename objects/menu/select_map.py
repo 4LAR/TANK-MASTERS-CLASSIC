@@ -1,6 +1,9 @@
-class select_map_buttons():
+class map_list_class():
+    def __init__(self):
+        self.map_names, self.map_logos = self.search()
 
-    def mapList(self):
+    def search(self):
+        print('READ MAPS')
         maps_names = []
         maps_logos = []
         files = os.listdir('maps')
@@ -16,6 +19,10 @@ class select_map_buttons():
             except:
                 pass
         return maps_names, maps_logos
+
+map_list = map_list_class()
+
+class select_map_buttons():
 
     def update_page_text(self):
         self.text_page.label.text = 'page: ' + str(self.page) + '/' + str(math.ceil(len(self.map_names) / self.maps_in_page))
@@ -115,8 +122,10 @@ class select_map_buttons():
                     break
 
     def update_map_list(self):
+
         self.page = 1
-        self.map_names, self.map_logos = self.mapList()
+        self.map_names = map_list.map_names
+        self.map_logos = map_list.map_logos
 
     def __init__(self, editor=False):
         self.editor = editor

@@ -65,22 +65,37 @@ class back():
 
 first_breath_menu = True
 
-game_in_menu = None
+menu_world = None
+menu_wind = None
+menu_walls = None
+menu_weather = None
+
 game_in_menu_bool = False
 def add_game_in_menu():
-    global game_in_menu
     global game_in_menu_bool
+    global menu_world
+    global menu_wind
+    global menu_walls
+    global menu_weather
 
     add_display(game_settings)
     if not game_in_menu_bool:
-        game_in_menu = world('Castle 2')
+        add_display(graphics_settings)
+        menu_world = world('Castle 2')
+        add_display(menu_world)
+        menu_wind = wind()
+        add_display(menu_wind)
+        menu_walls = walls()
+        add_display(menu_walls)
+        menu_weather = weather()
         game_in_menu_bool = True
-
-    add_display(graphics_settings)
-    add_display(game_in_menu)
-    add_display(wind())
-    add_display(walls())
-    add_display(weather())
+        add_display(menu_weather)
+    else:
+        add_display(graphics_settings)
+        add_display(menu_world)
+        add_display(menu_wind)
+        add_display(menu_walls)
+        add_display(menu_weather)
 
 def menu():
     show_cursor()
@@ -233,6 +248,8 @@ def play_menu():
     add_display(head_menu(align_top=False))
 
 def settings_menu():
+    global game_settings_page
+
     show_cursor()
     clear_display()
     add_display(back(function=menu))
