@@ -87,6 +87,9 @@ class bullets():
                                 dead = True
                                 if not get_obj_display('players').tanks[j].death_bool and not get_obj_display('players').tanks[j].protection:
                                     get_obj_display('players').tanks[j].health -= get_obj_display('players').tanks[bullet[0]].demage_a
+                                    if get_obj_display('players').tanks[j].health <= 0:
+                                        get_obj_display('players').tanks[bullet[0]].kills += 1
+                                    #get_obj_display('world').shaking(delay=0.2, power=settings.height/1000)
                                 self.bullets.pop(i)
                                 #get_obj_display('smoke').add_smoke(bullet[1], bullet[2], 9)
 

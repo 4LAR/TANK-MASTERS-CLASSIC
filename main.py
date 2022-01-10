@@ -7,6 +7,7 @@
 version_engine = 'STONE ENGINE 2.5.0' # версия движка
 
 import time
+import datetime
 import os
 import sys
 import traceback

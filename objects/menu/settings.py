@@ -7,27 +7,31 @@ class game_settings_page():
                 self.settings_page_buttons[i].flag = False
 
     def select_screen(self, id):
-        self.settings_buttons[0][id].flag = True
-        for i in range(len(self.settings_buttons[0])):
+        self.settings_buttons[1][id].flag = True
+        for i in range(len(self.settings_buttons[1])):
             if i != id:
-                self.settings_buttons[0][i].flag = False
+                self.settings_buttons[1][i].flag = False
 
     def read_settings(self):
+        # game
+        self.settings_buttons[0][0].flag = settings.show_fps
+        self.settings_buttons[0][1].flag = settings.console
+
         # display
-        self.settings_buttons[0][settings.full_screen].flag = True
+        self.settings_buttons[1][settings.full_screen].flag = True
 
 
-        self.settings_buttons[0][3].change_text(str(settings.width))
-        self.settings_buttons[0][4].change_text(str(settings.height))
+        self.settings_buttons[1][3].change_text(str(settings.width))
+        self.settings_buttons[1][4].change_text(str(settings.height))
 
         # graphics
-        self.settings_buttons[2][0].flag = graphics_settings.draw_leaf
-        self.settings_buttons[2][1].flag = graphics_settings.draw_traces
-        self.settings_buttons[2][2].flag = graphics_settings.draw_shadows
-        self.settings_buttons[2][3].flag = graphics_settings.draw_smoke
+        self.settings_buttons[3][0].flag = graphics_settings.draw_leaf
+        self.settings_buttons[3][1].flag = graphics_settings.draw_traces
+        self.settings_buttons[3][2].flag = graphics_settings.draw_shadows
+        self.settings_buttons[3][3].flag = graphics_settings.draw_smoke
 
-        self.settings_buttons[2][4].flag = graphics_settings.game_in_menu
-        self.settings_buttons[2][5].flag = graphics_settings.shadows_buttons
+        self.settings_buttons[3][4].flag = graphics_settings.game_in_menu
+        self.settings_buttons[3][5].flag = graphics_settings.shadows_buttons
 
         #settings.save_settings()
 
@@ -41,16 +45,20 @@ class game_settings_page():
         # 3 - draw smoke
         # 4 - draw leaf
 
+        # game
+        settings.show_fps = self.settings_buttons[0][0].flag
+        settings.console = self.settings_buttons[0][1].flag
+
         # display
-        if self.settings_buttons[0][0].flag:
+        if self.settings_buttons[1][0].flag:
             full_screen = 0
-        elif self.settings_buttons[0][1].flag:
+        elif self.settings_buttons[1][1].flag:
             full_screen = 1
-        elif self.settings_buttons[0][2].flag:
+        elif self.settings_buttons[1][2].flag:
             full_screen = 2
 
-        width = int(self.settings_buttons[0][3].text_obj.text_label.label.text)
-        height = int(self.settings_buttons[0][4].text_obj.text_label.label.text)
+        width = int(self.settings_buttons[1][3].text_obj.text_label.label.text)
+        height = int(self.settings_buttons[1][4].text_obj.text_label.label.text)
 
         if (full_screen != settings.full_screen
         or width != settings.width
@@ -65,14 +73,14 @@ class game_settings_page():
         # проверка на
 
         # graphics
-        graphics_settings.draw_leaf = self.settings_buttons[2][0].flag
-        graphics_settings.draw_traces = self.settings_buttons[2][1].flag
-        graphics_settings.draw_shadows = self.settings_buttons[2][2].flag
-        graphics_settings.draw_smoke = self.settings_buttons[2][3].flag
-        graphics_settings.game_in_menu = self.settings_buttons[2][4].flag
-        graphics_settings.shadows_buttons = self.settings_buttons[2][5].flag
+        graphics_settings.draw_leaf = self.settings_buttons[3][0].flag
+        graphics_settings.draw_traces = self.settings_buttons[3][1].flag
+        graphics_settings.draw_shadows = self.settings_buttons[3][2].flag
+        graphics_settings.draw_smoke = self.settings_buttons[3][3].flag
+        graphics_settings.game_in_menu = self.settings_buttons[3][4].flag
+        graphics_settings.shadows_buttons = self.settings_buttons[3][5].flag
 
-        graphics_settings.save_settings()
+        save_settings.save_settings()
         settings.save_settings()
 
         if reboot_bool:
@@ -85,24 +93,25 @@ class game_settings_page():
         self.save_settings_button = image_button(
             settings.width - (settings.height/120 * 48), settings.height/10,
             'buttons/button_clear_left.png', scale=settings.height/120,
-            center=False, arg='get_obj_display("game_settings_page").save_settings(); menu()',
+            center=False, arg='get_obj_display("game_settings_page").save_settings(); global game_in_menu_bool; game_in_menu_bool=False; menu()',
             image_selected='buttons/button_clear_left_selected.png',
             text='save', text_indent= settings.height/20, shadow=graphics_settings.shadows_buttons
         )
 
 
         self.page = 0
-        # 0 - display
-        # 1 - sound
-        # 2 - graphics
-        # 3 - keyboard
+        # 0 - geme
+        # 1 - display
+        # 2 - sound
+        # 3 - graphics
+        # 4 - keyboard
 
         self.settings_page_buttons = []
         self.settings_page_buttons_text = []
 
         buttons_distance = settings.width/5.4
 
-        # display
+        # game
         self.settings_page_buttons.append(
             image_flag(
                 0,
@@ -120,9 +129,9 @@ class game_settings_page():
 
         self.settings_page_buttons_text.append(
             text_label(
-                settings.width/30,
+                settings.width/20,
                 settings.height - settings.height/6 + settings.height/50,
-                'display',
+                'game',
                 load_font=True, font='pixel.ttf',
                 size=settings.height//24, anchor_x='left', anchor_y='bottom',
                 color = (150, 150, 150, 255)
@@ -131,7 +140,7 @@ class game_settings_page():
 
         self.settings_page_buttons[0].flag = True
 
-        # sound
+        # display
         self.settings_page_buttons.append(
             image_flag(
                 buttons_distance,
@@ -143,21 +152,22 @@ class game_settings_page():
                 scale=settings.height/160,
                 function_bool = True,
                 arg='get_obj_display("game_settings_page").select_page(1)'
+
             )
         )
 
         self.settings_page_buttons_text.append(
             text_label(
-                buttons_distance + settings.width/20,
+                buttons_distance + settings.width/30,
                 settings.height - settings.height/6 + settings.height/50,
-                'sound',
+                'display',
                 load_font=True, font='pixel.ttf',
                 size=settings.height//24, anchor_x='left', anchor_y='bottom',
                 color = (150, 150, 150, 255)
             )
         )
 
-        # graphics
+        # sound
         self.settings_page_buttons.append(
             image_flag(
                 buttons_distance * 2,
@@ -174,16 +184,16 @@ class game_settings_page():
 
         self.settings_page_buttons_text.append(
             text_label(
-                buttons_distance * 2 + settings.width/40,
+                buttons_distance * 2 + settings.width/20,
                 settings.height - settings.height/6 + settings.height/50,
-                'graphics',
+                'sound',
                 load_font=True, font='pixel.ttf',
                 size=settings.height//24, anchor_x='left', anchor_y='bottom',
                 color = (150, 150, 150, 255)
             )
         )
 
-        # keyboard
+        # graphics
         self.settings_page_buttons.append(
             image_flag(
                 buttons_distance * 3,
@@ -202,6 +212,32 @@ class game_settings_page():
             text_label(
                 buttons_distance * 3 + settings.width/40,
                 settings.height - settings.height/6 + settings.height/50,
+                'graphics',
+                load_font=True, font='pixel.ttf',
+                size=settings.height//24, anchor_x='left', anchor_y='bottom',
+                color = (150, 150, 150, 255)
+            )
+        )
+
+        # keyboard
+        self.settings_page_buttons.append(
+            image_flag(
+                buttons_distance * 4,
+                settings.height - settings.height/6,
+                image='buttons/button_clear_full_kv.png',
+                image_flag='buttons/button_clear_full_kv_flag.png',
+                image_selected_flag='buttons/button_clear_full_kv_flag_selected.png',
+                image_selected='buttons/button_clear_full_kv_selected.png',
+                scale=settings.height/160,
+                function_bool = True,
+                arg='get_obj_display("game_settings_page").select_page(4)'
+            )
+        )
+
+        self.settings_page_buttons_text.append(
+            text_label(
+                buttons_distance * 4 + settings.width/40,
+                settings.height - settings.height/6 + settings.height/50,
                 'keyboard',
                 load_font=True, font='pixel.ttf',
                 size=settings.height//24, anchor_x='left', anchor_y='bottom',
@@ -211,11 +247,51 @@ class game_settings_page():
 
         self.settings_buttons = []
 
-        # display
+        # game
         self.settings_buttons.append([])
 
         # left
         self.settings_buttons[0].append(
+            image_flag(
+                settings.width/100,
+                settings.height - settings.height/3.5 - (settings.height/8) * 0,
+                image='buttons/flag/flag.png',
+                image_flag='buttons/flag/flag_selected.png',
+                image_selected_flag='buttons/flag/flag_hover_selected.png',
+                image_selected='buttons/flag/flag_hover.png',
+                scale=settings.height/160,
+
+                text='draw fps',
+                text_color = (150, 150, 150, 255),
+                font='pixel.ttf',
+                text_indent=settings.height/8, shadow=graphics_settings.shadows_buttons
+
+            )
+        )
+
+        self.settings_buttons[0].append(
+            image_flag(
+                settings.width/100,
+                settings.height - settings.height/3.5 - (settings.height/8) * 1,
+                image='buttons/flag/flag.png',
+                image_flag='buttons/flag/flag_selected.png',
+                image_selected_flag='buttons/flag/flag_hover_selected.png',
+                image_selected='buttons/flag/flag_hover.png',
+                scale=settings.height/160,
+
+                text='console (F1)',
+                text_color = (150, 150, 150, 255),
+                font='pixel.ttf',
+                text_indent=settings.height/8, shadow=graphics_settings.shadows_buttons
+
+            )
+        )
+
+        # display
+        self.settings_buttons.append([])
+
+        # left
+        self.settings_buttons[1].append(
             image_flag(
                 settings.width/100,
                 settings.height - settings.height/3.5 - (settings.height/8) * 0,
@@ -235,7 +311,7 @@ class game_settings_page():
 
             )
         )
-        self.settings_buttons[0].append(
+        self.settings_buttons[1].append(
             image_flag(
                 settings.width/100,
                 settings.height - settings.height/3.5 - (settings.height/8) * 1,
@@ -255,7 +331,7 @@ class game_settings_page():
 
             )
         )
-        self.settings_buttons[0].append(
+        self.settings_buttons[1].append(
             image_flag(
                 settings.width/100,
                 settings.height - settings.height/3.5 - (settings.height/8) * 2,
@@ -277,7 +353,7 @@ class game_settings_page():
         )
 
         # right
-        self.settings_buttons[0].append(
+        self.settings_buttons[1].append(
             input_label_image(
                 settings.width/100 + settings.width/2,
                 settings.height - settings.height/2.5 - (settings.height/8) * 0,
@@ -288,7 +364,7 @@ class game_settings_page():
             )
         )
 
-        self.settings_buttons[0].append(
+        self.settings_buttons[1].append(
             input_label_image(
                 settings.width/100 + settings.width/2,
                 settings.height - settings.height/2.5 - (settings.height/8) * 1,
@@ -318,7 +394,7 @@ class game_settings_page():
         self.settings_buttons.append([])
 
         # left page
-        self.settings_buttons[2].append(
+        self.settings_buttons[3].append(
             image_flag(
                 settings.width/100,
                 settings.height - settings.height/3.5,
@@ -336,7 +412,7 @@ class game_settings_page():
             )
         )
 
-        self.settings_buttons[2].append(
+        self.settings_buttons[3].append(
             image_flag(
                 settings.width/100,
                 settings.height - settings.height/3.5 - (settings.height/8) * 1,
@@ -354,7 +430,7 @@ class game_settings_page():
             )
         )
 
-        self.settings_buttons[2].append(
+        self.settings_buttons[3].append(
             image_flag(
                 settings.width/100,
                 settings.height - settings.height/3.5 - (settings.height/8) * 2,
@@ -372,7 +448,7 @@ class game_settings_page():
             )
         )
 
-        self.settings_buttons[2].append(
+        self.settings_buttons[3].append(
             image_flag(
                 settings.width/100,
                 settings.height - settings.height/3.5 - (settings.height/8) * 3,
@@ -391,7 +467,7 @@ class game_settings_page():
         )
 
         # right page
-        self.settings_buttons[2].append(
+        self.settings_buttons[3].append(
             image_flag(
                 settings.width/100 + settings.width/2,
                 settings.height - settings.height/3.5 - (settings.height/8) * 0,
@@ -409,7 +485,7 @@ class game_settings_page():
             )
         )
 
-        self.settings_buttons[2].append(
+        self.settings_buttons[3].append(
             image_flag(
                 settings.width/100 + settings.width/2,
                 settings.height - settings.height/3.5 - (settings.height/8) * 1,

@@ -41,6 +41,8 @@ class player():
 
     def __init__(self, id, bot=False, tank_settings=[0, 0], use=True):
 
+        self.name = 'PLAYER ' + str(id) + (' BOT' if bot else '')
+
         # info
         self.score = 0
         self.kills = 0
@@ -247,6 +249,7 @@ class player():
                 self.death_bool = True
                 get_obj_display('world').shaking(delay=0.2, power=settings.height/150)
                 self.sound.play('death.wav')
+                self.death += 1
 
             if self.death_bool and self.death_time <= time.perf_counter():
                 self.death_bool = False
@@ -256,7 +259,7 @@ class player():
                 self.gun_laser_count = 0
                 self.temperature_gun = 0
                 self.gun_overheat = False
-                
+
                 self.go_spawn()
 
             # подстройка скорости игрока под FPS

@@ -11,6 +11,21 @@ class select_tank_buttons():
             self.tank_settings[id][type] = (len(tanks.bases)-1) if type == 0 else (len(tanks.towers)-1)
         self.update_tanks()
 
+    def save(self):
+        for i in range(len(tank_settings.tanks)):
+            tank_settings.tanks[i][0] = self.buttons[i].flag
+            tank_settings.tanks[i][1] = self.buttons_bot[i].flag
+            tank_settings.tanks[i][2] = self.tank_settings[i][0]
+            tank_settings.tanks[i][3] = self.tank_settings[i][1]
+
+    def reset(self):
+        for i in range(len(tank_settings.tanks)):
+            self.buttons[i].flag = True if (i == 0) else False
+            self.buttons_bot[i].flag = False
+            self.tank_settings[i][0] = 0
+            self.tank_settings[i][1] = 1
+        self.update_tanks()
+
     def update_tanks(self):
         self.image_body = []
         self.image_tower = []
@@ -53,7 +68,14 @@ class select_tank_buttons():
         self.image_tower = []
         self.image_team = []
 
-        self.tank_settings = [[0, 1], [0, 1], [0, 1], [0, 1]]
+        #self.tank_settings = [[0, 1], [0, 1], [0, 1], [0, 1]]
+        self.tank_settings = []
+        for i in range(len(tank_settings.tanks)):
+            self.tank_settings.append([])
+            self.tank_settings[i] = [
+                tank_settings.tanks[i][2],
+                tank_settings.tanks[i][3]
+            ]
 
         self.buttons_body_up = []
         self.buttons_body_down = []
@@ -171,7 +193,9 @@ class select_tank_buttons():
                 )
             )
 
-        self.buttons[0].flag = True
+        for i in range(len(tank_settings.tanks)):
+            self.buttons[i].flag = tank_settings.tanks[i][0]
+            self.buttons_bot[i].flag = tank_settings.tanks[i][1]
 
     def on_mouse_press(self, x, y, button, modifiers):
         for i in range(len(self.buttons)):

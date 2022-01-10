@@ -141,6 +141,8 @@ def create_new_map():
 
 def select_tank(map_name='test'):
     def play_with_select_tank():
+        get_obj_display('select_tank_buttons').save()
+        save_settings.save_settings()
         play(
             map_name,
             [
@@ -160,12 +162,13 @@ def select_tank(map_name='test'):
 
     show_cursor()
     clear_display()
-    add_display(back(function=select_map))
+    add_display(back(arg='get_obj_display(\'select_tank_buttons\').save(); save_settings.save_settings(); select_map()'))
     add_display(background_menu())
     if graphics_settings.game_in_menu:
         add_game_in_menu()
     add_display(head_menu('select machine'))
-    add_display(image_button(0, settings.height/10, 'buttons/button_clear.png', scale=settings.height/120, center=False, function=select_map, image_selected='buttons/button_clear_selected.png', text='back', text_indent= settings.height//100, shadow=graphics_settings.shadows_buttons))
+    add_display(image_button(0, settings.height/10, 'buttons/button_clear.png', scale=settings.height/120, center=False, arg='get_obj_display(\'select_tank_buttons\').save(); save_settings.save_settings(); select_map()', image_selected='buttons/button_clear_selected.png', text='back', text_indent= settings.height//100, shadow=graphics_settings.shadows_buttons))
+    add_display(image_button(settings.width / 3, settings.height/10, 'buttons/button_clear_full.png', scale=settings.height/120, center=False, arg='get_obj_display(\'select_tank_buttons\').reset()', image_selected='buttons/button_clear_full_selected.png', text='reset', text_indent= settings.height/9, shadow=graphics_settings.shadows_buttons))
     add_display(image_button(settings.width - (settings.height/120 * 48), settings.height/10, 'buttons/button_clear_left.png', scale=settings.height/120, center=False, function=play_with_select_tank, image_selected='buttons/button_clear_left_selected.png', text='start', text_indent= settings.height//25, shadow=graphics_settings.shadows_buttons))
 
     add_display(select_tank_buttons())
@@ -190,6 +193,8 @@ def game_setup():
     )'''
 
     add_display(game_setup_flags())
+    add_display(image_button(settings.width / 3, settings.height/10, 'buttons/button_clear_full.png', scale=settings.height/120, center=False, arg='get_obj_display(\'game_setup_flags\').reset()', image_selected='buttons/button_clear_full_selected.png', text='reset', text_indent= settings.height/9, shadow=graphics_settings.shadows_buttons))
+
 
     add_display(head_menu(align_top=False))
 

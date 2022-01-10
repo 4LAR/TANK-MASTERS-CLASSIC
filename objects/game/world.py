@@ -11,6 +11,8 @@ class world():
 
     def __init__(self, map_name='test'):
 
+        self.time = (game_settings.time_set_min * 60) + game_settings.time_set_sec + time.perf_counter()
+
         self.shaking_time = 0
         self.shaking_power = 10
 
