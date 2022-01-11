@@ -37,7 +37,7 @@ class game_setup_flags():
         self.settings_flags[2].flag = False
         self.settings_flags[3].flag = False
 
-        self.settings_flags[4].flag
+        self.settings_flags[4].flag = True
         self.settings_flags[5].text_obj.text_label.label.text = '2'
         self.settings_flags[6].text_obj.text_label.label.text = '0'
 

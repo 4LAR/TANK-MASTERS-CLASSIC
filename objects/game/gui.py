@@ -38,6 +38,8 @@ class gui():
                 )
             )
 
+        self.old_perf_counter = 0
+
     def update(self):
         for i in range(4):
             if get_obj_display('players').tanks[i].use:
@@ -47,8 +49,10 @@ class gui():
                 self.label_health[i][1].rec.width = ((settings.width/4)/100) * get_obj_display('players').tanks[i].health if not get_obj_display('players').tanks[i].death_bool else 0
 
         if game_settings.time_bool:
-            time_split = str(datetime.timedelta(seconds=get_obj_display('world').time -  time.perf_counter())).split(':')
-            self.time.label.text = time_split[1] + ':' + time_split[2].split('.')[0]
+            if not get_obj_display('game_settings').pause:
+                get_obj_display('world').time -= time.perf_counter() - self.old_perf_counter
+                time_split = str(datetime.timedelta(seconds=get_obj_display('world').time)).split(':')
+                self.time.label.text = time_split[1] + ':' + time_split[2].split('.')[0]
 
     def draw(self):
         for i in range(4):

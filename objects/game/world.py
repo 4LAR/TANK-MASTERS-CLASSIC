@@ -1,4 +1,8 @@
-SHADOWS = True
+def get_offs_display(fov, disp_posx, disp_posy, width, height, no_pos=False):
+    x = (width/2 + (width/fov - disp_posx/(fov/2)))
+    y = (height/2 + (height/fov - disp_posy/(fov/2)))
+
+    return x, y
 
 class world():
 
@@ -9,7 +13,10 @@ class world():
         self.shaking_time = time.perf_counter() + delay
         self.shaking_power = power
 
-    def __init__(self, map_name='test'):
+    def __init__(self, map_name='test', menu=False):
+
+        self.menu = menu
+        self.disp_pos = [settings.width/2, settings.height/2]
 
         self.time = (game_settings.time_set_min * 60) + game_settings.time_set_sec + time.perf_counter()
 
@@ -32,10 +39,13 @@ class world():
         get_obj_other('os_world').read_file(self.map_name) # открываем карту
 
         self.world_size = get_obj_other('os_world').world_size
+
+        menu_scale = 1.1 if (self.menu and graphics_settings.paralax_in_menu) else 1
+
         if self.world_size[0] > self.world_size[1]:
-            self.scale = settings.width/(self.size * self.world_size[0])
+            self.scale = settings.width/(self.size * self.world_size[0]) * menu_scale
         else:
-            self.scale = settings.height/(self.size * self.world_size[1])
+            self.scale = settings.height/(self.size * self.world_size[1]) * menu_scale
 
         self.size_poligon = self.size * self.scale
         self.poligons_wall = [] # список полигонов блоков
@@ -104,10 +114,12 @@ class world():
     def get_water_poligon(self, x, y):
         return self.poligons_water[self.get_block_num(x, y)]
 
+    def on_mouse_motion(self, x, y, dx, dy):
+        self.disp_pos = [x, y]
+
     def set_floor(self):
         print("SET FLOOR")
         for y in range(self.world_size[1]):
-            #print(y)
             for x in range(self.world_size[0]):
                 block = self.map_floor[self.get_block_num(x, y)].split('.')
                 if block[0] != 'none':
@@ -122,12 +134,11 @@ class world():
     def set_wall(self):
         print("SET WALL")
         for y in range(self.world_size[1]):
-            #print(y)
             for x in range(self.world_size[0]):
                 block = self.map_wall[self.get_block_num(x, y)].split('.')
                 if block[0] != 'none':
                     self.temp_image_wall.paste(self.wall_block_img[block[0]].rotate(int(block[1])), (x * self.size, y * self.size))
-                    if SHADOWS:
+                    if graphics_settings.draw_shadows:
                         image = self.wall_block_img[block[0]].rotate(int(block[1]))
                         ibw, ibh = image.size
                         image_shadow_wall = get_pil_black_mask(image, self.shadow_alpha)
@@ -137,7 +148,6 @@ class world():
     def set_water(self):
         print("SET WATER")
         for y in range(self.world_size[1]):
-            #print(y)
             for x in range(self.world_size[0]):
                 block = self.map_water[self.get_block_num(x, y)].split('.')
                 if block[0] != 'none':
@@ -153,7 +163,6 @@ class world():
     def set_vegetation(self):
         print("SET VEGETATION")
         for y in range(self.world_size[1]):
-            #print(y)
             for x in range(self.world_size[0]):
                 block = self.map_vegetation[self.get_block_num(x, y)].split('.')
                 if block[0] != 'none':
@@ -165,7 +174,7 @@ class world():
                     else:
                         self.temp_image_vegetation.paste(self.vegetation_block_img[block[0]].rotate(int(block[1])), (x * self.size, y * self.size))
 
-                    if SHADOWS:
+                    if graphics_settings.draw_shadows:
                         image = self.vegetation_block_img[block[0]].rotate(int(block[1]))
                         image_vegetation_other = get_pil_black_mask(image, self.shadow_alpha)
                         for y_ in range(0, self.offs_shadows[0], (1 if (self.offs_shadows[0] > 0) else -1)):
@@ -175,12 +184,11 @@ class world():
     def set_other_up(self):
         print("SET OTHER UP")
         for y in range(self.world_size[1]):
-            #print(y)
             for x in range(self.world_size[0]):
                 block = self.map_other_up[self.get_block_num(x, y)].split('.')
                 if block[0] != 'none':
                     self.temp_image_other_up.paste(self.other_up_block_img[block[0]].rotate(int(block[1])), (x * self.size, y * self.size))
-                    if SHADOWS:
+                    if graphics_settings.draw_shadows:
                         image = self.other_up_block_img[block[0]].rotate(int(block[1]))
                         image_shadow_other = get_pil_black_mask(image, self.shadow_alpha)
                         for y_ in range(0, self.offs_shadows[0], (1 if (self.offs_shadows[0] > 0) else -1)):
@@ -189,7 +197,6 @@ class world():
     def set_other_down(self):
         print("SET OTHER DOWN")
         for y in range(self.world_size[1]):
-            #print(y)
             for x in range(self.world_size[0]):
                 block = self.map_other_down[self.get_block_num(x, y)].split('.')
                 if block[0] != 'none':
@@ -201,7 +208,7 @@ class world():
                     else:
                         self.temp_image_other_down.paste(self.other_down_block_img[block[0]].rotate(int(block[1])), (x * self.size, y * self.size))
 
-                    if SHADOWS:
+                    if graphics_settings.draw_shadows:
                         image = self.other_down_block_img[block[0]].rotate(int(block[1]))
                         image_shadow_other = get_pil_black_mask(image, self.shadow_alpha)
                         for y_ in range(0, self.offs_shadows[0]//2, (1 if (self.offs_shadows[0] > 0) else -1)):
@@ -210,7 +217,6 @@ class world():
     def generate_wall_polygons(self):
         print("GENERATE WALL POLYGONS")
         for y in range(self.world_size[1]):
-            #print(y)
             for x in range(self.world_size[0]):
                 block = self.map_wall[self.get_block_num(x, (self.world_size[1] - 1) - y)]
                 if block != 'none':
@@ -241,7 +247,6 @@ class world():
     def generate_water_polygons(self):
         print("GENERATE WATER POLYGONS")
         for y in range(self.world_size[1]):
-            #print(y)
             for x in range(self.world_size[0]):
                 block = self.map_water[self.get_block_num(x, (self.world_size[1] - 1) - y)]
                 if block != 'none':
@@ -292,6 +297,13 @@ class world():
                 self.map_offs[0] = 0
                 self.map_offs[1] = 0
                 self.update_offs()
+
+        if graphics_settings.paralax_in_menu and self.menu:
+            # fov = 8
+            x_, y_ = get_offs_display(16, self.disp_pos[0], self.disp_pos[1], settings.width/2, settings.height/2)
+            self.map_offs[0] = -(-settings.width/2 + self.disp_pos[0])/16
+            self.map_offs[1] = -(-settings.height/2 + self.disp_pos[1])/16
+            self.update_offs()
 
     def update_offs(self):
 

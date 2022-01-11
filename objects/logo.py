@@ -17,14 +17,10 @@ class skip():
 	def on_key_press(self, symbol, modifiers):
 		if symbol == pyglet.window.key.ESCAPE:
 			if self.type == 0:
-			#	text_logo()
-			#else:
 				main()
 			return pyglet.event.EVENT_HANDLED
 		elif symbol == pyglet.window.key.SPACE:
 			if self.type == 0:
-			#	text_logo()
-			#else:
 				main()
 		return True
 
@@ -37,12 +33,15 @@ def logo_text():
     add_display(text_label(settings.width//2, settings.height//4, '100LAR STUDIO', load_font=True, font='pixel.ttf', size=settings.height//10, anchor_x='center', color = (180, 180, 180, 255)))
     add_display(breathing_label(0, settings.height//6, settings.width, settings.height//6, (0, 0, 0), 0, delay=0.04, function=logo_stop))
 #main()
+if user_game_settings.draw_logo:
+	hide_cursor()
+	add_display(skip())
+	add_display(label(settings.width, settings.height, settings.width, settings.height, (0, 0, 0)))
+	add_display(image_label('logo_studio.png', settings.width//2.5, settings.height//3, scale=settings.height//180, pixel=True))
+	add_display(breathing_label(0, 0, settings.width, settings.height, (0, 0, 0), 0, delay=0.04, function=logo_text))
 
-hide_cursor()
-add_display(skip())
-add_display(label(settings.width, settings.height, settings.width, settings.height, (0, 0, 0)))
-add_display(image_label('logo_studio.png', settings.width//2.5, settings.height//3, scale=settings.height//180, pixel=True))
-add_display(breathing_label(0, 0, settings.width, settings.height, (0, 0, 0), 0, delay=0.04, function=logo_text))
+else:
+	main()
 
 # предупреждающий текст
 def add_timer_text_logo():

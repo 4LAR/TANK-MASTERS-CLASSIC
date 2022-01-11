@@ -41,7 +41,7 @@ class player():
 
     def __init__(self, id, bot=False, tank_settings=[0, 0], use=True):
 
-        self.name = 'PLAYER ' + str(id) + (' BOT' if bot else '')
+        self.name = 'PLAYER ' + str(id + 1) + (' BOT' if bot else '')
 
         # info
         self.score = 0
@@ -239,7 +239,11 @@ class player():
             )
 
     def update(self):
+        #if self.use and get_obj_display('game_settings').pause and self.death_bool:
+        #    self.death_time = self.death_time + (time.perf_counter() - self.old_perf_counter)
+
         if self.use and not get_obj_display('game_settings').pause:
+            #self.old_perf_counter = time.perf_counter()
             # респавн при смерти
             if self.health <= 0 and not self.death_bool:
                 get_obj_display('smoke').add_smoke(self.pos[0], self.pos[1])
@@ -408,8 +412,8 @@ class player():
                         self.obj_tanks[i].y = self.pos[1] - get_obj_display('world').offs_shadows[0] / 3 + get_obj_display('world').map_offs[1]#6
 
                     else:
-                        self.obj_tanks[i].x = self.pos[0] + get_obj_display('world').map_offs[0]
-                        self.obj_tanks[i].y = self.pos[1] + get_obj_display('world').map_offs[1]
+                        self.obj_tanks[i].x = self.pos[0] + get_obj_display('world').map_offs[0] + get_obj_display('world').map_offs[0]
+                        self.obj_tanks[i].y = self.pos[1] + get_obj_display('world').map_offs[1] + get_obj_display('world').map_offs[1]
                         self.obj_tanks[i].update_image(True)
 
             # удаление следов

@@ -8,6 +8,10 @@ class Save_settings():
             config = configparser.ConfigParser()
             config.read(self.path)
 
+            # Game
+            user_game_settings.name = config.get("Game", "name")
+            user_game_settings.draw_logo = True if (config.get("Game", "draw_logo")).lower() == 'true' else False
+
             # Graphics
             graphics_settings.draw_leaf = True if (config.get("Graphics", "draw_leaf")).lower() == 'true' else False
 
@@ -19,21 +23,24 @@ class Save_settings():
             graphics_settings.draw_smoke = True if (config.get("Graphics", "draw_smoke")).lower() == 'true' else False
 
             graphics_settings.game_in_menu = True if (config.get("Graphics", "game_in_menu")).lower() == 'true' else False
+            graphics_settings.map_in_menu = config.get("Graphics", "map_in_menu")
+            graphics_settings.paralax_in_menu = True if (config.get("Graphics", "paralax_in_menu")).lower() == 'true' else False
+
             graphics_settings.shadows_buttons = True if (config.get("Graphics", "shadows_buttons")).lower() == 'true' else False
 
-            # Game
-            game_settings.scatter_bool = True if (config.get("Game", "scatter_bool")).lower() == 'true' else False
+            # Game_setup
+            game_settings.scatter_bool = True if (config.get("Game_setup", "scatter_bool")).lower() == 'true' else False
 
-            game_settings.wind_deg = int(config.get("Game", "wind_deg"))
-            game_settings.wind_bool = True if (config.get("Game", "wind_bool")).lower() == 'true' else False
-            game_settings.wind_power = int(config.get("Game", "wind_power"))
+            game_settings.wind_deg = int(config.get("Game_setup", "wind_deg"))
+            game_settings.wind_bool = True if (config.get("Game_setup", "wind_bool")).lower() == 'true' else False
+            game_settings.wind_power = int(config.get("Game_setup", "wind_power"))
 
-            game_settings.rain = True if (config.get("Game", "rain")).lower() == 'true' else False
-            game_settings.snow = True if (config.get("Game", "snow")).lower() == 'true' else False
+            game_settings.rain = True if (config.get("Game_setup", "rain")).lower() == 'true' else False
+            game_settings.snow = True if (config.get("Game_setup", "snow")).lower() == 'true' else False
 
-            game_settings.time_bool = True if (config.get("Game", "time_bool")).lower() == 'true' else False
-            game_settings.time_set_min = int(config.get("Game", "time_set_min"))
-            game_settings.time_set_sec = int(config.get("Game", "time_set_sec"))
+            game_settings.time_bool = True if (config.get("Game_setup", "time_bool")).lower() == 'true' else False
+            game_settings.time_set_min = int(config.get("Game_setup", "time_set_min"))
+            game_settings.time_set_sec = int(config.get("Game_setup", "time_set_sec"))
 
             # Tank
             for i in range(4):
@@ -48,6 +55,11 @@ class Save_settings():
     def save_settings(self):
         config = configparser.ConfigParser()
 
+        config.add_section("Game")
+        config.set("Game", "name", str(user_game_settings.name))
+
+        config.set("Game", "draw_logo", str(user_game_settings.draw_logo))
+
         # Graphics
         config.add_section("Graphics")
 
@@ -61,23 +73,26 @@ class Save_settings():
         config.set("Graphics", "draw_smoke", str(graphics_settings.draw_smoke))
 
         config.set("Graphics", "game_in_menu", str(graphics_settings.game_in_menu))
+        config.set("Graphics", "map_in_menu", str(graphics_settings.map_in_menu))
+        config.set("Graphics", "paralax_in_menu", str(graphics_settings.paralax_in_menu))
+
         config.set("Graphics", "shadows_buttons", str(graphics_settings.shadows_buttons))
 
-        # Game
-        config.add_section("Game")
+        # Game_setup
+        config.add_section("Game_setup")
 
-        config.set("Game", "scatter_bool", str(game_settings.scatter_bool))
+        config.set("Game_setup", "scatter_bool", str(game_settings.scatter_bool))
 
-        config.set("Game", "wind_deg", str(game_settings.wind_deg))
-        config.set("Game", "wind_bool", str(game_settings.wind_bool))
-        config.set("Game", "wind_power", str(game_settings.wind_power))
+        config.set("Game_setup", "wind_deg", str(game_settings.wind_deg))
+        config.set("Game_setup", "wind_bool", str(game_settings.wind_bool))
+        config.set("Game_setup", "wind_power", str(game_settings.wind_power))
 
-        config.set("Game", "rain", str(game_settings.rain))
-        config.set("Game", "snow", str(game_settings.snow))
+        config.set("Game_setup", "rain", str(game_settings.rain))
+        config.set("Game_setup", "snow", str(game_settings.snow))
 
-        config.set("Game", "time_bool", str(game_settings.time_bool))
-        config.set("Game", "time_set_min", str(game_settings.time_set_min))
-        config.set("Game", "time_set_sec", str(game_settings.time_set_sec))
+        config.set("Game_setup", "time_bool", str(game_settings.time_bool))
+        config.set("Game_setup", "time_set_min", str(game_settings.time_set_min))
+        config.set("Game_setup", "time_set_sec", str(game_settings.time_set_sec))
 
         # Tank
         config.add_section("Tank_MPL")
@@ -90,7 +105,13 @@ class Save_settings():
         with open(self.path, "w") as config_file: # запись файла с настройками
             config.write(config_file)
 
-class Game_settings():
+class User_game_settings(): # game settings
+    def __init__(self):
+        self.name = 'PLAYER'
+
+        self.draw_logo = True
+
+class Game_settings(): # settings in game
     def __init__(self):
         self.scatter_bool = True
 
@@ -102,12 +123,11 @@ class Game_settings():
 
         self.snow = False
 
-        self.pause = False # dont save
-
         self.time_bool = True
         self.time_set_min = 2
         self.time_set_sec = 0
 
+        self.pause = False # dont save
         self.multiplayer = False # dont save
 
 class Graphics_settings():
@@ -122,8 +142,11 @@ class Graphics_settings():
 
         self.draw_smoke = True
 
-        self.game_in_menu = False
-        self.shadows_buttons = False
+        self.game_in_menu = True
+        self.map_in_menu = 'Castle 2'
+        self.paralax_in_menu = True
+
+        self.shadows_buttons = True
 
 class Tank_settings():
     def __init__(self):
@@ -134,6 +157,7 @@ class Tank_settings():
             [False, False,0, 1]
         ]
 
+user_game_settings = User_game_settings()
 game_settings = Game_settings()
 graphics_settings = Graphics_settings()
 tank_settings = Tank_settings()

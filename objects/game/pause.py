@@ -142,11 +142,12 @@ class pause():
             )
 
     def update(self):
-        for i in range(len(get_obj_display('players').tanks)):
-            self.score_text[i][0].label.text = get_obj_display('players').tanks[(len(get_obj_display('players').tanks) - 1) - i].name
-            self.score_text[i][1].label.text = str(get_obj_display('players').tanks[(len(get_obj_display('players').tanks) - 1) - i].score)
-            self.score_text[i][2].label.text = str(get_obj_display('players').tanks[(len(get_obj_display('players').tanks) - 1) - i].kills)
-            self.score_text[i][3].label.text = str(get_obj_display('players').tanks[(len(get_obj_display('players').tanks) - 1) - i].death)
+        if get_obj_display('game_settings').pause:
+            for i in range(len(get_obj_display('players').tanks)):
+                self.score_text[i][0].label.text = get_obj_display('players').tanks[(len(get_obj_display('players').tanks) - 1) - i].name
+                self.score_text[i][1].label.text = str(get_obj_display('players').tanks[(len(get_obj_display('players').tanks) - 1) - i].score)
+                self.score_text[i][2].label.text = str(get_obj_display('players').tanks[(len(get_obj_display('players').tanks) - 1) - i].kills)
+                self.score_text[i][3].label.text = str(get_obj_display('players').tanks[(len(get_obj_display('players').tanks) - 1) - i].death)
 
     def on_mouse_press(self, x, y, button, modifiers):
         if get_obj_display('game_settings').pause:

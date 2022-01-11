@@ -14,8 +14,12 @@ class game_settings_page():
 
     def read_settings(self):
         # game
-        self.settings_buttons[0][0].flag = settings.show_fps
-        self.settings_buttons[0][1].flag = settings.console
+        self.settings_buttons[0][0].change_text(str(user_game_settings.name))
+
+        self.settings_buttons[0][1].flag = settings.show_fps
+        self.settings_buttons[0][2].flag = settings.console
+
+        self.settings_buttons[0][3].flag = user_game_settings.draw_logo
 
         # display
         self.settings_buttons[1][settings.full_screen].flag = True
@@ -31,7 +35,9 @@ class game_settings_page():
         self.settings_buttons[3][3].flag = graphics_settings.draw_smoke
 
         self.settings_buttons[3][4].flag = graphics_settings.game_in_menu
-        self.settings_buttons[3][5].flag = graphics_settings.shadows_buttons
+        self.settings_buttons[3][5].flag = graphics_settings.paralax_in_menu
+
+        self.settings_buttons[3][6].flag = graphics_settings.shadows_buttons
 
         #settings.save_settings()
 
@@ -46,8 +52,12 @@ class game_settings_page():
         # 4 - draw leaf
 
         # game
-        settings.show_fps = self.settings_buttons[0][0].flag
-        settings.console = self.settings_buttons[0][1].flag
+        user_game_settings.name = self.settings_buttons[0][0].text_obj.text_label.label.text
+
+        settings.show_fps = self.settings_buttons[0][1].flag
+        settings.console = self.settings_buttons[0][2].flag
+
+        user_game_settings.draw_logo = self.settings_buttons[0][3].flag
 
         # display
         if self.settings_buttons[1][0].flag:
@@ -77,8 +87,11 @@ class game_settings_page():
         graphics_settings.draw_traces = self.settings_buttons[3][1].flag
         graphics_settings.draw_shadows = self.settings_buttons[3][2].flag
         graphics_settings.draw_smoke = self.settings_buttons[3][3].flag
+
         graphics_settings.game_in_menu = self.settings_buttons[3][4].flag
-        graphics_settings.shadows_buttons = self.settings_buttons[3][5].flag
+        graphics_settings.paralax_in_menu = self.settings_buttons[3][5].flag
+
+        graphics_settings.shadows_buttons = self.settings_buttons[3][6].flag
 
         save_settings.save_settings()
         settings.save_settings()
@@ -252,8 +265,20 @@ class game_settings_page():
 
         # left
         self.settings_buttons[0].append(
-            image_flag(
+            input_label_image(
                 settings.width/100,
+                settings.height - settings.height/3.5 - (settings.height/8) * 0,
+                'buttons/button_clear_2_reverse.png', 'buttons/button_clear_selected_2_reverse.png',
+                scale=settings.height/160, color_text=(150, 150, 150, 255),
+                text='name', pre_text='PLAYER', font='pixel.ttf',
+                text_indent=settings.height/12, text_input_indent=settings.height/6, shadow=graphics_settings.shadows_buttons
+            )
+        )
+
+        # right
+        self.settings_buttons[0].append(
+            image_flag(
+                settings.width/100 + settings.width/2,
                 settings.height - settings.height/3.5 - (settings.height/8) * 0,
                 image='buttons/flag/flag.png',
                 image_flag='buttons/flag/flag_selected.png',
@@ -271,7 +296,7 @@ class game_settings_page():
 
         self.settings_buttons[0].append(
             image_flag(
-                settings.width/100,
+                settings.width/100 + settings.width/2,
                 settings.height - settings.height/3.5 - (settings.height/8) * 1,
                 image='buttons/flag/flag.png',
                 image_flag='buttons/flag/flag_selected.png',
@@ -280,6 +305,24 @@ class game_settings_page():
                 scale=settings.height/160,
 
                 text='console (F1)',
+                text_color = (150, 150, 150, 255),
+                font='pixel.ttf',
+                text_indent=settings.height/8, shadow=graphics_settings.shadows_buttons
+
+            )
+        )
+
+        self.settings_buttons[0].append(
+            image_flag(
+                settings.width/100 + settings.width/2,
+                settings.height - settings.height/3.5 - (settings.height/8) * 2,
+                image='buttons/flag/flag.png',
+                image_flag='buttons/flag/flag_selected.png',
+                image_selected_flag='buttons/flag/flag_hover_selected.png',
+                image_selected='buttons/flag/flag_hover.png',
+                scale=settings.height/160,
+
+                text='draw logo',
                 text_color = (150, 150, 150, 255),
                 font='pixel.ttf',
                 text_indent=settings.height/8, shadow=graphics_settings.shadows_buttons
@@ -489,6 +532,24 @@ class game_settings_page():
             image_flag(
                 settings.width/100 + settings.width/2,
                 settings.height - settings.height/3.5 - (settings.height/8) * 1,
+                image='buttons/flag/flag.png',
+                image_flag='buttons/flag/flag_selected.png',
+                image_selected_flag='buttons/flag/flag_hover_selected.png',
+                image_selected='buttons/flag/flag_hover.png',
+                scale=settings.height/160,
+
+                text='paralax in menu',
+                text_color = (150, 150, 150, 255),
+                font='pixel.ttf',
+                text_indent=settings.height/8, shadow=graphics_settings.shadows_buttons
+
+            )
+        )
+
+        self.settings_buttons[3].append(
+            image_flag(
+                settings.width/100 + settings.width/2,
+                settings.height - settings.height/3.5 - (settings.height/8) * 2,
                 image='buttons/flag/flag.png',
                 image_flag='buttons/flag/flag_selected.png',
                 image_selected_flag='buttons/flag/flag_hover_selected.png',

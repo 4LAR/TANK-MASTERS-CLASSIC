@@ -81,7 +81,7 @@ def add_game_in_menu():
     add_display(game_settings)
     if not game_in_menu_bool:
         add_display(graphics_settings)
-        menu_world = world('Castle 2')
+        menu_world = world(map_name=graphics_settings.map_in_menu, menu=True)
         add_display(menu_world)
         menu_wind = wind()
         add_display(menu_wind)
@@ -130,6 +130,8 @@ def create_new_map():
     clear_display()
     add_display(back(arg='select_map(editor=True)'))
     add_display(background_menu())
+    if graphics_settings.game_in_menu:
+        add_game_in_menu()
     add_display(head_menu('editor: new map'))
     add_display(image_button(0, settings.height/10, 'buttons/button_clear.png', scale=settings.height/120, center=False, arg='select_map(editor=True)', image_selected='buttons/button_clear_selected.png', text='back', text_indent= settings.height//100, shadow=graphics_settings.shadows_buttons))
     add_display(input_label_image(settings.width/25, settings.height - settings.height/4.4, 'buttons/input_world_name.png', 'buttons/input_world_name_selected.png', scale=settings.height/120, color_text=(150, 150, 150, 255), text='map name', pre_text='new world', font='pixel.ttf', text_indent=settings.height/15, text_input_indent=settings.height/10, shadow=graphics_settings.shadows_buttons))

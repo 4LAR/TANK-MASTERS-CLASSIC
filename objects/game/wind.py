@@ -69,4 +69,8 @@ class wind():
     def draw(self):
         if graphics_settings.draw_leaf:
             for w in self.wind_images:
+                w[0].x += get_obj_display('world').map_offs[0]
+                w[0].y += get_obj_display('world').map_offs[1]
                 drawp(w[0])
+                w[0].x -= get_obj_display('world').map_offs[0]
+                w[0].y -= get_obj_display('world').map_offs[1]
