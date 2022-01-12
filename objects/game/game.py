@@ -48,6 +48,9 @@ class tanks():
         self.towers_damage = [60, 100, 10, 100, 60]
         self.towers_delay = [1, 1.5, 0.1, 0.2, 0.2]
         self.towers_scatter = [0, 0, 4, 0, 0]
+        self.score = {
+            'kill': 1
+        }
         self.towers_laser_color = [
             (200, 0, 0),
             (0, 0, 200),
@@ -77,6 +80,7 @@ def play(
     add_display(weather())
     add_display(gui())
     add_display(pause())
+    add_display(table_game())
 
 def editor(map_name='test', new=False):
     show_cursor()

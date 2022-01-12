@@ -31,8 +31,6 @@ class player():
                 self.pos = [
                     get_obj_display('world').image_floor.x + (get_obj_display('world').spawn[self.id][0] * get_obj_display('world').size * get_obj_display('world').scale) - get_obj_display('world').map_offs[0],
                     get_obj_display('world').image_floor.y + ((get_obj_display('world').world_size[1] - get_obj_display('world').spawn[self.id][1]) * get_obj_display('world').size * get_obj_display('world').scale) - get_obj_display('world').map_offs[1]
-                    #get_obj_display('world').spawn[self.id][0] * get_obj_display('world').size * get_obj_display('world').scale,
-                    #settings.height - get_obj_display('world').image_wall.height - (get_obj_display('world').spawn[self.id][1] * get_obj_display('world').size * get_obj_display('world').scale)
                 ]
             except:
                 self.pos = [settings.width//2, settings.height//2]
@@ -163,9 +161,7 @@ class player():
             self.obj_tanks[4].append(image_label('tanks/tower/' + tanks.towers[self.tank_settings[1]] + '.png', settings.width//2, settings.height//2, scale=self.scale_tank, pixel=False, center=True))
             self.obj_tanks.append([])
             for i in range(self.gun_laser_max_count):
-                #self.obj_tanks[5].append(image_label('tanks/tower/' + tanks.towers[self.tank_settings[1]] + '/' + str(i) + '.png', settings.width//2, settings.height//2, scale=self.scale_tank, pixel=False, center=True))
                 self.obj_tanks[5].append(PIL_to_pyglet(get_pil_color_mask(Image.open('img/tanks/tower/' + tanks.towers[self.tank_settings[1]] + '/' + str(i) + '.png').convert("RGBA"), tanks.towers_laser_color[id]), self.scale_tank, True))
-                #self.obj_tanks[5][i] =
 
         self.poligon_body = collision.Poly(v(100, 100),
         [
@@ -242,14 +238,13 @@ class player():
         #if self.use and get_obj_display('game_settings').pause and self.death_bool:
         #    self.death_time = self.death_time + (time.perf_counter() - self.old_perf_counter)
 
-        if self.use and not get_obj_display('game_settings').pause:
+        if self.use and not get_obj_display('game_settings').pause and not get_obj_display('game_settings').end_game:
             #self.old_perf_counter = time.perf_counter()
             # респавн при смерти
             if self.health <= 0 and not self.death_bool:
                 get_obj_display('smoke').add_smoke(self.pos[0], self.pos[1])
                 self.health = self.default_health
                 self.death_time = time.perf_counter() + self.death_delay
-                #print(time.strftime('%H:%M:%S', ((time.perf_counter() + self.death_delay) - self.death_time)))
                 self.death_bool = True
                 get_obj_display('world').shaking(delay=0.2, power=settings.height/150)
                 self.sound.play('death.wav')
@@ -442,6 +437,8 @@ class player():
                             pass
                         t = 1.0
                         while True:
+                            self.poligon_body.pos.x = self.pos[0]
+                            self.poligon_body.pos.y = self.pos[1]
                             if collision.collide(self.poligon_body, poligon):
                                 self.pos = [pos_[0] - (x_ * t), pos_[1] - (y_ * t)]
                                 self.detect = True
@@ -452,19 +449,16 @@ class player():
                 except:
                     pass
 
-        '''for i in range(len(get_obj_display('players').tanks)):
-            t = 1.0
-            while True:
-                if self.id != i and collision.collide(self.poligon_body, get_obj_display('players').tanks[i].poligon_body):
+        if game_settings.collide_players:
+            for i in range(len(get_obj_display('players').tanks)):
+                self.poligon_body.pos.x = self.pos[0]
+                self.poligon_body.pos.y = self.pos[1]
 
-                    self.pos = [pos_[0] - (x_ * t), pos_[1] - (y_ * t)]
+                if self.id != i and collision.collide(self.poligon_body, get_obj_display('players').tanks[i].poligon_body):
+                    self.pos = [pos_[0], pos_[1]]
                     self.poligon_body.pos.x = self.pos[0]
                     self.poligon_body.pos.y = self.pos[1]
-
-                    t += 0.05
-                else:
-                    break
-                self.detect = True'''
+                    self.detect = True
 
         if send_return_bool:
             return self.detect

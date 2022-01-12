@@ -12,6 +12,7 @@ menu/select_tank.py
 menu/game_setup.py
 game/game_settings.py
 menu/settings.py
+menu/end_game.py
 game/world.py
 game/wind.py
 game/players.py
@@ -20,6 +21,7 @@ game/smoke.py
 game/gui.py
 game/weather.py
 game/pause.py
+game/table.py
 game/game.py
 netCode/client.py
 netCode/server.py

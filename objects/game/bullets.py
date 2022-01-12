@@ -65,48 +65,54 @@ class bullets():
                     elif wind > 0:
                         bullet[3] += wind_power
 
-                x, y = self.get_speed_by_deg_sp(bullet[3], speed_tick)
-                bullet[1] += x
-                bullet[2] += y
-
-                if ((bullet[1] > settings.width)
-                or (bullet[1] < 0)
-                or (bullet[2] > settings.height)
-                or (bullet[2] < 0)):
-                    self.bullets.pop(i)
-
-                else:
-                    self.bullet_poly.pos.x = bullet[1]
-                    self.bullet_poly.pos.y = bullet[2]
-                    self.bullet_poly.angle = math.radians(bullet[3])
-
-                    dead = False
-                    for j in range(len(get_obj_display('players').tanks)):
-                        if bullet[0] != j and collision.collide(self.bullet_poly, get_obj_display('players').tanks[j].poligon_body):
-                            if get_obj_display('players').tanks[j].use:
-                                dead = True
-                                if not get_obj_display('players').tanks[j].death_bool and not get_obj_display('players').tanks[j].protection:
-                                    get_obj_display('players').tanks[j].health -= get_obj_display('players').tanks[bullet[0]].demage_a
-                                    if get_obj_display('players').tanks[j].health <= 0:
-                                        get_obj_display('players').tanks[bullet[0]].kills += 1
-                                    #get_obj_display('world').shaking(delay=0.2, power=settings.height/1000)
-                                self.bullets.pop(i)
-                                #get_obj_display('smoke').add_smoke(bullet[1], bullet[2], 9)
-
+                dead = False
+                for b in range(4):
                     if not dead:
-                        pos = [bullet[1] + ((settings.width - get_obj_display('world').image_wall.width) / 2), bullet[2] - ((settings.height - get_obj_display('world').image_wall.height) / 2)]
-                        pos = [int(math.sqrt(pos[0] ** 2)//get_obj_display('world').size_poligon), int(math.sqrt(pos[1] ** 2)//get_obj_display('world').size_poligon)]
+                        x, y = self.get_speed_by_deg_sp(bullet[3], (speed_tick/4))
+                        bullet[1] += x
+                        bullet[2] += y
 
-                        block = get_obj_display('world').get_wall_poligon(pos[0], pos[1])
-                        if block != 'none':
-                            if collision.collide(self.bullet_poly, block):
-                                self.bullets.pop(i)
-                                get_obj_display('smoke').add_smoke(bullet[1], bullet[2], 9)
-                                # попытка сделать разрушемость
-                                #get_obj_display('world').map_wall[get_obj_display('world').get_block_num(pos[0], get_obj_display('world').world_size[1] - pos[1])] = 'none'
-                                #get_obj_display('world').clear_images_wall()
-                                #get_obj_display('world').set_wall()
-                                #get_obj_display('world').update_images_wall()
+                        if ((bullet[1] > settings.width)
+                        or (bullet[1] < 0)
+                        or (bullet[2] > settings.height)
+                        or (bullet[2] < 0)):
+                            self.bullets.pop(i)
+                            dead = True
+
+                        else:
+                            self.bullet_poly.pos.x = bullet[1]
+                            self.bullet_poly.pos.y = bullet[2]
+                            self.bullet_poly.angle = math.radians(bullet[3])
+
+
+                            for j in range(len(get_obj_display('players').tanks)):
+                                if bullet[0] != j and collision.collide(self.bullet_poly, get_obj_display('players').tanks[j].poligon_body):
+                                    if get_obj_display('players').tanks[j].use:
+                                        dead = True
+                                        if not get_obj_display('players').tanks[j].death_bool and not get_obj_display('players').tanks[j].protection:
+                                            get_obj_display('players').tanks[j].health -= get_obj_display('players').tanks[bullet[0]].demage_a
+                                            if get_obj_display('players').tanks[j].health <= 0:
+                                                get_obj_display('players').tanks[bullet[0]].kills += 1
+                                                get_obj_display('players').tanks[bullet[0]].score += tanks.score['kill']
+                                            #get_obj_display('world').shaking(delay=0.2, power=settings.height/1000)
+                                        self.bullets.pop(i)
+                                        #get_obj_display('smoke').add_smoke(bullet[1], bullet[2], 9)
+
+                            if not dead:
+                                pos = [bullet[1] + ((settings.width - get_obj_display('world').image_wall.width) / 2), bullet[2] - ((settings.height - get_obj_display('world').image_wall.height) / 2)]
+                                pos = [int(math.sqrt(pos[0] ** 2)//get_obj_display('world').size_poligon), int(math.sqrt(pos[1] ** 2)//get_obj_display('world').size_poligon)]
+
+                                block = get_obj_display('world').get_wall_poligon(pos[0], pos[1])
+                                if block != 'none':
+                                    if collision.collide(self.bullet_poly, block):
+                                        self.bullets.pop(i)
+                                        get_obj_display('smoke').add_smoke(bullet[1], bullet[2], 9)
+                                        dead = True
+                                        # попытка сделать разрушемость
+                                        #get_obj_display('world').map_wall[get_obj_display('world').get_block_num(pos[0], get_obj_display('world').world_size[1] - pos[1])] = 'none'
+                                        #get_obj_display('world').clear_images_wall()
+                                        #get_obj_display('world').set_wall()
+                                        #get_obj_display('world').update_images_wall()
 
     def draw(self):
         for bullet in self.bullets:

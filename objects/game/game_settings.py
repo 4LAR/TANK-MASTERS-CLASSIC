@@ -42,6 +42,8 @@ class Save_settings():
             game_settings.time_set_min = int(config.get("Game_setup", "time_set_min"))
             game_settings.time_set_sec = int(config.get("Game_setup", "time_set_sec"))
 
+            game_settings.collide_players = True if (config.get("Game_setup", "collide_players")).lower() == 'true' else False
+
             # Tank
             for i in range(4):
                 tank_settings.tanks[i][0] = True if (config.get("Tank_MPL", "P" + str(i + 1) + '_use')).lower() == 'true' else False
@@ -94,6 +96,8 @@ class Save_settings():
         config.set("Game_setup", "time_set_min", str(game_settings.time_set_min))
         config.set("Game_setup", "time_set_sec", str(game_settings.time_set_sec))
 
+        config.set("Game_setup", "collide_players", str(game_settings.collide_players))
+
         # Tank
         config.add_section("Tank_MPL")
         for i in range(4):
@@ -123,11 +127,14 @@ class Game_settings(): # settings in game
 
         self.snow = False
 
-        self.time_bool = True
+        self.time_bool = False
         self.time_set_min = 2
         self.time_set_sec = 0
 
+        self.collide_players = True
+
         self.pause = False # dont save
+        self.end_game = False # dont save
         self.multiplayer = False # dont save
 
 class Graphics_settings():

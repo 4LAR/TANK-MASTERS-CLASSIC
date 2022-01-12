@@ -140,6 +140,27 @@ class timer():
                 exec(self.arg)
             self.stop = True
 
+class slider_image():
+    def __init__(self, x, y, image, image_slider, image_selected='', scale=1, shadow=False):
+        self.x = x
+        self.y = y
+
+        self.imgae = image
+        self.image_selected = image_selected
+        self.image_slider = image_slider
+
+    def on_mouse_motion(self, x, y, dx, dy):
+        pass
+
+    def on_mouse_press(self, x, y, button, modifiers):
+        pass
+
+    def on_mouse_drag(self, x, y, dx, dy, buttons, modifiers):
+        pass
+
+    def draw(self):
+        pass
+
 class input_label_image():
     def change_text(self, text):
         self.text = text
@@ -523,7 +544,7 @@ class label(): # класс для прорисовки 4х угольника
         self.rec.draw()
 
 class breathing_label(): # класс для прорисовки 4х угольника
-    def __init__(self, x, y, size_x, size_y, color=(255, 255, 255), rotation=0, for_from=255, for_before=0, tick=-5, delay=0.03, function=None):
+    def __init__(self, x, y, size_x, size_y, color=(255, 255, 255), rotation=0, for_from=255, for_before=0, tick=-5, delay=0.03, function=None, arg=None):
         self.x = x
         self.y = y
         self.size_x = size_x
@@ -532,6 +553,7 @@ class breathing_label(): # класс для прорисовки 4х уголь
         self.rotation = rotation
 
         self.function = function
+        self.arg = arg
 
         self.for_from = for_from
         self.for_before = for_before
@@ -556,6 +578,8 @@ class breathing_label(): # класс для прорисовки 4х уголь
                     self.stop = True
                     if self.function != None:
                         self.function()
+                    elif self.arg != None:
+                        exec(self.arg)
                 self.time = time.perf_counter() + self.delay
         else:
             self.rec.opacity = self.for_before
