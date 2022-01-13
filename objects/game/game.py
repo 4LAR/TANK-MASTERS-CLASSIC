@@ -2,6 +2,14 @@
 #🐀
 
 KEY_BINDS = {
+    'main': {
+        'up': 'W',
+        'left': 'A',
+        'down': 'S',
+        'right': 'D',
+        'shoot_a': 'SPACE'
+    },
+
     'P1': {
         'up': 'W',
         'left': 'A',
@@ -34,6 +42,11 @@ KEY_BINDS = {
         'shoot_a': 'NUM_0'
     }
 }
+
+if os.path.exists('KEY_BINDS.json'):
+    KEY_BINDS = read_dict('KEY_BINDS')
+else:
+    save_dict(KEY_BINDS, 'KEY_BINDS')
 
 class tanks():
     def __init__(self):

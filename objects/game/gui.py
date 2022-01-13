@@ -84,7 +84,7 @@ class gui():
                         players_info['players'][i]['tower'] = player.tank_settings[1]
                         players_info['players'][i]['body'] = player.tank_settings[0]
 
-                    add_display(breathing_label(0, 0, settings.width, settings.height, (0, 0, 0), 0, delay=0.04, arg='end_game(' + str(players_info) + ')', for_from=0, for_before=255, tick=5))
+                    add_display(breathing_label(0, 0, settings.width, settings.height, (0, 0, 0), 0, delay=0.04, arg='game_settings.reload(); end_game(' + str(players_info) + ')', for_from=0, for_before=255, tick=5))
                 get_obj_display('game_settings').end_game = True
 
     def draw(self):

@@ -12,6 +12,19 @@ class game_settings_page():
             if i != id:
                 self.settings_buttons[1][i].flag = False
 
+    def select_player(self, id):
+        players = ['main', 'P1', 'P2', 'P3', 'P4']
+        buttons = ['up', 'down', 'left', 'right', 'shoot_a']
+        for i in range(5):
+            self.KEY_BINDS[players[self.selected_player]][buttons[i]] = self.settings_buttons[4][5 + i].key
+            self.settings_buttons[4][5 + i].update_key(self.KEY_BINDS[players[id]][buttons[i]])
+
+        self.selected_player = id
+        self.settings_buttons[4][id].flag = True
+        for i in range(5):
+            if i != id:
+                self.settings_buttons[4][i].flag = False
+
     def read_settings(self):
         # game
         self.settings_buttons[0][0].change_text(str(user_game_settings.name))
@@ -24,9 +37,11 @@ class game_settings_page():
         # display
         self.settings_buttons[1][settings.full_screen].flag = True
 
-
         self.settings_buttons[1][3].change_text(str(settings.width))
         self.settings_buttons[1][4].change_text(str(settings.height))
+
+        # sound
+        self.settings_buttons[2][0].change_state(settings.sound_volume * 8)
 
         # graphics
         self.settings_buttons[3][0].flag = graphics_settings.draw_leaf
@@ -80,7 +95,9 @@ class game_settings_page():
             settings.height = height
 
 
-        # проверка на
+        # sound
+        settings.sound_volume = self.settings_buttons[2][0].state / 8
+        sound.update()
 
         # graphics
         graphics_settings.draw_leaf = self.settings_buttons[3][0].flag
@@ -95,6 +112,15 @@ class game_settings_page():
 
         save_settings.save_settings()
         settings.save_settings()
+
+        # keyboard
+        global KEY_BINDS
+        players = ['main', 'P1', 'P2', 'P3', 'P4']
+        buttons = ['up', 'down', 'left', 'right', 'shoot_a']
+        for i in range(5):
+            self.KEY_BINDS[players[self.selected_player]][buttons[i]] = self.settings_buttons[4][5 + i].key
+        KEY_BINDS = self.KEY_BINDS
+        save_dict(KEY_BINDS, 'KEY_BINDS')
 
         if reboot_bool:
             #reboot()
@@ -118,6 +144,15 @@ class game_settings_page():
         # 2 - sound
         # 3 - graphics
         # 4 - keyboard
+
+        self.selected_player = 0
+        # 0 - main
+        # 1 - P1
+        # 2 - P2
+        # 3 - P3
+        # 4 - P4
+
+        self.KEY_BINDS = KEY_BINDS
 
         self.settings_page_buttons = []
         self.settings_page_buttons_text = []
@@ -420,18 +455,17 @@ class game_settings_page():
 
         # sound
         self.settings_buttons.append([])
-        '''self.settings_buttons[1].append(
-            image_flag(
-                settings.width/100,
-                settings.height - settings.height/3.5,
-                image='buttons/flag/flag.png',
-                image_flag='buttons/flag/flag_selected.png',
-                image_selected_flag='buttons/flag/flag_hover_selected.png',
-                image_selected='buttons/flag/flag_hover.png',
-                scale=settings.height/160,
-
-            )
-        )'''
+        #add_display(slider_image(300, 300, 'buttons/slider_medium/input_slider.png', 'buttons/slider_medium/slider.png', 'buttons/slider_medium/input_slider_hover.png',scale=settings.height/120, shadow=graphics_settings.shadows_buttons))
+        self.settings_buttons[2].append(
+            slider_image(
+                    settings.width/100,
+                    settings.height - settings.height/3.5 - (settings.height/8) * 1,
+                    'buttons/slider_medium/input_slider.png',
+                    'buttons/slider_medium/slider.png',
+                    'buttons/slider_medium/input_slider_hover.png',
+                    scale=settings.height/160, shadow=graphics_settings.shadows_buttons
+                )
+        )
 
         # graphics
         self.settings_buttons.append([])
@@ -566,7 +600,94 @@ class game_settings_page():
 
         # keyboard
         self.settings_buttons.append([])
+        players = ['main', 'P1', 'P2', 'P3', 'P4']
+        for i in range(5):
+            self.settings_buttons[4].append(
+                image_flag(
+                    buttons_distance * i,
+                    settings.height - settings.height/6 - settings.height/10,
+                    image='buttons/button_clear_full_kv.png',
+                    image_flag='buttons/button_clear_full_kv_flag.png',
+                    image_selected_flag='buttons/button_clear_full_kv_flag_selected.png',
+                    image_selected='buttons/button_clear_full_kv_selected.png',
+                    scale=settings.height/160,
+                    function_bool = True,
+                    arg='get_obj_display("game_settings_page").select_player(' + str(i) + ')',
 
+                    text=players[i],
+                    text_color = (150, 150, 150, 255),
+                    font='pixel.ttf',
+                    text_indent=settings.height/10 if i == 0 else settings.height/8
+
+                )
+            )
+
+
+        # inputs
+        self.settings_buttons[4].append(
+            read_key_image(
+                settings.width/100,
+                settings.height - settings.height/3.5 - (settings.height/8) * 1,
+                'buttons/button_clear_2_reverse.png',
+                'buttons/button_clear_selected_2_reverse.png',
+                scale=settings.height/160, color_text=(150, 150, 150, 255),
+                text='up   ', font='pixel.ttf', text_indent=settings.height/10,
+                text_input_indent=settings.height/5, shadow=graphics_settings.shadows_buttons
+            )
+        )
+        self.settings_buttons[4][5].update_key(self.KEY_BINDS['main']['up'])
+        self.settings_buttons[4].append(
+            read_key_image(
+                settings.width/100,
+                settings.height - settings.height/3.5 - (settings.height/8) * 2,
+                'buttons/button_clear_2_reverse.png',
+                'buttons/button_clear_selected_2_reverse.png',
+                scale=settings.height/160, color_text=(150, 150, 150, 255),
+                text='down ', font='pixel.ttf', text_indent=settings.height/10,
+                text_input_indent=settings.height/6, shadow=graphics_settings.shadows_buttons
+            )
+        )
+        self.settings_buttons[4][6].update_key(self.KEY_BINDS['main']['down'])
+        self.settings_buttons[4].append(
+            read_key_image(
+                settings.width/100 + settings.width/2,
+                settings.height - settings.height/3.5 - (settings.height/8) * 1,
+                'buttons/button_clear_2_reverse.png',
+                'buttons/button_clear_selected_2_reverse.png',
+                scale=settings.height/160, color_text=(150, 150, 150, 255),
+                text='left ', font='pixel.ttf', text_indent=settings.height/10,
+                text_input_indent=settings.height/6, shadow=graphics_settings.shadows_buttons
+            )
+        )
+        self.settings_buttons[4][7].update_key(self.KEY_BINDS['main']['left'])
+        self.settings_buttons[4].append(
+            read_key_image(
+                settings.width/100 + settings.width/2,
+                settings.height - settings.height/3.5 - (settings.height/8) * 2,
+                'buttons/button_clear_2_reverse.png',
+                'buttons/button_clear_selected_2_reverse.png',
+                scale=settings.height/160, color_text=(150, 150, 150, 255),
+                text='right', font='pixel.ttf', text_indent=settings.height/10,
+                text_input_indent=settings.height/6, shadow=graphics_settings.shadows_buttons
+            )
+        )
+        self.settings_buttons[4][8].update_key(self.KEY_BINDS['main']['right'])
+
+        # right
+        self.settings_buttons[4].append(
+            read_key_image(
+                settings.width/100,
+                settings.height - settings.height/3.5 - (settings.height/8) * 3.5,
+                'buttons/button_clear_2_reverse.png',
+                'buttons/button_clear_selected_2_reverse.png',
+                scale=settings.height/160, color_text=(150, 150, 150, 255),
+                text='shoot', font='pixel.ttf', text_indent=settings.height/10,
+                text_input_indent=settings.height/6.2, shadow=graphics_settings.shadows_buttons
+            )
+        )
+        self.settings_buttons[4][9].update_key(self.KEY_BINDS['main']['shoot_a'])
+
+        self.select_player(0)
 
         self.read_settings()
 
@@ -589,6 +710,20 @@ class game_settings_page():
             s.on_mouse_motion(x, y, dx, dy)
 
         self.save_settings_button.on_mouse_motion(x, y, dx, dy)
+
+    def on_mouse_drag(self, x, y, dx, dy, buttons, modifiers):
+        for s in self.settings_buttons[self.page]:
+            try:
+                s.on_mouse_drag(x, y, dx, dy, buttons, modifiers)
+            except:
+                pass
+
+    def on_key_press(self, symbol, modifier):
+        for s in self.settings_buttons[self.page]:
+            try:
+                s.on_key_press(symbol, modifier)
+            except:
+                pass
 
     def on_key_press(self, symbol, modifiers):
         for s in self.settings_buttons[self.page]:

@@ -5,6 +5,8 @@ def end_game(info):
     add_display(background_menu())
     if graphics_settings.game_in_menu:
         add_game_in_menu()
+    else:
+        add_display(game_settings)
     add_display(head_menu('end game'))
     add_display(image_button(0, settings.height/10, 'buttons/button_clear.png', scale=settings.height/120, center=False, arg='select_map(editor=False)', image_selected='buttons/button_clear_selected.png', text='exit', text_indent= settings.height//100, shadow=graphics_settings.shadows_buttons))
 

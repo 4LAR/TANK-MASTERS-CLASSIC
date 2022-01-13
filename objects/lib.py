@@ -1,3 +1,9 @@
+def save_dict(dict, name):
+    json.dump(dict, open(str(name) + '.json','w'))
+
+def read_dict(name):
+    return json.load(open(str(name) + '.json'))
+
 def norm_deg(deg):
     #while True:
     if deg <= 180:
@@ -118,6 +124,12 @@ class Sound():
         self.sound = pyglet.media.Player()
         self.sound.volume = settings.sound_volume
 
+    def sound_volume(self, vol):
+        self.sound.volume = vol
+
+    def update(self):
+        self.sound.volume = settings.sound_volume
+
     def play(self, music):
         self.sound.next_source()
         self.sound.queue(pyglet.media.load('sound/' + music) )
@@ -140,26 +152,204 @@ class timer():
                 exec(self.arg)
             self.stop = True
 
-class slider_image():
-    def __init__(self, x, y, image, image_slider, image_selected='', scale=1, shadow=False):
+class read_key_image():
+    def __init__(self, x, y, image, image_selected='', scale=1, font='default.ttf', color_text=(255, 255, 255, 255), text='', text_indent=0, text_input_indent=20, shadow=False, color_shadow=(0, 0, 0, 128)):
         self.x = x
         self.y = y
 
-        self.imgae = image
+        self.image = image
+        self.image_selected = image_selected
+        self.scale = scale
+
+        self.shadow = shadow
+        self.color_shadow = color_shadow
+
+        self.image_shadow_obj = PIL_to_pyglet(get_pil_color_mask(Image.open('img/' + self.image).convert("RGBA"), self.color_shadow), scale, False)
+        self.image_shadow_obj.x = x - scale
+        self.image_shadow_obj.y = y + scale
+
+        self.image_obj = image_label(self.image, x, y, scale=scale, center=False)
+        self.image_selected_obj = image_label(self.image_selected, x, y, scale=scale, center=False)
+
+        self.image_shadow_obj = PIL_to_pyglet(get_pil_color_mask(Image.open('img/' + self.image).convert("RGBA"), self.color_shadow), scale, False)
+        self.image_shadow_obj.x = x - scale
+        self.image_shadow_obj.y = y + scale
+
+        self.key = ''
+
+        self.font = font
+        self.color_text = color_text
+
+        self.text = text
+        size = self.scale * 5.5
+        self.text_button = text_label(self.x + text_indent, self.y + size*1.6, self.text, load_font=True, font=font, size=int(size), anchor_x='left', color=color_text)
+        self.text_obj = text_label(x + text_indent + self.text_button.label.content_width + text_input_indent, self.y + size*1.6, self.key, load_font=True, font=font, size=int(size), anchor_x='left', color=color_text)
+
+        self.hover = False
+        self.selected = False
+
+        self.image_poligon = collision.Poly(v(x, y),
+        [
+            v(0, self.image_obj.sprite.height),
+            v(self.image_obj.sprite.width, self.image_obj.sprite.height),
+            v(self.image_obj.sprite.width, 0),
+            v(0, 0)
+        ])
+
+        self.cursor_poligon = collision.Poly(v(0, 0),
+        [
+            v(-1, 1),
+            v(1, 1),
+            v(-1, -1),
+            v(1, -1)
+        ])
+
+    def update_key(self, key):
+        self.key = key
+        self.text_obj.label.text = self.key
+
+    def on_mouse_press(self, x, y, button, modifiers):
+        self.cursor_poligon.pos.x = x
+        self.cursor_poligon.pos.y = y
+        if collision.collide(self.image_poligon, self.cursor_poligon):
+            sound.play('upgrade.wav')
+            if not self.selected:
+                self.selected = True
+            else:
+                self.selected = False
+
+    def on_mouse_motion(self, x, y, dx, dy):
+        self.cursor_poligon.pos.x = x
+        self.cursor_poligon.pos.y = y
+        if collision.collide(self.image_poligon, self.cursor_poligon):
+            if not self.hover:
+                sound.play('select.wav')
+            self.hover = True
+        else:
+            self.hover = False
+
+    def on_key_press(self, symbol, modifier):
+        if self.selected:
+            block_simv = [
+                'F1',
+                'F2',
+                'F3',
+                'F4',
+                'F5',
+                'F6',
+                'F7',
+                'F8',
+                'F9',
+                'F10',
+                'F11',
+                'F12',
+                'ESCAPE',
+                'ENTER',
+                'LWINDOWS',
+                'RWINDOWS'
+            ]
+            #print(symbol, chr(symbol), key.symbol_string(symbol))
+            if not key.symbol_string(symbol) in block_simv:
+                self.update_key(key.symbol_string(symbol))
+
+            self.selected = False
+
+    def draw(self):
+        if self.shadow:
+            drawp(self.image_shadow_obj)
+        if self.hover or self.selected:
+            drawp(self.image_selected_obj)
+        else:
+            drawp(self.image_obj)
+
+        self.text_button.draw()
+        self.text_obj.draw()
+
+class slider_image():
+    def __init__(self, x, y, image, image_slider, image_selected='', scale=1, shadow=False, color_shadow=(0, 0, 0, 128)):
+        self.x = x
+        self.y = y
+
+        self.image = image
         self.image_selected = image_selected
         self.image_slider = image_slider
 
+        self.shadow = shadow
+        self.color_shadow = color_shadow
+
+        self.image_shadow_obj = PIL_to_pyglet(get_pil_color_mask(Image.open('img/' + self.image).convert("RGBA"), self.color_shadow), scale, False)
+        self.image_shadow_obj.x = x - scale
+        self.image_shadow_obj.y = y + scale
+
+        self.state = 0
+
+        self.image_obj = image_label(self.image, x, y, scale=scale, center=False)
+        self.image_selected_obj = image_label(self.image_selected, x, y, scale=scale, center=False)
+
+        self.image_slider_obj = image_label(self.image_slider, x, y, scale=scale, center=False)
+
+        self.max_width = self.image_obj.sprite.width - self.image_obj.sprite.width/4
+
+        self.image_poligon = collision.Poly(v(x, y),
+        [
+            v(0, self.image_obj.sprite.height),
+            v(self.image_obj.sprite.width, self.image_obj.sprite.height),
+            v(self.image_obj.sprite.width, 0),
+            v(0, 0)
+        ])
+
+        self.cursor_poligon = collision.Poly(v(0, 0),
+        [
+            v(-1, 1),
+            v(1, 1),
+            v(-1, -1),
+            v(1, -1)
+        ])
+
+        self.hover = False
+
+    def change_state(self, state):
+        self.state = state
+        self.update_state( (self.x + (self.image_obj.sprite.width * state)) )
+
+    def update_state(self, state):
+        #if self.hover:
+        self.image_slider_obj.x = state - self.image_slider_obj.sprite.width/2
+        self.image_slider_obj.update_image(True)
+        self.state = (1 / self.image_obj.sprite.width) * (state - self.x)
+
     def on_mouse_motion(self, x, y, dx, dy):
-        pass
+        self.cursor_poligon.pos.x = x
+        self.cursor_poligon.pos.y = y
+        if collision.collide(self.image_poligon, self.cursor_poligon):
+            if not self.hover:
+                sound.play('select.wav')
+            self.hover = True
+        else:
+            self.hover = False
 
     def on_mouse_press(self, x, y, button, modifiers):
-        pass
+        self.cursor_poligon.pos.x = x
+        self.cursor_poligon.pos.y = y
+        if collision.collide(self.image_poligon, self.cursor_poligon):
+            sound.play('upgrade.wav')
+            self.update_state(x)
 
     def on_mouse_drag(self, x, y, dx, dy, buttons, modifiers):
-        pass
+        self.cursor_poligon.pos.x = x
+        self.cursor_poligon.pos.y = y
+        if collision.collide(self.image_poligon, self.cursor_poligon):
+            self.update_state(x)
 
     def draw(self):
-        pass
+        if self.shadow:
+            drawp(self.image_shadow_obj)
+
+        if self.hover:
+            drawp(self.image_selected_obj)
+        else:
+            drawp(self.image_obj)
+        drawp(self.image_slider_obj)
 
 class input_label_image():
     def change_text(self, text):
@@ -192,7 +382,6 @@ class input_label_image():
         self.image_shadow_obj = PIL_to_pyglet(get_pil_color_mask(Image.open('img/' + self.image).convert("RGBA"), self.color_shadow), scale, False)
         self.image_shadow_obj.x = x - scale
         self.image_shadow_obj.y = y + scale
-
 
         self.image_obj = image_label(self.image, x, y, scale=scale, center=False)
         self.image_selected_obj = image_label(self.image_selected, x, y, scale=scale, center=False)
@@ -752,7 +941,9 @@ class image_flag():
 
 
 class image_button():
-    def __init__(self, x, y, image, scale=1, rotation=0, alpha=255, center=False, function=None, arg=None, image_selected=None, poligon=False, text=None, text_color=(180, 180, 180, 255), font='pixel.ttf', text_indent=0, shadow=False, color_shadow=(0, 0, 0, 128)):
+    def __init__(self, x, y, image, scale=1, rotation=0, alpha=255, center=False, function=None, arg=None, image_selected=None, poligon=False, text=None, text_color=(180, 180, 180, 255), font='pixel.ttf', text_indent=0, shadow=False, color_shadow=(0, 0, 0, 128), use=True):
+        self.use = use
+
         self.x = x
         self.y = y
         self.image = image
@@ -812,28 +1003,28 @@ class image_button():
         ])
 
     def on_mouse_press(self, x, y, button, modifiers):
-        #engine_settings.on_mouse_press_bool = True
-        self.cursor_poligon.pos.x = x
-        self.cursor_poligon.pos.y = y
-        if collision.collide(self.image_poligon, self.cursor_poligon):
-            #engine_settings.on_mouse_press_bool = False
-            sound.play('upgrade.wav')
-            if self.arg == None:
-                self.function()
-            else:
-                exec(self.arg)
-            return True
-        return False
+        if self.use:
+            self.cursor_poligon.pos.x = x
+            self.cursor_poligon.pos.y = y
+            if collision.collide(self.image_poligon, self.cursor_poligon):
+                sound.play('upgrade.wav')
+                if self.arg == None:
+                    self.function()
+                else:
+                    exec(self.arg)
+                return True
+            return False
 
     def on_mouse_motion(self, x, y, dx, dy):
-        self.cursor_poligon.pos.x = x
-        self.cursor_poligon.pos.y = y
-        if collision.collide(self.image_poligon, self.cursor_poligon):
-            if not self.selected:
-                sound.play('select.wav')
-            self.selected = True
-        else:
-            self.selected = False
+        if self.use:
+            self.cursor_poligon.pos.x = x
+            self.cursor_poligon.pos.y = y
+            if collision.collide(self.image_poligon, self.cursor_poligon):
+                if not self.selected:
+                    sound.play('select.wav')
+                self.selected = True
+            else:
+                self.selected = False
 
     def update_pos(self, x_pol, y_pol, x_im, y_im):
         self.image_poligon.pos.x = x_pol

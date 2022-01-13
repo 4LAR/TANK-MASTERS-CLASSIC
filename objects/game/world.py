@@ -114,7 +114,12 @@ class world():
     def get_water_poligon(self, x, y):
         return self.poligons_water[self.get_block_num(x, y)]
 
+
+    # для паралакса в меню
     def on_mouse_motion(self, x, y, dx, dy):
+        self.disp_pos = [x, y]
+
+    def on_mouse_drag(self, x, y, dx, dy, buttons, modifiers):
         self.disp_pos = [x, y]
 
     def set_floor(self):

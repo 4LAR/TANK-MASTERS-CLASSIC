@@ -118,6 +118,7 @@ def menu():
     add_display(text_label(settings.width/100, settings.height - settings.height/10, 'TANK MASTERS', load_font=True, font='pixel.ttf', size=settings.height//20, anchor_x='left', color = (150, 150, 150, 255), shadow=True, color_shadow=(20, 20, 20, 122), shadow_size=settings.height//20))
     add_display(text_label(settings.width/5, settings.height - settings.height/6.5, 'CLASSIC', load_font=True, font='pixel.ttf', size=settings.height//20, anchor_x='left', color = (150, 150, 150, 255), shadow=True, color_shadow=(20, 20, 20, 122), shadow_size=settings.height//20))
     add_display(text_label(settings.width/100, settings.height/40, version_engine + ' | ' + version, load_font=True, font='pixel.ttf', size=settings.height//48, anchor_x='left', color = (150, 150, 150, 255)))
+    #add_display(read_key_image(300, 300, 'buttons/button_clear_2_reverse.png', 'buttons/button_clear_selected_2_reverse.png', scale=settings.height/120, color_text=(150, 150, 150, 255), text='left', font='pixel.ttf', text_indent=settings.height/10, text_input_indent=settings.height/4, shadow=graphics_settings.shadows_buttons))
     if first_breath_menu:
         add_display(breathing_label(0, 0, settings.width, settings.height, (0, 0, 0), 0, delay=0.01, for_from=255, for_before=0, tick=-5))
         first_breath_menu = False
