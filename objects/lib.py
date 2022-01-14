@@ -1,3 +1,6 @@
+
+BUFFERSIZE = 512
+
 def save_dict(dict, name):
     json.dump(dict, open(str(name) + '.json','w'))
 

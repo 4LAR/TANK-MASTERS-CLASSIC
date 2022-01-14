@@ -97,8 +97,8 @@ try:
 
     from weakref import WeakKeyDictionary
 
-    from PodSixNet.Server import Server
-    from PodSixNet.Channel import Channel
+    #from PodSixNet.Server import Server
+    #from PodSixNet.Channel import Channel
 
     # расположение нужных каталогов
     img_dir     = path.join(path.dirname(__file__), 'img') # путь к папке с картинками

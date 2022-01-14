@@ -136,6 +136,7 @@ class Game_settings(): # settings in game
         self.pause = False # dont save
         self.end_game = False # dont save
         self.multiplayer = False # dont save
+        self.multiplayer_id = 0 # dont save
 
     def reload(self):
         self.pause = False

@@ -24,5 +24,5 @@ game/pause.py
 game/table.py
 game/game.py
 netCode/client.py
-netCode/server.py
+netCode/net_code.py
 logo.py

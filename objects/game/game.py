@@ -93,7 +93,9 @@ def play(
     add_display(weather())
     add_display(gui())
     add_display(pause())
-    add_display(table_game())
+    if game_settings.multiplayer:
+        add_display(table_game())
+        add_display(net_code())
 
 def editor(map_name='test', new=False):
     show_cursor()
