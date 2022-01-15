@@ -278,86 +278,90 @@ class player():
                         self.time_random_rotation = time.perf_counter() + random.randrange(1, 4)
 
                 # передвижение
-                move_bool = False # для анимации
-                if (eval('keyboard[key.' + KEY_BINDS['P' + str(self.id + 1)]['left'] + ']') and not self.bot) or (self.bot and self.bot_rotation == -90):
-                    self.wall_collision_bool = self.set_pos_body(-speed_tick, 0, self.bot)
-                    self.rotation = -90
-                    move_bool = True
-                elif (eval('keyboard[key.' + KEY_BINDS['P' + str(self.id + 1)]['right'] + ']') and not self.bot) or (self.bot and self.bot_rotation == 90):
-                    self.wall_collision_bool = self.set_pos_body(speed_tick, 0, self.bot)
-                    self.rotation = 90
-                    move_bool = True
-                elif (eval('keyboard[key.' + KEY_BINDS['P' + str(self.id + 1)]['up'] + ']') and not self.bot) or (self.bot and self.bot_rotation == 0):
-                    self.wall_collision_bool = self.set_pos_body(0, speed_tick, self.bot)
-                    self.rotation = 0
-                    move_bool = True
-                elif (eval('keyboard[key.' + KEY_BINDS['P' + str(self.id + 1)]['down'] + ']') and not self.bot) or (self.bot and self.bot_rotation == 180):
-                    self.wall_collision_bool = self.set_pos_body(0, -speed_tick, self.bot)
-                    self.rotation = 180
-                    move_bool = True
+                if not game_settings.multiplayer or self.id == game_settings.multiplayer_id:
+                    keys = KEY_BINDS['main'] if game_settings.multiplayer else KEY_BINDS['P' + str(self.id + 1)]
+                    move_bool = False # для анимации
+                    if (eval('keyboard[key.' + keys['left'] + ']') and not self.bot) or (self.bot and self.bot_rotation == -90):
+                        self.wall_collision_bool = self.set_pos_body(-speed_tick, 0, self.bot)
+                        self.rotation = -90
+                        move_bool = True
+                    elif (eval('keyboard[key.' + keys['right'] + ']') and not self.bot) or (self.bot and self.bot_rotation == 90):
+                        self.wall_collision_bool = self.set_pos_body(speed_tick, 0, self.bot)
+                        self.rotation = 90
+                        move_bool = True
+                    elif (eval('keyboard[key.' + keys['up'] + ']') and not self.bot) or (self.bot and self.bot_rotation == 0):
+                        self.wall_collision_bool = self.set_pos_body(0, speed_tick, self.bot)
+                        self.rotation = 0
+                        move_bool = True
+                    elif (eval('keyboard[key.' + keys['down'] + ']') and not self.bot) or (self.bot and self.bot_rotation == 180):
+                        self.wall_collision_bool = self.set_pos_body(0, -speed_tick, self.bot)
+                        self.rotation = 180
+                        move_bool = True
 
-                if move_bool or self.tank_settings[0] == 1:
-                    self.anim_tick()
-                    if get_obj_display('graphics_settings').draw_traces:
-                        self.add_trace(self.pos[0], self.pos[1], self.rotation)
+                    if move_bool or self.tank_settings[0] == 1:
+                        self.anim_tick()
+                        if get_obj_display('graphics_settings').draw_traces:
+                            self.add_trace(self.pos[0], self.pos[1], self.rotation)
 
-                self.poligon_body.pos.x = self.pos[0]
-                self.poligon_body.pos.y = self.pos[1]
 
-                # стрельба
-                if ( (eval('keyboard[key.' + KEY_BINDS['P' + str(self.id+1)]['shoot_a'] + ']') and not self.bot) or (self.bot and self.bot_shoot_a) ):
-                    self.shoot_a_bool = True
-                    if self.time_shoot_a <= time.perf_counter():
-                        # Обычные пушки
-                        if self.tank_settings[1] in [0, 1]:
-                            self.shoot(move_bool)
 
-                        # пулемёт
-                        elif self.tank_settings[1] in [2]:
-                            if self.gun_twist_time <= time.perf_counter():
-                                if (self.temperature_gun < self.max_temperature_gun) and not self.gun_overheat:
-                                    self.temperature_gun += self.temperature_gun_in_Shoot
-                                    if self.temperature_gun >= self.max_temperature_gun:
-                                        self.gun_overheat = True
-                                    self.shoot(move_bool)
+                    # стрельба
+                    if ( (eval('keyboard[key.' + keys['shoot_a'] + ']') and not self.bot) or (self.bot and self.bot_shoot_a) ):
+                        self.shoot_a_bool = True
+                        if self.time_shoot_a <= time.perf_counter():
+                            # Обычные пушки
+                            if self.tank_settings[1] in [0, 1]:
+                                self.shoot(move_bool)
 
-                            self.anim_tick_tower()
+                            # пулемёт
+                            elif self.tank_settings[1] in [2]:
+                                if self.gun_twist_time <= time.perf_counter():
+                                    if (self.temperature_gun < self.max_temperature_gun) and not self.gun_overheat:
+                                        self.temperature_gun += self.temperature_gun_in_Shoot
+                                        if self.temperature_gun >= self.max_temperature_gun:
+                                            self.gun_overheat = True
+                                        self.shoot(move_bool)
 
-                        # лазер
-                        elif self.tank_settings[1] in [3, 4]:
-                            if self.gun_laser_count < self.gun_laser_max_count:
-                                self.gun_laser_count += 1
+                                self.anim_tick_tower()
 
-                            if (self.bot and self.bot_shoot_a):
-                                if self.gun_laser_count >= self.gun_laser_max_count:
-                                    self.shoot(move_bool, type='laser')
-                                    self.gun_laser_count = 0
+                            # лазер
+                            elif self.tank_settings[1] in [3, 4]:
+                                if self.gun_laser_count < self.gun_laser_max_count:
+                                    self.gun_laser_count += 1
 
-                        self.time_shoot_a = time.perf_counter() + self.delay_shoot_a
-                else:
-                    if self.tank_settings[1] in [3, 4]:
-                        if self.gun_laser_count >= self.gun_laser_max_count:
-                            self.shoot(move_bool, type='laser')
-                        self.gun_laser_count = 0
+                                if (self.bot and self.bot_shoot_a):
+                                    if self.gun_laser_count >= self.gun_laser_max_count:
+                                        self.shoot(move_bool, type='laser')
+                                        self.gun_laser_count = 0
+
+                            self.time_shoot_a = time.perf_counter() + self.delay_shoot_a
+                    else:
+                        if self.tank_settings[1] in [3, 4]:
+                            if self.gun_laser_count >= self.gun_laser_max_count:
+                                self.shoot(move_bool, type='laser')
+                            self.gun_laser_count = 0
+
+                        if self.tank_settings[1] in [2]:
+                            self.gun_twist_time = time.perf_counter() + self.gun_twist_delay
+
+                        self.shoot_a_bool = False
 
                     if self.tank_settings[1] in [2]:
-                        self.gun_twist_time = time.perf_counter() + self.gun_twist_delay
+                        if (self.temperature_gun > 0) and (self.gun_overheat_time <= time.perf_counter()):
+                            self.temperature_gun -= self.temperature_gun_in_Shoot
+                            if self.temperature_gun <= self.max_temperature_gun / 4:
+                                self.gun_overheat = False
 
-                    self.shoot_a_bool = False
+                            self.gun_overheat_time = time.perf_counter() + self.gun_overheat_delay
 
-                if self.tank_settings[1] in [2]:
-                    if (self.temperature_gun > 0) and (self.gun_overheat_time <= time.perf_counter()):
-                        self.temperature_gun -= self.temperature_gun_in_Shoot
-                        if self.temperature_gun <= self.max_temperature_gun / 4:
-                            self.gun_overheat = False
+                            if self.gun_overheat:
+                                get_obj_display('smoke').add_smoke(self.pos[0] + self.offs[self.rotation][0], self.pos[1] + self.offs[self.rotation][1], 9)
 
-                        self.gun_overheat_time = time.perf_counter() + self.gun_overheat_delay
+                        self.obj_tanks[5].alpha = (200 / self.max_temperature_gun) * self.temperature_gun
+                        self.obj_tanks[5].update_image(True)
 
-                        if self.gun_overheat:
-                            get_obj_display('smoke').add_smoke(self.pos[0] + self.offs[self.rotation][0], self.pos[1] + self.offs[self.rotation][1], 9)
-
-                    self.obj_tanks[5].alpha = (200 / self.max_temperature_gun) * self.temperature_gun
-                    self.obj_tanks[5].update_image(True)
+            self.poligon_body.pos.x = self.pos[0]
+            self.poligon_body.pos.y = self.pos[1]
 
             # перемещение стпрайтов и полигонов по карте
             if self.death_bool:

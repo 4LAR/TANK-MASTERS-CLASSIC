@@ -9,8 +9,9 @@ def thread_multiplayer():
             data = json.dumps(data).encode('utf-8')
             tcp_socket.send(data)
 
-            get_obj_display('net_code').data_recive = tcp_socket.recv(BUFFERSIZE)
+            data = tcp_socket.recv(BUFFERSIZE)
+            get_obj_display('net_code').data_recive = json.loads(data.decode('utf-8'))
 
             tcp_socket.close()
-        except:
-            pass
+        except Exception as e:
+            print(e)

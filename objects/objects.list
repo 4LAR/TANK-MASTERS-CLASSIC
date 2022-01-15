@@ -4,6 +4,7 @@ main.py
 console.py
 editor/map_editor.py
 editor/map_editor_inventory.py
+menu/alert.py
 menu/menu.py
 menu/single.py
 menu/multiplayer.py

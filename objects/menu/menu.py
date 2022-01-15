@@ -97,10 +97,27 @@ def add_game_in_menu():
         add_display(menu_walls)
         add_display(menu_weather)
 
+def exit_alert():
+    show_cursor()
+    clear_display()
+    add_display(back(arg='menu()'))
+    add_display(background_menu())
+    if graphics_settings.game_in_menu:
+        add_game_in_menu()
+    add_display(head_menu())
+    add_display(head_menu(align_top=False))
+
+    add_display(label(0, 0,settings.width, settings.height,(0, 0, 0), alpha = 128))
+    add_display(text_label(settings.width/2, settings.height/1.5, 'are you sure you want to exit', load_font=True, font='pixel.ttf', size=settings.height//18, anchor_x='center', color = (150, 150, 150, 255)))
+
+    add_display(image_button(0, settings.height/10, 'buttons/button_clear.png', scale=settings.height/120, center=False, arg='exit()', image_selected='buttons/button_clear_selected.png', text='yes', text_indent= settings.height//100, shadow=graphics_settings.shadows_buttons))
+    add_display(image_button(settings.width - (settings.height/120 * 48), settings.height/10, 'buttons/button_clear_left.png', scale=settings.height/120, center=False, arg='menu()', image_selected='buttons/button_clear_left_selected.png', text='no', text_indent= settings.height/30, shadow=graphics_settings.shadows_buttons))
+
 def menu():
     show_cursor()
     global first_breath_menu
     clear_display()
+    add_display(back(arg='exit_alert()'))
     add_display(background_menu())
     if graphics_settings.game_in_menu:
         add_game_in_menu()
@@ -113,12 +130,13 @@ def menu():
     add_display(image_button(0, settings.height - settings.height/3, 'buttons/button_clear.png', scale=settings.height/120, center=False, arg='single_game()', function=play_menu, image_selected='buttons/button_clear_selected.png', text='single', text_indent= settings.height//100, shadow=graphics_settings.shadows_buttons))
     add_display(image_button(0, settings.height - settings.height/2, 'buttons/button_clear.png', scale=settings.height/120, center=False, arg='select_map(editor=False)', image_selected='buttons/button_clear_selected.png', text='mp local', text_indent= settings.height//100, shadow=graphics_settings.shadows_buttons))
     add_display(image_button(0, settings.height - settings.height/1.5, 'buttons/button_clear.png', scale=settings.height/120, center=False, arg='multiplayer_game()', image_selected='buttons/button_clear_selected.png', text='mp online', text_indent= settings.height//100, shadow=graphics_settings.shadows_buttons))
-    add_display(image_button(settings.width - (settings.height/120 * 48), settings.height/10, 'buttons/button_clear_left.png', scale=settings.height/120, center=False, text='exit', image_selected='buttons/button_clear_left_selected.png', arg='exit()', text_indent= settings.height/6, shadow=graphics_settings.shadows_buttons))
+    add_display(image_button(settings.width - (settings.height/120 * 48), settings.height/10, 'buttons/button_clear_left.png', scale=settings.height/120, center=False, text='exit', image_selected='buttons/button_clear_left_selected.png', arg='exit_alert()', text_indent= settings.height/6, shadow=graphics_settings.shadows_buttons))
     add_display(head_menu(align_top=False))
     add_display(text_label(settings.width/100, settings.height - settings.height/10, 'TANK MASTERS', load_font=True, font='pixel.ttf', size=settings.height//20, anchor_x='left', color = (150, 150, 150, 255), shadow=True, color_shadow=(20, 20, 20, 122), shadow_size=settings.height//20))
     add_display(text_label(settings.width/5, settings.height - settings.height/6.5, 'CLASSIC', load_font=True, font='pixel.ttf', size=settings.height//20, anchor_x='left', color = (150, 150, 150, 255), shadow=True, color_shadow=(20, 20, 20, 122), shadow_size=settings.height//20))
     add_display(text_label(settings.width/100, settings.height/40, version_engine + ' | ' + version, load_font=True, font='pixel.ttf', size=settings.height//48, anchor_x='left', color = (150, 150, 150, 255)))
-    #add_display(read_key_image(300, 300, 'buttons/button_clear_2_reverse.png', 'buttons/button_clear_selected_2_reverse.png', scale=settings.height/120, color_text=(150, 150, 150, 255), text='left', font='pixel.ttf', text_indent=settings.height/10, text_input_indent=settings.height/4, shadow=graphics_settings.shadows_buttons))
+    #add_display(alert())
+
     if first_breath_menu:
         add_display(breathing_label(0, 0, settings.width, settings.height, (0, 0, 0), 0, delay=0.01, for_from=255, for_before=0, tick=-5))
         first_breath_menu = False

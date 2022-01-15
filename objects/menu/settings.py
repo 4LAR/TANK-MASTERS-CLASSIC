@@ -624,67 +624,40 @@ class game_settings_page():
 
 
         # inputs
-        self.settings_buttons[4].append(
-            read_key_image(
-                settings.width/100,
-                settings.height - settings.height/3.5 - (settings.height/8) * 1,
-                'buttons/button_clear_2_reverse.png',
-                'buttons/button_clear_selected_2_reverse.png',
-                scale=settings.height/160, color_text=(150, 150, 150, 255),
-                text='up   ', font='pixel.ttf', text_indent=settings.height/10,
-                text_input_indent=settings.height/5, shadow=graphics_settings.shadows_buttons
-            )
-        )
-        self.settings_buttons[4][5].update_key(self.KEY_BINDS['main']['up'])
-        self.settings_buttons[4].append(
-            read_key_image(
-                settings.width/100,
-                settings.height - settings.height/3.5 - (settings.height/8) * 2,
-                'buttons/button_clear_2_reverse.png',
-                'buttons/button_clear_selected_2_reverse.png',
-                scale=settings.height/160, color_text=(150, 150, 150, 255),
-                text='down ', font='pixel.ttf', text_indent=settings.height/10,
-                text_input_indent=settings.height/6, shadow=graphics_settings.shadows_buttons
-            )
-        )
-        self.settings_buttons[4][6].update_key(self.KEY_BINDS['main']['down'])
-        self.settings_buttons[4].append(
-            read_key_image(
-                settings.width/100 + settings.width/2,
-                settings.height - settings.height/3.5 - (settings.height/8) * 1,
-                'buttons/button_clear_2_reverse.png',
-                'buttons/button_clear_selected_2_reverse.png',
-                scale=settings.height/160, color_text=(150, 150, 150, 255),
-                text='left ', font='pixel.ttf', text_indent=settings.height/10,
-                text_input_indent=settings.height/6, shadow=graphics_settings.shadows_buttons
-            )
-        )
-        self.settings_buttons[4][7].update_key(self.KEY_BINDS['main']['left'])
-        self.settings_buttons[4].append(
-            read_key_image(
-                settings.width/100 + settings.width/2,
-                settings.height - settings.height/3.5 - (settings.height/8) * 2,
-                'buttons/button_clear_2_reverse.png',
-                'buttons/button_clear_selected_2_reverse.png',
-                scale=settings.height/160, color_text=(150, 150, 150, 255),
-                text='right', font='pixel.ttf', text_indent=settings.height/10,
-                text_input_indent=settings.height/6, shadow=graphics_settings.shadows_buttons
-            )
-        )
-        self.settings_buttons[4][8].update_key(self.KEY_BINDS['main']['right'])
+        inputs_pos = [
+            [settings.width/100, settings.height - settings.height/3.5 - (settings.height/8) * 1],
+            [settings.width/100, settings.height - settings.height/3.5 - (settings.height/8) * 2],
+            [settings.width/100 + settings.width/2, settings.height - settings.height/3.5 - (settings.height/8) * 1],
+            [settings.width/100 + settings.width/2, settings.height - settings.height/3.5 - (settings.height/8) * 2],
+            [settings.width/100, settings.height - settings.height/3.5 - (settings.height/8) * 3.5],
+        ]
+        inputs_indent = [
+            settings.height/5,
+            settings.height/6,
+            settings.height/6,
+            settings.height/6,
+            settings.height/6.2,
 
-        # right
-        self.settings_buttons[4].append(
-            read_key_image(
-                settings.width/100,
-                settings.height - settings.height/3.5 - (settings.height/8) * 3.5,
-                'buttons/button_clear_2_reverse.png',
-                'buttons/button_clear_selected_2_reverse.png',
-                scale=settings.height/160, color_text=(150, 150, 150, 255),
-                text='shoot', font='pixel.ttf', text_indent=settings.height/10,
-                text_input_indent=settings.height/6.2, shadow=graphics_settings.shadows_buttons
+        ]
+
+        inputs_text = ['up   ', 'down ', 'left ', 'right', 'shoot']
+        for i in range(5):
+            self.settings_buttons[4].append(
+                read_key_image(
+                    inputs_pos[i][0],
+                    inputs_pos[i][1],
+                    'buttons/button_clear_2_reverse.png',
+                    'buttons/button_clear_selected_2_reverse.png',
+                    scale=settings.height/160, color_text=(150, 150, 150, 255),
+                    text=inputs_text[i], font='pixel.ttf', text_indent=settings.height/10,
+                    text_input_indent=inputs_indent[i], shadow=graphics_settings.shadows_buttons
+                )
             )
-        )
+            
+        self.settings_buttons[4][5].update_key(self.KEY_BINDS['main']['up'])
+        self.settings_buttons[4][6].update_key(self.KEY_BINDS['main']['down'])
+        self.settings_buttons[4][7].update_key(self.KEY_BINDS['main']['left'])
+        self.settings_buttons[4][8].update_key(self.KEY_BINDS['main']['right'])
         self.settings_buttons[4][9].update_key(self.KEY_BINDS['main']['shoot_a'])
 
         self.select_player(0)

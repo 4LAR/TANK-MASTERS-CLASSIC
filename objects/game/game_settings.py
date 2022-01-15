@@ -136,12 +136,13 @@ class Game_settings(): # settings in game
         self.pause = False # dont save
         self.end_game = False # dont save
         self.multiplayer = False # dont save
-        self.multiplayer_id = 0 # dont save
+        self.multiplayer_id = 0#int(input('id: ')) # dont save
 
     def reload(self):
         self.pause = False
         self.end_game = False
         self.multiplayer = False
+        self.multiplayer_id = 0
 
 class Graphics_settings():
     def __init__(self):
