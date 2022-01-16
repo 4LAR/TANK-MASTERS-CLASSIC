@@ -123,19 +123,25 @@ def PIL_resize_image(input_image_path,
 
 pyglet.options['audio'] = ('openal', 'pulse', 'directsound', 'silent')
 class Sound():
-    def __init__(self):
+    def __init__(self, loop=False, no_sound=False):
+        self.no_sound = no_sound
+
         self.sound = pyglet.media.Player()
         self.sound.volume = settings.sound_volume
+        self.sound.loop = loop
 
     def sound_volume(self, vol):
         self.sound.volume = vol
+
+    def pause(self):
+        self.sound.pause()
 
     def update(self):
         self.sound.volume = settings.sound_volume
 
     def play(self, music):
         self.sound.next_source()
-        self.sound.queue(pyglet.media.load('sound/' + music) )
+        self.sound.queue( pyglet.media.load(('' if self.no_sound else 'sound/') + music) )
         self.sound.play()
 
 sound = Sound()

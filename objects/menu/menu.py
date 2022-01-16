@@ -63,6 +63,9 @@ class back():
             return pyglet.event.EVENT_HANDLED
 
 
+background_sound = Sound(True)
+background_sound.play('background/forest waterfall.wav')
+
 first_breath_menu = True
 
 menu_world = None
