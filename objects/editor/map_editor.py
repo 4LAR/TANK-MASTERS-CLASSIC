@@ -535,7 +535,13 @@ class map(object):
             self.set_or_cut_block(x, y, button)
 
     def set_or_cut_block(self, x, y, button):
-        if not self.inventory_bool:
+        ok = True
+        for b in get_obj_display('map_inventory').hotbar_buttons:
+            if b.selected:
+                ok = False
+                break
+
+        if not self.inventory_bool and ok:
             if button == 1 and not self.cut:
                 x_ = int( ( ( (self.pos[0] - x)/self.scale )//self.size) ) + 1
                 y_ = int( ( ( (self.pos[1] - y)/self.scale )//self.size) )
@@ -627,7 +633,8 @@ class map(object):
                     self.del_spawn([_x_, _y_])
 
     def on_mouse_scroll(self, x, y, scroll_x, scroll_y):
-        self.scale_map(scroll_y)
+        if keyboard[key.LCTRL]:
+            self.scale_map(scroll_y)
 
     def on_mouse_motion(self, x, y, dx, dy):
         self.mouse_pos = [x, y]
