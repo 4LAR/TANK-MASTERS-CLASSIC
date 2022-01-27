@@ -295,8 +295,8 @@ class world():
     def update(self):
         if not get_obj_display('game_settings').pause:
             if self.shaking_time > time.perf_counter():
-                self.map_offs[0] = random.randint(-10, 10)
-                self.map_offs[1] = random.randint(-10, 10)
+                self.map_offs[0] = random.uniform(-self.shaking_power, self.shaking_power)
+                self.map_offs[1] = random.uniform(-self.shaking_power, self.shaking_power)
                 self.update_offs()
             else:
                 self.map_offs[0] = 0
@@ -353,6 +353,13 @@ class world():
     def draw(self):
         drawp(self.image_floor)
         drawp(self.image_water)
+        if not self.menu:
+            for p in get_obj_display('players').tanks:
+                p.team_color_label.rec.x += self.map_offs[0]
+                p.team_color_label.rec.y += self.map_offs[1]
+                p.team_color_label.draw()
+                p.team_color_label.rec.x -= self.map_offs[0]
+                p.team_color_label.rec.y -= self.map_offs[1]
         if get_obj_display('graphics_settings').draw_shadows:
             drawp(self.image_shadows_down)
         drawp(self.image_other_down)

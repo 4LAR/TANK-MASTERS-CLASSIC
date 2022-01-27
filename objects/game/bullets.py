@@ -94,7 +94,7 @@ class bullets():
                                             if get_obj_display('players').tanks[j].health <= 0:
                                                 get_obj_display('players').tanks[bullet[0]].kills += 1
                                                 get_obj_display('players').tanks[bullet[0]].score += tanks.score['kill']
-                                            #get_obj_display('world').shaking(delay=0.2, power=settings.height/1000)
+                                            get_obj_display('world').shaking(delay=0.2, power=settings.height/400)
                                         self.bullets.pop(i)
                                         #get_obj_display('smoke').add_smoke(bullet[1], bullet[2], 9)
 

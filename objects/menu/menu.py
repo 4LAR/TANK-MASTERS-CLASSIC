@@ -110,11 +110,11 @@ def exit_alert():
     add_display(head_menu())
     add_display(head_menu(align_top=False))
 
-    add_display(label(0, 0,settings.width, settings.height,(0, 0, 0), alpha = 128))
+    add_display(label(0, 0,settings.width, settings.height, (0, 0, 0), alpha = 128))
     add_display(text_label(settings.width/2, settings.height/1.5, 'are you sure you want to exit', load_font=True, font='pixel.ttf', size=settings.height//18, anchor_x='center', color = (150, 150, 150, 255)))
 
-    add_display(image_button(0, settings.height/10, 'buttons/button_clear.png', scale=settings.height/120, center=False, arg='exit()', image_selected='buttons/button_clear_selected.png', text='yes', text_indent= settings.height//100, shadow=graphics_settings.shadows_buttons))
-    add_display(image_button(settings.width - (settings.height/120 * 48), settings.height/10, 'buttons/button_clear_left.png', scale=settings.height/120, center=False, arg='menu()', image_selected='buttons/button_clear_left_selected.png', text='no', text_indent= settings.height/30, shadow=graphics_settings.shadows_buttons))
+    add_display(image_button(0, settings.height/10, 'buttons/button_clear.png', scale=settings.height/120, center=False, arg='exit()', image_selected='buttons/button_clear_selected.png', text='yes', text_indent= settings.height/5, shadow=graphics_settings.shadows_buttons))
+    add_display(image_button(settings.width - (settings.height/120 * 48), settings.height/10, 'buttons/button_clear_left.png', scale=settings.height/120, center=False, arg='menu()', image_selected='buttons/button_clear_left_selected.png', text='no', text_indent= settings.height/10, shadow=graphics_settings.shadows_buttons))
 
 def menu():
     show_cursor()
@@ -208,13 +208,6 @@ def game_setup():
         add_game_in_menu()
     add_display(head_menu('game setup'))
     add_display(image_button(0, settings.height/10, 'buttons/button_clear.png', scale=settings.height/120, center=False, arg='global game_in_menu_bool; get_obj_display(\'game_setup_flags\').save_settings(); game_in_menu_bool = False; select_map()', image_selected='buttons/button_clear_selected.png', text='back', text_indent= settings.height//100, shadow=graphics_settings.shadows_buttons))
-    '''image_button(
-        settings.width - (settings.height/120 * 48), settings.height/10,
-        'buttons/button_clear_left.png', scale=settings.height/120,
-        center=False, arg='get_obj_display("game_settings_page").save_settings(); menu()',
-        image_selected='buttons/button_clear_left_selected.png',
-        text='save', text_indent= settings.height/20, shadow=graphics_settings.shadows_buttons
-    )'''
 
     add_display(game_setup_flags())
     add_display(image_button(settings.width / 3, settings.height/10, 'buttons/button_clear_full.png', scale=settings.height/120, center=False, arg='get_obj_display(\'game_setup_flags\').reset()', image_selected='buttons/button_clear_full_selected.png', text='reset', text_indent= settings.height/9, shadow=graphics_settings.shadows_buttons))
@@ -241,27 +234,8 @@ def select_map(editor=False):
     ))
     add_display(image_button(settings.width/3, settings.height/10, 'buttons/button_left_page.png', image_selected='buttons/button_left_page_selected.png', scale=settings.height/120, center=False, arg='get_obj_display(\'select_map_buttons\').page_down()', shadow=graphics_settings.shadows_buttons))
 
-
-    '''add_display(image_label('select_maps_panel_flags.png',
-        0, (settings.height - settings.height/3.5) - (2 * settings.height/4.5),
-        scale=settings.height/120, pixel=True
-    ))'''
-
     if not editor:
         add_display(image_button(0, settings.height/3.5, 'buttons/button_clear.png', scale=settings.height/120, center=False, function=game_setup, image_selected='buttons/button_clear_selected.png', text='game setup', text_indent= settings.height//100, shadow=graphics_settings.shadows_buttons))
-
-    '''add_display(
-        image_flag(
-            0,
-            (settings.height - settings.height/3.5),
-            image='menu/select tank/flag.png',
-            image_flag='menu/select tank/flag_selected.png',
-            image_selected_flag='menu/select tank/flag_hover_selected.png',
-            image_selected='menu/select tank/flag_hover.png',
-            scale=settings.height/160,
-
-        )
-    )'''
 
     add_display(select_map_buttons(editor))
     add_display(head_menu(align_top=False))

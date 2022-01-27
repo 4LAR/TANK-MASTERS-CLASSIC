@@ -32,6 +32,10 @@ class player():
                     get_obj_display('world').image_floor.x + (get_obj_display('world').spawn[self.id][0] * get_obj_display('world').size * get_obj_display('world').scale) - get_obj_display('world').map_offs[0],
                     get_obj_display('world').image_floor.y + ((get_obj_display('world').world_size[1] - get_obj_display('world').spawn[self.id][1]) * get_obj_display('world').size * get_obj_display('world').scale) - get_obj_display('world').map_offs[1]
                 ]
+
+                self.pos[0] += self.obj_tanks[0].width/4
+                self.pos[1] -= self.obj_tanks[0].height/4
+
             except:
                 self.pos = [settings.width//2, settings.height//2]
         else:
@@ -60,16 +64,13 @@ class player():
         self.norm_fps = 75
 
         self.pos = [0, 0]
-        self.go_spawn()
-
-        print('PLAYER ' + str(id) + ' SPAWN: ', self.pos)
 
         self.scale_tank = get_obj_display('world').scale / 1.2
 
         self.default_health = 100
         self.health = 100
 
-        self.protection = True
+        self.protection = False
         self.protection_delay = 2
         self.protection_time = time.perf_counter() + self.protection_delay
 
@@ -93,7 +94,7 @@ class player():
         self.demage_a = tanks.towers_damage[self.tank_settings[1]]
 
         self.def_speed = [tanks.bases_speed[self.tank_settings[0]]]
-        self.speed_tick = self.def_speed[0]/10
+        self.speed_tick = self.def_speed[0]/10 # 0
         self.speed = 0
         self.rotation = 0
 
@@ -171,6 +172,14 @@ class player():
             v(-self.obj_tanks[0].width/2 + self.obj_tanks[0].width/50, self.obj_tanks[0].height/2 - self.obj_tanks[0].height/50)
         ])
 
+        self.spawn_collision = collision.Poly(v(100, 100),
+        [
+            v(-self.obj_tanks[0].width/2 + self.obj_tanks[0].width/50, -self.obj_tanks[0].height/2 + self.obj_tanks[0].height/50),
+            v(self.obj_tanks[0].width/2 - self.obj_tanks[0].width/50, -self.obj_tanks[0].height/2 + self.obj_tanks[0].height/50),
+            v(self.obj_tanks[0].width/2 - self.obj_tanks[0].width/50, self.obj_tanks[0].height/2 - self.obj_tanks[0].height/50),
+            v(-self.obj_tanks[0].width/2 + self.obj_tanks[0].width/50, self.obj_tanks[0].height/2 - self.obj_tanks[0].height/50)
+        ])
+
         self.traces_list = []
         self.traces_delay = 0.5
         self.trace_image = image_label('tanks/traces/' + tanks.bases[self.tank_settings[0]] + '.png', settings.width//2, settings.height//2, scale=self.scale_tank, pixel=False, center=True, rotation=0, alpha=10)
@@ -181,6 +190,15 @@ class player():
             90: [self.obj_tanks[0].width/2, 0], # 90
             180: [0, -self.obj_tanks[0].height/2]  # 180
         }
+
+        self.go_spawn()
+
+        self.spawn_collision.pos.x = self.pos[0]
+        self.spawn_collision.pos.y = self.pos[1]
+
+        self.team_color_label = label(self.pos[0] - self.obj_tanks[0].width/2, self.pos[1] - self.obj_tanks[0].height/2, self.obj_tanks[0].width, self.obj_tanks[0].height, tanks.team_colors[self.id], alpha = 128)
+
+        print('PLAYER ' + str(id) + ' SPAWN: ', self.pos)
 
     def add_trace(self, x, y, rotation):
         self.traces_list.append([x, y, rotation, time.perf_counter() + self.traces_delay])
@@ -197,13 +215,10 @@ class player():
             self.anim_ticks = 0
 
     def anim_tick_tower(self):
-        #self.anim_ticks += 1
-        #if self.anim_ticks >= 5:
         if len(self.obj_tanks[4]) > self.anim_tower_state + 1:
             self.anim_tower_state += 1
         else:
             self.anim_tower_state = 0
-            #self.anim_ticks = 0
 
     def anim_protection_tick(self):
         self.protection_ticks += 1
@@ -235,9 +250,6 @@ class player():
             )
 
     def update(self):
-        #if self.use and get_obj_display('game_settings').pause and self.death_bool:
-        #    self.death_time = self.death_time + (time.perf_counter() - self.old_perf_counter)
-
         if self.use and not get_obj_display('game_settings').pause and not get_obj_display('game_settings').end_game:
             #self.old_perf_counter = time.perf_counter()
             # респавн при смерти
@@ -246,7 +258,7 @@ class player():
                 self.health = self.default_health
                 self.death_time = time.perf_counter() + self.death_delay
                 self.death_bool = True
-                get_obj_display('world').shaking(delay=0.2, power=settings.height/150)
+                get_obj_display('world').shaking(delay=0.2, power=settings.height/108)
                 self.sound.play('death.wav')
                 self.death += 1
 
@@ -298,15 +310,24 @@ class player():
                         self.rotation = 180
                         move_bool = True
 
+                    #if move_bool:
+                    #    if self.speed_tick < self.def_speed[0]/10:
+                    #        self.speed_tick += self.def_speed[0]/10
+
+                    #else:
+                    #    self.speed_tick = 0
+
+                    if not get_obj_display('game_settings').run:
+                        self.go_spawn()
+                        move_bool = False
+
                     if move_bool or self.tank_settings[0] == 1:
                         self.anim_tick()
                         if get_obj_display('graphics_settings').draw_traces:
                             self.add_trace(self.pos[0], self.pos[1], self.rotation)
 
-
-
                     # стрельба
-                    if ( (eval('keyboard[key.' + keys['shoot_a'] + ']') and not self.bot) or (self.bot and self.bot_shoot_a) ):
+                    if ( (eval('keyboard[key.' + keys['shoot_a'] + ']') and not self.bot) or (self.bot and self.bot_shoot_a) ) and get_obj_display('game_settings').run:
                         self.shoot_a_bool = True
                         if self.time_shoot_a <= time.perf_counter():
                             # Обычные пушки
@@ -458,7 +479,10 @@ class player():
                 self.poligon_body.pos.x = self.pos[0]
                 self.poligon_body.pos.y = self.pos[1]
 
-                if self.id != i and collision.collide(self.poligon_body, get_obj_display('players').tanks[i].poligon_body):
+                if (self.id != i
+                        and (collision.collide(self.poligon_body, get_obj_display('players').tanks[i].poligon_body)
+                        or collision.collide(self.poligon_body, get_obj_display('players').tanks[i].spawn_collision))
+                    ):
                     self.pos = [pos_[0], pos_[1]]
                     self.poligon_body.pos.x = self.pos[0]
                     self.poligon_body.pos.y = self.pos[1]

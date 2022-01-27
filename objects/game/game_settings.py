@@ -127,19 +127,21 @@ class Game_settings(): # settings in game
 
         self.snow = False
 
-        self.time_bool = False
+        self.time_bool = True
         self.time_set_min = 2
         self.time_set_sec = 0
 
         self.collide_players = True
 
         self.pause = False # dont save
+        self.run = False
         self.end_game = False # dont save
         self.multiplayer = False # dont save
         self.multiplayer_id = 0#int(input('id: ')) # dont save
 
     def reload(self):
         self.pause = False
+        self.run = False
         self.end_game = False
         self.multiplayer = False
         self.multiplayer_id = 0

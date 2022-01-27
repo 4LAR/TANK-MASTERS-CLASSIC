@@ -197,8 +197,8 @@ class map_inventory():
             if not keyboard[key.LCTRL]:
                 self.hotbar_num -= int(scroll_y)
                 if self.hotbar_num < 0:
-                    self.hotbar_num = 10
-                elif self.hotbar_num > 10:
+                    self.hotbar_num = 9
+                elif self.hotbar_num > 9:
                     self.hotbar_num = 0
 
                 self.hotbar_change_num(self.hotbar_num)

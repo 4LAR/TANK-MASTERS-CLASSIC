@@ -49,7 +49,16 @@ class gui():
             )
 
         self.old_perf_counter = 0
+        self.time_run = 0
         self.save_time = 0
+
+        self.time_run_bool = False
+        self.time_run = 3
+        get_obj_display('world').time -= (time.perf_counter() - self.old_perf_counter)
+
+    def start_run_time(self):
+        self.time_run_bool = True
+        self.time_run = 4
 
     def update(self):
         for i in range(4):
@@ -60,11 +69,24 @@ class gui():
                     self.label_health[i][1].rec.x = self.health_pos[i][0] + (settings.width//4 - (((settings.width/4)/100) * get_obj_display('players').tanks[i].health))
                 self.label_health[i][1].rec.width = ((settings.width/4)/100) * get_obj_display('players').tanks[i].health if not get_obj_display('players').tanks[i].death_bool else 0
 
+        if not get_obj_display('game_settings').run:
+            if self.time_run_bool:
+                self.time_run -= (time.perf_counter() - self.old_perf_counter)
+
+            self.time.label.text = str(int(self.time_run))
+            if self.time_run <= 0:
+                get_obj_display('game_settings').run = True
+
+            self.old_perf_counter = time.perf_counter()
+
         if game_settings.time_bool:
             if not get_obj_display('game_settings').pause:
-                get_obj_display('world').time -= (time.perf_counter() - self.old_perf_counter)
-                time_split = str(datetime.timedelta(seconds=get_obj_display('world').time)).split(':')
-                self.time.label.text = time_split[1] + ':' + time_split[2].split('.')[0]
+
+                if get_obj_display('game_settings').run:
+                    get_obj_display('world').time -= (time.perf_counter() - self.old_perf_counter)
+
+                    time_split = str(datetime.timedelta(seconds=get_obj_display('world').time + 1)).split(':')
+                    self.time.label.text = time_split[1] + ':' + time_split[2].split('.')[0]
             self.old_perf_counter = time.perf_counter()
 
             if get_obj_display('world').time <= 0:
@@ -93,5 +115,5 @@ class gui():
                 for l in self.label_health[i]:
                     l.draw()
 
-        if game_settings.time_bool and not get_obj_display('game_settings').end_game:
+        if (game_settings.time_bool) and not get_obj_display('game_settings').end_game:
             self.time.draw()
