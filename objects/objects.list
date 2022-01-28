@@ -15,6 +15,7 @@ game/game_settings.py
 menu/settings.py
 menu/end_game.py
 game/world.py
+game/crates.py
 game/wind.py
 game/players.py
 game/bullets.py
