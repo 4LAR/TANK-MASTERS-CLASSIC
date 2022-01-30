@@ -69,6 +69,7 @@ class player():
 
         self.default_health = 100
         self.health = 100
+        self.armor_bool = False
 
         self.protection = False
         self.protection_delay = 2
@@ -391,8 +392,8 @@ class player():
                 self.death_tank_image.update_rotation(self.rotation)
                 self.death_tank_image.update_image(True)
 
-            if self.protection:
-                if self.protection_time <= time.perf_counter():
+            if self.protection or self.armor_bool:
+                if self.protection_time <= time.perf_counter() and not self.armor_bool:
                     self.protection = False
                 else:
                     self.anim_protection_tick()
@@ -516,7 +517,7 @@ class player():
                 drawp(self.obj_tanks[0])
                 drawp(self.death_tank_image)
 
-            if self.protection:
+            if self.protection or self.armor_bool:
                 drawp(self.protection_images[self.protection_image_num])
 
             if objects_other[0].draw_poligons:

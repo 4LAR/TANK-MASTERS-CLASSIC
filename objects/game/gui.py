@@ -115,5 +115,5 @@ class gui():
                 for l in self.label_health[i]:
                     l.draw()
 
-        if (game_settings.time_bool) and not get_obj_display('game_settings').end_game:
+        if (game_settings.time_bool or not get_obj_display('game_settings').run) and not get_obj_display('game_settings').end_game:
             self.time.draw()
