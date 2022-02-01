@@ -5,17 +5,29 @@ import os
 #
 
 
-# класс который потом будет мхранён в файл или же наоборот
+# класс который потом будет сохранён в файл или же наоборот
 class save_world():
     def __init__(self):
 
         self.name = 'test' # название карты
+        self.info = 'hello world' # информация о карте
+        self.game_mode = 'death match' # игровой режим
+
+        self.use_sound = False
+
+        self.sound = [
+            '', # default
+            '', # rain
+            '', # snow
+            ''  # snow rain
+        ]
 
         self.icon = None # иконка карты
 
         self.mods = [] # скрипты (передвежение объектов)
 
-        self.spawn = [] # точки спавна игроков
+        self.spawn = [] # точки спавна игроков (x, y)
+        self.flags = [] # точки для захвата (x, y, size)
 
         self.world_size = [64, 64] # размер карты
 
@@ -38,7 +50,10 @@ class save_world():
         self.map_effect_down = np.array([], dtype='<U32') # еффекты под игроком
 
     # функция для обновлния массивов (для загрузки карты из файла)
-    def write_world(self, world_size, map_floor, map_wall, map_water, map_vegetation, map_ceiling, map_middle, map_other_up, map_other_down, map_effect_up, map_effect_down, old=False):
+    def write_world(self, world_size, map_floor, map_wall, map_water, map_vegetation, map_ceiling, map_middle, map_other_up, map_other_down, map_effect_up, map_effect_down,
+            #info, game_mode, use_sound, sound, flags,
+            old=False
+        ):
 
         self.world_size = world_size
 
@@ -63,6 +78,21 @@ class save_world():
 # класс который хранит в себе спрайты блоков, названия блоков и манипулирует с классом save_world
 class os_world():
     def __init__(self):
+        self.name = 'test' # название карты
+        self.info = 'hello world' # информация о карте
+        self.game_mode = 'death match' # игровой режим
+
+        self.use_sound = False
+
+        self.sound = [
+            '', # default
+            '', # rain
+            '', # snow
+            ''  # snow rain
+        ]
+
+        self.flags = [] # точки для захвата (x, y, size)
+
         self.size = 8 # разркшкние спрайтов
         self.resize = (8, 8) # тоже разрешение спрайтов, но содержит ширину и высоту
 
@@ -250,45 +280,44 @@ class os_world():
         print("GENERATE WORLD")
         print("SPAWN FLOOR")
         self.map_floor = np.full(self.world_size[0] * self.world_size[1], 'grass.0', dtype='<U32')#grass.0
-        #self.map_floor = generate_grass(self.world_size[0], self.world_size[1])
 
         print("SPAWN WALLS")
         self.map_wall = np.full(self.world_size[0] * self.world_size[1], 'none', dtype='<U32')
-        #self.map_wall = generate_none(self.world_size[0], self.world_size[1])
 
         print("SPAWN WATER")
         self.map_water = np.full(self.world_size[0] * self.world_size[1], 'none', dtype='<U32')
-        #self.map_water = generate_none(self.world_size[0], self.world_size[1])
 
         print("SPAWN VEGETATION")
         self.map_vegetation = np.full(self.world_size[0] * self.world_size[1], 'none', dtype='<U32')
-        #self.map_vegetation = generate_none(self.world_size[0], self.world_size[1])
-
 
         print("SPAWN CEILING")
         self.map_ceiling = np.full(self.world_size[0] * self.world_size[1], 'none', dtype='<U32')
-        #self.map_ceiling = generate_none(self.world_size[0], self.world_size[1])
 
         print("SPAWN MIDDLE")
         self.map_middle = np.full(self.world_size[0] * self.world_size[1], 'none', dtype='<U32')
-        #self.map_middle = generate_none(self.world_size[0], self.world_size[1])
 
-        #
         print("SPAWN OTHER")
         self.map_other_up = np.full(self.world_size[0] * self.world_size[1], 'none', dtype='<U32')
         self.map_other_down = np.full(self.world_size[0] * self.world_size[1], 'none', dtype='<U32')
-        #self.map_other_up = generate_none(self.world_size[0], self.world_size[1])
-        #self.map_other_down = generate_none(self.world_size[0], self.world_size[1])
 
         print("SPAWN EFFECT")
         self.map_effect_up = np.full(self.world_size[0] * self.world_size[1], 'none', dtype='<U32')
         self.map_effect_down = np.full(self.world_size[0] * self.world_size[1], 'none', dtype='<U32')
-        #self.map_effect_up = generate_none(self.world_size[0], self.world_size[1])
-        #self.map_effect_down = generate_none(self.world_size[0], self.world_size[1])
-
 
         # записываем всё что сгенерировали в класс os_world
-        self.save_world_obj.write_world(self.world_size, self.map_floor, self.map_wall, self.map_water, self.map_vegetation, self.map_ceiling, self.map_middle, self.map_other_up, self.map_other_down, self.map_effect_up, self.map_effect_down)
+        self.save_world_obj.write_world(
+            self.world_size,
+            self.map_floor,
+            self.map_wall,
+            self.map_water,
+            self.map_vegetation,
+            self.map_ceiling,
+            self.map_middle,
+            self.map_other_up,
+            self.map_other_down,
+            self.map_effect_up,
+            self.map_effect_down
+        )
 
     # функция для сохраниения карты
     def save_file(self, file):
@@ -319,22 +348,33 @@ class os_world():
 
             self.map_ceiling = self.save_world_obj.map_ceiling
 
-            # для переноса карт с версии 43 в 44 (в данный момен уже не используется)
+            self.map_other_up = self.save_world_obj.map_other_up
+            self.map_other_down = self.save_world_obj.map_other_down
+
+            self.map_effect_up = self.save_world_obj.map_effect_up
+            self.map_effect_down = self.save_world_obj.map_effect_down
+
+            # для переноса карт
             if not old:
-                self.map_other_up = self.save_world_obj.map_other_up
-                self.map_other_down = self.save_world_obj.map_other_down
+                self.info = self.save_world_obj.info
+                self.game_mode = self.save_world_obj.game_mode
+                self.use_sound = self.save_world_obj.use_sound
 
-                self.map_effect_up = self.save_world_obj.map_effect_up
-                self.map_effect_down = self.save_world_obj.map_effect_down
+                self.sound = self.save_world_obj.sound
+                self.flags = self.save_world_obj.flags
+                pass
             else:
-                self.save_world_obj.map_other_up = self.map_other_up
-                self.save_world_obj.map_other_down = self.map_other_down
+                self.save_world_obj.info = self.info
+                self.save_world_obj.game_mode = self.game_mode
+                self.save_world_obj.use_sound = self.use_sound
 
-                self.save_world_obj.map_effect_up = self.map_effect_up
-                self.save_world_obj.map_effect_down = self.map_effect_down
+                self.save_world_obj.sound = self.sound
+                self.save_world_obj.flags = self.flags
+                pass
 
             return True
-        except:
+        except Exception as e:
+            print(e)
             return False
 
         #print(self.map_other_up)

@@ -38,6 +38,20 @@ class world():
         print("READ WORLD FILE")
         get_obj_other('os_world').read_file(self.map_name) # открываем карту
 
+        sound_list = [
+            'forest.wav',
+            'forest waterfall.wav',
+            'winter forest wind.mp3'
+        ]
+        if get_obj_display('game_settings').rain and not get_obj_display('game_settings').snow:
+            sound = sound_list[1]
+        elif get_obj_display('game_settings').snow:
+            sound = sound_list[2]
+        else:
+            sound = sound_list[0]
+
+        background_sound.play('sound/background/' + sound)
+
         self.world_size = get_obj_other('os_world').world_size
 
         menu_scale = 1.1 if (self.menu and graphics_settings.paralax_in_menu) else 1

@@ -128,6 +128,8 @@ class select_map_buttons():
         self.map_logos = map_list.map_logos
 
     def __init__(self, editor=False):
+        map_list.search()
+        
         self.editor = editor
 
         self.buttons = []
