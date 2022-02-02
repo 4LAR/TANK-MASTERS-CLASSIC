@@ -467,6 +467,28 @@ class game_settings_page():
                 )
         )
 
+        self.settings_buttons[2].append(
+            slider_image(
+                    settings.width/100,
+                    settings.height - settings.height/3.5 - (settings.height/8) * 2,
+                    'buttons/slider_medium/input_slider.png',
+                    'buttons/slider_medium/slider.png',
+                    'buttons/slider_medium/input_slider_hover.png',
+                    scale=settings.height/160, shadow=graphics_settings.shadows_buttons
+                )
+        )
+
+        self.settings_buttons[2].append(
+            slider_image(
+                    settings.width/100,
+                    settings.height - settings.height/3.5 - (settings.height/8) * 3,
+                    'buttons/slider_medium/input_slider.png',
+                    'buttons/slider_medium/slider.png',
+                    'buttons/slider_medium/input_slider_hover.png',
+                    scale=settings.height/160, shadow=graphics_settings.shadows_buttons
+                )
+        )
+
         # graphics
         self.settings_buttons.append([])
 
@@ -653,7 +675,7 @@ class game_settings_page():
                     text_input_indent=inputs_indent[i], shadow=graphics_settings.shadows_buttons
                 )
             )
-            
+
         self.settings_buttons[4][5].update_key(self.KEY_BINDS['main']['up'])
         self.settings_buttons[4][6].update_key(self.KEY_BINDS['main']['down'])
         self.settings_buttons[4][7].update_key(self.KEY_BINDS['main']['left'])
