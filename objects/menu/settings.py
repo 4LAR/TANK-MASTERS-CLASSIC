@@ -41,7 +41,7 @@ class game_settings_page():
         self.settings_buttons[1][4].change_text(str(settings.height))
 
         # sound
-        self.settings_buttons[2][0].change_state(settings.sound_volume * 8)
+        self.settings_buttons[2][0].change_state(settings.sound_volume)
 
         # graphics
         self.settings_buttons[3][0].flag = graphics_settings.draw_leaf
@@ -96,7 +96,7 @@ class game_settings_page():
 
 
         # sound
-        settings.sound_volume = self.settings_buttons[2][0].state / 8
+        settings.sound_volume = self.settings_buttons[2][0].state
         sound.update()
 
         # graphics
@@ -455,10 +455,21 @@ class game_settings_page():
 
         # sound
         self.settings_buttons.append([])
-        #add_display(slider_image(300, 300, 'buttons/slider_medium/input_slider.png', 'buttons/slider_medium/slider.png', 'buttons/slider_medium/input_slider_hover.png',scale=settings.height/120, shadow=graphics_settings.shadows_buttons))
+
         self.settings_buttons[2].append(
             slider_image(
-                    settings.width/100,
+                    settings.width/100 + settings.width/2,
+                    settings.height - settings.height/3.5 - (settings.height/8) * 0,
+                    'buttons/slider_medium/input_slider.png',
+                    'buttons/slider_medium/slider.png',
+                    'buttons/slider_medium/input_slider_hover.png',
+                    scale=settings.height/160, shadow=graphics_settings.shadows_buttons
+                )
+        )
+
+        self.settings_buttons[2].append(
+            slider_image(
+                    settings.width/100 + settings.width/2,
                     settings.height - settings.height/3.5 - (settings.height/8) * 1,
                     'buttons/slider_medium/input_slider.png',
                     'buttons/slider_medium/slider.png',
@@ -469,7 +480,7 @@ class game_settings_page():
 
         self.settings_buttons[2].append(
             slider_image(
-                    settings.width/100,
+                    settings.width/100 + settings.width/2,
                     settings.height - settings.height/3.5 - (settings.height/8) * 2,
                     'buttons/slider_medium/input_slider.png',
                     'buttons/slider_medium/slider.png',
@@ -480,13 +491,87 @@ class game_settings_page():
 
         self.settings_buttons[2].append(
             slider_image(
-                    settings.width/100,
+                    settings.width/100 + settings.width/2,
                     settings.height - settings.height/3.5 - (settings.height/8) * 3,
                     'buttons/slider_medium/input_slider.png',
                     'buttons/slider_medium/slider.png',
                     'buttons/slider_medium/input_slider_hover.png',
                     scale=settings.height/160, shadow=graphics_settings.shadows_buttons
                 )
+        )
+
+        # left
+
+        self.settings_buttons[2].append(
+            image_flag(
+                settings.width/100,
+                settings.height - settings.height/3.5 - (settings.height/8) * 0,
+                image='buttons/flag/flag.png',
+                image_flag='buttons/flag/flag_selected.png',
+                image_selected_flag='buttons/flag/flag_hover_selected.png',
+                image_selected='buttons/flag/flag_hover.png',
+                scale=settings.height/160,
+
+                text='general sound volume',
+                text_color = (150, 150, 150, 255),
+                font='pixel.ttf',
+                text_indent=settings.height/8, shadow=graphics_settings.shadows_buttons
+
+            )
+        )
+
+        self.settings_buttons[2].append(
+            image_flag(
+                settings.width/100,
+                settings.height - settings.height/3.5 - (settings.height/8) * 1,
+                image='buttons/flag/flag.png',
+                image_flag='buttons/flag/flag_selected.png',
+                image_selected_flag='buttons/flag/flag_hover_selected.png',
+                image_selected='buttons/flag/flag_hover.png',
+                scale=settings.height/160,
+
+                text='buttons sound volume',
+                text_color = (150, 150, 150, 255),
+                font='pixel.ttf',
+                text_indent=settings.height/8, shadow=graphics_settings.shadows_buttons
+
+            )
+        )
+
+        self.settings_buttons[2].append(
+            image_flag(
+                settings.width/100,
+                settings.height - settings.height/3.5 - (settings.height/8) * 2,
+                image='buttons/flag/flag.png',
+                image_flag='buttons/flag/flag_selected.png',
+                image_selected_flag='buttons/flag/flag_hover_selected.png',
+                image_selected='buttons/flag/flag_hover.png',
+                scale=settings.height/160,
+
+                text='tanks sound volume',
+                text_color = (150, 150, 150, 255),
+                font='pixel.ttf',
+                text_indent=settings.height/8, shadow=graphics_settings.shadows_buttons
+
+            )
+        )
+
+        self.settings_buttons[2].append(
+            image_flag(
+                settings.width/100,
+                settings.height - settings.height/3.5 - (settings.height/8) * 3,
+                image='buttons/flag/flag.png',
+                image_flag='buttons/flag/flag_selected.png',
+                image_selected_flag='buttons/flag/flag_hover_selected.png',
+                image_selected='buttons/flag/flag_hover.png',
+                scale=settings.height/160,
+
+                text='background sound volume',
+                text_color = (150, 150, 150, 255),
+                font='pixel.ttf',
+                text_indent=settings.height/8, shadow=graphics_settings.shadows_buttons
+
+            )
         )
 
         # graphics

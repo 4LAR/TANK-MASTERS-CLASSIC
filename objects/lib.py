@@ -129,7 +129,7 @@ class Sound():
         self.no_sound = no_sound
 
         self.sound = pyglet.media.Player()
-        self.sound.volume = settings.sound_volume
+        self.sound.volume = 0#settings.sound_volume
         self.sound.loop = loop
 
     def sound_volume(self, vol):
@@ -320,21 +320,26 @@ class slider_image():
 
         self.hover = False
 
-        self.left = self.image_obj.sprite.width/40
-        self.right = self.image_obj.sprite.width/8
+        self.left = self.x
+        self.right = self.x - self.image_obj.sprite.width/6.5
 
     def change_state(self, state):
         self.state = state
-        self.update_state((self.x + ((self.image_obj.sprite.width - (self.left + self.right)) * state) ) )
+        #print(state)
+        self.update_state(self.left + (self.image_obj.sprite.width + self.image_slider_obj.sprite.width*1.5) * state)
 
     def update_state(self, state):
+        #print(state - self.image_slider_obj.sprite.width/2)
+        #print(self.left)
+        #print(self.right + self.image_obj.sprite.width)
         if ((state - self.image_slider_obj.sprite.width/2) >= self.left
-            and (state - self.image_slider_obj.sprite.width/2) <= self.image_obj.sprite.width - self.right
+            and (state - self.image_slider_obj.sprite.width/2) <= self.right + self.image_obj.sprite.width
             ):
             self.image_slider_obj.x = state - self.image_slider_obj.sprite.width/2
             self.image_slider_obj.update_image(True)
-            self.state = (1 / (self.image_obj.sprite.width - (self.left + self.right))) * (state - self.x)
-            self.state = float("{0:.2f}".format(self.state)) - 0.09
+            self.state = (1 / (self.image_obj.sprite.width - (self.image_obj.sprite.width/6.5))) * (state - self.x)
+            self.state = float("{0:.2f}".format(self.state - 0.09))
+            #print('==>', self.state)
 
     def on_mouse_motion(self, x, y, dx, dy):
         self.cursor_poligon.pos.x = x

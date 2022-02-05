@@ -12,6 +12,22 @@ class Save_settings():
             user_game_settings.name = config.get("Game", "name")
             user_game_settings.draw_logo = True if (config.get("Game", "draw_logo")).lower() == 'true' else False
 
+            # Sound
+            sound_settings.use_sound_general = True if (config.get("Sound", "use_sound_general")).lower() == 'true' else False
+            sound_settings.use_sound_buttons = True if (config.get("Sound", "use_sound_buttons")).lower() == 'true' else False
+            sound_settings.use_sound_tanks = True if (config.get("Sound", "use_sound_tanks")).lower() == 'true' else False
+            sound_settings.use_sound_background = True if (config.get("Sound", "use_sound_background")).lower() == 'true' else False
+
+            sound_settings.sound_volume_buttons = float(config.get("Sound", "sound_volume_buttons"))
+            sound_settings.sound_volume_tanks = float(config.get("Sound", "sound_volume_tanks"))
+            sound_settings.sound_volume_background = float(config.get("Sound", "sound_volume_background"))
+
+            if sound_settings.use_sound_general and sound_settings.use_sound_buttons:
+                sound.sound_volume(sound_settings.sound_volume_buttons)
+
+            if sound_settings.use_sound_general and sound_settings.use_sound_background:
+                background_sound.sound_volume(sound_settings.sound_volume_background)
+
             # Graphics
             graphics_settings.draw_leaf = True if (config.get("Graphics", "draw_leaf")).lower() == 'true' else False
 
@@ -61,6 +77,17 @@ class Save_settings():
         config.set("Game", "name", str(user_game_settings.name))
 
         config.set("Game", "draw_logo", str(user_game_settings.draw_logo))
+
+        # Sound
+        config.add_section("Sound")
+        config.set("Sound", "use_sound_general", str(sound_settings.use_sound_general))
+        config.set("Sound", "use_sound_buttons", str(sound_settings.use_sound_buttons))
+        config.set("Sound", "use_sound_tanks", str(sound_settings.use_sound_tanks))
+        config.set("Sound", "use_sound_background", str(sound_settings.use_sound_background))
+
+        config.set("Sound", "sound_volume_buttons", str(sound_settings.sound_volume_buttons))
+        config.set("Sound", "sound_volume_tanks", str(sound_settings.sound_volume_tanks))
+        config.set("Sound", "sound_volume_background", str(sound_settings.sound_volume_background))
 
         # Graphics
         config.add_section("Graphics")
@@ -166,6 +193,18 @@ class Graphics_settings():
 
         self.shadows_buttons = True
 
+class Sound_settings():
+    def __init__(self):
+        self.use_sound_general = True
+        self.use_sound_buttons = True
+        self.use_sound_tanks = True
+        self.use_sound_background = True
+
+        self.sound_volume_buttons = 0
+        self.sound_volume_tanks = 0
+        self.sound_volume_background = 0
+
+
 class Tank_settings():
     def __init__(self):
         self.tanks = [
@@ -178,6 +217,7 @@ class Tank_settings():
 user_game_settings = User_game_settings()
 game_settings = Game_settings()
 graphics_settings = Graphics_settings()
+sound_settings = Sound_settings()
 tank_settings = Tank_settings()
 
 save_settings = Save_settings()
