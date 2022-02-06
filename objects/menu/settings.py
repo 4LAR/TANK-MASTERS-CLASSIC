@@ -42,6 +42,14 @@ class game_settings_page():
 
         # sound
         self.settings_buttons[2][0].change_state(settings.sound_volume)
+        self.settings_buttons[2][1].change_state(sound_settings.sound_volume_buttons)
+        self.settings_buttons[2][2].change_state(sound_settings.sound_volume_tanks)
+        self.settings_buttons[2][3].change_state(sound_settings.sound_volume_background)
+
+        self.settings_buttons[2][4].flag = sound_settings.use_sound_general
+        self.settings_buttons[2][5].flag = sound_settings.use_sound_buttons
+        self.settings_buttons[2][6].flag = sound_settings.use_sound_tanks
+        self.settings_buttons[2][7].flag = sound_settings.use_sound_background
 
         # graphics
         self.settings_buttons[3][0].flag = graphics_settings.draw_leaf
@@ -97,7 +105,17 @@ class game_settings_page():
 
         # sound
         settings.sound_volume = self.settings_buttons[2][0].state
-        sound.update()
+
+        sound_settings.sound_volume_buttons = self.settings_buttons[2][1].state
+        sound_settings.sound_volume_tanks = self.settings_buttons[2][2].state
+        sound_settings.sound_volume_background = self.settings_buttons[2][3].state
+
+        sound_settings.use_sound_general = self.settings_buttons[2][4].flag
+        sound_settings.use_sound_buttons = self.settings_buttons[2][5].flag
+        sound_settings.use_sound_tanks = self.settings_buttons[2][6].flag
+        sound_settings.use_sound_background = self.settings_buttons[2][7].flag
+
+        sound_settings.update_sound()
 
         # graphics
         graphics_settings.draw_leaf = self.settings_buttons[3][0].flag

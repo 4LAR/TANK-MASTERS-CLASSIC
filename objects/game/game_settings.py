@@ -22,11 +22,7 @@ class Save_settings():
             sound_settings.sound_volume_tanks = float(config.get("Sound", "sound_volume_tanks"))
             sound_settings.sound_volume_background = float(config.get("Sound", "sound_volume_background"))
 
-            if sound_settings.use_sound_general and sound_settings.use_sound_buttons:
-                sound.sound_volume(sound_settings.sound_volume_buttons)
-
-            if sound_settings.use_sound_general and sound_settings.use_sound_background:
-                background_sound.sound_volume(sound_settings.sound_volume_background)
+            sound_settings.update_sound()
 
             # Graphics
             graphics_settings.draw_leaf = True if (config.get("Graphics", "draw_leaf")).lower() == 'true' else False
@@ -200,10 +196,20 @@ class Sound_settings():
         self.use_sound_tanks = True
         self.use_sound_background = True
 
-        self.sound_volume_buttons = 0
-        self.sound_volume_tanks = 0
-        self.sound_volume_background = 0
+        self.sound_volume_buttons = 0.07
+        self.sound_volume_tanks = 0.08
+        self.sound_volume_background = 0.62
 
+    def update_sound(self):
+        if self.use_sound_general and self.use_sound_buttons:
+            sound.sound_volume(settings.sound_volume * self.sound_volume_buttons)
+        else:
+            sound.sound_volume(0)
+        #
+        if self.use_sound_general and self.use_sound_background:
+            background_sound.sound_volume(settings.sound_volume * self.sound_volume_background)
+        else:
+            background_sound.sound_volume(0)
 
 class Tank_settings():
     def __init__(self):

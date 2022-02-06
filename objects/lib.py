@@ -320,26 +320,28 @@ class slider_image():
 
         self.hover = False
 
-        self.left = self.x
-        self.right = self.x - self.image_obj.sprite.width/6.5
+        self.left = self.x + self.image_obj.sprite.width/13
+        self.right = self.x + self.image_obj.sprite.width - self.image_obj.sprite.width/13
 
     def change_state(self, state):
         self.state = state
         #print(state)
-        self.update_state(self.left + (self.image_obj.sprite.width + self.image_slider_obj.sprite.width*1.5) * state)
+        self.update_state(self.left + (self.image_obj.sprite.width - (self.image_obj.sprite.width/13)*2) * state)
 
     def update_state(self, state):
         #print(state - self.image_slider_obj.sprite.width/2)
         #print(self.left)
         #print(self.right + self.image_obj.sprite.width)
-        if ((state - self.image_slider_obj.sprite.width/2) >= self.left
-            and (state - self.image_slider_obj.sprite.width/2) <= self.right + self.image_obj.sprite.width
+        if ((state) >= self.left
+            and (state) <= self.right
             ):
             self.image_slider_obj.x = state - self.image_slider_obj.sprite.width/2
             self.image_slider_obj.update_image(True)
-            self.state = (1 / (self.image_obj.sprite.width - (self.image_obj.sprite.width/6.5))) * (state - self.x)
+            #self.state = (1 / (self.image_obj.sprite.width - (self.image_obj.sprite.width/13)*2)) * (state - self.x)
+            self.state = (1 / (self.right - self.left)) * (state - self.x)
             self.state = float("{0:.2f}".format(self.state - 0.09))
             #print('==>', self.state)
+            #print()
 
     def on_mouse_motion(self, x, y, dx, dy):
         self.cursor_poligon.pos.x = x
