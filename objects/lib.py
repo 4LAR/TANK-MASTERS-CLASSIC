@@ -995,7 +995,7 @@ class image_button():
         self.shadow = shadow
         self.color_shadow = color_shadow
 
-        self.image_shadow_obj = PIL_to_pyglet(get_pil_color_mask(Image.open('img/' + self.image).convert("RGBA"), self.color_shadow), scale, False)
+        self.image_shadow_obj = PIL_to_pyglet(get_pil_color_mask(Image.open('img/' + self.image).convert("RGBA"), self.color_shadow), scale, center)
         self.image_shadow_obj.x = x - scale
         self.image_shadow_obj.y = y + scale
 

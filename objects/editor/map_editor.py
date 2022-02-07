@@ -397,18 +397,19 @@ class map(object):
     def update(self):
         if not self.inventory_bool:
             speed = self.speed * 2 if keyboard[key.LSHIFT] else self.speed
-            if keyboard[key.W]:
-                self.update_camera_pos(y=-speed)
-                #self.pos[1] -= self.speed
-            elif keyboard[key.S]:
-                self.update_camera_pos(y=speed)
-                #self.pos[1] += self.speed
-            if keyboard[key.A]:
-                self.update_camera_pos(x=speed)
-                #self.pos[0] += self.speed
-            elif keyboard[key.D]:
-                self.update_camera_pos(x=-speed)
-                #self.pos[0] -= self.speed
+            if not keyboard[key.LCTRL]:
+                if keyboard[key.W]:
+                    self.update_camera_pos(y=-speed)
+                    #self.pos[1] -= self.speed
+                elif keyboard[key.S]:
+                    self.update_camera_pos(y=speed)
+                    #self.pos[1] += self.speed
+                if keyboard[key.A]:
+                    self.update_camera_pos(x=speed)
+                    #self.pos[0] += self.speed
+                elif keyboard[key.D]:
+                    self.update_camera_pos(x=-speed)
+                    #self.pos[0] -= self.speed
 
         #if keyboard[key.Q]:
         #    self.map_floor[0] = self.floor_blocks_img['grass']
@@ -446,43 +447,39 @@ class map(object):
 
 
     def on_key_press(self, symbol, modifiers):
-        if symbol == key.P:
-            print("SAVE WORLD")
-            objects_display[0].save_file(self.world_file_name)
-        elif symbol == key.E:
-            if self.inventory_bool:
-                self.inventory_bool = False
-            else:
-                self.inventory_bool = True
+        if modifiers & key.MOD_CTRL:
+            if symbol == key.S:
+                print("SAVE WORLD")
+                objects_display[0].save_file(self.world_file_name)
 
-        elif symbol == key.C:
-            if self.show_celling:
-                self.show_celling = False
-            else:
-                self.show_celling = True
-        elif symbol == key.V:
-            if self.show_vegetation:
-                self.show_vegetation = False
-            else:
-                self.show_vegetation = True
+            elif symbol == key.C:
+                if self.show_celling:
+                    self.show_celling = False
+                else:
+                    self.show_celling = True
+            elif symbol == key.V:
+                if self.show_vegetation:
+                    self.show_vegetation = False
+                else:
+                    self.show_vegetation = True
 
-        elif symbol == key.B:
-            if self.show_other_up:
-                self.show_other_up = False
-            else:
-                self.show_other_up = True
+            elif symbol == key.B:
+                if self.show_other_up:
+                    self.show_other_up = False
+                else:
+                    self.show_other_up = True
 
-        elif symbol == key.L:
-            if self.show_effect_up:
-                self.show_effect_up = False
-            else:
-                self.show_effect_up = True
+            elif symbol == key.L:
+                if self.show_effect_up:
+                    self.show_effect_up = False
+                else:
+                    self.show_effect_up = True
 
-        elif symbol == key.N:
-            if self.show_other_down:
-                self.show_other_down = False
-            else:
-                self.show_other_down = True
+            elif symbol == key.N:
+                if self.show_other_down:
+                    self.show_other_down = False
+                else:
+                    self.show_other_down = True
 
         elif symbol == key.Q:
             if self.show_grid:
@@ -517,6 +514,9 @@ class map(object):
                 objects_display[2].current_rot = 0
             objects_display[2].update_rot_change_block()
 
+        elif symbol == key.E:
+            self.open_inventory()
+
         objects_display[2].text.label.text = ((objects_display[2].selected_block + '.' +  str(objects_display[2].current_rot)) if not self.cut else 'cut') + '\n' + ('press' if self.press_or_line else 'line')
 
         if symbol == pyglet.window.key.ESCAPE:
@@ -524,6 +524,12 @@ class map(object):
             objects_display[0].save_file(self.world_file_name)
             menu()
             return pyglet.event.EVENT_HANDLED
+
+    def open_inventory(self):
+        if self.inventory_bool:
+            self.inventory_bool = False
+        else:
+            self.inventory_bool = True
 
     def on_mouse_press(self, x, y, button, modifiers):
         if self.press_or_line:
@@ -633,18 +639,25 @@ class map(object):
                     self.del_spawn([_x_, _y_])
 
     def on_mouse_scroll(self, x, y, scroll_x, scroll_y):
-        if keyboard[key.LCTRL]:
-            self.scale_map(scroll_y)
+        #if keyboard[key.LCTRL]:
+        self.scale_map(scroll_y)
 
     def on_mouse_motion(self, x, y, dx, dy):
         self.mouse_pos = [x, y]
 
     def scale_map(self, scroll_y):
         if not self.inventory_bool:
+            #self.pos[0] += self.pos[0]/2
+            #self.pos[1] += self.pos[0]/2
+
+            #self.pos[0] -= ((self.mouse_pos[0] - (settings.width/2)) / self.scale) * scroll_y
+            #self.pos[1] -= ((self.mouse_pos[1] - (settings.height/2)) / self.scale) * scroll_y
+
             if scroll_y > 0:
                 self.pos = [self.pos[0] - self.mouse_pos[0]/(scroll_y * 10), self.pos[1] - self.mouse_pos[1]/(scroll_y * 10)]
             else:
                 self.pos = [self.pos[0] + self.mouse_pos[0]/(abs(scroll_y) * 10), self.pos[1] + self.mouse_pos[1]/(abs(scroll_y) * 10)]
+
             self.scale += self.tick_scale * (scroll_y * 10)
             self.image_wall.scale = self.scale
             self.image_floor.scale = self.scale

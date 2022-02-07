@@ -156,7 +156,7 @@ class Game_settings(): # settings in game
 
         self.collide_players = True
 
-        self.crates_bool = True
+        self.crates_bool = False
 
         self.pause = False # dont save
         self.run = False

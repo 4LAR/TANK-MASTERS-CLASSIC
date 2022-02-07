@@ -91,23 +91,25 @@ class crates():
 
 
     def update(self):
-        for i in range(len(self.crates_list)-1, -1, -1):
-            self.crate_poly.pos.x = self.crates_list[i][0]
-            self.crate_poly.pos.y = self.crates_list[i][1]
+        if get_obj_display('game_settings').crates_bool:
+            for i in range(len(self.crates_list)-1, -1, -1):
+                self.crate_poly.pos.x = self.crates_list[i][0]
+                self.crate_poly.pos.y = self.crates_list[i][1]
 
-            for p in get_obj_display('players').tanks:
-                if collision.collide(p.poligon_body, self.crate_poly):
-                    self.crates_list.pop(i)
-                    self.sound.play('upgrade.wav')
-                    self.add_crate()
-                    break
+                for p in get_obj_display('players').tanks:
+                    if collision.collide(p.poligon_body, self.crate_poly):
+                        self.crates_list.pop(i)
+                        self.sound.play('upgrade.wav')
+                        self.add_crate()
+                        break
 
     def draw(self):
-        for c in self.crates_list:
-            self.crates_obj_shadow.x = c[0] + get_obj_display('world').offs_shadows[0] / 3 + get_obj_display('world').map_offs[0]
-            self.crates_obj_shadow.y = c[1] - get_obj_display('world').offs_shadows[0] / 3 + get_obj_display('world').map_offs[1]
-            drawp(self.crates_obj_shadow)
-            self.creates_obj[0].x = c[0] + get_obj_display('world').map_offs[0]
-            self.creates_obj[0].y = c[1] + get_obj_display('world').map_offs[1]
-            self.creates_obj[0].update_image(True)
-            drawp(self.creates_obj[0])
+        if get_obj_display('game_settings').crates_bool:
+            for c in self.crates_list:
+                self.crates_obj_shadow.x = c[0] + get_obj_display('world').offs_shadows[0] / 3 + get_obj_display('world').map_offs[0]
+                self.crates_obj_shadow.y = c[1] - get_obj_display('world').offs_shadows[0] / 3 + get_obj_display('world').map_offs[1]
+                drawp(self.crates_obj_shadow)
+                self.creates_obj[0].x = c[0] + get_obj_display('world').map_offs[0]
+                self.creates_obj[0].y = c[1] + get_obj_display('world').map_offs[1]
+                self.creates_obj[0].update_image(True)
+                drawp(self.creates_obj[0])
