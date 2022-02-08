@@ -47,6 +47,8 @@ class Save_settings():
             game_settings.wind_bool = True if (config.get("Game_setup", "wind_bool")).lower() == 'true' else False
             game_settings.wind_power = int(config.get("Game_setup", "wind_power"))
 
+            game_settings.crates_bool = True if (config.get("Game_setup", "crates_bool")).lower() == 'true' else False
+
             game_settings.rain = True if (config.get("Game_setup", "rain")).lower() == 'true' else False
             game_settings.snow = True if (config.get("Game_setup", "snow")).lower() == 'true' else False
 
@@ -55,6 +57,7 @@ class Save_settings():
             game_settings.time_set_sec = int(config.get("Game_setup", "time_set_sec"))
 
             game_settings.collide_players = True if (config.get("Game_setup", "collide_players")).lower() == 'true' else False
+            game_settings.random_tanks_bool = True if (config.get("Game_setup", "random_tanks_bool")).lower() == 'true' else False
 
             # Tank
             for i in range(4):
@@ -112,6 +115,8 @@ class Save_settings():
         config.set("Game_setup", "wind_bool", str(game_settings.wind_bool))
         config.set("Game_setup", "wind_power", str(game_settings.wind_power))
 
+        config.set("Game_setup", "crates_bool", str(game_settings.crates_bool))
+
         config.set("Game_setup", "rain", str(game_settings.rain))
         config.set("Game_setup", "snow", str(game_settings.snow))
 
@@ -120,6 +125,7 @@ class Save_settings():
         config.set("Game_setup", "time_set_sec", str(game_settings.time_set_sec))
 
         config.set("Game_setup", "collide_players", str(game_settings.collide_players))
+        config.set("Game_setup", "random_tanks_bool", str(game_settings.random_tanks_bool))
 
         # Tank
         config.add_section("Tank_MPL")
@@ -155,6 +161,7 @@ class Game_settings(): # settings in game
         self.time_set_sec = 0
 
         self.collide_players = True
+        self.random_tanks_bool = False
 
         self.crates_bool = False
 

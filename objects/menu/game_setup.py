@@ -42,10 +42,11 @@ class game_setup_flags():
         self.settings_flags[3].flag = False
 
         self.settings_flags[4].flag = True
+        self.settings_flags[5].flag = False
 
-        self.settings_flags[5].flag = True
-        self.settings_flags[6].text_obj.text_label.label.text = '2'
-        self.settings_flags[7].text_obj.text_label.label.text = '0'
+        self.settings_flags[6].flag = True
+        self.settings_flags[7].text_obj.text_label.label.text = '2'
+        self.settings_flags[8].text_obj.text_label.label.text = '0'
 
     def __init__(self):
 
