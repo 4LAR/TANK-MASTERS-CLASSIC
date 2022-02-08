@@ -127,9 +127,15 @@ class select_map_buttons():
         self.map_names = map_list.map_names
         self.map_logos = map_list.map_logos
 
+        maps = zip(map_list.map_names, map_list.map_logos)
+        xs = sorted(maps, key=lambda tup: tup[0])
+
+        self.map_names = [x[0] for x in xs]
+        self.map_logos = [x[1] for x in xs]
+
     def __init__(self, editor=False):
         map_list.search()
-        
+
         self.editor = editor
 
         self.buttons = []

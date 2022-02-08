@@ -54,6 +54,8 @@ class map(object):
         self.circle_spawn = circle_label(0, 0, 360, size_circle=5, color=(9, 0, 0, 255))
         self.image_spawn = image_label('spawn.png', 0, 0, pixel=False, center=False)
 
+        self.select_block_grid_image = image_label('buttons/frame/frame_selected.png', 0, 0, pixel=False, center=False)
+
         self.image_floor = None
         self.image_wall = None
 
@@ -440,8 +442,6 @@ class map(object):
         self.image_effect_up.x = self.pos[0]
         self.image_effect_up.y = self.pos[1]
 
-        ##
-
         self.image_grid.x = self.pos[0]
         self.image_grid.y = self.pos[1]
 
@@ -653,10 +653,7 @@ class map(object):
             #self.pos[0] -= ((self.mouse_pos[0] - (settings.width/2)) / self.scale) * scroll_y
             #self.pos[1] -= ((self.mouse_pos[1] - (settings.height/2)) / self.scale) * scroll_y
 
-            if scroll_y > 0:
-                self.pos = [self.pos[0] - self.mouse_pos[0]/(scroll_y * 10), self.pos[1] - self.mouse_pos[1]/(scroll_y * 10)]
-            else:
-                self.pos = [self.pos[0] + self.mouse_pos[0]/(abs(scroll_y) * 10), self.pos[1] + self.mouse_pos[1]/(abs(scroll_y) * 10)]
+            self.pos = [self.pos[0] - (self.mouse_pos[0]*scroll_y) / 10, self.pos[1] - (self.mouse_pos[1] * scroll_y) / 10]
 
             self.scale += self.tick_scale * (scroll_y * 10)
             self.image_wall.scale = self.scale
@@ -671,6 +668,7 @@ class map(object):
             self.image_effect_up.scale = self.scale
 
             self.image_grid.scale = self.scale
+            #self.select_block_grid_image.sprite.scale = self.scale / 2
 
 
     def draw(self):

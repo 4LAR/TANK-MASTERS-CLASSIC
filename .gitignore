@@ -3,12 +3,7 @@ log.txt
 settings.txt
 *.pyc
 main.spec
-log.txt
 main.exe
 objects.pkl
-objects.pkl
-settings.txt
-settings.txt
-log.txt
-settings.txt
-log.txt
+game_settings.txt
+KEY_BINDS.json

@@ -312,15 +312,17 @@ class game_settings_page():
         )
 
         self.settings_buttons = []
+        self.settings_background =[]
 
         # game
         self.settings_buttons.append([])
+        self.settings_background.append([])
 
         # left
         self.settings_buttons[0].append(
             input_label_image(
                 settings.width/100,
-                settings.height - settings.height/3.5 - (settings.height/8) * 0,
+                settings.height - settings.height/3.5 - (settings.height/8) * 0.5,
                 'buttons/button_clear_2_reverse.png', 'buttons/button_clear_selected_2_reverse.png',
                 scale=settings.height/160, color_text=(150, 150, 150, 255),
                 text='name', pre_text='PLAYER', font='pixel.ttf',
@@ -383,14 +385,48 @@ class game_settings_page():
             )
         )
 
+        # background
+        self.settings_background[0].append(
+            label(
+                settings.width/300,
+                settings.height - settings.height/3.5 - (settings.height/8) * 0.7,
+                settings.width / 2.55,
+                settings.height/5,
+                (0, 0, 0), alpha=120
+            )
+        )
+
+        self.settings_background[0].append(
+            label(
+                settings.width/300 + settings.width/2,
+                settings.height - settings.height/3.5 - (settings.height/8) * 2.1,
+                settings.width / 2.15,
+                settings.height/2.65,
+                (0, 0, 0), alpha=120
+            )
+        )
+
+        # text
+        self.settings_background[0].append(
+            text_label(
+                settings.width/100,
+                settings.height - settings.height/3.5 + (settings.height/8) * 0.4,
+                'multiplayer',
+                load_font=True, font='pixel.ttf',
+                size=settings.height//24, anchor_x='left', anchor_y='bottom',
+                color = (150, 150, 150, 255)
+            )
+        )
+
         # display
         self.settings_buttons.append([])
+        self.settings_background.append([])
 
         # left
         self.settings_buttons[1].append(
             image_flag(
                 settings.width/100,
-                settings.height - settings.height/3.5 - (settings.height/8) * 0,
+                settings.height - settings.height/3.5 - (settings.height/8) * 0.5,
                 image='buttons/flag/flag.png',
                 image_flag='buttons/flag/flag_selected.png',
                 image_selected_flag='buttons/flag/flag_hover_selected.png',
@@ -410,7 +446,7 @@ class game_settings_page():
         self.settings_buttons[1].append(
             image_flag(
                 settings.width/100,
-                settings.height - settings.height/3.5 - (settings.height/8) * 1,
+                settings.height - settings.height/3.5 - (settings.height/8) * 1.5,
                 image='buttons/flag/flag.png',
                 image_flag='buttons/flag/flag_selected.png',
                 image_selected_flag='buttons/flag/flag_hover_selected.png',
@@ -430,7 +466,7 @@ class game_settings_page():
         self.settings_buttons[1].append(
             image_flag(
                 settings.width/100,
-                settings.height - settings.height/3.5 - (settings.height/8) * 2,
+                settings.height - settings.height/3.5 - (settings.height/8) * 2.5,
                 image='buttons/flag/flag.png',
                 image_flag='buttons/flag/flag_selected.png',
                 image_selected_flag='buttons/flag/flag_hover_selected.png',
@@ -452,7 +488,7 @@ class game_settings_page():
         self.settings_buttons[1].append(
             input_label_image(
                 settings.width/100 + settings.width/2,
-                settings.height - settings.height/2.5 - (settings.height/8) * 0,
+                settings.height - settings.height/3.5 - (settings.height/8) * 0.5,
                 'buttons/button_clear_2_reverse.png', 'buttons/button_clear_selected_2_reverse.png',
                 scale=settings.height/160, color_text=(150, 150, 150, 255),
                 text='width', pre_text='1600', font='pixel.ttf',
@@ -463,7 +499,7 @@ class game_settings_page():
         self.settings_buttons[1].append(
             input_label_image(
                 settings.width/100 + settings.width/2,
-                settings.height - settings.height/2.5 - (settings.height/8) * 1,
+                settings.height - settings.height/3.5 - (settings.height/8) * 1.5,
                 'buttons/button_clear_2_reverse.png', 'buttons/button_clear_selected_2_reverse.png',
                 scale=settings.height/160, color_text=(150, 150, 150, 255),
                 text='height', pre_text='900', font='pixel.ttf',
@@ -471,8 +507,64 @@ class game_settings_page():
             )
         )
 
+        self.settings_buttons[1].append(
+            input_label_image(
+                settings.width/100 + settings.width/2,
+                settings.height - settings.height/3.5 - (settings.height/8) * 1.5,
+                'buttons/button_clear_2_reverse.png', 'buttons/button_clear_selected_2_reverse.png',
+                scale=settings.height/160, color_text=(150, 150, 150, 255),
+                text='height', pre_text='900', font='pixel.ttf',
+                text_indent=settings.height/12, text_input_indent=settings.height/6, shadow=graphics_settings.shadows_buttons
+            )
+        )
+
+        # background
+        self.settings_background[1].append(
+            label(
+                settings.width/300,
+                settings.height - settings.height/3.5 - (settings.height/8) * 2.6,
+                settings.width / 2.15,
+                settings.height/2.65 + (settings.height/8) * 0.5,
+                (0, 0, 0), alpha=120
+            )
+        )
+
+        self.settings_background[1].append(
+            label(
+                settings.width/300 + settings.width/2,
+                settings.height - settings.height/3.5 - (settings.height/8) * 1.6,
+                settings.width / 2.55,
+                settings.height/3.20,
+                (0, 0, 0), alpha=120
+            )
+        )
+
+        # text
+        self.settings_background[1].append(
+            text_label(
+                settings.width/100 + settings.width/2,
+                settings.height - settings.height/3.5 + (settings.height/8) * 0.4,
+                'resolution',
+                load_font=True, font='pixel.ttf',
+                size=settings.height//24, anchor_x='left', anchor_y='bottom',
+                color = (150, 150, 150, 255)
+            )
+        )
+
+        self.settings_background[1].append(
+            text_label(
+                settings.width/100,
+                settings.height - settings.height/3.5 + (settings.height/8) * 0.4,
+                'window',
+                load_font=True, font='pixel.ttf',
+                size=settings.height//24, anchor_x='left', anchor_y='bottom',
+                color = (150, 150, 150, 255)
+            )
+        )
+
         # sound
         self.settings_buttons.append([])
+        self.settings_background.append([])
 
         self.settings_buttons[2].append(
             slider_image(
@@ -592,14 +684,35 @@ class game_settings_page():
             )
         )
 
+        self.settings_background[2].append(
+            label(
+                settings.width/300,
+                settings.height - settings.height/3.5 - (settings.height/8) * 3.1,
+                settings.width / 2.15,
+                settings.height/2.65 + settings.height/8,
+                (0, 0, 0), alpha=120
+            )
+        )
+
+        self.settings_background[2].append(
+            label(
+                settings.width/300 + settings.width/2,
+                settings.height - settings.height/3.5 - (settings.height/8) * 3.1,
+                settings.width / 2.55,
+                settings.height/2.65 + settings.height/8,
+                (0, 0, 0), alpha=120
+            )
+        )
+
         # graphics
         self.settings_buttons.append([])
+        self.settings_background.append([])
 
         # left page
         self.settings_buttons[3].append(
             image_flag(
                 settings.width/100,
-                settings.height - settings.height/3.5,
+                settings.height - settings.height/3.5 - (settings.height/8) * 0.5,
                 image='buttons/flag/flag.png',
                 image_flag='buttons/flag/flag_selected.png',
                 image_selected_flag='buttons/flag/flag_hover_selected.png',
@@ -617,7 +730,7 @@ class game_settings_page():
         self.settings_buttons[3].append(
             image_flag(
                 settings.width/100,
-                settings.height - settings.height/3.5 - (settings.height/8) * 1,
+                settings.height - settings.height/3.5 - (settings.height/8) * 1.5,
                 image='buttons/flag/flag.png',
                 image_flag='buttons/flag/flag_selected.png',
                 image_selected_flag='buttons/flag/flag_hover_selected.png',
@@ -635,7 +748,7 @@ class game_settings_page():
         self.settings_buttons[3].append(
             image_flag(
                 settings.width/100,
-                settings.height - settings.height/3.5 - (settings.height/8) * 2,
+                settings.height - settings.height/3.5 - (settings.height/8) * 2.5,
                 image='buttons/flag/flag.png',
                 image_flag='buttons/flag/flag_selected.png',
                 image_selected_flag='buttons/flag/flag_hover_selected.png',
@@ -653,7 +766,7 @@ class game_settings_page():
         self.settings_buttons[3].append(
             image_flag(
                 settings.width/100,
-                settings.height - settings.height/3.5 - (settings.height/8) * 3,
+                settings.height - settings.height/3.5 - (settings.height/8) * 3.5,
                 image='buttons/flag/flag.png',
                 image_flag='buttons/flag/flag_selected.png',
                 image_selected_flag='buttons/flag/flag_hover_selected.png',
@@ -672,7 +785,7 @@ class game_settings_page():
         self.settings_buttons[3].append(
             image_flag(
                 settings.width/100 + settings.width/2,
-                settings.height - settings.height/3.5 - (settings.height/8) * 0,
+                settings.height - settings.height/3.5 - (settings.height/8) * 0.5,
                 image='buttons/flag/flag.png',
                 image_flag='buttons/flag/flag_selected.png',
                 image_selected_flag='buttons/flag/flag_hover_selected.png',
@@ -690,7 +803,7 @@ class game_settings_page():
         self.settings_buttons[3].append(
             image_flag(
                 settings.width/100 + settings.width/2,
-                settings.height - settings.height/3.5 - (settings.height/8) * 1,
+                settings.height - settings.height/3.5 - (settings.height/8) * 1.5,
                 image='buttons/flag/flag.png',
                 image_flag='buttons/flag/flag_selected.png',
                 image_selected_flag='buttons/flag/flag_hover_selected.png',
@@ -708,7 +821,7 @@ class game_settings_page():
         self.settings_buttons[3].append(
             image_flag(
                 settings.width/100 + settings.width/2,
-                settings.height - settings.height/3.5 - (settings.height/8) * 2,
+                settings.height - settings.height/3.5 - (settings.height/8) * 2.5,
                 image='buttons/flag/flag.png',
                 image_flag='buttons/flag/flag_selected.png',
                 image_selected_flag='buttons/flag/flag_hover_selected.png',
@@ -723,8 +836,54 @@ class game_settings_page():
             )
         )
 
+        # backgraund
+        self.settings_background[3].append(
+            label(
+                settings.width/300,
+                settings.height - settings.height/3.5 - (settings.height/8) * 3.6,
+                settings.width / 2.15,
+                settings.height/2.65 + settings.height/8 + (settings.height/8) * 0.5,
+                (0, 0, 0), alpha=120
+            )
+        )
+
+        self.settings_background[3].append(
+            label(
+                settings.width/300 + settings.width/2,
+                settings.height - settings.height/3.5 - (settings.height/8) * 2.6,
+                settings.width / 2.15,
+                settings.height/2.65 + (settings.height/8) * 0.5,
+                (0, 0, 0), alpha=120
+            )
+        )
+
+        # text
+        self.settings_background[3].append(
+            text_label(
+                settings.width/100 + settings.width/2,
+                settings.height - settings.height/3.5 + (settings.height/8) * 0.4,
+                'menu',
+                load_font=True, font='pixel.ttf',
+                size=settings.height//24, anchor_x='left', anchor_y='bottom',
+                color = (150, 150, 150, 255)
+            )
+        )
+
+        self.settings_background[3].append(
+            text_label(
+                settings.width/100,
+                settings.height - settings.height/3.5 + (settings.height/8) * 0.4,
+                'visual',
+                load_font=True, font='pixel.ttf',
+                size=settings.height//24, anchor_x='left', anchor_y='bottom',
+                color = (150, 150, 150, 255)
+            )
+        )
+
         # keyboard
         self.settings_buttons.append([])
+        self.settings_background.append([])
+
         players = ['main', 'P1', 'P2', 'P3', 'P4']
         for i in range(5):
             self.settings_buttons[4].append(
@@ -778,6 +937,26 @@ class game_settings_page():
                     text_input_indent=inputs_indent[i], shadow=graphics_settings.shadows_buttons
                 )
             )
+
+        self.settings_background[4].append(
+            label(
+                settings.width/300,
+                settings.height - settings.height/3.5 - (settings.height/8) * 3.7,
+                settings.width / 2.55,
+                settings.height/2.65 + settings.height/12,
+                (0, 0, 0), alpha=120
+            )
+        )
+
+        self.settings_background[4].append(
+            label(
+                settings.width/300 + settings.width/2,
+                settings.height - settings.height/3.5 - (settings.height/8) * 2.1,
+                settings.width / 2.55,
+                settings.height/2.65 - settings.height/8,
+                (0, 0, 0), alpha=120
+            )
+        )
 
         self.settings_buttons[4][5].update_key(self.KEY_BINDS['main']['up'])
         self.settings_buttons[4][6].update_key(self.KEY_BINDS['main']['down'])
@@ -843,6 +1022,9 @@ class game_settings_page():
             drawp(s)
 
         for s in self.settings_page_buttons_text:
+            s.draw()
+
+        for s in self.settings_background[self.page]:
             s.draw()
 
         for s in self.settings_buttons[self.page]:

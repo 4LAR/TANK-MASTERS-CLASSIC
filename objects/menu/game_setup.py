@@ -8,9 +8,9 @@ class game_setup_flags():
 
         self.settings_flags[4].flag = game_settings.collide_players
 
-        self.settings_flags[5].flag = game_settings.time_bool
-        self.settings_flags[6].text_obj.text_label.label.text = str(game_settings.time_set_min)
-        self.settings_flags[7].text_obj.text_label.label.text = str(game_settings.time_set_sec)
+        self.settings_flags[6].flag = game_settings.time_bool
+        self.settings_flags[7].text_obj.text_label.label.text = str(game_settings.time_set_min)
+        self.settings_flags[8].text_obj.text_label.label.text = str(game_settings.time_set_sec)
 
     def save_settings(self):
 
@@ -29,9 +29,9 @@ class game_setup_flags():
 
         game_settings.collide_players = self.settings_flags[4].flag
 
-        game_settings.time_bool    = self.settings_flags[5].flag
-        game_settings.time_set_min = int(self.settings_flags[6].text_obj.text_label.label.text)
-        game_settings.time_set_sec = int(self.settings_flags[7].text_obj.text_label.label.text)
+        game_settings.time_bool    = self.settings_flags[6].flag
+        game_settings.time_set_min = int(self.settings_flags[7].text_obj.text_label.label.text)
+        game_settings.time_set_sec = int(self.settings_flags[8].text_obj.text_label.label.text)
 
         save_settings.save_settings()
 
@@ -50,12 +50,13 @@ class game_setup_flags():
     def __init__(self):
 
         self.settings_flags = []
+        self.backgraund_flags = []
 
         # 1 column
         self.settings_flags.append(
             image_flag(
                 settings.width/100,
-                settings.height - settings.height/4.5 - (settings.height/8) * 0,
+                settings.height - settings.height/3.5 + (settings.height/8) * 0.3,
                 image='buttons/flag_small/flag.png',
                 image_flag='buttons/flag_small/flag_selected.png',
                 image_selected_flag='buttons/flag_small/flag_hover_selected.png',
@@ -73,7 +74,7 @@ class game_setup_flags():
         self.settings_flags.append(
             image_flag(
                 settings.width/100,
-                settings.height - settings.height/4.5 - (settings.height/8) * 1,
+                settings.height - settings.height/3.5 - (settings.height/8) * 0.7,
                 image='buttons/flag_small/flag.png',
                 image_flag='buttons/flag_small/flag_selected.png',
                 image_selected_flag='buttons/flag_small/flag_hover_selected.png',
@@ -90,8 +91,8 @@ class game_setup_flags():
 
         self.settings_flags.append(
             image_flag(
-                settings.width/100,
-                settings.height - settings.height/4.5 - (settings.height/8) * 2,
+                settings.width/100 + settings.width/4,
+                settings.height - settings.height/3.5 + (settings.height/8) * 0.3,
                 image='buttons/flag_small/flag.png',
                 image_flag='buttons/flag_small/flag_selected.png',
                 image_selected_flag='buttons/flag_small/flag_hover_selected.png',
@@ -108,8 +109,8 @@ class game_setup_flags():
 
         self.settings_flags.append(
             image_flag(
-                settings.width/100,
-                settings.height - settings.height/4.5 - (settings.height/8) * 3,
+                settings.width/100 + settings.width/4,
+                settings.height - settings.height/3.5 - (settings.height/8) * 0.7,
                 image='buttons/flag_small/flag.png',
                 image_flag='buttons/flag_small/flag_selected.png',
                 image_selected_flag='buttons/flag_small/flag_hover_selected.png',
@@ -127,8 +128,8 @@ class game_setup_flags():
         # 3 column
         self.settings_flags.append(
             image_flag(
-                settings.width/100 + settings.width/2,
-                settings.height - settings.height/4.5 - (settings.height/8) * 4,
+                settings.width/100,
+                settings.height - settings.height/4.5 - (settings.height/8) * 3,
                 image='buttons/flag/flag.png',
                 image_flag='buttons/flag/flag_selected.png',
                 image_selected_flag='buttons/flag/flag_hover_selected.png',
@@ -145,15 +146,33 @@ class game_setup_flags():
 
         self.settings_flags.append(
             image_flag(
+                settings.width/100,
+                settings.height - settings.height/4.5 - (settings.height/8) * 4,
+                image='buttons/flag/flag.png',
+                image_flag='buttons/flag/flag_selected.png',
+                image_selected_flag='buttons/flag/flag_hover_selected.png',
+                image_selected='buttons/flag/flag_hover.png',
+                scale=settings.height/160,
+
+                text='random tanks',
+                text_color = (150, 150, 150, 255),
+                font='pixel.ttf',
+                text_indent=settings.height/8, shadow=graphics_settings.shadows_buttons
+
+            )
+        )
+
+        self.settings_flags.append(
+            image_flag(
                 settings.width/100 + settings.width/2,
-                settings.height - settings.height/4.5 - (settings.height/8) * 0,
+                settings.height - settings.height/4.5 + (settings.height/8) * 0.2,
                 image='buttons/flag_small/flag.png',
                 image_flag='buttons/flag_small/flag_selected.png',
                 image_selected_flag='buttons/flag_small/flag_hover_selected.png',
                 image_selected='buttons/flag_small/flag_hover.png',
                 scale=settings.height/160,
 
-                text='time',
+                text='timer',
                 text_color = (150, 150, 150, 255),
                 font='pixel.ttf',
                 text_indent=settings.height/8, shadow=graphics_settings.shadows_buttons
@@ -164,7 +183,7 @@ class game_setup_flags():
         self.settings_flags.append(
             input_label_image(
                 settings.width/100 + settings.width/2,
-                settings.height - settings.height/2.8 - (settings.height/8) * 0,
+                settings.height - settings.height/2.8 + (settings.height/8) * 0.2,
                 'buttons/button_clear_2_reverse.png', 'buttons/button_clear_selected_2_reverse.png',
                 scale=settings.height/160, color_text=(150, 150, 150, 255),
                 text='minutes', pre_text='2', font='pixel.ttf',
@@ -175,11 +194,89 @@ class game_setup_flags():
         self.settings_flags.append(
             input_label_image(
                 settings.width/100 + settings.width/2,
-                settings.height - settings.height/2.8 - (settings.height/8) * 1,
+                settings.height - settings.height/2.8 - (settings.height/8) * 0.8,
                 'buttons/button_clear_2_reverse.png', 'buttons/button_clear_selected_2_reverse.png',
                 scale=settings.height/160, color_text=(150, 150, 150, 255),
                 text='seconds', pre_text='0', font='pixel.ttf',
                 text_indent=settings.height/12, text_input_indent=settings.height/6, shadow=graphics_settings.shadows_buttons
+            )
+        )
+
+        # backgraund
+        # gameplay
+        self.backgraund_flags.append(
+            label(
+                settings.width/300,
+                settings.height - settings.height/3.5 - (settings.height/8) * 0.8,
+                (settings.width / 2.15) / 1.95,
+                settings.height/3.25,
+                (0, 0, 0), alpha=120
+            )
+        )
+
+        self.backgraund_flags.append(
+            text_label(
+                settings.width/100,
+                settings.height - settings.height/3.5 + (settings.height/8) * 1.2,
+                'gameplay',
+                load_font=True, font='pixel.ttf',
+                size=settings.height//24, anchor_x='left', anchor_y='bottom',
+                color = (150, 150, 150, 255)
+            )
+        )
+
+        # weather
+        self.backgraund_flags.append(
+            label(
+                settings.width/300 + settings.width/4,
+                settings.height - settings.height/3.5 - (settings.height/8) * 0.8,
+                (settings.width / 2.15) / 1.95,
+                settings.height/3.25,
+                (0, 0, 0), alpha=120
+            )
+        )
+
+        self.backgraund_flags.append(
+            text_label(
+                settings.width/100 + settings.width/4,
+                settings.height - settings.height/3.5 + (settings.height/8) * 1.2,
+                'weather',
+                load_font=True, font='pixel.ttf',
+                size=settings.height//24, anchor_x='left', anchor_y='bottom',
+                color = (150, 150, 150, 255)
+            )
+        )
+
+        # players
+        self.backgraund_flags.append(
+            label(
+                settings.width/300,
+                settings.height - settings.height/3.5 - (settings.height/8) * 3.6,
+                settings.width / 2.15,
+                settings.height/3.25,
+                (0, 0, 0), alpha=120
+            )
+        )
+
+        self.backgraund_flags.append(
+            text_label(
+                settings.width/100,
+                settings.height - settings.height/3.5 - (settings.height/8) * 1.6,
+                'players',
+                load_font=True, font='pixel.ttf',
+                size=settings.height//24, anchor_x='left', anchor_y='bottom',
+                color = (150, 150, 150, 255)
+            )
+        )
+
+        # timer
+        self.backgraund_flags.append(
+            label(
+                settings.width/300 + settings.width/4 + settings.width/4,
+                settings.height - settings.height/3.5 - (settings.height/8) * 1.5,
+                settings.width / 2.55,
+                settings.height/2.53,
+                (0, 0, 0), alpha=120
             )
         )
 
@@ -208,5 +305,8 @@ class game_setup_flags():
                 pass
 
     def draw(self):
+        for s in self.backgraund_flags:
+            s.draw()
+
         for s in self.settings_flags:
             drawp(s)

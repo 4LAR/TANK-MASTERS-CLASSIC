@@ -107,6 +107,7 @@ class map_inventory():
             'world/wall/',
             'world/liquid/',
             'world/vegetation/',
+            '',
             'world/other_up/',
             'world/other_down/'
         ]
