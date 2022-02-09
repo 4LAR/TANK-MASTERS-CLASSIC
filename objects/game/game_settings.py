@@ -88,6 +88,8 @@ class Save_settings():
         config.set("Sound", "sound_volume_tanks", str(sound_settings.sound_volume_tanks))
         config.set("Sound", "sound_volume_background", str(sound_settings.sound_volume_background))
 
+        sound_settings.update_sound()
+
         # Graphics
         config.add_section("Graphics")
 
