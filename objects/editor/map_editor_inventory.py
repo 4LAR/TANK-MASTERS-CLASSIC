@@ -117,7 +117,7 @@ class map_inventory():
             scale=settings.height/65,
             pixel=False,
             center=True,
-            rotation=self.current_rot,
+            rotation=-self.current_rot,
         )
 
 

@@ -7,6 +7,7 @@ class game_setup_flags():
         self.settings_flags[3].flag = game_settings.snow
 
         self.settings_flags[4].flag = game_settings.collide_players
+        self.settings_flags[5].flag = game_settings.random_tanks_bool
 
         self.settings_flags[6].flag = game_settings.time_bool
         self.settings_flags[7].text_obj.text_label.label.text = str(game_settings.time_set_min)
@@ -28,6 +29,7 @@ class game_setup_flags():
         game_settings.snow         = self.settings_flags[3].flag
 
         game_settings.collide_players = self.settings_flags[4].flag
+        game_settings.random_tanks_bool = self.settings_flags[5].flag
 
         game_settings.time_bool    = self.settings_flags[6].flag
         game_settings.time_set_min = int(self.settings_flags[7].text_obj.text_label.label.text)

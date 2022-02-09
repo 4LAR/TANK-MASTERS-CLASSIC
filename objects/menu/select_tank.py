@@ -1,4 +1,8 @@
 class select_tank_buttons():
+    def random_tank(self, id=0):
+        self.tank_settings[id][0] = random.randint(0, len(tanks.bases)-1)
+        self.tank_settings[id][1] = random.randint(0, len(tanks.towers)-1)
+
     def tank_up(self, id, type=0):
         self.tank_settings[id][type] += 1
         if self.tank_settings[id][type] > ((len(tanks.bases)-1) if type == 0 else (len(tanks.towers)-1)):
@@ -12,11 +16,12 @@ class select_tank_buttons():
         self.update_tanks()
 
     def save(self):
-        for i in range(len(tank_settings.tanks)):
-            tank_settings.tanks[i][0] = self.buttons[i].flag
-            tank_settings.tanks[i][1] = self.buttons_bot[i].flag
-            tank_settings.tanks[i][2] = self.tank_settings[i][0]
-            tank_settings.tanks[i][3] = self.tank_settings[i][1]
+        if not game_settings.random_tanks_bool:
+            for i in range(len(tank_settings.tanks)):
+                tank_settings.tanks[i][0] = self.buttons[i].flag
+                tank_settings.tanks[i][1] = self.buttons_bot[i].flag
+                tank_settings.tanks[i][2] = self.tank_settings[i][0]
+                tank_settings.tanks[i][3] = self.tank_settings[i][1]
 
     def reset(self):
         for i in range(len(tank_settings.tanks)):
@@ -197,47 +202,52 @@ class select_tank_buttons():
             self.buttons[i].flag = tank_settings.tanks[i][0]
             self.buttons_bot[i].flag = tank_settings.tanks[i][1]
 
+        if game_settings.random_tanks_bool:
+            for i in range(4):
+                self.random_tank(id=i)
+
     def on_mouse_press(self, x, y, button, modifiers):
         for i in range(len(self.buttons)):
             self.buttons[i].on_mouse_press(x, y, button, modifiers)
             if self.buttons[i].flag:
                 self.buttons_bot[i].on_mouse_press(x, y, button, modifiers)
-
-                self.buttons_body_down[i].on_mouse_press(x, y, button, modifiers)
-                self.buttons_body_up[i].on_mouse_press(x, y, button, modifiers)
-                self.buttons_tower_down[i].on_mouse_press(x, y, button, modifiers)
-                self.buttons_tower_up[i].on_mouse_press(x, y, button, modifiers)
+                if not game_settings.random_tanks_bool:
+                    self.buttons_body_down[i].on_mouse_press(x, y, button, modifiers)
+                    self.buttons_body_up[i].on_mouse_press(x, y, button, modifiers)
+                    self.buttons_tower_down[i].on_mouse_press(x, y, button, modifiers)
+                    self.buttons_tower_up[i].on_mouse_press(x, y, button, modifiers)
 
     def on_mouse_motion(self, x, y, dx, dy):
         for i in range(len(self.buttons)):
             self.buttons[i].on_mouse_motion(x, y, dx, dy)
             if self.buttons[i].flag:
                 self.buttons_bot[i].on_mouse_motion(x, y, dx, dy)
-
-                self.buttons_body_down[i].on_mouse_motion(x, y, dx, dy)
-                self.buttons_body_up[i].on_mouse_motion(x, y, dx, dy)
-                self.buttons_tower_down[i].on_mouse_motion(x, y, dx, dy)
-                self.buttons_tower_up[i].on_mouse_motion(x, y, dx, dy)
+                if not game_settings.random_tanks_bool:
+                    self.buttons_body_down[i].on_mouse_motion(x, y, dx, dy)
+                    self.buttons_body_up[i].on_mouse_motion(x, y, dx, dy)
+                    self.buttons_tower_down[i].on_mouse_motion(x, y, dx, dy)
+                    self.buttons_tower_up[i].on_mouse_motion(x, y, dx, dy)
 
     def draw(self):
         for i in range(len(self.buttons)):
-            if self.buttons[i].flag:
-                drawp(self.background[i])
+            if not game_settings.random_tanks_bool:
+                if self.buttons[i].flag:
+                    drawp(self.background[i])
 
             if self.buttons[i].flag:
                 drawp(self.buttons_bot[i])
                 drawp(self.text_bot[i])
+                if not game_settings.random_tanks_bool:
+                    drawp(self.background_tank[i])
 
-                drawp(self.background_tank[i])
+                    drawp(self.image_body[i])
+                    drawp(self.image_team[i])
+                    drawp(self.image_tower[i])
 
-                drawp(self.image_body[i])
-                drawp(self.image_team[i])
-                drawp(self.image_tower[i])
-
-                drawp(self.buttons_body_down[i])
-                drawp(self.buttons_body_up[i])
-                drawp(self.buttons_tower_down[i])
-                drawp(self.buttons_tower_up[i])
+                    drawp(self.buttons_body_down[i])
+                    drawp(self.buttons_body_up[i])
+                    drawp(self.buttons_tower_down[i])
+                    drawp(self.buttons_tower_up[i])
 
             drawp(self.buttons[i])
             drawp(self.text[i])
