@@ -97,6 +97,9 @@ try:
 
     from weakref import WeakKeyDictionary
 
+    import PyQt5
+    import screeninfo
+
     #from PodSixNet.Server import Server
     #from PodSixNet.Channel import Channel
 
@@ -190,9 +193,9 @@ try:
 
     class settings():
         def __init__(self):
-            self.width = 1280 # ширина окна
-            self.height = 720 # высота окна
-            self.full_screen = 0 # как будет работать окно (0 - окно с рамками, 1 - окно без рамок, полный экран (не стабильно) )
+            self.width = screeninfo.get_monitors()[0].width # ширина окна
+            self.height = screeninfo.get_monitors()[0].height # высота окна
+            self.full_screen = 1 # как будет работать окно (0 - окно с рамками, 1 - окно без рамок, полный экран (не стабильно) )
             self.gamma = 1.0 # гамма (не используется)
 
             self.fps = 120 # максимальный fps при обновлении классов
@@ -241,8 +244,10 @@ try:
                 config = configparser.ConfigParser()
                 config.read("settings.txt")
                 self.use_window = True if (config.get("Screen", "use_window")).lower() == 'true' else False
-                self.width = int(config.get("Screen", "width"))
-                self.height = int(config.get("Screen", "height"))
+                if ( screeninfo.get_monitors()[0].width >= int(config.get("Screen", "width")) and screeninfo.get_monitors()[0].height >= int(config.get("Screen", "height"))):
+                    self.width = int(config.get("Screen", "width"))
+                    self.height = int(config.get("Screen", "height"))
+
                 self.full_screen = int(config.get("Screen", "full-screen"))
 
                 self.show_fps = True if (config.get("User_interface", "show-fps")).lower() == 'true' else False

@@ -100,8 +100,8 @@ def play(
     add_display(weather())
     add_display(gui())
     add_display(pause())
+    add_display(table_game())
     if game_settings.multiplayer:
-        add_display(table_game())
         add_display(net_code())
     add_display(breathing_label(0, 0, settings.width, settings.height, (0, 0, 0), 0, delay=0.01, for_from=255, for_before=0, tick=-5, arg='get_obj_display(\'gui\').start_run_time()'))
 

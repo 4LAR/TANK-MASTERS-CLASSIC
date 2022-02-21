@@ -99,8 +99,9 @@ class game_settings_page():
             reboot_bool = True
 
             settings.full_screen = full_screen
-            settings.width = width
-            settings.height = height
+            if ((screeninfo.get_monitors()[0].width >= width) and (screeninfo.get_monitors()[0].height >= height)):
+                settings.width = width
+                settings.height = height
 
 
         # sound
