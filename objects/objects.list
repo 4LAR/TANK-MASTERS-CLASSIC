@@ -19,6 +19,7 @@ game/world.py
 game/crates.py
 game/wind.py
 game/players.py
+game/target.py
 game/bullets.py
 game/smoke.py
 game/gui.py
