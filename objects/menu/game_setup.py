@@ -131,8 +131,8 @@ class game_setup_flags():
         # 3 column
         self.settings_flags.append(
             image_flag(
-                settings.width/100,
-                settings.height - settings.height/4.5 - (settings.height/8) * 3,
+                settings.width/100 + settings.width/2,
+                settings.height - settings.height/4.5 - (settings.height/8) * 3.5,
                 image='buttons/flag/flag.png',
                 image_flag='buttons/flag/flag_selected.png',
                 image_selected_flag='buttons/flag/flag_hover_selected.png',
@@ -149,8 +149,8 @@ class game_setup_flags():
 
         self.settings_flags.append(
             image_flag(
-                settings.width/100,
-                settings.height - settings.height/4.5 - (settings.height/8) * 4,
+                settings.width/100 + settings.width/2,
+                settings.height - settings.height/4.5 - (settings.height/8) * 4.5,
                 image='buttons/flag/flag.png',
                 image_flag='buttons/flag/flag_selected.png',
                 image_selected_flag='buttons/flag/flag_hover_selected.png',
@@ -253,8 +253,8 @@ class game_setup_flags():
         # players
         self.backgraund_flags.append(
             label(
-                settings.width/300,
-                settings.height - settings.height/3.5 - (settings.height/8) * 3.6,
+                settings.width/300 + settings.width/2,
+                settings.height - settings.height/3.5 - (settings.height/8) * 4.1,
                 settings.width / 2.15,
                 settings.height/3.25,
                 (0, 0, 0), alpha=120
@@ -263,8 +263,8 @@ class game_setup_flags():
 
         self.backgraund_flags.append(
             text_label(
-                settings.width/100,
-                settings.height - settings.height/3.5 - (settings.height/8) * 1.6,
+                settings.width/100 + settings.width/2,
+                settings.height - settings.height/3.5 - (settings.height/8) * 2.1,
                 'players',
                 load_font=True, font='pixel.ttf',
                 size=settings.height//24, anchor_x='left', anchor_y='bottom',

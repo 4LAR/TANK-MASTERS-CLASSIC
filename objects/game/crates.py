@@ -40,6 +40,7 @@ class crates():
         ])'''
 
         self.add_crate()
+        self.add_crate()
 
     def add_crate(self):
         while True:
@@ -98,6 +99,11 @@ class crates():
 
                 for p in get_obj_display('players').tanks:
                     if collision.collide(p.poligon_body, self.crate_poly):
+                        if p.health < p.default_health:
+                            p.health = p.default_health
+                        else:
+                            p.armor_bool = True
+
                         self.crates_list.pop(i)
                         self.sound.play('upgrade.wav')
                         self.add_crate()

@@ -508,17 +508,6 @@ class game_settings_page():
             )
         )
 
-        self.settings_buttons[1].append(
-            input_label_image(
-                settings.width/100 + settings.width/2,
-                settings.height - settings.height/3.5 - (settings.height/8) * 1.5,
-                'buttons/button_clear_2_reverse.png', 'buttons/button_clear_selected_2_reverse.png',
-                scale=settings.height/160, color_text=(150, 150, 150, 255),
-                text='height', pre_text='900', font='pixel.ttf',
-                text_indent=settings.height/12, text_input_indent=settings.height/6, shadow=graphics_settings.shadows_buttons
-            )
-        )
-
         # background
         self.settings_background[1].append(
             label(
