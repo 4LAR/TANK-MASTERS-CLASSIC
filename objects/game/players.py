@@ -1,9 +1,15 @@
 class players():
-    def __init__(self, bot, tanks, tank_settings):
+    def __init__(self, bot, tanks, tank_settings, enemy_bool=False, enemy_count=0, enemy_bots=False):
         self.tanks = []
 
         for i in range(4):
             self.tanks.append(player(i, bot[i], tank_settings[i], tanks[i]))
+        
+        try:
+            for i in range(enemy_count):
+                self.tanks.append(player(4 + i, enemy_bots, tank_settings[i], True, True))
+        except Exception as e:
+            print(e)
 
     def update(self):
         for tank in self.tanks:
@@ -41,7 +47,9 @@ class player():
         else:
             self.pos = [-settings.width, -settings.height]
 
-    def __init__(self, id, bot=False, tank_settings=[0, 0], use=True):
+    def __init__(self, id, bot=False, tank_settings=[0, 0], use=True, enemy_bool=False):
+
+        self.enemy_bool = enemy_bool
 
         self.name = 'PLAYER ' + str(id + 1) + (' BOT' if bot else '')
 
@@ -151,7 +159,10 @@ class player():
         self.obj_tanks.append([])
         self.obj_tanks[1].append(image_label('tanks/body/no_team/' + tanks.bases[self.tank_settings[0]] + '.png', settings.width//2, settings.height//2, scale=self.scale_tank, pixel=False, center=True))
         self.obj_tanks[1].append(image_label('tanks/body/no_team/' + tanks.bases[self.tank_settings[0]] + '_1.png', settings.width//2, settings.height//2, scale=self.scale_tank, pixel=False, center=True))
-        self.obj_tanks.append(image_label('tanks/body/' + tanks.teams[self.id] + '/' + tanks.bases[self.tank_settings[0]] + '.png', settings.width//2, settings.height//2, scale=self.scale_tank, pixel=False, center=True))
+        if not self.enemy_bool:
+            self.obj_tanks.append(image_label('tanks/body/' + tanks.teams[self.id] + '/' + tanks.bases[self.tank_settings[0]] + '.png', settings.width//2, settings.height//2, scale=self.scale_tank, pixel=False, center=True))
+        else:
+            self.obj_tanks[1].append(image_label('tanks/body/no_team/' + tanks.bases[self.tank_settings[0]] + '_1.png', settings.width//2, settings.height//2, scale=self.scale_tank, pixel=False, center=True))
         self.obj_tanks.append(PIL_to_pyglet(get_pil_black_mask(Image.open('img/tanks/tower/' + tanks.towers[self.tank_settings[1]] + '.png').convert("RGBA"), get_obj_display('world').shadow_alpha), self.scale_tank, True))
 
         if self.tank_settings[1] in [0, 1]:
@@ -202,7 +213,7 @@ class player():
         self.spawn_collision.pos.x = self.pos[0]
         self.spawn_collision.pos.y = self.pos[1]
 
-        self.team_color_label = label(self.pos[0] - self.obj_tanks[0].width/2, self.pos[1] - self.obj_tanks[0].height/2, self.obj_tanks[0].width, self.obj_tanks[0].height, tanks.team_colors[self.id], alpha = 128)
+        self.team_color_label = label(self.pos[0] - self.obj_tanks[0].width/2, self.pos[1] - self.obj_tanks[0].height/2, self.obj_tanks[0].width, self.obj_tanks[0].height, (tanks.team_colors[self.id]) if (not self.enemy_bool) else 4, alpha = 128)
 
         print('PLAYER ' + str(id) + ' SPAWN: ', self.pos)
 
@@ -299,19 +310,19 @@ class player():
                 if not game_settings.multiplayer or self.id == game_settings.multiplayer_id:
                     keys = KEY_BINDS['main'] if game_settings.multiplayer else KEY_BINDS['P' + str(self.id + 1)]
                     move_bool = False # для анимации
-                    if (eval('keyboard[key.' + keys['left'] + ']') and not self.bot) or (self.bot and self.bot_rotation == -90):
+                    if (eval('keyboard[key.' + keys['left'] + ']') and not self.bot and not self.enemy_bool) or (self.bot and self.bot_rotation == -90):
                         self.wall_collision_bool = self.set_pos_body(-speed_tick, 0, self.bot)
                         self.rotation = -90
                         move_bool = True
-                    elif (eval('keyboard[key.' + keys['right'] + ']') and not self.bot) or (self.bot and self.bot_rotation == 90):
+                    elif (eval('keyboard[key.' + keys['right'] + ']') and not self.bot and not self.enemy_bool) or (self.bot and self.bot_rotation == 90):
                         self.wall_collision_bool = self.set_pos_body(speed_tick, 0, self.bot)
                         self.rotation = 90
                         move_bool = True
-                    elif (eval('keyboard[key.' + keys['up'] + ']') and not self.bot) or (self.bot and self.bot_rotation == 0):
+                    elif (eval('keyboard[key.' + keys['up'] + ']') and not self.bot and not self.enemy_bool) or (self.bot and self.bot_rotation == 0):
                         self.wall_collision_bool = self.set_pos_body(0, speed_tick, self.bot)
                         self.rotation = 0
                         move_bool = True
-                    elif (eval('keyboard[key.' + keys['down'] + ']') and not self.bot) or (self.bot and self.bot_rotation == 180):
+                    elif (eval('keyboard[key.' + keys['down'] + ']') and not self.bot and not self.enemy_bool) or (self.bot and self.bot_rotation == 180):
                         self.wall_collision_bool = self.set_pos_body(0, -speed_tick, self.bot)
                         self.rotation = 180
                         move_bool = True
@@ -333,7 +344,7 @@ class player():
                             self.add_trace(self.pos[0], self.pos[1], self.rotation)
 
                     # стрельба
-                    if ( (eval('keyboard[key.' + keys['shoot_a'] + ']') and not self.bot) or (self.bot and self.bot_shoot_a) ) and get_obj_display('game_settings').run:
+                    if ( (eval('keyboard[key.' + keys['shoot_a'] + ']') and not self.bot and not self.enemy_bool) or (self.bot and self.bot_shoot_a) ) and get_obj_display('game_settings').run:
                         self.shoot_a_bool = True
                         if self.time_shoot_a <= time.perf_counter():
                             # Обычные пушки

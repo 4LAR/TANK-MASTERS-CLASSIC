@@ -74,7 +74,8 @@ class tanks():
             (128, 0, 0),
             (0, 0, 128),
             (0, 128, 0),
-            (128, 128, 0)
+            (128, 128, 0),
+            (100, 100, 100)
         ]
 
 
@@ -84,7 +85,10 @@ def play(
             map_name='test',
             bot=[False, False, False, False],
             tanks=[True, False, False, False],
-            tank_settings=[[0, 0], [0, 0], [0, 0], [0, 0]]
+            tank_settings=[[0, 0], [0, 0], [0, 0], [0, 0]],
+            enemy_bool=False,
+            enemy_count=0,
+            enemy_bots=False
         ):
     hide_cursor()
     clear_display()
@@ -92,7 +96,7 @@ def play(
     add_display(graphics_settings)
     add_display(world(map_name))
     add_display(crates())
-    add_display(players(bot, tanks, tank_settings))
+    add_display(players(bot, tanks, tank_settings, enemy_bool, enemy_count, enemy_bots))
     add_display(bullets())
     add_display(wind())
     add_display(walls())
