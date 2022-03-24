@@ -93,7 +93,8 @@ class table_game():
             )
 
         self.score_text = []
-        for i in range( (len(get_obj_display('end_game_table').info['players'])) if self.end_game else (len(get_obj_display('players').tanks)) ):
+        #(len(get_obj_display('end_game_table').info['players'])) if self.end_game else (len(get_obj_display('players').tanks))
+        for i in range( 4 ):
             self.score_text.append([])
             self.score_text[i].append(
                 text_label(
@@ -138,7 +139,8 @@ class table_game():
             )
 
         if self.end_game:
-            for i in range(len(get_obj_display('end_game_table').info['players'])-1, -1, -1):
+            # len(get_obj_display('end_game_table').info['players'])-1
+            for i in range(3, -1, -1):
                 player = get_obj_display('end_game_table').info['players'][i]
                 if player['use']:
                     self.score_text[i][0].label.text = player['name']
@@ -155,7 +157,8 @@ class table_game():
     def update(self):
         if not self.end_game:
             if get_obj_display('game_settings').pause:
-                for i in range(len(get_obj_display('players').tanks)-1, -1, -1):
+                #len(get_obj_display('players').tanks)-1
+                for i in range(3, -1, -1):
                     if get_obj_display('players').tanks[i].use:
                         self.score_text[i][0].label.text = get_obj_display('players').tanks[i].name
                         self.score_text[i][1].label.text = str(get_obj_display('players').tanks[i].score)
@@ -174,7 +177,7 @@ class table_game():
                 l.draw()
             for t in self.score_panel_text:
                 t.draw()
-
-            for i in range( (len(get_obj_display('end_game_table').info['players'])) if self.end_game else (len(get_obj_display('players').tanks)) ):
+            #(len(get_obj_display('end_game_table').info['players'])) if self.end_game else (len(get_obj_display('players').tanks))
+            for i in range( 4 ):
                 for t in self.score_text[i]:
                     t.draw()

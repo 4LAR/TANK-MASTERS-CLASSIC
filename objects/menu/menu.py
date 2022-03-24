@@ -212,7 +212,7 @@ def game_setup():
 
     add_display(game_setup_flags())
     #add_display(image_button(settings.width / 3, settings.height/10, 'buttons/button_clear_full.png', scale=settings.height/120, center=False, arg='get_obj_display(\'game_setup_flags\').reset()', image_selected='buttons/button_clear_full_selected.png', text='reset', text_indent= settings.height/9, shadow=graphics_settings.shadows_buttons))
-    add_display(image_button(0, settings.height/3.5, 'buttons/button_clear.png', scale=settings.height/120, center=False, arg='get_obj_display(\'game_setup_flags\').reset()', image_selected='buttons/button_clear_selected.png', text='back', text_indent= settings.height//100, shadow=graphics_settings.shadows_buttons))
+    add_display(image_button(0, settings.height/3.5, 'buttons/button_clear.png', scale=settings.height/120, center=False, arg='get_obj_display(\'game_setup_flags\').reset()', image_selected='buttons/button_clear_selected.png', text='reset', text_indent= settings.height//100, shadow=graphics_settings.shadows_buttons))
 
 
     add_display(head_menu(align_top=False))

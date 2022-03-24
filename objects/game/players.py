@@ -4,10 +4,10 @@ class players():
 
         for i in range(4):
             self.tanks.append(player(i, bot[i], tank_settings[i], tanks[i]))
-        
+
         try:
             for i in range(enemy_count):
-                self.tanks.append(player(4 + i, enemy_bots, tank_settings[i], True, True))
+                self.tanks.append(player(4 + i, enemy_bots, tank_settings[0], True, True))
         except Exception as e:
             print(e)
 
@@ -162,7 +162,7 @@ class player():
         if not self.enemy_bool:
             self.obj_tanks.append(image_label('tanks/body/' + tanks.teams[self.id] + '/' + tanks.bases[self.tank_settings[0]] + '.png', settings.width//2, settings.height//2, scale=self.scale_tank, pixel=False, center=True))
         else:
-            self.obj_tanks[1].append(image_label('tanks/body/no_team/' + tanks.bases[self.tank_settings[0]] + '_1.png', settings.width//2, settings.height//2, scale=self.scale_tank, pixel=False, center=True))
+            self.obj_tanks.append(image_label('tanks/body/no_team/' + tanks.bases[self.tank_settings[0]] + '_1.png', settings.width//2, settings.height//2, scale=self.scale_tank, pixel=False, center=True))
         self.obj_tanks.append(PIL_to_pyglet(get_pil_black_mask(Image.open('img/tanks/tower/' + tanks.towers[self.tank_settings[1]] + '.png').convert("RGBA"), get_obj_display('world').shadow_alpha), self.scale_tank, True))
 
         if self.tank_settings[1] in [0, 1]:
@@ -213,8 +213,8 @@ class player():
         self.spawn_collision.pos.x = self.pos[0]
         self.spawn_collision.pos.y = self.pos[1]
 
-        self.team_color_label = label(self.pos[0] - self.obj_tanks[0].width/2, self.pos[1] - self.obj_tanks[0].height/2, self.obj_tanks[0].width, self.obj_tanks[0].height, (tanks.team_colors[self.id]) if (not self.enemy_bool) else 4, alpha = 128)
-
+        self.team_color_label = label(self.pos[0] - self.obj_tanks[0].width/2, self.pos[1] - self.obj_tanks[0].height/2, self.obj_tanks[0].width, self.obj_tanks[0].height, (tanks.team_colors[self.id]) if (not self.enemy_bool) else tanks.team_colors[4], alpha = 128)
+        print(self.team_color_label)
         print('PLAYER ' + str(id) + ' SPAWN: ', self.pos)
 
     def add_trace(self, x, y, rotation):
@@ -287,7 +287,6 @@ class player():
                 self.gun_laser_count = 0
                 self.temperature_gun = 0
                 self.gun_overheat = False
-
                 self.go_spawn()
 
             # подстройка скорости игрока под FPS
@@ -308,7 +307,7 @@ class player():
 
                 # передвижение
                 if not game_settings.multiplayer or self.id == game_settings.multiplayer_id:
-                    keys = KEY_BINDS['main'] if game_settings.multiplayer else KEY_BINDS['P' + str(self.id + 1)]
+                    keys = (KEY_BINDS['main'] if game_settings.multiplayer else KEY_BINDS['P' + str(self.id + 1)]) if (not self.enemy_bool) else KEY_BINDS['P' + str(1)]
                     move_bool = False # для анимации
                     if (eval('keyboard[key.' + keys['left'] + ']') and not self.bot and not self.enemy_bool) or (self.bot and self.bot_rotation == -90):
                         self.wall_collision_bool = self.set_pos_body(-speed_tick, 0, self.bot)
