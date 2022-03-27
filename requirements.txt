@@ -4,3 +4,4 @@ numpy==1.20.2
 pyglet==1.5.17
 Pillow==8.4.0
 PodSixNet==0.11.0
+screeninfo~=0.8
