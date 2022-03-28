@@ -20,5 +20,6 @@ def training_start():
         "traning",
         enemy_bool=True,
         enemy_bots=False,
-        enemy_count = 8
+        enemy_count = 8,
+        traning=True
     )

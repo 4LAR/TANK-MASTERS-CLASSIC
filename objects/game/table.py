@@ -1,5 +1,7 @@
 class table_game():
-    def __init__(self, end_game=False):
+    def __init__(self, end_game=False, traning=False):
+        self.traning = traning
+        
         self.end_game = end_game
 
         self.score_panel = label(
@@ -171,13 +173,14 @@ class table_game():
                         self.score_text[i][3].label.text = 'none'
 
     def draw(self):
-        if get_obj_display('game_settings').pause or self.end_game:
-            self.score_panel.draw()
-            for l in self.score_lines:
-                l.draw()
-            for t in self.score_panel_text:
-                t.draw()
-            #(len(get_obj_display('end_game_table').info['players'])) if self.end_game else (len(get_obj_display('players').tanks))
-            for i in range( 4 ):
-                for t in self.score_text[i]:
+        if not self.traning:
+            if get_obj_display('game_settings').pause or self.end_game:
+                self.score_panel.draw()
+                for l in self.score_lines:
+                    l.draw()
+                for t in self.score_panel_text:
                     t.draw()
+                #(len(get_obj_display('end_game_table').info['players'])) if self.end_game else (len(get_obj_display('players').tanks))
+                for i in range( 4 ):
+                    for t in self.score_text[i]:
+                        t.draw()

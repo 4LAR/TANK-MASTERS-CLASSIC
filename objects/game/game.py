@@ -88,7 +88,8 @@ def play(
             tank_settings=[[0, 0], [0, 0], [0, 0], [0, 0]],
             enemy_bool=False,
             enemy_count=0,
-            enemy_bots=False
+            enemy_bots=False,
+            traning=False
         ):
     hide_cursor()
     clear_display()
@@ -96,15 +97,15 @@ def play(
     add_display(graphics_settings)
     add_display(world(map_name))
     add_display(crates())
-    add_display(players(bot, tanks, tank_settings, enemy_bool, enemy_count, enemy_bots))
+    add_display(players(bot, tanks, tank_settings, enemy_bool, enemy_count, enemy_bots, traning))
     add_display(bullets())
     add_display(wind())
     add_display(walls())
     add_display(smoke())
     add_display(weather())
-    add_display(gui())
-    add_display(pause())
-    add_display(table_game())
+    add_display(gui(traning))
+    add_display(pause(traning))
+    add_display(table_game(traning=traning))
     if game_settings.multiplayer:
         add_display(net_code())
     add_display(breathing_label(0, 0, settings.width, settings.height, (0, 0, 0), 0, delay=0.01, for_from=255, for_before=0, tick=-5, arg='get_obj_display(\'gui\').start_run_time()'))

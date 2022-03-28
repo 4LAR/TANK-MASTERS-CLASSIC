@@ -1,5 +1,5 @@
 class players():
-    def __init__(self, bot, tanks, tank_settings, enemy_bool=False, enemy_count=0, enemy_bots=False):
+    def __init__(self, bot, tanks, tank_settings, enemy_bool=False, enemy_count=0, enemy_bots=False, traning=False):
         self.tanks = []
 
         for i in range(4):
@@ -7,7 +7,7 @@ class players():
 
         try:
             for i in range(enemy_count):
-                self.tanks.append(player(4 + i, enemy_bots, tank_settings[0], True, True))
+                self.tanks.append(player(4 + i, enemy_bots, tank_settings[0], True, True, traning))
         except Exception as e:
             print(e)
 
@@ -47,7 +47,9 @@ class player():
         else:
             self.pos = [-settings.width, -settings.height]
 
-    def __init__(self, id, bot=False, tank_settings=[0, 0], use=True, enemy_bool=False):
+    def __init__(self, id, bot=False, tank_settings=[0, 0], use=True, enemy_bool=False, traning=False):
+
+        self.traning = traning
 
         self.enemy_bool = enemy_bool
 
@@ -91,6 +93,8 @@ class player():
         self.protection_ticks = 0
         self.protection_image_num = 0
         self.protection_images = []
+        self.protection_up_images = []
+
         for i in range(4):
             self.protection_images.append(
                 image_label(
@@ -101,6 +105,17 @@ class player():
                 )
             )
 
+            self.protection_up_images.append(
+                image_label(
+                    'tanks/protection_up/protection_' + str(i + 1) + '.png',
+                    settings.width//2, settings.height//2,
+                    scale=self.scale_tank * 1.2, pixel=False,
+                    center=True
+                )
+            )
+
+        
+
         self.death_bool = False
         self.death_delay = 2
         self.death_time = time.perf_counter() + self.death_delay
@@ -110,7 +125,7 @@ class player():
         self.def_speed = [tanks.bases_speed[self.tank_settings[0]]]
         self.speed_tick = self.def_speed[0]/10 # 0
         self.speed = 0
-        self.rotation = 0
+        self.rotation = -90 if self.traning else 0
 
         # bot
         self.bot_rotation = 0
@@ -214,7 +229,6 @@ class player():
         self.spawn_collision.pos.y = self.pos[1]
 
         self.team_color_label = label(self.pos[0] - self.obj_tanks[0].width/2, self.pos[1] - self.obj_tanks[0].height/2, self.obj_tanks[0].width, self.obj_tanks[0].height, (tanks.team_colors[self.id]) if (not self.enemy_bool) else tanks.team_colors[4], alpha = 128)
-        print(self.team_color_label)
         print('PLAYER ' + str(id) + ' SPAWN: ', self.pos)
 
     def add_trace(self, x, y, rotation):
@@ -281,8 +295,9 @@ class player():
 
             if self.death_bool and self.death_time <= time.perf_counter():
                 self.death_bool = False
-                self.protection_time = time.perf_counter() + self.protection_delay
-                self.protection = True
+                if not self.traning:
+                    self.protection_time = time.perf_counter() + self.protection_delay
+                    self.protection = True
 
                 self.gun_laser_count = 0
                 self.temperature_gun = 0
@@ -412,9 +427,14 @@ class player():
                     self.protection = False
                 else:
                     self.anim_protection_tick()
-                    self.protection_images[self.protection_image_num].x = self.pos[0] + get_obj_display('world').map_offs[0]
-                    self.protection_images[self.protection_image_num].y = self.pos[1] + get_obj_display('world').map_offs[1]
-                    self.protection_images[self.protection_image_num].update_image(True)
+                    if self.armor_bool:
+                        self.protection_up_images[self.protection_image_num].x = self.pos[0] + get_obj_display('world').map_offs[0]
+                        self.protection_up_images[self.protection_image_num].y = self.pos[1] + get_obj_display('world').map_offs[1]
+                        self.protection_up_images[self.protection_image_num].update_image(True)
+                    else:
+                        self.protection_images[self.protection_image_num].x = self.pos[0] + get_obj_display('world').map_offs[0]
+                        self.protection_images[self.protection_image_num].y = self.pos[1] + get_obj_display('world').map_offs[1]
+                        self.protection_images[self.protection_image_num].update_image(True)
 
             for i in range(len(self.obj_tanks)):
 
@@ -533,7 +553,10 @@ class player():
                 drawp(self.death_tank_image)
 
             if self.protection or self.armor_bool:
-                drawp(self.protection_images[self.protection_image_num])
+                if self.armor_bool:
+                    drawp(self.protection_up_images[self.protection_image_num])
+                else:
+                    drawp(self.protection_images[self.protection_image_num])
 
             if objects_other[0].draw_poligons:
                 points = (

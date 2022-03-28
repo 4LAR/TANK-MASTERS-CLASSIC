@@ -1,5 +1,9 @@
 class gui():
-    def __init__(self):
+    def __init__(self, traning):
+        self.traning = traning
+        if self.traning:
+            get_obj_display('game_settings').run = True
+
         self.label_health = []
 
         self.time = text_label(
@@ -79,7 +83,7 @@ class gui():
 
             self.old_perf_counter = time.perf_counter()
 
-        if game_settings.time_bool:
+        if game_settings.time_bool and not self.traning:
             if not get_obj_display('game_settings').pause:
 
                 if get_obj_display('game_settings').run:
@@ -115,5 +119,5 @@ class gui():
                 for l in self.label_health[i]:
                     l.draw()
 
-        if (game_settings.time_bool or not get_obj_display('game_settings').run) and not get_obj_display('game_settings').end_game:
+        if (game_settings.time_bool or not get_obj_display('game_settings').run) and not get_obj_display('game_settings').end_game and not self.traning:
             self.time.draw()
