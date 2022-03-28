@@ -1,6 +1,7 @@
-numba==0.53.1
 collision==1.2.2
+numba==0.53.1
 numpy==1.20.2
+Pillow==9.0.1
 pyglet==1.5.17
-Pillow==8.4.0
-PodSixNet==0.11.0
+PyQt5==5.15.6
+screeninfo==0.8
