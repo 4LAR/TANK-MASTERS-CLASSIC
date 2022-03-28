@@ -193,7 +193,7 @@ class Graphics_settings():
         self.draw_smoke = True
 
         self.game_in_menu = True
-        self.map_in_menu = 'Castle 2'
+        self.map_in_menu = 'arcade/Castle 2'
         self.paralax_in_menu = True
 
         self.shadows_buttons = True

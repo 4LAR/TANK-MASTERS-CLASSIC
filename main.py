@@ -56,7 +56,8 @@ engine_run = True
 def exit(): # заставляет закрыть программу
     global engine_run
     engine_run = False
-    sys.exit(0)
+    #sys.exit(0)
+    os._exit(0)
 
 '''def reboot():
     global engine_run

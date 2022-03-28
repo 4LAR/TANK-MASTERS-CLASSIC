@@ -114,7 +114,7 @@ class player():
                 )
             )
 
-        
+
 
         self.death_bool = False
         self.death_delay = 2
@@ -516,8 +516,8 @@ class player():
                 self.poligon_body.pos.y = self.pos[1]
 
                 if (self.id != i
-                        and (collision.collide(self.poligon_body, get_obj_display('players').tanks[i].poligon_body)
-                        or collision.collide(self.poligon_body, get_obj_display('players').tanks[i].spawn_collision))
+                        and ((collision.collide(self.poligon_body, get_obj_display('players').tanks[i].poligon_body)
+                        or collision.collide(self.poligon_body, get_obj_display('players').tanks[i].spawn_collision) ) and get_obj_display('players').tanks[i].use)
                     ):
                     self.pos = [pos_[0], pos_[1]]
                     self.poligon_body.pos.x = self.pos[0]

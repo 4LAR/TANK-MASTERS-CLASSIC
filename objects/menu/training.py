@@ -17,7 +17,7 @@ def training():
 
 def training_start():
     play(
-        "traning",
+        "traning/traning",
         enemy_bool=True,
         enemy_bots=False,
         enemy_count = 8,

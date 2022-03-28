@@ -1,24 +1,27 @@
 class map_list_class():
     def __init__(self):
-        self.map_names, self.map_logos = self.search()
+        self.map_names, self.map_logos, self.map_dir = self.search()
 
-    def search(self):
+    def search(self, type_maps='arcade'):
         print('READ MAPS')
         maps_names = []
         maps_logos = []
-        files = os.listdir('maps')
+        map_dir   = []
+
+        files = os.listdir('maps/'+type_maps)
 
         for file in files:
             try:
                 if file.split('.')[1] == 'map':
+                    map_dir.append(type_maps + '/' + file.split('.')[0])
                     maps_names.append(file.split('.')[0])
-                    if os.path.exists('maps/' + file + '/logo.png'):
-                        maps_logos.append('maps/' + file + '/logo.png')
+                    if os.path.exists('maps/' + type_maps + '/' + file + '/logo.png'):
+                        maps_logos.append('maps/' + type_maps + '/' + file + '/logo.png')
                     else:
                         maps_logos.append('img/file_not_found.png')
             except:
                 pass
-        return maps_names, maps_logos
+        return maps_names, maps_logos, map_dir
 
 map_list = map_list_class()
 
@@ -44,7 +47,7 @@ class select_map_buttons():
             image_button((x * settings.width/2.8) + settings.width/50 + settings.width/3.8,
                 (settings.height - settings.height/3.5) - (y * settings.height/4.5),
                 'buttons/button_map.png', scale=settings.height/160,
-                center=False, arg=('editor(\'' + self.map_names[i] + '\')') if self.editor else ('select_tank(\'' + self.map_names[i] + '\')'), #('play(\'' + self.map_names[i] + '\')'),
+                center=False, arg=('editor(\'' + self.map_dir[i] + '\')') if self.editor else ('select_tank(\'' + self.map_dir[i] + '\')'), #('play(\'' + self.map_names[i] + '\')'),
                 image_selected='buttons/button_map_selected.png', shadow=graphics_settings.shadows_buttons
             )
         )
@@ -103,7 +106,7 @@ class select_map_buttons():
                 self.x = 0
 
             self.num += 1
-            
+
             if self.num >= len(self.map_names) or (self.num >= self.page * self.maps_in_page) or (self.y >= 3):
                 self.end_load = True
 
@@ -116,7 +119,7 @@ class select_map_buttons():
         self.game_mode = []
 
         for i in range(len(self.map_names)-1, -1, -1):
-            read_bool = self.os_world.read_file(self.map_names[i])
+            read_bool = self.os_world.read_file(self.map_dir[i])
             #print(self.map_names[i], read_bool, i)
             if read_bool:
                 self.world_size.append(self.os_world.world_size)
@@ -124,6 +127,7 @@ class select_map_buttons():
             else:
                 self.map_names.pop(i)
                 self.map_logos.pop(i)
+                self.map_dir.pop(i)
 
         self.num = ((self.page - 1) * self.maps_in_page) - 1
         self.x = 0
@@ -151,8 +155,10 @@ class select_map_buttons():
         self.page = 1
         self.map_names = map_list.map_names
         self.map_logos = map_list.map_logos
+        self.map_dir = map_list.map_dir
 
-        maps = zip(map_list.map_names, map_list.map_logos)
+
+        maps = zip(map_list.map_names, map_list.map_logos, self.map_dir)
         xs = sorted(maps, key=lambda tup: tup[0])
 
         self.map_names = [x[0] for x in xs]
