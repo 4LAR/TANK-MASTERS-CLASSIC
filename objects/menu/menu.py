@@ -147,7 +147,7 @@ def menu():
 
 def create_new_map():
     def create_map():
-        editor(get_obj_display('input_label_image').text_obj.text, True)
+        editor('arcade/' + get_obj_display('input_label_image').text_obj.text, True)
 
     show_cursor()
     clear_display()

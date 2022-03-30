@@ -67,8 +67,6 @@ class map(object):
 
         self.image_grid = None
 
-        self.world_file_name = ''
-
         self.world_file_name = name
         print("READ WORLD FILE")
         if len(name) < 1:
@@ -523,6 +521,7 @@ class map(object):
             print("SAVE WORLD")
             objects_display[0].save_file(self.world_file_name)
             menu()
+            background_sound.play('sound/background/forest waterfall.wav')
             return pyglet.event.EVENT_HANDLED
 
     def open_inventory(self):

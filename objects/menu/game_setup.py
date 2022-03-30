@@ -56,7 +56,9 @@ class game_setup_flags():
         self.settings_flags[8].text_obj.text_label.label.text = '2'
         self.settings_flags[9].text_obj.text_label.label.text = '0'
 
-    def __init__(self):
+    def __init__(self, traning=False):
+
+        self.traning = traning
 
         self.settings_flags = []
         self.backgraund_flags = []
@@ -166,7 +168,9 @@ class game_setup_flags():
                 text='players collide',
                 text_color = (150, 150, 150, 255),
                 font='pixel.ttf',
-                text_indent=settings.height/8, shadow=graphics_settings.shadows_buttons
+                text_indent=settings.height/8, shadow=graphics_settings.shadows_buttons,
+
+                use=not self.traning
 
             )
         )
@@ -184,7 +188,9 @@ class game_setup_flags():
                 text='random tanks',
                 text_color = (150, 150, 150, 255),
                 font='pixel.ttf',
-                text_indent=settings.height/8, shadow=graphics_settings.shadows_buttons
+                text_indent=settings.height/8, shadow=graphics_settings.shadows_buttons,
+
+                use=not self.traning
 
             )
         )
@@ -202,7 +208,9 @@ class game_setup_flags():
                 text='timer',
                 text_color = (150, 150, 150, 255),
                 font='pixel.ttf',
-                text_indent=settings.height/8, shadow=graphics_settings.shadows_buttons
+                text_indent=settings.height/8, shadow=graphics_settings.shadows_buttons,
+
+                use=not self.traning
 
             )
         )
@@ -214,7 +222,9 @@ class game_setup_flags():
                 'buttons/button_clear_2_reverse.png', 'buttons/button_clear_selected_2_reverse.png',
                 scale=settings.height/160, color_text=(150, 150, 150, 255),
                 text='minutes', pre_text='2', font='pixel.ttf',
-                text_indent=settings.height/12, text_input_indent=settings.height/6, shadow=graphics_settings.shadows_buttons
+                text_indent=settings.height/12, text_input_indent=settings.height/6, shadow=graphics_settings.shadows_buttons,
+
+                use=not self.traning
             )
         )
 
@@ -225,7 +235,9 @@ class game_setup_flags():
                 'buttons/button_clear_2_reverse.png', 'buttons/button_clear_selected_2_reverse.png',
                 scale=settings.height/160, color_text=(150, 150, 150, 255),
                 text='seconds', pre_text='0', font='pixel.ttf',
-                text_indent=settings.height/12, text_input_indent=settings.height/6, shadow=graphics_settings.shadows_buttons
+                text_indent=settings.height/12, text_input_indent=settings.height/6, shadow=graphics_settings.shadows_buttons,
+
+                use=not self.traning
             )
         )
 
@@ -281,7 +293,9 @@ class game_setup_flags():
                 settings.height - settings.height/3.5 - (settings.height/8) * 4.1,
                 settings.width / 2.15,
                 settings.height/3.25,
-                (0, 0, 0), alpha=120
+                (0, 0, 0), alpha=120,
+
+                use=not self.traning
             )
         )
 
@@ -292,7 +306,9 @@ class game_setup_flags():
                 'players',
                 load_font=True, font='pixel.ttf',
                 size=settings.height//24, anchor_x='left', anchor_y='bottom',
-                color = (150, 150, 150, 255)
+                color = (150, 150, 150, 255),
+
+                use=not self.traning
             )
         )
 
@@ -303,7 +319,9 @@ class game_setup_flags():
                 settings.height - settings.height/3.5 - (settings.height/8) * 1.5,
                 settings.width / 2.55,
                 settings.height/2.53,
-                (0, 0, 0), alpha=120
+                (0, 0, 0), alpha=120,
+
+                use=not self.traning
             )
         )
 
