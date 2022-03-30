@@ -25,12 +25,15 @@ class Save_settings():
             sound_settings.update_sound()
 
             # Graphics
+            graphics_settings.draw_clouds = True if (config.get("Graphics", "draw_clouds")).lower() == 'true' else False
+
             graphics_settings.draw_leaf = True if (config.get("Graphics", "draw_leaf")).lower() == 'true' else False
 
             graphics_settings.draw_traces = True if (config.get("Graphics", "draw_traces")).lower() == 'true' else False
             graphics_settings.max_traces = int(config.get("Graphics", "max_traces"))
 
             graphics_settings.draw_shadows = True if (config.get("Graphics", "draw_shadows")).lower() == 'true' else False
+            graphics_settings.better_shadows = True if (config.get("Graphics", "better_shadows")).lower() == 'true' else False
 
             graphics_settings.draw_smoke = True if (config.get("Graphics", "draw_smoke")).lower() == 'true' else False
 
@@ -46,11 +49,13 @@ class Save_settings():
             game_settings.wind_deg = int(config.get("Game_setup", "wind_deg"))
             game_settings.wind_bool = True if (config.get("Game_setup", "wind_bool")).lower() == 'true' else False
             game_settings.wind_power = int(config.get("Game_setup", "wind_power"))
+            game_settings.random_wind = True if (config.get("Game_setup", "random_wind")).lower() == 'true' else False
 
             game_settings.crates_bool = True if (config.get("Game_setup", "crates_bool")).lower() == 'true' else False
 
             game_settings.rain = True if (config.get("Game_setup", "rain")).lower() == 'true' else False
             game_settings.snow = True if (config.get("Game_setup", "snow")).lower() == 'true' else False
+            game_settings.random_weather = True if (config.get("Game_setup", "random_weather")).lower() == 'true' else False
 
             game_settings.time_bool = True if (config.get("Game_setup", "time_bool")).lower() == 'true' else False
             game_settings.time_set_min = int(config.get("Game_setup", "time_set_min"))
@@ -93,12 +98,15 @@ class Save_settings():
         # Graphics
         config.add_section("Graphics")
 
+        config.set("Graphics", "draw_clouds", str(graphics_settings.draw_clouds))
+
         config.set("Graphics", "draw_leaf", str(graphics_settings.draw_leaf))
 
         config.set("Graphics", "draw_traces", str(graphics_settings.draw_traces))
         config.set("Graphics", "max_traces", str(graphics_settings.max_traces))
 
         config.set("Graphics", "draw_shadows", str(graphics_settings.draw_shadows))
+        config.set("Graphics", "better_shadows", str(graphics_settings.better_shadows))
 
         config.set("Graphics", "draw_smoke", str(graphics_settings.draw_smoke))
 
@@ -116,11 +124,13 @@ class Save_settings():
         config.set("Game_setup", "wind_deg", str(game_settings.wind_deg))
         config.set("Game_setup", "wind_bool", str(game_settings.wind_bool))
         config.set("Game_setup", "wind_power", str(game_settings.wind_power))
+        config.set("Game_setup", "random_wind", str(game_settings.random_wind))
 
         config.set("Game_setup", "crates_bool", str(game_settings.crates_bool))
 
         config.set("Game_setup", "rain", str(game_settings.rain))
         config.set("Game_setup", "snow", str(game_settings.snow))
+        config.set("Game_setup", "random_weather", str(game_settings.random_weather))
 
         config.set("Game_setup", "time_bool", str(game_settings.time_bool))
         config.set("Game_setup", "time_set_min", str(game_settings.time_set_min))
@@ -153,10 +163,11 @@ class Game_settings(): # settings in game
         self.wind_deg = -45
         self.wind_bool = True
         self.wind_power = 100
+        self.random_wind = False
 
         self.rain = False
-
         self.snow = False
+        self.random_weather = False
 
         self.time_bool = True
         self.time_set_min = 2
@@ -183,17 +194,20 @@ class Game_settings(): # settings in game
 class Graphics_settings():
     def __init__(self):
 
+        self.draw_clouds = True
+
         self.draw_leaf = True
 
         self.draw_traces = False
         self.max_traces = 20
 
         self.draw_shadows = True
+        self.better_shadows = True
 
         self.draw_smoke = True
 
         self.game_in_menu = True
-        self.map_in_menu = 'arcade/Castle 2'
+        self.map_in_menu = 'arcade/Castle'
         self.paralax_in_menu = True
 
         self.shadows_buttons = True

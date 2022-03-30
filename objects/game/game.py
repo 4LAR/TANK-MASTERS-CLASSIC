@@ -102,6 +102,8 @@ def play(
     add_display(wind())
     add_display(walls())
     add_display(smoke())
+    add_display(points())
+    add_display(clouds())
     add_display(weather())
     add_display(gui(traning))
     add_display(pause(traning))
