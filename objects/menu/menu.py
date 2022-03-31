@@ -33,7 +33,6 @@ class head_menu():
             self.image_shadow_obj = PIL_to_pyglet(get_pil_color_mask(image, (0, 0, 0, 128)), settings.height/130, False)
             self.image_shadow_obj.x = -1 - settings.height/130
             self.image_shadow_obj.y = (-settings.height/15) + settings.height/130
-            #self.image_shadow_obj.scale = settings.height/130
 
         self.image = pyglet.image.ImageData(image.width, image.height, 'RGBA', raw_image, pitch=-image.width * 4)
         self.sprite = pyglet.sprite.Sprite(
@@ -128,11 +127,8 @@ def menu():
     add_display(head_menu())
     add_display(image_button(settings.width - (settings.height/120 * 48), settings.height - settings.height/3, 'buttons/button_clear_left.png', scale=settings.height/120, center=False, arg='select_map(editor=True)', function=play_menu, image_selected='buttons/button_clear_left_selected.png', text='editor', text_indent=settings.height/8, shadow=graphics_settings.shadows_buttons))
     add_display(image_button(settings.width - (settings.height/120 * 48), settings.height - settings.height/2, 'buttons/button_clear_left.png', scale=settings.height/120, center=False, function=settings_menu, image_selected='buttons/button_clear_left_selected.png', text='settings', text_indent=settings.height/10, shadow=graphics_settings.shadows_buttons))
-    #add_display(image_button(settings.width - (settings.height/120 * 48), settings.height - settings.height/1.5, 'buttons/button_clear_left.png', scale=settings.height/120, center=False, function=settings_menu, image_selected='buttons/button_clear_left_selected.png', text='settings', text_indent= settings.height//10, shadow=graphics_settings.shadows_buttons))
-
     add_display(image_button(0, settings.height - settings.height/3, 'buttons/button_clear.png', scale=settings.height/120, center=False, arg='select_map(editor=False)', function=play_menu, image_selected='buttons/button_clear_selected.png', text='arcade', text_indent= settings.height//100, shadow=graphics_settings.shadows_buttons))
     add_display(image_button(0, settings.height - settings.height/2, 'buttons/button_clear.png', scale=settings.height/120, center=False, arg='single_game()', image_selected='buttons/button_clear_selected.png', text='missions', text_indent= settings.height//100, shadow=graphics_settings.shadows_buttons))
-    #add_display(image_button(0, settings.height - settings.height/1.5, 'buttons/button_clear.png', scale=settings.height/120, center=False, arg='multiplayer_game()', image_selected='buttons/button_clear_selected.png', text='mp online', text_indent= settings.height//100, shadow=graphics_settings.shadows_buttons))
     add_display(image_button(0, settings.height - settings.height/1.5, 'buttons/button_clear.png', scale=settings.height/120, center=False, arg='training()', image_selected='buttons/button_clear_selected.png', text='training', text_indent= settings.height//100, shadow=graphics_settings.shadows_buttons))
     add_display(image_button(settings.width - (settings.height/120 * 48), settings.height/10, 'buttons/button_clear_left.png', scale=settings.height/120, center=False, text='exit', image_selected='buttons/button_clear_left_selected.png', arg='exit_alert()', text_indent= settings.height/6, shadow=graphics_settings.shadows_buttons))
     add_display(head_menu(align_top=False))
@@ -211,7 +207,6 @@ def game_setup():
     add_display(image_button(0, settings.height/10, 'buttons/button_clear.png', scale=settings.height/120, center=False, arg='global game_in_menu_bool; get_obj_display(\'game_setup_flags\').save_settings(); game_in_menu_bool = False; select_map()', image_selected='buttons/button_clear_selected.png', text='back', text_indent= settings.height//100, shadow=graphics_settings.shadows_buttons))
 
     add_display(game_setup_flags())
-    #add_display(image_button(settings.width / 3, settings.height/10, 'buttons/button_clear_full.png', scale=settings.height/120, center=False, arg='get_obj_display(\'game_setup_flags\').reset()', image_selected='buttons/button_clear_full_selected.png', text='reset', text_indent= settings.height/9, shadow=graphics_settings.shadows_buttons))
     add_display(image_button(0, settings.height/3.5, 'buttons/button_clear.png', scale=settings.height/120, center=False, arg='get_obj_display(\'game_setup_flags\').reset()', image_selected='buttons/button_clear_selected.png', text='reset', text_indent= settings.height//100, shadow=graphics_settings.shadows_buttons))
 
 

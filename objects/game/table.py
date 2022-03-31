@@ -180,7 +180,6 @@ class table_game():
                     l.draw()
                 for t in self.score_panel_text:
                     t.draw()
-                #(len(get_obj_display('end_game_table').info['players'])) if self.end_game else (len(get_obj_display('players').tanks))
                 for i in range( 4 ):
                     for t in self.score_text[i]:
                         t.draw()

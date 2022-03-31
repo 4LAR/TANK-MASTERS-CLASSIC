@@ -18,7 +18,6 @@ class map(object):
         self.show_grid = True
 
         self.cut = False
-        # True - Press ; False - line
         self.press_or_line = True
 
         self.batch = pyglet.graphics.Batch()
@@ -78,28 +77,6 @@ class map(object):
         else:
             objects_display[0].read_file(self.world_file_name, False)
 
-        '''inp = input('1 - generate (test.map)\n2 - open (test.map)\n3 - update map (43 to 44)\n>')
-        if inp == '1':
-            self.world_file_name = input('WRITE WORLD NAME: ')
-            print("START GENERATE")
-            width = int(input('WIDTH: '))
-            height = int(input('HEIGHT: '))
-            objects_display[0].generate_world([width, height])
-        elif inp == '2':
-
-            self.world_file_name = input('WRITE WORLD NAME: ')
-            print("READ WORLD FILE")
-            objects_display[0].read_file(self.world_file_name, False)
-        elif inp == '3':
-            self.world_file_name = input('WRITE WORLD NAME: ')
-            self.world_file_name_new = input('WRITE NEW WORLD NAME: ')
-            print("READ WORLD FILE")
-            objects_display[0].read_file('os_world', False)
-            print("READ WORLD FILE")
-            objects_display[0].read_file(self.world_file_name, True)
-            print("SAVE WORLD")
-            objects_display[0].save_file(self.world_file_name_new)'''
-
         self.spawn = objects_display[0].save_world_obj.spawn
         print(self.spawn)
 
@@ -122,7 +99,6 @@ class map(object):
         self.map_effect_up = objects_display[0].map_effect_up
         self.map_effect_down = objects_display[0].map_effect_down
 
-        #self.scale = settings.height/1400
         if self.world_size[0] > self.world_size[1]:
             self.scale = settings.width/(self.size * self.world_size[0])
         else:
@@ -304,7 +280,6 @@ class map(object):
                 for x in range(self.world_size[0]):
                     block = self.map_ceiling[self.get_block_num(x, y)].split('.')
                     if block[0] != 'none':
-                        #temp_image_ceiling.paste(self.ceiling_block_img[block[0]].rotate(int(block[1])), (x * self.size, y * self.size))
                         temp_image_ceiling.paste(self.ceiling_block_img[block[0]].rotate(int(block[1])), (x * self.size, y * self.size))
 
         else:
@@ -362,7 +337,6 @@ class map(object):
         self.image_vegetation = pyglet.image.ImageData(temp_image_vegetation.width, temp_image_vegetation.height, 'RGBA', raw_image, pitch=-temp_image_vegetation.width * 4)
         self.image_vegetation = pyglet.sprite.Sprite(self.image_vegetation, settings.width//4, settings.height//2)
         self.image_vegetation.scale = self.scale
-        #image_ceiling
 
     def set_spawn(self, pos):
         print("SET SPAWN")
@@ -400,20 +374,13 @@ class map(object):
             if not keyboard[key.LCTRL]:
                 if keyboard[key.W]:
                     self.update_camera_pos(y=-speed)
-                    #self.pos[1] -= self.speed
                 elif keyboard[key.S]:
                     self.update_camera_pos(y=speed)
-                    #self.pos[1] += self.speed
                 if keyboard[key.A]:
                     self.update_camera_pos(x=speed)
-                    #self.pos[0] += self.speed
                 elif keyboard[key.D]:
                     self.update_camera_pos(x=-speed)
-                    #self.pos[0] -= self.speed
 
-        #if keyboard[key.Q]:
-        #    self.map_floor[0] = self.floor_blocks_img['grass']
-        #    self.update_render_floor()
         self.image_floor.x = self.pos[0]
         self.image_floor.y = self.pos[1]
 
@@ -428,8 +395,6 @@ class map(object):
 
         self.image_ceiling.x = self.pos[0]
         self.image_ceiling.y = self.pos[1]
-
-        ##
 
         self.image_other_up.x = self.pos[0]
         self.image_other_up.y = self.pos[1]
@@ -590,7 +555,6 @@ class map(object):
                     self.update_render_effect_up()
 
                 elif objects_display[2].selected_type == -1:
-                    #self.map_other_down[self.get_block_num(_x_, _y_)] = objects_display[2].selected_block + '.' + str(objects_display[2].current_rot)
                     self.set_spawn([_x_, _y_])
 
             if button == 4 or self.cut:
@@ -646,12 +610,6 @@ class map(object):
 
     def scale_map(self, scroll_y):
         if not self.inventory_bool:
-            #self.pos[0] += self.pos[0]/2
-            #self.pos[1] += self.pos[0]/2
-
-            #self.pos[0] -= ((self.mouse_pos[0] - (settings.width/2)) / self.scale) * scroll_y
-            #self.pos[1] -= ((self.mouse_pos[1] - (settings.height/2)) / self.scale) * scroll_y
-
             self.pos = [self.pos[0] - (self.mouse_pos[0]*scroll_y) / 10, self.pos[1] - (self.mouse_pos[1] * scroll_y) / 10]
 
             self.scale += self.tick_scale * (scroll_y * 10)
@@ -667,8 +625,6 @@ class map(object):
             self.image_effect_up.scale = self.scale
 
             self.image_grid.scale = self.scale
-            #self.select_block_grid_image.sprite.scale = self.scale / 2
-
 
     def draw(self):
         drawp(self.image_floor)
@@ -692,16 +648,12 @@ class map(object):
         if self.show_effect_up:
             drawp(self.image_effect_up)
 
-
-
         for s in self.spawn:
             self.image_spawn.sprite.x = int((s[0]) * (self.size))*self.scale + self.pos[0]
             self.image_spawn.sprite.y = int((self.world_size[1] - s[1] -1) * (self.size))*self.scale + self.pos[1]
             self.image_spawn.sprite.scale = self.scale
 
             drawp(self.image_spawn)
-            #self.circle_spawn.edit(360, ((s[0] * self.size_poligon) * self.scale + self.pos[0]), (((self.world_size[1] - s[1]) * self.size_poligon) * self.scale + self.pos[1]))
-            #self.circle_spawn.draw()
 
         if self.show_grid:
             drawp(self.image_grid)

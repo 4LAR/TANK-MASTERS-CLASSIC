@@ -13,8 +13,6 @@ def norm_deg(deg):
         deg = 180 - (180 + deg)
     elif deg > 180:
         deg = -180 + (deg - 180)
-        #else:
-        #    break
 
     return deg
 
@@ -129,7 +127,7 @@ class Sound():
         self.no_sound = no_sound
 
         self.sound = pyglet.media.Player()
-        self.sound.volume = 0#settings.sound_volume
+        self.sound.volume = 0
         self.sound.loop = loop
 
     def sound_volume(self, vol):
@@ -148,6 +146,44 @@ class Sound():
         self.sound_name = music
 
 sound = Sound()
+
+class text_cursor():
+    def __init__(self, align='rt', text='', length=settings.width/15):
+        self.align = align
+        self.text = text
+        self.length = length
+        
+        self.cursor_text_size = settings.height//50
+        self.cursor_text = text_label(settings.width//6, settings.height - settings.height//15, 'text', load_font=True, font='pixel.ttf', size=self.cursor_text_size, anchor_x='left', color = (180, 180, 180, 255))
+        self.cursor_text.label.text = text
+
+    def draw(self, x=0, y=0):
+        if self.align == 'rt':
+            draw_line(
+                (x, y),
+                (x - settings.width//15, y + settings.height//15)
+            )
+            draw_line(
+                (x - settings.width//15, y + settings.height//15),
+                (x - settings.width//15 - self.length, y + settings.height//15)
+            )
+
+            self.cursor_text.label.x = x - settings.width//15 - self.length
+            self.cursor_text.label.y = y + settings.height//15 + self.cursor_text_size
+        else:
+            draw_line(
+                (x, y),
+                (x + settings.width//15, y - settings.height//15)
+            )
+            draw_line(
+                (x + settings.width//15, y - settings.height//15),
+                (x + settings.width//15 + self.length, y - settings.height//15)
+            )
+
+            self.cursor_text.label.x = x + settings.width//15
+            self.cursor_text.label.y = y - settings.height//15 + self.cursor_text_size
+
+        self.cursor_text.draw()
 
 class timer():
     def __init__(self, delay, func, arg=None):
@@ -260,7 +296,6 @@ class read_key_image():
                 'LWINDOWS',
                 'RWINDOWS'
             ]
-            #print(symbol, chr(symbol), key.symbol_string(symbol))
             if not key.symbol_string(symbol) in block_simv:
                 self.update_key(key.symbol_string(symbol))
 
@@ -325,13 +360,9 @@ class slider_image():
 
     def change_state(self, state):
         self.state = state
-        #print(state)
         self.update_state(self.left + (self.image_obj.sprite.width - (self.image_obj.sprite.width/13)*2) * state)
 
     def update_state(self, state):
-        #print(state - self.image_slider_obj.sprite.width/2)
-        #print(self.left)
-        #print(self.right + self.image_obj.sprite.width)
         if ((state) >= self.left
             and (state) <= self.right
             ):
@@ -340,8 +371,6 @@ class slider_image():
             #self.state = (1 / (self.image_obj.sprite.width - (self.image_obj.sprite.width/13)*2)) * (state - self.x)
             self.state = (1 / (self.right - self.left)) * (state - self.x)
             self.state = float("{0:.2f}".format(self.state - 0.09))
-            #print('==>', self.state)
-            #print()
 
     def on_mouse_motion(self, x, y, dx, dy):
         self.cursor_poligon.pos.x = x
@@ -477,10 +506,8 @@ class input_label_image():
 
             if self.selected or self.hover:
                 drawp(self.image_selected_obj)
-                #self.image_selected_obj.draw()
             else:
                 drawp(self.image_obj)
-                #self.image_obj.draw()
 
             self.text_button.draw()
             self.text_obj.draw()
@@ -504,7 +531,6 @@ class input_label():
         self.width = width
         self.height = height
 
-        #def __init__(self, x, y, size_x, size_y, color=(255, 255, 255), rotation=0, alpha=255)
         self.background_label = label(
             self.x, self.y,
             self.width, self.height,
@@ -554,11 +580,9 @@ class input_label():
             self.hover = False
 
     def on_mouse_press(self, x, y, button, modifiers):
-        #engine_settings.on_mouse_press_bool = True
         self.cursor_poligon.pos.x = x
         self.cursor_poligon.pos.y = y
         if collision.collide(self.poligon, self.cursor_poligon):
-            #engine_settings.on_mouse_press_bool = False
             engine_settings.on_text_bool = True
             self.selected = True
             return True
@@ -651,12 +675,6 @@ class image_label(): # класс для проприсвки картинки
             self.sprite.visible = self.visible
             self.sprite.opacity = self.alpha
             self.sprite.rotation = self.rotation
-        #if self.center:
-            #self.image.anchor_x = self.image.width // 2 ##this line is new
-            #self.image.anchor_y = self.image.height // 2 ## and this line also
-            #self.sprite = pyglet.sprite.Sprite(self.image, x = self.x, y = self.y)
-            #self.sprite.anchor_x = self.sprite.width // 2
-            #self.sprite.anchor_y = self.sprite.height // 2
 
         self.sprite.visible = self.visible
         self.sprite.opacity = self.alpha
@@ -740,7 +758,6 @@ class image_label(): # класс для проприсвки картинки
         if self.pixel:
             self.image.blit(self.x, self.y)
         else:
-            #self.sprite.draw()
             drawp(self.sprite)
 
 class label(): # класс для прорисовки 4х угольника
@@ -948,16 +965,12 @@ class image_flag():
 
             if self.selected and self.flag and self.image_selected_flag != None:
                 drawp(self.image_selected_flag_obj)
-                #self.image_selected_flag_obj.draw()
             elif not self.selected and self.flag:
                 drawp(self.image_flag_obj)
-                #self.image_flag_obj.draw()
             elif self.selected and not self.flag and self.image_selected != None:
                 drawp(self.image_selected_obj)
-                #self.image_selected_obj.draw()
             elif not self.selected and not self.flag:
                 drawp(self.image_obj)
-                #self.image_obj.draw()
 
             if self.text != None:
                 self.text_label.draw()
@@ -978,8 +991,14 @@ class image_flag():
 
 
 class image_button():
-    def __init__(self, x, y, image, scale=1, rotation=0, alpha=255, center=False, function=None, arg=None, image_selected=None, poligon=False, text=None, text_color=(180, 180, 180, 255), font='pixel.ttf', text_indent=0, shadow=False, color_shadow=(0, 0, 0, 128), use=True):
+    def __init__(self, x, y, image, scale=1, rotation=0, alpha=255, center=False, function=None, arg=None, image_selected=None, poligon=False, text=None, text_color=(180, 180, 180, 255), font='pixel.ttf', text_indent=0, shadow=False, color_shadow=(0, 0, 0, 128), draw_info=False, alight_info='rt', text_info='', use=True):
         self.use = use
+
+        self.draw_info = draw_info
+        self.alight_info = alight_info
+        self.text_info = text_info
+
+        #self.text_info_class = text_cursor(text='test')
 
         self.x = x
         self.y = y
@@ -994,8 +1013,7 @@ class image_button():
         self.text = text
 
         if self.text != None:
-            size = self.scale * 5.5#settings.height/150 * self.scale
-            #print(size)
+            size = self.scale * 5.5
             self.text = text_label(self.x + text_indent, self.y + size*1.6, self.text, load_font=True, font=font, size=int(size), anchor_x='left', color=text_color)
 
         self.arg = arg
@@ -1078,10 +1096,11 @@ class image_button():
             drawp(self.image_shadow_obj)
         if not self.selected:
             drawp(self.image_obj)
-            #self.image_obj.draw()
         elif self.image_selected != None:
             drawp(self.image_selected_obj)
-            #self.image_selected_obj.draw()
+
+        #if self.selected:
+        #    self.text_info_class.draw(self.cursor_poligon.pos.x, self.cursor_poligon.pos.y)
 
         if self.text != None:
             self.text.draw()
@@ -1128,8 +1147,6 @@ class circle_label():
             y = self.size_circle * math.sin(angle) + self.y
             self.verts += [x,y]
             self.color_points += self.color
-        #print(self.verts)
-        #print(self.color_points)
         self.circle = pyglet.graphics.vertex_list(self.numPoints,
             ('v2f', self.verts),
             ('c4B', self.color_points)
@@ -1137,12 +1154,7 @@ class circle_label():
 
     def draw(self):
         pyglet.gl.glLineWidth(self.size)
-        #pyglet.gl.glClear(pyglet.gl.GL_COLOR_BUFFER_BIT)
         pyglet.gl.glEnable (GL_LINE_SMOOTH)
-        #pyglet.gl.glColor3f(self.color[0], self.color[1], self.color[2])
-
-        #glEnable(GL_BLEND)
-        #glDisable(GL_DEPTH_TEST)
         pyglet.gl.glEnable(pyglet.gl.GL_BLEND)
         pyglet.gl.glBlendFunc(pyglet.gl.GL_SRC_ALPHA, pyglet.gl.GL_ONE_MINUS_SRC_ALPHA)
 

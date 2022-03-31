@@ -163,6 +163,7 @@ class select_map_buttons():
 
         self.map_names = [x[0] for x in xs]
         self.map_logos = [x[1] for x in xs]
+        self.map_dir = [x[2] for x in xs]
 
     def __init__(self, editor=False):
         map_list.search()

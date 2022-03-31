@@ -73,7 +73,6 @@ class select_tank_buttons():
         self.image_tower = []
         self.image_team = []
 
-        #self.tank_settings = [[0, 1], [0, 1], [0, 1], [0, 1]]
         self.tank_settings = []
         for i in range(len(tank_settings.tanks)):
             self.tank_settings.append([])
