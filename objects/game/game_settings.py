@@ -25,6 +25,8 @@ class Save_settings():
             sound_settings.update_sound()
 
             # Graphics
+            graphics_settings.animated_water = True if (config.get("Graphics", "animated_water")).lower() == 'true' else False
+
             graphics_settings.draw_clouds = True if (config.get("Graphics", "draw_clouds")).lower() == 'true' else False
 
             graphics_settings.draw_leaf = True if (config.get("Graphics", "draw_leaf")).lower() == 'true' else False
@@ -97,6 +99,8 @@ class Save_settings():
 
         # Graphics
         config.add_section("Graphics")
+        
+        config.set("Graphics", "animated_water", str(graphics_settings.animated_water))
 
         config.set("Graphics", "draw_clouds", str(graphics_settings.draw_clouds))
 
@@ -193,6 +197,8 @@ class Game_settings(): # settings in game
 
 class Graphics_settings():
     def __init__(self):
+
+        self.animated_water = True
 
         self.draw_clouds = True
 

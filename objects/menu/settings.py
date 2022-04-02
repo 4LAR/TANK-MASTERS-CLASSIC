@@ -56,11 +56,13 @@ class game_settings_page():
         self.settings_buttons[3][1].flag = graphics_settings.draw_traces
         self.settings_buttons[3][2].flag = graphics_settings.draw_shadows
         self.settings_buttons[3][3].flag = graphics_settings.draw_smoke
+        self.settings_buttons[3][4].flag = graphics_settings.draw_clouds
+        self.settings_buttons[3][5].flag = graphics_settings.animated_water
 
-        self.settings_buttons[3][4].flag = graphics_settings.game_in_menu
-        self.settings_buttons[3][5].flag = graphics_settings.paralax_in_menu
+        self.settings_buttons[3][6].flag = graphics_settings.game_in_menu
+        self.settings_buttons[3][7].flag = graphics_settings.paralax_in_menu
 
-        self.settings_buttons[3][6].flag = graphics_settings.shadows_buttons
+        self.settings_buttons[3][8].flag = graphics_settings.shadows_buttons
 
         #settings.save_settings()
 
@@ -123,11 +125,13 @@ class game_settings_page():
         graphics_settings.draw_traces = self.settings_buttons[3][1].flag
         graphics_settings.draw_shadows = self.settings_buttons[3][2].flag
         graphics_settings.draw_smoke = self.settings_buttons[3][3].flag
+        graphics_settings.draw_clouds = self.settings_buttons[3][4].flag
+        graphics_settings.animated_water = self.settings_buttons[3][5].flag
 
-        graphics_settings.game_in_menu = self.settings_buttons[3][4].flag
-        graphics_settings.paralax_in_menu = self.settings_buttons[3][5].flag
+        graphics_settings.game_in_menu = self.settings_buttons[3][6].flag
+        graphics_settings.paralax_in_menu = self.settings_buttons[3][7].flag
 
-        graphics_settings.shadows_buttons = self.settings_buttons[3][6].flag
+        graphics_settings.shadows_buttons = self.settings_buttons[3][8].flag
 
         save_settings.save_settings()
         settings.save_settings()
@@ -703,13 +707,13 @@ class game_settings_page():
             image_flag(
                 settings.width/100,
                 settings.height - settings.height/3.5 - (settings.height/8) * 0.5,
-                image='buttons/flag/flag.png',
-                image_flag='buttons/flag/flag_selected.png',
-                image_selected_flag='buttons/flag/flag_hover_selected.png',
-                image_selected='buttons/flag/flag_hover.png',
+                image='buttons/flag_small/flag.png',
+                image_flag='buttons/flag_small/flag_selected.png',
+                image_selected_flag='buttons/flag_small/flag_hover_selected.png',
+                image_selected='buttons/flag_small/flag_hover.png',
                 scale=settings.height/160,
 
-                text='draw leaf',
+                text='leaf',
                 text_color = (150, 150, 150, 255),
                 font='pixel.ttf',
                 text_indent=settings.height/8, shadow=graphics_settings.shadows_buttons
@@ -721,13 +725,49 @@ class game_settings_page():
             image_flag(
                 settings.width/100,
                 settings.height - settings.height/3.5 - (settings.height/8) * 1.5,
-                image='buttons/flag/flag.png',
-                image_flag='buttons/flag/flag_selected.png',
-                image_selected_flag='buttons/flag/flag_hover_selected.png',
-                image_selected='buttons/flag/flag_hover.png',
+                image='buttons/flag_small/flag.png',
+                image_flag='buttons/flag_small/flag_selected.png',
+                image_selected_flag='buttons/flag_small/flag_hover_selected.png',
+                image_selected='buttons/flag_small/flag_hover.png',
                 scale=settings.height/160,
 
-                text='draw traces',
+                text='traces',
+                text_color = (150, 150, 150, 255),
+                font='pixel.ttf',
+                text_indent=settings.height/8, shadow=graphics_settings.shadows_buttons
+
+            )
+        )
+
+        self.settings_buttons[3].append(
+            image_flag(
+                settings.width/100 + settings.width/4.35,
+                settings.height - settings.height/3.5 - (settings.height/8) * 0.5,#2.5,
+                image='buttons/flag_small/flag.png',
+                image_flag='buttons/flag_small/flag_selected.png',
+                image_selected_flag='buttons/flag_small/flag_hover_selected.png',
+                image_selected='buttons/flag_small/flag_hover.png',
+                scale=settings.height/160,
+
+                text='shadows',
+                text_color = (150, 150, 150, 255),
+                font='pixel.ttf',
+                text_indent=settings.height/8, shadow=graphics_settings.shadows_buttons
+
+            )
+        )
+
+        self.settings_buttons[3].append(
+            image_flag(
+                settings.width/100 + settings.width/4.35,
+                settings.height - settings.height/3.5 - (settings.height/8) * 1.5,#3.5,
+                image='buttons/flag_small/flag.png',
+                image_flag='buttons/flag_small/flag_selected.png',
+                image_selected_flag='buttons/flag_small/flag_hover_selected.png',
+                image_selected='buttons/flag_small/flag_hover.png',
+                scale=settings.height/160,
+
+                text='smoke',
                 text_color = (150, 150, 150, 255),
                 font='pixel.ttf',
                 text_indent=settings.height/8, shadow=graphics_settings.shadows_buttons
@@ -739,13 +779,13 @@ class game_settings_page():
             image_flag(
                 settings.width/100,
                 settings.height - settings.height/3.5 - (settings.height/8) * 2.5,
-                image='buttons/flag/flag.png',
-                image_flag='buttons/flag/flag_selected.png',
-                image_selected_flag='buttons/flag/flag_hover_selected.png',
-                image_selected='buttons/flag/flag_hover.png',
+                image='buttons/flag_small/flag.png',
+                image_flag='buttons/flag_small/flag_selected.png',
+                image_selected_flag='buttons/flag_small/flag_hover_selected.png',
+                image_selected='buttons/flag_small/flag_hover.png',
                 scale=settings.height/160,
 
-                text='draw shadows',
+                text='clouds',
                 text_color = (150, 150, 150, 255),
                 font='pixel.ttf',
                 text_indent=settings.height/8, shadow=graphics_settings.shadows_buttons
@@ -763,7 +803,7 @@ class game_settings_page():
                 image_selected='buttons/flag/flag_hover.png',
                 scale=settings.height/160,
 
-                text='draw smoke',
+                text='animated water',
                 text_color = (150, 150, 150, 255),
                 font='pixel.ttf',
                 text_indent=settings.height/8, shadow=graphics_settings.shadows_buttons

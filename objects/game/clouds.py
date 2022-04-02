@@ -12,8 +12,7 @@ class clouds():
         return x, y
 
     def __init__(self):
-        try:
-
+        if graphics_settings.draw_clouds:
             self.deg = 45
 
             self.image_cloud = Image.new('RGBA', (settings.width*2, settings.height*2))
@@ -47,8 +46,6 @@ class clouds():
                 self.cloud_arr[i][0].x = self.cloud_arr[i][1]
                 self.cloud_arr[i][0].y = self.cloud_arr[i][2]
 
-        except:
-            print("FATAL ERROR: " + str(traceback.format_exc()))
 
     def update(self):
         if graphics_settings.draw_clouds and not get_obj_display('game_settings').pause:
