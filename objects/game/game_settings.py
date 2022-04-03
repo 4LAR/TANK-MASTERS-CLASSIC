@@ -99,7 +99,7 @@ class Save_settings():
 
         # Graphics
         config.add_section("Graphics")
-        
+
         config.set("Graphics", "animated_water", str(graphics_settings.animated_water))
 
         config.set("Graphics", "draw_clouds", str(graphics_settings.draw_clouds))
@@ -198,7 +198,7 @@ class Game_settings(): # settings in game
 class Graphics_settings():
     def __init__(self):
 
-        self.animated_water = True
+        self.animated_water = False
 
         self.draw_clouds = True
 
