@@ -1,4 +1,4 @@
-version = 'TANK MASTERS:CLASSIC 0.8.0'
+version = 'TANK MASTERS:CLASSIC 0.8.1'
 
 window.set_caption(version_engine + ' | ' + version)
 
