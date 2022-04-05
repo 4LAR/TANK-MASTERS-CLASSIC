@@ -129,7 +129,7 @@ class select_map_buttons():
                 self.map_logos.pop(i)
                 self.map_dir.pop(i)
 
-        self.num = ((self.page - 1) * self.maps_in_page) - 1
+        self.num = ((self.page - 1) * self.maps_in_page)
         self.x = 0
         self.y = 0
 
@@ -164,6 +164,8 @@ class select_map_buttons():
         self.map_names = [x[0] for x in xs]
         self.map_logos = [x[1] for x in xs]
         self.map_dir = [x[2] for x in xs]
+
+        print(self.map_names, self.map_logos, self.map_dir)
 
     def __init__(self, editor=False):
         map_list.search()
