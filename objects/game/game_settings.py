@@ -1,3 +1,5 @@
+FIRST_START = False
+
 class Save_settings():
     def __init__(self):
         self.path = 'game_settings.txt'
@@ -74,6 +76,9 @@ class Save_settings():
                 tank_settings.tanks[i][3] = int(config.get("Tank_MPL", "P" + str(i + 1) + '_tower'))
 
         else:
+            global FIRST_START
+            FIRST_START = True
+            
             self.save_settings()
 
     def save_settings(self):

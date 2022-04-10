@@ -314,7 +314,6 @@ try:
             #window.height = settings.height
             window.set_fullscreen(fullscreen=(True if settings.full_screen == 2 else False), width=settings.width, height=settings.height)
 
-
         width = settings.width # ширина окна
         height = settings.height # высота окна
 

@@ -21,9 +21,22 @@ class background_menu():
         drawp(self.image_background)
 
 class head_menu():
-    def __init__(self, text='', align_top=True):
+    def __init__(self, text='', align_top=True, draw_user=True):
         self.align_top = align_top
+        self.draw_user = draw_user
 
+        #version
+        self.version_text = text_label(settings.width/100, settings.height/40, version_engine + ' | ' + version, load_font=True, font='pixel.ttf', size=settings.height//48, anchor_x='left', color = (150, 150, 150, 255))
+
+        #user
+        self.name_user_text = text_label(settings.width - settings.width/20, settings.height/35, str(user_game_settings.name), load_font=True, font='pixel.ttf', size=settings.height//36, anchor_x='right', color = (150, 150, 150, 255))
+        self.user_ico = image_label('gui/ico/user_ico.png',
+            settings.width - settings.width/4.9, settings.height/80,
+            scale=settings.height/300, pixel=True
+        )
+        self.user_button = image_button(settings.width - settings.width/4.6, -settings.height/13, 'buttons/button_clear_full_kv.png', scale=settings.height/120, center=False, arg='player_info()', image_selected='buttons/button_clear_full_kv_selected.png')
+
+        # other
         self.text = text_label(settings.width/2, settings.height - settings.height/35, text, load_font=True, font='pixel.ttf', size=settings.height//24, anchor_x='center', color = (150, 150, 150, 255))
 
         image = PIL_resize_image('img/buttons/button_clear.png', (settings.width//2, 16))
@@ -41,11 +54,28 @@ class head_menu():
         )
         self.sprite.scale = settings.height/130
 
+    def on_mouse_press(self, x, y, button, modifiers):
+        if (self.draw_user and not self.align_top):
+            return self.user_button.on_mouse_press(x, y, button, modifiers)
+
+    def on_mouse_motion(self, x, y, dx, dy):
+        if (self.draw_user and not self.align_top):
+            self.user_button.on_mouse_motion(x, y, dx, dy)
+
     def draw(self):
         if graphics_settings.shadows_buttons and not self.align_top:
             drawp(self.image_shadow_obj)
         drawp(self.sprite)
+        drawp(self.sprite)
+
         self.text.draw()
+
+        self.version_text.draw()
+
+        if (self.draw_user and not self.align_top):
+            self.user_button.draw()
+            drawp(self.user_ico)
+            self.name_user_text.draw()
 
 class back():
     def __init__(self, function=None, arg=None):
@@ -107,7 +137,7 @@ def exit_alert():
     if graphics_settings.game_in_menu:
         add_game_in_menu()
     add_display(head_menu())
-    add_display(head_menu(align_top=False))
+    add_display(head_menu(align_top=False, draw_user=False))
 
     add_display(label(0, 0,settings.width, settings.height, (0, 0, 0), alpha = 128))
     add_display(text_label(settings.width/2, settings.height/1.5, 'are you sure you want to exit', load_font=True, font='pixel.ttf', size=settings.height//18, anchor_x='center', color = (150, 150, 150, 255)))
@@ -134,7 +164,6 @@ def menu():
     add_display(head_menu(align_top=False))
     add_display(text_label(settings.width/100, settings.height - settings.height/10, 'TANK MASTERS', load_font=True, font='pixel.ttf', size=settings.height//20, anchor_x='left', color = (150, 150, 150, 255), shadow=True, color_shadow=(20, 20, 20, 122), shadow_size=settings.height//20))
     add_display(text_label(settings.width/5, settings.height - settings.height/6.5, 'CLASSIC', load_font=True, font='pixel.ttf', size=settings.height//20, anchor_x='left', color = (150, 150, 150, 255), shadow=True, color_shadow=(20, 20, 20, 122), shadow_size=settings.height//20))
-    add_display(text_label(settings.width/100, settings.height/40, version_engine + ' | ' + version, load_font=True, font='pixel.ttf', size=settings.height//48, anchor_x='left', color = (150, 150, 150, 255)))
     #add_display(alert())
 
     if first_breath_menu:

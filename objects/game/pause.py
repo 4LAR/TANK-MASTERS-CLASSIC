@@ -3,7 +3,7 @@ class pause():
         self.traning = traning
 
         self.head = head_menu('pause')
-        self.head_down = head_menu(align_top=False)
+        self.head_down = head_menu(align_top=False, draw_user=False)
 
         self.continue_button = image_button(0, settings.height/4, 'buttons/button_clear.png', scale=settings.height/120, center=False, arg='get_obj_display(\'game_settings\').pause = False', image_selected='buttons/button_clear_selected.png', text='continue', text_indent= settings.height//100, shadow=graphics_settings.shadows_buttons)
         self.exit_button = image_button(0, settings.height/10, 'buttons/button_clear.png', scale=settings.height/120, center=False, arg='game_settings.reload(); select_map()' if not self.traning else 'game_settings.reload(); training_start()', image_selected='buttons/button_clear_selected.png', text='back', text_indent= settings.height//100, shadow=graphics_settings.shadows_buttons)

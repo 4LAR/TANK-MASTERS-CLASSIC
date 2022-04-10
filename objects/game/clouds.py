@@ -28,7 +28,13 @@ class clouds():
             for _ in range(self.max_cloud):
                 x = random.randrange(0, settings.width*2)
                 y = random.randrange(0, settings.height*2)
-                image = Image.new('RGBA', (random.randrange(settings.width//12, settings.width//6), random.randrange(settings.height//12, settings.height//6)))
+                image = Image.new(
+                    'RGBA',
+                    (
+                        random.randrange(settings.width//12, settings.width//6),  # ширина
+                        random.randrange(settings.height//12, settings.height//6) # высота
+                    )
+                )
                 image.putalpha(48)
                 self.image_cloud.paste(image,
                     (x, y)

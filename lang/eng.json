@@ -1,0 +1,56 @@
+{
+  "menu": {
+    "yes": "yes",
+    "no": "no",
+    "lang_tag": "en",
+    "exit": "exit",
+    "back": "back",
+    "arcade": "arcade",
+    "missions": "missions",
+    "traning": "traning",
+    "editor": "editor",
+    "settings": "settings",
+    "game_setup": "game_setup",
+    "reset": "reset"
+  },
+  "settings": {
+    "game": {
+      "page": "game",
+      "": ""
+    },
+    "display": {
+      "display": "display",
+      "": ""
+    },
+    "sound": {
+      "sound": "sound",
+      "": ""
+    },
+    "graphics": {
+      "graphics": "graphics",
+      "": ""
+    },
+    "keyboard": {
+      "keyboard": "keyboard",
+      "": ""
+    }
+  },
+  "game_setup": {
+    "gameplay": "gameplay",
+    "weather": "weather",
+    "players": "players",
+    "scatter": "scatter",
+    "wind": "wind",
+    "crates": "crates",
+    "rain": "rain",
+    "snow": "snow",
+    "timer": "timer",
+    "minutes": "minutes",
+    "seconds": "seconds",
+    "players_collide": "players collide",
+    "random_tanks": "random tanks"
+  }
+  
+  
+  
+}
