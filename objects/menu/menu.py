@@ -100,6 +100,7 @@ first_breath_menu = True
 menu_world = None
 menu_wind = None
 menu_walls = None
+menu_clouds = None
 menu_weather = None
 
 game_in_menu_bool = False
@@ -108,6 +109,7 @@ def add_game_in_menu():
     global menu_world
     global menu_wind
     global menu_walls
+    global menu_clouds
     global menu_weather
 
     add_display(game_settings)
@@ -119,6 +121,9 @@ def add_game_in_menu():
         add_display(menu_wind)
         menu_walls = walls()
         add_display(menu_walls)
+
+        menu_clouds = clouds()
+        add_display(menu_clouds)
         menu_weather = weather()
         game_in_menu_bool = True
         add_display(menu_weather)
@@ -127,6 +132,7 @@ def add_game_in_menu():
         add_display(menu_world)
         add_display(menu_wind)
         add_display(menu_walls)
+        add_display(menu_clouds)
         add_display(menu_weather)
 
 def exit_alert():

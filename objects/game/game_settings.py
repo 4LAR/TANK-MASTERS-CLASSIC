@@ -68,6 +68,8 @@ class Save_settings():
             game_settings.collide_players = True if (config.get("Game_setup", "collide_players")).lower() == 'true' else False
             game_settings.random_tanks_bool = True if (config.get("Game_setup", "random_tanks_bool")).lower() == 'true' else False
 
+            game_settings.education = True if (config.get("Game_setup", "education")).lower() == 'true' else False
+
             # Tank
             for i in range(4):
                 tank_settings.tanks[i][0] = True if (config.get("Tank_MPL", "P" + str(i + 1) + '_use')).lower() == 'true' else False
@@ -148,6 +150,8 @@ class Save_settings():
         config.set("Game_setup", "collide_players", str(game_settings.collide_players))
         config.set("Game_setup", "random_tanks_bool", str(game_settings.random_tanks_bool))
 
+        config.set("Game_setup", "education", str(game_settings.education))
+
         # Tank
         config.add_section("Tank_MPL")
         for i in range(4):
@@ -186,6 +190,9 @@ class Game_settings(): # settings in game
         self.random_tanks_bool = False
 
         self.crates_bool = True
+
+        # traning only
+        self.education = False
 
         self.pause = False # dont save
         self.run = False

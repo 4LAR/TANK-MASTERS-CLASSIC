@@ -8,12 +8,12 @@ class game_setup_flags():
         self.settings_flags[3].flag = game_settings.rain
         self.settings_flags[4].flag = game_settings.snow
 
-        self.settings_flags[5].flag = game_settings.collide_players
-        self.settings_flags[6].flag = game_settings.random_tanks_bool
+        self.settings_flags[6].flag = game_settings.collide_players
+        self.settings_flags[7].flag = game_settings.random_tanks_bool
 
-        self.settings_flags[7].flag = game_settings.time_bool
-        self.settings_flags[8].text_obj.text_label.label.text = str(game_settings.time_set_min)
-        self.settings_flags[9].text_obj.text_label.label.text = str(game_settings.time_set_sec)
+        self.settings_flags[8].flag = game_settings.time_bool
+        self.settings_flags[9].text_obj.text_label.label.text = str(game_settings.time_set_min)
+        self.settings_flags[10].text_obj.text_label.label.text = str(game_settings.time_set_sec)
 
     def save_settings(self):
 
@@ -32,12 +32,12 @@ class game_setup_flags():
         game_settings.rain         = self.settings_flags[3].flag
         game_settings.snow         = self.settings_flags[4].flag
 
-        game_settings.collide_players = self.settings_flags[5].flag
-        game_settings.random_tanks_bool = self.settings_flags[6].flag
+        game_settings.collide_players = self.settings_flags[6].flag
+        game_settings.random_tanks_bool = self.settings_flags[7].flag
 
-        game_settings.time_bool    = self.settings_flags[7].flag
-        game_settings.time_set_min = int(self.settings_flags[8].text_obj.text_label.label.text)
-        game_settings.time_set_sec = int(self.settings_flags[9].text_obj.text_label.label.text)
+        game_settings.time_bool    = self.settings_flags[8].flag
+        game_settings.time_set_min = int(self.settings_flags[9].text_obj.text_label.label.text)
+        game_settings.time_set_sec = int(self.settings_flags[10].text_obj.text_label.label.text)
 
         save_settings.save_settings()
 
@@ -147,6 +147,24 @@ class game_setup_flags():
                 scale=settings.height/160,
 
                 text='snow',
+                text_color = (150, 150, 150, 255),
+                font='pixel.ttf',
+                text_indent=settings.height/8, shadow=graphics_settings.shadows_buttons
+
+            )
+        )
+
+        self.settings_flags.append(
+            image_flag(
+                settings.width/100 + settings.width/4,
+                settings.height - settings.height/3.5 - (settings.height/8) * 1.7,
+                image='buttons/flag_small/flag.png',
+                image_flag='buttons/flag_small/flag_selected.png',
+                image_selected_flag='buttons/flag_small/flag_hover_selected.png',
+                image_selected='buttons/flag_small/flag_hover.png',
+                scale=settings.height/160,
+
+                text='random',
                 text_color = (150, 150, 150, 255),
                 font='pixel.ttf',
                 text_indent=settings.height/8, shadow=graphics_settings.shadows_buttons
@@ -268,9 +286,12 @@ class game_setup_flags():
         self.backgraund_flags.append(
             label(
                 settings.width/300 + settings.width/4,
-                settings.height - settings.height/3.5 - (settings.height/8) * 0.8,
+                settings.height - settings.height/3.5 - (settings.height/8) * 1.8,
                 (settings.width / 2.15) / 1.95,
-                settings.height/3.25,
+                settings.height/2.30,
+                #settings.height - settings.height/3.5 - (settings.height/8) * 0.8,
+                #(settings.width / 2.15) / 1.95,
+                #settings.height/3.25,
                 (0, 0, 0), alpha=120
             )
         )

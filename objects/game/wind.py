@@ -28,6 +28,7 @@ class wind():
         self.images_count = 6
 
         self.wind_images = []
+        self.wind_shadows_images = []
 
         for i in range(self.images_count):
             self.temp_wind_image = Image.new('RGBA',
@@ -51,6 +52,9 @@ class wind():
             self.wind_images[i][0].x = ((settings.width - get_obj_display('world').image_wall.width) / 2) + x
             self.wind_images[i][0].y = ((settings.height - get_obj_display('world').image_wall.height) / 2) + y
 
+            temp_shadow = get_pil_black_mask(self.temp_wind_image, 255//2)
+            self.wind_shadows_images.append(PIL_to_pyglet(temp_shadow, get_obj_display('world').scale))
+
     def update(self):
         if graphics_settings.draw_leaf and not get_obj_display('game_settings').pause:
             x, y = self.get_speed_by_deg_sp(180 - game_settings.wind_deg, self.speed)
@@ -66,8 +70,19 @@ class wind():
                     self.wind_images[i][1] = 0
                     self.wind_images[i][0].opacity = 255
 
+                self.wind_shadows_images[i].x = self.wind_images[i][0].x + get_obj_display('world').offs_shadows[0]
+                self.wind_shadows_images[i].y = self.wind_images[i][0].y + get_obj_display('world').offs_shadows[1]
+                self.wind_shadows_images[i].opacity = self.wind_images[i][0].opacity//2
+
     def draw(self):
         if graphics_settings.draw_leaf:
+            for w in self.wind_shadows_images:
+                w.x += get_obj_display('world').map_offs[0]
+                w.y += get_obj_display('world').map_offs[1]
+                drawp(w)
+                w.x -= get_obj_display('world').map_offs[0]
+                w.y -= get_obj_display('world').map_offs[1]
+
             for w in self.wind_images:
                 w[0].x += get_obj_display('world').map_offs[0]
                 w[0].y += get_obj_display('world').map_offs[1]
