@@ -1,6 +1,6 @@
 class player_info_class():
     def __init__(self):
-        pass
+        self.kills = 0
 
 class player_info_save():
     def __init__(self):
@@ -14,11 +14,11 @@ class player_info_save():
 
     def save(self):
         save_obj(self.info, self.path)
-    
+
     def read(self):
         try:
             self.info = load_obj(self.path)
-        
+
         except:
             self.info = player_info_class()
             self.save()

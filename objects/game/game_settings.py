@@ -13,6 +13,7 @@ class Save_settings():
             # Game
             user_game_settings.name = config.get("Game", "name")
             user_game_settings.draw_logo = True if (config.get("Game", "draw_logo")).lower() == 'true' else False
+            user_game_settings.language = config.get("Game", "language")
 
             # Sound
             sound_settings.use_sound_general = True if (config.get("Sound", "use_sound_general")).lower() == 'true' else False
@@ -70,6 +71,11 @@ class Save_settings():
 
             game_settings.education = True if (config.get("Game_setup", "education")).lower() == 'true' else False
 
+            # Map filter
+            map_filter.death_match_filter = True if (config.get("Map_filter", "death_match_filter")).lower() == 'true' else False
+            map_filter.capture_flag_filter = True if (config.get("Map_filter", "capture_flag_filter")).lower() == 'true' else False
+            map_filter.resource_capture_filter = True if (config.get("Map_filter", "resource_capture_filter")).lower() == 'true' else False
+
             # Tank
             for i in range(4):
                 tank_settings.tanks[i][0] = True if (config.get("Tank_MPL", "P" + str(i + 1) + '_use')).lower() == 'true' else False
@@ -80,7 +86,7 @@ class Save_settings():
         else:
             global FIRST_START
             FIRST_START = True
-            
+
             self.save_settings()
 
     def save_settings(self):
@@ -90,6 +96,8 @@ class Save_settings():
         config.set("Game", "name", str(user_game_settings.name))
 
         config.set("Game", "draw_logo", str(user_game_settings.draw_logo))
+
+        config.set("Game", "language", str(user_game_settings.language))
 
         # Sound
         config.add_section("Sound")
@@ -152,6 +160,12 @@ class Save_settings():
 
         config.set("Game_setup", "education", str(game_settings.education))
 
+        # Map filter
+        config.add_section("Map_filter")
+        config.set("Map_filter", "death_match_filter", str(map_filter.death_match_filter))
+        config.set("Map_filter", "capture_flag_filter", str(map_filter.capture_flag_filter))
+        config.set("Map_filter", "resource_capture_filter", str(map_filter.resource_capture_filter))
+
         # Tank
         config.add_section("Tank_MPL")
         for i in range(4):
@@ -163,11 +177,20 @@ class Save_settings():
         with open(self.path, "w") as config_file: # запись файла с настройками
             config.write(config_file)
 
+class Map_filter(): # фильтр карт и режимов
+    def __init__(self):
+        # gamemodes
+        self.death_match_filter = True
+        self.capture_flag_filter = True
+        self.resource_capture_filter = True
+
 class User_game_settings(): # game settings
     def __init__(self):
         self.name = 'PLAYER'
 
         self.draw_logo = True
+
+        self.language = 'en'
 
 class Game_settings(): # settings in game
     def __init__(self):
@@ -266,5 +289,6 @@ game_settings = Game_settings()
 graphics_settings = Graphics_settings()
 sound_settings = Sound_settings()
 tank_settings = Tank_settings()
+map_filter = Map_filter()
 
 save_settings = Save_settings()
