@@ -5,7 +5,10 @@ def save_dict(dict, name):
     json.dump(dict, open(str(name) + '.json','w'))
 
 def read_dict(name):
-    return json.load(open(str(name) + '.json'))
+    with open(str(name) + '.json', encoding='utf-8') as fh:
+        data = json.load(fh)
+    return data
+    #return json.load(open(str(name) + '.json', 'r'))
 
 def norm_deg(deg):
     #while True:
@@ -152,7 +155,7 @@ class text_cursor():
         self.align = align
         self.text = text
         self.length = length
-        
+
         self.cursor_text_size = settings.height//50
         self.cursor_text = text_label(settings.width//6, settings.height - settings.height//15, 'text', load_font=True, font='pixel.ttf', size=self.cursor_text_size, anchor_x='left', color = (180, 180, 180, 255))
         self.cursor_text.label.text = text

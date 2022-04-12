@@ -1,4 +1,4 @@
-version = 'TANK MASTERS:CLASSIC 0.8.1'
+version = 'TANK MASTERS:CLASSIC 0.9.0'
 
 window.set_caption(version_engine + ' | ' + version)
 
@@ -41,4 +41,7 @@ def hide_cursor():
     window.set_mouse_visible(False)
 
 def main():
-    menu()
+    if FIRST_START:
+        first_name()
+    else:
+        menu()

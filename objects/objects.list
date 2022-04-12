@@ -2,13 +2,16 @@ lib.py
 os_world.py
 main.py
 console.py
+language.py
 editor/map_editor.py
 editor/map_editor_inventory.py
 menu/alert.py
+menu/first_start.py
 menu/menu.py
 menu/single.py
 menu/training.py
 menu/multiplayer.py
+menu/select_map_filter.py
 menu/select_map.py
 menu/select_tank.py
 menu/game_setup.py
