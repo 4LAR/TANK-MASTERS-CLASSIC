@@ -264,13 +264,6 @@ def select_map(editor=False):
     if editor:
         add_display(image_button(settings.width - (settings.height/120 * 48), settings.height/10, 'buttons/button_clear_left.png', scale=settings.height/120, center=False, function=create_new_map, image_selected='buttons/button_clear_left_selected.png', text=language.json['menu']['create_map'], text_indent= settings.height//25, shadow=graphics_settings.shadows_buttons))
 
-    add_display(image_button(settings.width/3 + settings.width/3.55, settings.height/10, 'buttons/button_right_page.png', image_selected='buttons/button_right_page_selected.png', scale=settings.height/120, center=False, arg='get_obj_display(\'select_map_buttons\').page_up()', shadow=graphics_settings.shadows_buttons))
-    add_display(image_label('buttons/page_indicator.png',
-        settings.width/2.5, settings.height/10,
-        scale=settings.height/120, pixel=True, shadow=graphics_settings.shadows_buttons
-    ))
-    add_display(image_button(settings.width/3, settings.height/10, 'buttons/button_left_page.png', image_selected='buttons/button_left_page_selected.png', scale=settings.height/120, center=False, arg='get_obj_display(\'select_map_buttons\').page_down()', shadow=graphics_settings.shadows_buttons))
-
     if not editor:
         add_display(image_button(0, settings.height/3.5, 'buttons/button_clear.png', scale=settings.height/120, center=False, function=game_setup, image_selected='buttons/button_clear_selected.png', text=language.json['menu']['game_setup'], text_indent= settings.height//100, shadow=graphics_settings.shadows_buttons))
 

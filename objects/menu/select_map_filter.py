@@ -1,6 +1,24 @@
 class select_map_filter_buttons():
+
+    def read_settings(self):
+        self.flags[0].flag = map_filter.death_match_filter
+        self.flags[1].flag = map_filter.capture_flag_filter
+        self.flags[2].flag = map_filter.resource_capture_filter
+
+    def save_settings(self):
+        map_filter.death_match_filter = self.flags[0].flag
+        map_filter.capture_flag_filter = self.flags[1].flag
+        map_filter.resource_capture_filter = self.flags[2].flag
+        save_settings.save_settings()
+        map_list.search()
+        get_obj_display('select_map_buttons').reset()
+
     def __init__(self):
         self.flags = []
+
+        # DM - death match
+        # CP - capture flag
+        # RC - resource capture
 
         flags_names = ['DM', 'CP', 'RC']
 
@@ -18,12 +36,13 @@ class select_map_filter_buttons():
                     text=flags_names[i],
                     text_color = (150, 150, 150, 255),
                     font='pixel.ttf',
+
+                    function_bool=True,
+                    arg='get_obj_display(\'select_map_filter_buttons\').save_settings()',
                     text_indent=settings.height/8, shadow=graphics_settings.shadows_buttons
 
                 )
             )
-
-            self.flags[i].flag = True
 
         self.background = label(
             settings.width/300,
@@ -41,6 +60,8 @@ class select_map_filter_buttons():
             size=settings.height//24, anchor_x='left', anchor_y='bottom',
             color = (150, 150, 150, 255)
         )
+
+        self.read_settings()
 
     def on_mouse_press(self, x, y, button, modifiers):
         for f in self.flags:

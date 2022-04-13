@@ -2,6 +2,11 @@ class crates():
     def __init__(self):
         self.sound = Sound()
 
+        if sound_settings.use_sound_general and sound_settings.use_sound_tanks:
+            self.sound.sound_volume(settings.sound_volume * sound_settings.sound_volume_tanks)
+        else:
+            self.sound.sound_volume(0)
+
         self.creates_obj = []
         scale = get_obj_display('world').scale / 1.2
 

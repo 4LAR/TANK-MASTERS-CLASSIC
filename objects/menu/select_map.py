@@ -5,14 +5,19 @@ class map_list_class():
         #self.map_names, self.map_logos, self.map_dir, self.world_size, self.game_mode = self.search()
         self.search()
 
-    def search(self, type_maps='arcade', filters=['death match']):
-        print('READ MAPS')
+    def search(self, type_maps='arcade'):
+        filters = []
+
+        if map_filter.death_match_filter: filters.append('death match')
+        if map_filter.capture_flag_filter: filters.append('capture flag')
+        if map_filter.resource_capture_filter: filters.append('resource capture')
+
+        print('READ MAPS (', filters, ')')
         self.map_names = []
         self.map_logos = []
         self.map_dir    = []
         self.world_size = []
         self.game_mode  = []
-
 
         files = os.listdir('maps/'+type_maps)
 
@@ -31,7 +36,7 @@ class map_list_class():
                             self.map_logos.append('img/file_not_found.png')
             except:
                 pass
-                
+
         return self.map_names, self.map_logos, self.map_dir, self.world_size, self.game_mode
 
 map_list = map_list_class()
@@ -167,6 +172,21 @@ class select_map_buttons():
         self.world_size = [x[3] for x in xs]
         self.game_mode = [x[4] for x in xs]
 
+    def reset(self):
+
+        self.buttons = []
+        self.image_maps = []
+        self.text_maps = []
+
+        self.x = 0
+        self.y = 0
+        self.num = 0
+        self.end_load = True
+
+        self.update_map_list()
+        self.update_page()
+        self.update_page_text()
+
     def __init__(self, editor=False):
         map_list.search()
 
@@ -178,6 +198,11 @@ class select_map_buttons():
 
         self.text_page = text_label(settings.width/2.3, settings.height/6, 'page: 1/1', load_font=True, font='pixel.ttf', size=settings.height//24, anchor_x='left', color = (150, 150, 150, 255))
 
+        self.text_page_background = image_label('buttons/page_indicator.png', settings.width/2.5, settings.height/10, scale=settings.height/120, pixel=True, shadow=graphics_settings.shadows_buttons)
+
+        self.page_up_button = image_button(settings.width/3 + settings.width/3.55, settings.height/10, 'buttons/button_right_page.png', image_selected='buttons/button_right_page_selected.png', scale=settings.height/120, center=False, arg='get_obj_display(\'select_map_buttons\').page_up()', shadow=graphics_settings.shadows_buttons)
+        self.page_down_button = image_button(settings.width/3, settings.height/10, 'buttons/button_left_page.png', image_selected='buttons/button_left_page_selected.png', scale=settings.height/120, center=False, arg='get_obj_display(\'select_map_buttons\').page_down()', shadow=graphics_settings.shadows_buttons)
+
         self.maps_in_page = 3 * 2
 
         self.x = 0
@@ -186,6 +211,13 @@ class select_map_buttons():
         self.end_load = True
 
         self.text_no_maps = text_label(settings.width/1.7, settings.height/1.2, 'maps not found', load_font=True, font='pixel.ttf', size=settings.height//18, anchor_x='center', color = (150, 150, 150, 255))
+        self.no_maps_background = label(
+            settings.width/2.5,
+            settings.height - settings.height/4.5,
+            (settings.width / 2.7),
+            settings.height/10,
+            (0, 0, 0), alpha=120
+        )
 
         self.update_map_list()
         self.update_page()
@@ -195,9 +227,17 @@ class select_map_buttons():
         for b in self.buttons:
             b.on_mouse_press(x, y, button, modifiers)
 
+        if len(self.map_names) > 6:
+            self.page_up_button.on_mouse_press(x, y, button, modifiers)
+            self.page_down_button.on_mouse_press(x, y, button, modifiers)
+
     def on_mouse_motion(self, x, y, dx, dy):
         for b in self.buttons:
             b.on_mouse_motion(x, y, dx, dy)
+
+        if len(self.map_names) > 6:
+            self.page_up_button.on_mouse_motion(x, y, dx, dy)
+            self.page_down_button.on_mouse_motion(x, y, dx, dy)
 
     def draw(self):
         for b in self.image_maps:
@@ -207,7 +247,12 @@ class select_map_buttons():
         for b in self.text_maps:
             b.draw()
 
-        self.text_page.draw()
+        if len(self.map_names) > 6:
+            self.page_up_button.draw()
+            self.text_page_background.draw()
+            self.page_down_button.draw()
+            self.text_page.draw()
 
         if not len(self.map_names) > 0:
+            self.no_maps_background.draw()
             self.text_no_maps.draw()

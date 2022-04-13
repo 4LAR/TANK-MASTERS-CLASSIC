@@ -8,6 +8,7 @@ editor/map_editor_inventory.py
 menu/alert.py
 menu/first_start.py
 menu/menu.py
+game/game_settings.py
 menu/single.py
 menu/training.py
 menu/multiplayer.py
@@ -15,7 +16,6 @@ menu/select_map_filter.py
 menu/select_map.py
 menu/select_tank.py
 menu/game_setup.py
-game/game_settings.py
 menu/settings.py
 menu/end_game.py
 menu/player_info_save.py
