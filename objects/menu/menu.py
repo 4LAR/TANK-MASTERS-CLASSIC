@@ -197,6 +197,7 @@ def create_new_map():
 
 def select_tank(map_name='test'):
     def play_with_select_tank():
+        on_input()
         get_obj_display('select_tank_buttons').save()
         save_settings.save_settings()
         play(
@@ -216,6 +217,10 @@ def select_tank(map_name='test'):
             get_obj_display('select_tank_buttons').tank_settings
         )
 
+    def breath_label_select_tank():
+        off_input()
+        add_display(breathing_label(0, 0, settings.width, settings.height, (0, 0, 0), 0, delay=0.01, for_from=0, for_before=255, tick=5, function=play_with_select_tank))
+
     show_cursor()
     clear_display()
     add_display(back(arg='get_obj_display(\'select_tank_buttons\').save(); save_settings.save_settings(); select_map()'))
@@ -225,7 +230,7 @@ def select_tank(map_name='test'):
     add_display(head_menu('select machine'))
     add_display(image_button(0, settings.height/10, 'buttons/button_clear.png', scale=settings.height/120, center=False, arg='get_obj_display(\'select_tank_buttons\').save(); save_settings.save_settings(); select_map()', image_selected='buttons/button_clear_selected.png', text=language.json['menu']['back'], text_indent= settings.height//100, shadow=graphics_settings.shadows_buttons))
     add_display(image_button(settings.width / 3, settings.height/10, 'buttons/button_clear_full.png', scale=settings.height/120, center=False, arg='get_obj_display(\'select_tank_buttons\').reset()', image_selected='buttons/button_clear_full_selected.png', text=language.json['menu']['reset'], text_indent= settings.height/9, shadow=graphics_settings.shadows_buttons))
-    add_display(image_button(settings.width - (settings.height/120 * 48), settings.height/10, 'buttons/button_clear_left.png', scale=settings.height/120, center=False, function=play_with_select_tank, image_selected='buttons/button_clear_left_selected.png', text=language.json['menu']['start'], text_indent= settings.height//25, shadow=graphics_settings.shadows_buttons))
+    add_display(image_button(settings.width - (settings.height/120 * 48), settings.height/10, 'buttons/button_clear_left.png', scale=settings.height/120, center=False, function=breath_label_select_tank, image_selected='buttons/button_clear_left_selected.png', text=language.json['menu']['start'], text_indent= settings.height//25, shadow=graphics_settings.shadows_buttons))
 
     add_display(select_tank_buttons())
 

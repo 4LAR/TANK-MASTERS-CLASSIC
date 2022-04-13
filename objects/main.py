@@ -25,6 +25,26 @@ engine_settings.on_mouse_release_bool  = True
 engine_settings.on_draw_bool           = True
 engine_settings.on_update_bool         = True
 
+def off_input():
+    engine_settings.on_text_bool           = False
+    engine_settings.on_mouse_motion_bool   = True
+    engine_settings.on_mouse_drag_bool     = False
+    engine_settings.on_key_press_bool      = False
+    engine_settings.on_mouse_press_bool    = False
+    engine_settings.on_mouse_release_bool  = False
+    engine_settings.on_draw_bool           = True
+    engine_settings.on_update_bool         = True
+
+def on_input():
+    engine_settings.on_text_bool           = False
+    engine_settings.on_mouse_motion_bool   = True
+    engine_settings.on_mouse_drag_bool     = True
+    engine_settings.on_key_press_bool      = True
+    engine_settings.on_mouse_press_bool    = True
+    engine_settings.on_mouse_release_bool  = True
+    engine_settings.on_draw_bool           = True
+    engine_settings.on_update_bool         = True
+
 def menu_cursor():
     image = pyglet.image.load('img/cursor/cursor_menu.png')
     texture = image.get_texture()
