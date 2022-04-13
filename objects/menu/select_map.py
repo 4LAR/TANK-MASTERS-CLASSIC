@@ -1,27 +1,38 @@
 class map_list_class():
     def __init__(self):
-        self.map_names, self.map_logos, self.map_dir = self.search()
+        self.os_world = os_world()
 
-    def search(self, type_maps='arcade'):
+        #self.map_names, self.map_logos, self.map_dir, self.world_size, self.game_mode = self.search()
+        self.search()
+
+    def search(self, type_maps='arcade', filters=['death match']):
         print('READ MAPS')
-        maps_names = []
-        maps_logos = []
-        map_dir   = []
+        self.map_names = []
+        self.map_logos = []
+        self.map_dir    = []
+        self.world_size = []
+        self.game_mode  = []
+
 
         files = os.listdir('maps/'+type_maps)
 
         for file in files:
             try:
                 if file.split('.')[1] == 'map':
-                    map_dir.append(type_maps + '/' + file.split('.')[0])
-                    maps_names.append(file.split('.')[0])
-                    if os.path.exists('maps/' + type_maps + '/' + file + '/logo.png'):
-                        maps_logos.append('maps/' + type_maps + '/' + file + '/logo.png')
-                    else:
-                        maps_logos.append('img/file_not_found.png')
+                    read_bool = self.os_world.read_file(type_maps + '/' + file.split('.')[0])
+                    if read_bool and self.os_world.game_mode in filters:
+                        self.world_size.append(self.os_world.world_size)
+                        self.game_mode.append(self.os_world.game_mode)
+                        self.map_dir.append(type_maps + '/' + file.split('.')[0])
+                        self.map_names.append(file.split('.')[0])
+                        if os.path.exists('maps/' + type_maps + '/' + file + '/logo.png'):
+                            self.map_logos.append('maps/' + type_maps + '/' + file + '/logo.png')
+                        else:
+                            self.map_logos.append('img/file_not_found.png')
             except:
                 pass
-        return maps_names, maps_logos, map_dir
+                
+        return self.map_names, self.map_logos, self.map_dir, self.world_size, self.game_mode
 
 map_list = map_list_class()
 
@@ -95,39 +106,26 @@ class select_map_buttons():
         )
 
     def update(self):
-        if not self.end_load:
+        if len(self.map_names) > 0:
+            if not self.end_load:
 
-            self.append_map(self.num, self.x, self.y)
+                self.append_map(self.num, self.x, self.y)
 
-            if self.x < 1:
-                self.x += 1
-            else:
-                self.y += 1
-                self.x = 0
+                if self.x < 1:
+                    self.x += 1
+                else:
+                    self.y += 1
+                    self.x = 0
 
-            self.num += 1
+                self.num += 1
 
-            if self.num >= len(self.map_names) or (self.num >= self.page * self.maps_in_page) or (self.y >= 3):
-                self.end_load = True
+                if self.num >= len(self.map_names) or (self.num >= self.page * self.maps_in_page) or (self.y >= 3):
+                    self.end_load = True
 
     def update_page(self):
         self.buttons = []
         self.image_maps = []
         self.text_maps = []
-
-        self.world_size = []
-        self.game_mode = []
-
-        for i in range(len(self.map_names)-1, -1, -1):
-            read_bool = self.os_world.read_file(self.map_dir[i])
-            #print(self.map_names[i], read_bool, i)
-            if read_bool:
-                self.world_size.append(self.os_world.world_size)
-                self.game_mode.append('death match')
-            else:
-                self.map_names.pop(i)
-                self.map_logos.pop(i)
-                self.map_dir.pop(i)
 
         self.num = ((self.page - 1) * self.maps_in_page)
         self.x = 0
@@ -156,14 +154,18 @@ class select_map_buttons():
         self.map_names = map_list.map_names
         self.map_logos = map_list.map_logos
         self.map_dir = map_list.map_dir
+        self.world_size = map_list.world_size
+        self.game_mode = map_list.game_mode
 
 
-        maps = zip(map_list.map_names, map_list.map_logos, self.map_dir)
+        maps = zip(map_list.map_names, map_list.map_logos, self.map_dir, self.world_size, self.game_mode)
         xs = sorted(maps, key=lambda tup: tup[0])
 
         self.map_names = [x[0] for x in xs]
         self.map_logos = [x[1] for x in xs]
         self.map_dir = [x[2] for x in xs]
+        self.world_size = [x[3] for x in xs]
+        self.game_mode = [x[4] for x in xs]
 
     def __init__(self, editor=False):
         map_list.search()
@@ -174,8 +176,6 @@ class select_map_buttons():
         self.image_maps = []
         self.text_maps = []
 
-        self.os_world = os_world()
-
         self.text_page = text_label(settings.width/2.3, settings.height/6, 'page: 1/1', load_font=True, font='pixel.ttf', size=settings.height//24, anchor_x='left', color = (150, 150, 150, 255))
 
         self.maps_in_page = 3 * 2
@@ -184,6 +184,8 @@ class select_map_buttons():
         self.y = 0
         self.num = 0
         self.end_load = True
+
+        self.text_no_maps = text_label(settings.width/1.7, settings.height/1.2, 'maps not found', load_font=True, font='pixel.ttf', size=settings.height//18, anchor_x='center', color = (150, 150, 150, 255))
 
         self.update_map_list()
         self.update_page()
@@ -206,3 +208,6 @@ class select_map_buttons():
             b.draw()
 
         self.text_page.draw()
+
+        if not len(self.map_names) > 0:
+            self.text_no_maps.draw()
