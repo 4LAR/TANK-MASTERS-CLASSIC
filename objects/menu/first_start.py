@@ -1,6 +1,7 @@
 def first_name():
 
     def save_name():
+        save_settings.save_settings()
         user_game_settings.name = get_obj_display('input_label_image').text_obj.text_label.label.text
         save_settings.save_settings()
         off_input()

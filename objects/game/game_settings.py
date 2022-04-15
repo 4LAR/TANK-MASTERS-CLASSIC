@@ -87,8 +87,6 @@ class Save_settings():
             global FIRST_START
             FIRST_START = True
 
-            self.save_settings()
-
     def save_settings(self):
         config = configparser.ConfigParser()
 
