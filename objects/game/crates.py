@@ -108,6 +108,7 @@ class crates():
                             p.health = p.default_health
                         else:
                             p.armor_bool = True
+                            p.protection = False
 
                         self.crates_list.pop(i)
                         self.sound.play('upgrade.wav')
