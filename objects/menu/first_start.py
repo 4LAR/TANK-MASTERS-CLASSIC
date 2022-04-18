@@ -14,6 +14,32 @@ def first_name():
     if graphics_settings.game_in_menu:
         add_game_in_menu()
 
+    # background
+    
+    add_display(
+            label(
+                settings.width/300,
+                settings.height/3.6,
+                settings.width / 2.15,
+                settings.height/2.65,
+                (0, 0, 0), alpha=120
+            )
+        )
+        
+
+    # text
+    add_display(
+        text_label(
+            settings.width/100,
+            settings.height - settings.height/3.5 + (settings.height/8) * 0.4,
+            'test',
+            load_font=True, font='pixel.ttf',
+            size=settings.height//24, anchor_x='left', anchor_y='bottom',
+            color = (150, 150, 150, 255)
+        )
+    )
+    
+    # buttons
     add_display(image_button(settings.width - (settings.height/120 * 48), settings.height/10, 'buttons/button_clear_left.png', scale=settings.height/120, center=False, function=save_name, image_selected='buttons/button_clear_left_selected.png', text=language.json['menu']['continue'], text_indent= settings.height//25, shadow=graphics_settings.shadows_buttons))
 
     add_display(
