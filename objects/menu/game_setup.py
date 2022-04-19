@@ -15,15 +15,9 @@ class game_setup_flags():
         self.settings_flags[9].text_obj.text_label.label.text = str(game_settings.time_set_min)
         self.settings_flags[10].text_obj.text_label.label.text = str(game_settings.time_set_sec)
 
-    def save_settings(self):
+        self.settings_flags[11].flag = game_settings.education
 
-        # 0 - scatter
-        # 1 - wind
-        # 2 - rain
-        # 3 - snow
-        # 4 - time bool
-        # 5 - time min
-        # 6 - time sec
+    def save_settings(self):
 
         game_settings.scatter_bool = self.settings_flags[0].flag
         game_settings.wind_bool    = self.settings_flags[1].flag
@@ -39,6 +33,8 @@ class game_setup_flags():
         game_settings.time_set_min = int(self.settings_flags[9].text_obj.text_label.label.text)
         game_settings.time_set_sec = int(self.settings_flags[10].text_obj.text_label.label.text)
 
+        game_settings.education    = self.settings_flags[11].flag
+
         save_settings.save_settings()
 
     def reset(self):
@@ -48,13 +44,16 @@ class game_setup_flags():
 
         self.settings_flags[3].flag = False
         self.settings_flags[4].flag = False
+        self.settings_flags[5].flag = False
 
-        self.settings_flags[5].flag = True
-        self.settings_flags[6].flag = False
+        self.settings_flags[6].flag = True
+        self.settings_flags[7].flag = False
 
-        self.settings_flags[7].flag = True
-        self.settings_flags[8].text_obj.text_label.label.text = '2'
-        self.settings_flags[9].text_obj.text_label.label.text = '0'
+        self.settings_flags[8].flag = True
+        self.settings_flags[9].text_obj.text_label.label.text = '2'
+        self.settings_flags[10].text_obj.text_label.label.text = '0'
+
+        self.settings_flags[11].flag = False
 
     def __init__(self, traning=False):
 
@@ -259,6 +258,27 @@ class game_setup_flags():
             )
         )
 
+        # traning
+        self.settings_flags.append(
+            image_flag(
+                settings.width/100 + settings.width/2,
+                settings.height - settings.height/3.5 + (settings.height/8) * 0.3,
+                image='buttons/flag_small/flag.png',
+                image_flag='buttons/flag_small/flag_selected.png',
+                image_selected_flag='buttons/flag_small/flag_hover_selected.png',
+                image_selected='buttons/flag_small/flag_hover.png',
+                scale=settings.height/160,
+
+                text='education',
+                text_color = (150, 150, 150, 255),
+                font='pixel.ttf',
+                text_indent=settings.height/8, shadow=graphics_settings.shadows_buttons,
+
+                use=self.traning
+
+            )
+        )
+
         # backgraund
         # gameplay
         self.backgraund_flags.append(
@@ -304,6 +324,35 @@ class game_setup_flags():
                 load_font=True, font='pixel.ttf',
                 size=settings.height//24, anchor_x='left', anchor_y='bottom',
                 color = (150, 150, 150, 255)
+            )
+        )
+
+        # traning
+        self.backgraund_flags.append(
+            label(
+                settings.width/300 + settings.width/2,
+                settings.height - settings.height/3.5 - (settings.height/8) * 1.8,
+                (settings.width / 2.15) / 1.95,
+                settings.height/2.30,
+                #settings.height - settings.height/3.5 - (settings.height/8) * 0.8,
+                #(settings.width / 2.15) / 1.95,
+                #settings.height/3.25,
+                (0, 0, 0), alpha=120,
+
+                use=self.traning
+            )
+        )
+
+        self.backgraund_flags.append(
+            text_label(
+                settings.width/100 + settings.width/2,
+                settings.height - settings.height/3.5 + (settings.height/8) * 1.2,
+                'traning',
+                load_font=True, font='pixel.ttf',
+                size=settings.height//24, anchor_x='left', anchor_y='bottom',
+                color = (150, 150, 150, 255),
+
+                use=self.traning
             )
         )
 

@@ -18,21 +18,40 @@ def first_name():
     
     add_display(
             label(
-                settings.width/300,
+                settings.width/60,
                 settings.height/3.6,
                 settings.width / 2.15,
-                settings.height/2.65,
+                settings.height/1.8,
                 (0, 0, 0), alpha=120
             )
         )
         
-
-    # text
     add_display(
         text_label(
-            settings.width/100,
-            settings.height - settings.height/3.5 + (settings.height/8) * 0.4,
-            'test',
+            settings.width/45,
+            settings.height - settings.height/3.5 + (settings.height/8) * 0.5,
+            'player',
+            load_font=True, font='pixel.ttf',
+            size=settings.height//24, anchor_x='left', anchor_y='bottom',
+            color = (150, 150, 150, 255)
+        )
+    )
+
+    add_display(
+            label(
+                settings.width/60 + settings.width/2,
+                settings.height/3.6,
+                settings.width / 2.15,
+                settings.height/1.8,
+                (0, 0, 0), alpha=120
+            )
+        )
+        
+    add_display(
+        text_label(
+            settings.width/45 + settings.width/2,
+            settings.height - settings.height/3.5 + (settings.height/8) * 0.5,
+            'traning',
             load_font=True, font='pixel.ttf',
             size=settings.height//24, anchor_x='left', anchor_y='bottom',
             color = (150, 150, 150, 255)
@@ -55,8 +74,8 @@ def first_name():
 
     add_display(
         image_flag(
-            settings.width/25,
-            settings.height - settings.height/3.5 - (settings.height/8) * 3.5,
+            settings.width/25 + settings.width/2,
+            settings.height - settings.height/3.5 - (settings.height/8) * 0.5,#3.5,
             image='buttons/flag_small/flag.png',
             image_flag='buttons/flag_small/flag_selected.png',
             image_selected_flag='buttons/flag_small/flag_hover_selected.png',
