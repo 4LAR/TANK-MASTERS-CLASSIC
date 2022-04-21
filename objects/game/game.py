@@ -111,13 +111,3 @@ def play(
     if game_settings.multiplayer:
         add_display(net_code())
     add_display(breathing_label(0, 0, settings.width, settings.height, (0, 0, 0), 0, delay=0.01, for_from=255, for_before=0, tick=-5, arg='get_obj_display(\'gui\').start_run_time()'))
-
-
-def editor(map_name='test', new=False):
-    background_sound.pause()
-    show_cursor()
-    engine_settings.on_mouse_scroll_bool = True
-    clear_display()
-    add_display(os_world())
-    add_display(map(map_name, new))
-    add_display(map_inventory())

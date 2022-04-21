@@ -5,11 +5,13 @@ console.py
 language.py
 editor/map_editor.py
 editor/map_editor_inventory.py
+editor/gui.py
+editor/editor.py
 menu/alert.py
 menu/first_start.py
 menu/menu.py
 game/game_settings.py
-menu/single.py
+menu/missions/single.py
 menu/training.py
 menu/multiplayer.py
 menu/select_map_filter.py
@@ -20,6 +22,8 @@ menu/settings.py
 menu/end_game.py
 menu/player_info_save.py
 menu/player_info.py
+menu/missions/missions.py
+menu/missions/select_tank.py
 game/world.py
 game/crates.py
 game/wind.py
