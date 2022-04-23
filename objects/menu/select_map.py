@@ -225,7 +225,8 @@ class select_map_buttons():
 
     def on_mouse_press(self, x, y, button, modifiers):
         for b in self.buttons:
-            b.on_mouse_press(x, y, button, modifiers)
+            if b.on_mouse_press(x, y, button, modifiers):
+                return True
 
         if len(self.map_names) > 6:
             self.page_up_button.on_mouse_press(x, y, button, modifiers)
