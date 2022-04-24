@@ -8,11 +8,13 @@ class map(object):
 
         self.inventory_bool = False
 
-        self.show_celling = True
-        self.show_vegetation = True
+        self.show_floor = True
+        self.show_wall = True
         self.show_other_down = True
+        self.show_water = True
+        self.show_vegetation = True
         self.show_other_up = True
-
+        self.show_celling = False # for TANK MASTERS (no TANK MASTERS CLASSIC)
         self.show_effect_up = True
 
         self.show_grid = True
@@ -51,7 +53,7 @@ class map(object):
         self.effect_up_img = objects_display[0].effect_up_img
 
         self.circle_spawn = circle_label(0, 0, 360, size_circle=5, color=(9, 0, 0, 255))
-        self.image_spawn = image_label('spawn.png', 0, 0, pixel=False, center=False)
+        self.image_spawn = image_label('editor/spawn.png', 0, 0, pixel=False, center=False)
 
         self.select_block_grid_image = image_label('buttons/frame/frame_selected.png', 0, 0, pixel=False, center=False)
 
@@ -415,53 +417,6 @@ class map(object):
                 print("SAVE WORLD")
                 objects_display[0].save_file(self.world_file_name)
 
-            elif symbol == key.C:
-                if self.show_celling:
-                    self.show_celling = False
-                else:
-                    self.show_celling = True
-            elif symbol == key.V:
-                if self.show_vegetation:
-                    self.show_vegetation = False
-                else:
-                    self.show_vegetation = True
-
-            elif symbol == key.B:
-                if self.show_other_up:
-                    self.show_other_up = False
-                else:
-                    self.show_other_up = True
-
-            elif symbol == key.L:
-                if self.show_effect_up:
-                    self.show_effect_up = False
-                else:
-                    self.show_effect_up = True
-
-            elif symbol == key.N:
-                if self.show_other_down:
-                    self.show_other_down = False
-                else:
-                    self.show_other_down = True
-
-        elif symbol == key.Q:
-            if self.show_grid:
-                self.show_grid = False
-            else:
-                self.show_grid = True
-
-        elif symbol == key.X:
-            if self.cut:
-                self.cut = False
-            else:
-                self.cut = True
-
-        elif symbol == key.T:
-            if self.press_or_line:
-                self.press_or_line = False
-            else:
-                self.press_or_line = True
-
         elif symbol == key.J:
             self.scale_map(1)
 
@@ -511,7 +466,7 @@ class map(object):
                 ok = False
                 break
 
-        if not self.inventory_bool and ok:
+        if not self.inventory_bool and ok and not get_obj_display('editor_gui').hover:
             if button == 1 and not self.cut:
                 x_ = int( ( ( (self.pos[0] - x)/self.scale )//self.size) ) + 1
                 y_ = int( ( ( (self.pos[1] - y)/self.scale )//self.size) )
@@ -519,8 +474,9 @@ class map(object):
                 _x_ = int(math.sqrt(x_ ** 2))
                 _y_ = self.world_size[1] - int(math.sqrt(y_ ** 2))
 
-                print(_x_, _y_)
-                print(self.get_block_num(_x_, _y_))
+                #print(_x_, _y_)
+                #print(self.get_block_num(_x_, _y_))
+
                 # [_x_, _y_]
                 if get_obj_display('map_inventory').selected_type == 0:
                     self.map_floor[self.get_block_num(_x_, _y_)] = get_obj_display('map_inventory').selected_block + '.' + str(get_obj_display('map_inventory').current_rot)
@@ -627,26 +583,29 @@ class map(object):
             self.image_grid.scale = self.scale
 
     def draw(self):
-        drawp(self.image_floor)
+        if get_obj_display('editor_gui').layers_buttons[0].flag:
+            drawp(self.image_floor)
 
-        drawp(self.image_wall)
+        if get_obj_display('editor_gui').layers_buttons[1].flag:
+            drawp(self.image_wall)
 
-        if self.show_other_down:
+        if get_obj_display('editor_gui').layers_buttons[2].flag:
             drawp(self.image_other_down)
 
-        drawp(self.image_water)
+        if get_obj_display('editor_gui').layers_buttons[3].flag:
+            drawp(self.image_water)
 
-        if self.show_vegetation:
+        if get_obj_display('editor_gui').layers_buttons[4].flag:
             drawp(self.image_vegetation)
 
-        if self.show_other_up:
+        if get_obj_display('editor_gui').layers_buttons[5].flag:
             drawp(self.image_other_up)
 
-        if self.show_celling:
-            drawp(self.image_ceiling)
+        #if get_obj_display('gui').layers_buttons[6]:
+        #    drawp(self.image_ceiling)
 
-        if self.show_effect_up:
-            drawp(self.image_effect_up)
+        #if get_obj_display('editor_gui').layers_buttons[6].flag:
+        #    drawp(self.image_effect_up)
 
         for s in self.spawn:
             self.image_spawn.sprite.x = int((s[0]) * (self.size))*self.scale + self.pos[0]
@@ -655,6 +614,6 @@ class map(object):
 
             drawp(self.image_spawn)
 
-        if self.show_grid:
+        if get_obj_display('editor_gui').layers_buttons[6].flag:
             drawp(self.image_grid)
             drawp(self.image_grid)

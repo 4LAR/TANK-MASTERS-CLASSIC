@@ -829,7 +829,7 @@ class breathing_label(): # класс для прорисовки 4х уголь
         self.rec.draw()
 
 class image_flag():
-    def __init__(self, x, y, image, image_flag, scale=1, rotation=0, alpha=255, center=False, image_selected_flag=None, image_selected=None, poligon=False, function_bool = False, function=None, arg=None, text=None, text_color=(0, 0, 0, 0), text_indent=0, font='default.ttf', shadow=False, color_shadow=(0, 0, 0, 128), use=True):
+    def __init__(self, x, y, image, image_flag, scale=1, rotation=0, alpha=255, center=False, image_selected_flag=None, image_selected=None, poligon=False, function_bool = False, function=None, arg=None, text=None, text_color=(0, 0, 0, 0), text_indent=0, font='default.ttf', shadow=False, color_shadow=(0, 0, 0, 128), use=True, text_scale=5.5, text_size_y=1.6):
         self.use = use
 
         self.x = x
@@ -853,10 +853,10 @@ class image_flag():
         self.font = font
 
         if self.text != None:
-            size = self.scale * 5.5
+            size = self.scale * text_scale
             self.text_label = text_label(
                 self.x + text_indent,
-                self.y + size * 1.6,
+                self.y + size * text_size_y,
                 self.text,
                 load_font=True, font=font, size=int(size),
                 anchor_x='left', color=text_color

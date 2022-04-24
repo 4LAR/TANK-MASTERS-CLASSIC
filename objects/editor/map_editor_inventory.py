@@ -203,21 +203,7 @@ class map_inventory():
 
     def on_mouse_scroll(self, x, y, scroll_x, scroll_y):
         pass
-        #if get_obj_display('map').inventory_bool:
-        #    self.scroll += self.scroll_tick * scroll_y
-        #    if self.scroll > 0:
-        #        self.scroll = 0
-        #    self.update_inventory()
-
-        #else:
-        #    if not keyboard[key.LCTRL]:
-        #        self.hotbar_num -= int(scroll_y)
-        #        if self.hotbar_num < 0:
-        #            self.hotbar_num = 9
-        #        elif self.hotbar_num > 9:
-        #            self.hotbar_num = 0
-        #        self.hotbar_change_num(self.hotbar_num)
-
+        
     def change_block(self, block_type, block_name):
         self.selected_block = block_name
         self.selected_type = block_type

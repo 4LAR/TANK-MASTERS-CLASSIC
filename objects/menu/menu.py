@@ -70,7 +70,8 @@ class head_menu():
 
         self.text.draw()
 
-        self.version_text.draw()
+        if not self.align_top:
+            self.version_text.draw()
 
         if (self.draw_user and not self.align_top):
             self.user_button.draw()
