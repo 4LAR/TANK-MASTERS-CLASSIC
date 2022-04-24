@@ -370,6 +370,13 @@ class map(object):
     def update_camera_pos(self, x=0, y=0):
         self.pos = [self.pos[0] + x, self.pos[1] + y]
 
+    def exit(self):
+        print("SAVE WORLD")
+        objects_display[0].save_file(self.world_file_name)
+        menu()
+        background_sound.play('sound/background/forest waterfall.wav')
+        return pyglet.event.EVENT_HANDLED
+
     def update(self):
         if not self.inventory_bool:
             speed = self.speed * 2 if keyboard[key.LSHIFT] else self.speed
@@ -438,11 +445,7 @@ class map(object):
         get_obj_display('map_inventory').text.label.text = ((get_obj_display('map_inventory').selected_block + '.' +  str(get_obj_display('map_inventory').current_rot)) if not self.cut else 'cut') + '\n' + ('press' if self.press_or_line else 'line')
 
         if symbol == pyglet.window.key.ESCAPE:
-            print("SAVE WORLD")
-            objects_display[0].save_file(self.world_file_name)
-            menu()
-            background_sound.play('sound/background/forest waterfall.wav')
-            return pyglet.event.EVENT_HANDLED
+           return self.exit()
 
     def open_inventory(self):
         if self.inventory_bool:

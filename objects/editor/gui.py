@@ -6,6 +6,23 @@ class editor_gui():
 
         self.head = head_menu(draw_user=False)
 
+        self.back_button = image_button(
+            -settings.width/15, 
+            settings.height - settings.height/6 - (settings.height/10)*(-1),
+            'buttons/button_clear_full_kv.png', 
+            scale=settings.height/160, 
+            center=False, 
+            arg="get_obj_display(\'map\').exit()", 
+
+            image_selected='buttons/button_clear_full_kv_selected.png', 
+            text=language.json['menu']['exit'], 
+            text_color = (150, 150, 150, 255),
+            font='pixel.ttf',
+            text_indent=settings.height/5,
+
+            text_size_y=1.2
+        )
+
         self.show_layers_flag = image_flag(
             settings.width - settings.width/4.3,
             settings.height - settings.height/6 - (settings.height/10)*(-1),
@@ -82,6 +99,8 @@ class editor_gui():
     def update(self):
         self.hover = self.show_layers_flag.selected
         
+        self.hover = True if self.back_button.selected else self.hover
+
         for b in self.layers_buttons:
             if b.selected:
                 self.hover = True
@@ -90,6 +109,7 @@ class editor_gui():
     def on_mouse_motion(self, x, y, dx, dy):
         # top bar
         self.show_layers_flag.on_mouse_motion(x, y, dx, dy)
+        self.back_button.on_mouse_motion(x, y, dx, dy)
 
         # right bar
         if self.show_layers_flag.flag:
@@ -108,6 +128,7 @@ class editor_gui():
     def on_mouse_press(self, x, y, button, modifiers):
         # top bar
         self.show_layers_flag.on_mouse_press(x, y, button, modifiers)
+        self.back_button.on_mouse_press(x, y, button, modifiers)
 
         # right bar
         if self.show_layers_flag.flag:
@@ -118,6 +139,7 @@ class editor_gui():
         # top bar
         self.head.draw()
         self.show_layers_flag.draw()
+        self.back_button.draw()
 
         # right bar
         if self.show_layers_flag.flag:

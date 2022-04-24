@@ -994,7 +994,7 @@ class image_flag():
 
 
 class image_button():
-    def __init__(self, x, y, image, scale=1, rotation=0, alpha=255, center=False, function=None, arg=None, image_selected=None, poligon=False, text=None, text_color=(180, 180, 180, 255), font='pixel.ttf', text_indent=0, shadow=False, color_shadow=(0, 0, 0, 128), draw_info=False, alight_info='rt', text_info='', use=True):
+    def __init__(self, x, y, image, scale=1, rotation=0, alpha=255, center=False, function=None, arg=None, image_selected=None, poligon=False, text=None, text_color=(180, 180, 180, 255), font='pixel.ttf', text_indent=0, shadow=False, color_shadow=(0, 0, 0, 128), draw_info=False, alight_info='rt', text_info='', use=True, text_scale=5.5, text_size_y=1.6):
         self.use = use
 
         self.draw_info = draw_info
@@ -1016,8 +1016,8 @@ class image_button():
         self.text = text
 
         if self.text != None:
-            size = self.scale * 5.5
-            self.text = text_label(self.x + text_indent, self.y + size*1.6, self.text, load_font=True, font=font, size=int(size), anchor_x='left', color=text_color)
+            size = self.scale * text_scale
+            self.text = text_label(self.x + text_indent, self.y + size*text_size_y, self.text, load_font=True, font=font, size=int(size), anchor_x='left', color=text_color)
 
         self.arg = arg
 
