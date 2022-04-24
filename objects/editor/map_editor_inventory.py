@@ -139,7 +139,7 @@ class map_inventory():
             if self.x >= settings.width - (settings.width//10)*3 - self.image_width*1.2:
                 self.x = 0
                 self.y += self.image_height*1.2
-            arg = 'objects_display[2].change_block(0, "'+self.floor_blocks_name[i]+'")'
+            arg = 'get_obj_display(\'map_inventory\').change_block(0, "'+self.floor_blocks_name[i]+'")'
             self.buttons[0].append(image_button(settings.width/4 + self.x, settings.height - self.image_height - self.y, 'world/floor/' + self.floor_blocks_name[i] + '.png', scale=self.image_scale, center=False, arg=arg))
 
         self.x = -self.image_width*1.2
@@ -150,7 +150,7 @@ class map_inventory():
             if self.x >= settings.width - (settings.width//10)*3 - self.image_width*1.2:
                 self.x = 0
                 self.y += self.image_height*1.2
-            arg = 'objects_display[2].change_block(1, "'+self.wall_block_name[i]+'")'
+            arg = 'get_obj_display(\'map_inventory\').change_block(1, "'+self.wall_block_name[i]+'")'
             self.buttons[1].append(image_button(settings.width/4 + self.x, settings.height - self.image_height - self.y, 'world/wall/' + self.wall_block_name[i] + '.png', scale=self.image_scale, center=False, arg=arg))
 
         self.x = -self.image_width*1.2
@@ -162,7 +162,7 @@ class map_inventory():
                 if self.x >= settings.width - (settings.width//10)*3 - self.image_width*1.2:
                     self.x = 0
                     self.y += self.image_height*1.2
-                arg = 'objects_display[2].change_block(2, "'+self.water_block_name[i]+'")'
+                arg = 'get_obj_display(\'map_inventory\').change_block(2, "'+self.water_block_name[i]+'")'
                 self.buttons[2].append(image_button(settings.width/4 + self.x, settings.height - self.image_height - self.y, 'world/liquid/' + self.water_block_name[i] + '.png', scale=self.image_scale, center=False, arg=arg))
 
 
@@ -174,7 +174,7 @@ class map_inventory():
             if self.x >= settings.width - (settings.width//10)*3 - self.image_width*1.2:
                 self.x = 0
                 self.y += self.image_height*1.2
-            arg = 'objects_display[2].change_block(3, "'+self.vegetation_block_name[i]+'")'
+            arg = 'get_obj_display(\'map_inventory\').change_block(3, "'+self.vegetation_block_name[i]+'")'
             self.buttons[3].append(image_button(settings.width/4 + self.x, settings.height - self.image_height - self.y, 'world/vegetation/' + self.vegetation_block_name[i] + '.png', scale=self.image_scale, center=False, arg=arg))
 
         self.x = -self.image_width*1.2
@@ -185,7 +185,7 @@ class map_inventory():
             if self.x >= settings.width - (settings.width//10)*3 - self.image_width*1.2:
                 self.x = 0
                 self.y += self.image_height*1.2
-            arg = 'objects_display[2].change_block(5, "'+self.other_up_block_name[i]+'")'
+            arg = 'get_obj_display(\'map_inventory\').change_block(5, "'+self.other_up_block_name[i]+'")'
             self.buttons[4].append(image_button(settings.width/4 + self.x, settings.height - self.image_height - self.y, 'world/other_up/' + self.other_up_block_name[i] + '.png', scale=self.image_scale, center=False, arg=arg))
 
         self.x = -self.image_width*1.2
@@ -196,14 +196,14 @@ class map_inventory():
             if self.x >= settings.width - (settings.width//10)*3 - self.image_width*1.2:
                 self.x = 0
                 self.y += self.image_height*1.2
-            arg = 'objects_display[2].change_block(6, "'+self.other_down_block_name[i]+'")'
+            arg = 'get_obj_display(\'map_inventory\').change_block(6, "'+self.other_down_block_name[i]+'")'
             self.buttons[5].append(image_button(settings.width/4 + self.x, settings.height - self.image_height - self.y, 'world/other_down/' + self.other_down_block_name[i] + '.png', scale=self.image_scale, center=False, arg=arg))
 
         self.buttons.append([])
 
     def on_mouse_scroll(self, x, y, scroll_x, scroll_y):
         pass
-        #if objects_display[1].inventory_bool:
+        #if get_obj_display('map').inventory_bool:
         #    self.scroll += self.scroll_tick * scroll_y
         #    if self.scroll > 0:
         #        self.scroll = 0
@@ -221,15 +221,15 @@ class map_inventory():
     def change_block(self, block_type, block_name):
         self.selected_block = block_name
         self.selected_type = block_type
-        self.text.label.text = ((block_name + '.' +  str(self.current_rot)) if not objects_display[1].cut else 'cut') + '\n' + ('press' if objects_display[1].press_or_line else 'line')
+        self.text.label.text = ((block_name + '.' +  str(self.current_rot)) if not get_obj_display('map').cut else 'cut') + '\n' + ('press' if get_obj_display('map').press_or_line else 'line')
         self.update_image_block()
 
     def update_rot_change_block(self):
-        self.text.label.text = ((self.selected_block + '.' +  str(self.current_rot)) if not objects_display[1].cut else 'cut') + '\n' + ('press' if objects_display[1].press_or_line else 'line')#self.selected_block + '.' +  str(self.current_rot)
+        self.text.label.text = ((self.selected_block + '.' +  str(self.current_rot)) if not get_obj_display('map').cut else 'cut') + '\n' + ('press' if get_obj_display('map').press_or_line else 'line')#self.selected_block + '.' +  str(self.current_rot)
         self.update_image_block()
 
     def on_mouse_motion(self, x, y, dx, dy):
-        if objects_display[1].inventory_bool:
+        if get_obj_display('map').inventory_bool:
             for b in self.inventory_buttons_select_type:
                 b.on_mouse_motion(x, y, dx, dy)
 
@@ -240,7 +240,7 @@ class map_inventory():
             b.on_mouse_motion(x, y, dx, dy)
 
     def on_mouse_press(self, x, y, button, modifiers):
-        if objects_display[1].inventory_bool:
+        if get_obj_display('map').inventory_bool:
             for b in self.inventory_buttons_select_type:
                 if b.on_mouse_press(x, y, button, modifiers):
                     return True
@@ -259,7 +259,7 @@ class map_inventory():
         for b in self.hotbar_buttons:
             drawp(b)
 
-        if objects_display[1].inventory_bool:
+        if get_obj_display('map').inventory_bool:
             self.backgraund.draw()
             for button in self.buttons[self.inventory_buttons_select_num]:
                 button.draw()

@@ -469,18 +469,18 @@ class map(object):
             self.scale_map(-1)
 
         elif symbol == key.F:
-            objects_display[2].selected_type = -1
+            get_obj_display('map_inventory').selected_type = -1
 
         elif symbol == key.R:
-            objects_display[2].current_rot += 90
-            if objects_display[2].current_rot > 270:
-                objects_display[2].current_rot = 0
-            objects_display[2].update_rot_change_block()
+            get_obj_display('map_inventory').current_rot += 90
+            if get_obj_display('map_inventory').current_rot > 270:
+                get_obj_display('map_inventory').current_rot = 0
+            get_obj_display('map_inventory').update_rot_change_block()
 
         elif symbol == key.E:
             self.open_inventory()
 
-        objects_display[2].text.label.text = ((objects_display[2].selected_block + '.' +  str(objects_display[2].current_rot)) if not self.cut else 'cut') + '\n' + ('press' if self.press_or_line else 'line')
+        get_obj_display('map_inventory').text.label.text = ((get_obj_display('map_inventory').selected_block + '.' +  str(get_obj_display('map_inventory').current_rot)) if not self.cut else 'cut') + '\n' + ('press' if self.press_or_line else 'line')
 
         if symbol == pyglet.window.key.ESCAPE:
             print("SAVE WORLD")
@@ -522,39 +522,39 @@ class map(object):
                 print(_x_, _y_)
                 print(self.get_block_num(_x_, _y_))
                 # [_x_, _y_]
-                if objects_display[2].selected_type == 0:
-                    self.map_floor[self.get_block_num(_x_, _y_)] = objects_display[2].selected_block + '.' + str(objects_display[2].current_rot)
+                if get_obj_display('map_inventory').selected_type == 0:
+                    self.map_floor[self.get_block_num(_x_, _y_)] = get_obj_display('map_inventory').selected_block + '.' + str(get_obj_display('map_inventory').current_rot)
                     self.update_render_floor()
 
-                elif objects_display[2].selected_type == 1:
-                    self.map_wall[self.get_block_num(_x_, _y_)] = objects_display[2].selected_block + '.' + str(objects_display[2].current_rot)
+                elif get_obj_display('map_inventory').selected_type == 1:
+                    self.map_wall[self.get_block_num(_x_, _y_)] = get_obj_display('map_inventory').selected_block + '.' + str(get_obj_display('map_inventory').current_rot)
                     self.update_render_wall()
 
-                elif objects_display[2].selected_type == 2:
-                    self.map_water[self.get_block_num(_x_, _y_)] = objects_display[2].selected_block + '.' + str(objects_display[2].current_rot)
+                elif get_obj_display('map_inventory').selected_type == 2:
+                    self.map_water[self.get_block_num(_x_, _y_)] = get_obj_display('map_inventory').selected_block + '.' + str(get_obj_display('map_inventory').current_rot)
                     self.update_render_water()
 
-                elif objects_display[2].selected_type == 3:
-                    self.map_vegetation[self.get_block_num(_x_, _y_)] = objects_display[2].selected_block + '.' + str(objects_display[2].current_rot)
+                elif get_obj_display('map_inventory').selected_type == 3:
+                    self.map_vegetation[self.get_block_num(_x_, _y_)] = get_obj_display('map_inventory').selected_block + '.' + str(get_obj_display('map_inventory').current_rot)
                     self.update_render_vegetation()
 
-                elif objects_display[2].selected_type == 4:
-                    self.map_ceiling[self.get_block_num(_x_, _y_)] = objects_display[2].selected_block + '.' + str(objects_display[2].current_rot)
+                elif get_obj_display('map_inventory').selected_type == 4:
+                    self.map_ceiling[self.get_block_num(_x_, _y_)] = get_obj_display('map_inventory').selected_block + '.' + str(get_obj_display('map_inventory').current_rot)
                     self.update_render_ceiling()
                 #####
-                elif objects_display[2].selected_type == 5:
-                    self.map_other_up[self.get_block_num(_x_, _y_)] = objects_display[2].selected_block + '.' + str(objects_display[2].current_rot)
+                elif get_obj_display('map_inventory').selected_type == 5:
+                    self.map_other_up[self.get_block_num(_x_, _y_)] = get_obj_display('map_inventory').selected_block + '.' + str(get_obj_display('map_inventory').current_rot)
                     self.update_render_other_up()
 
-                elif objects_display[2].selected_type == 6:
-                    self.map_other_down[self.get_block_num(_x_, _y_)] = objects_display[2].selected_block + '.' + str(objects_display[2].current_rot)
+                elif get_obj_display('map_inventory').selected_type == 6:
+                    self.map_other_down[self.get_block_num(_x_, _y_)] = get_obj_display('map_inventory').selected_block + '.' + str(get_obj_display('map_inventory').current_rot)
                     self.update_render_other_down()
 
-                elif objects_display[2].selected_type == 7:
-                    self.map_effect_up[self.get_block_num(_x_, _y_)] = objects_display[2].selected_block + '.' + str(objects_display[2].current_rot)
+                elif get_obj_display('map_inventory').selected_type == 7:
+                    self.map_effect_up[self.get_block_num(_x_, _y_)] = get_obj_display('map_inventory').selected_block + '.' + str(get_obj_display('map_inventory').current_rot)
                     self.update_render_effect_up()
 
-                elif objects_display[2].selected_type == -1:
+                elif get_obj_display('map_inventory').selected_type == -1:
                     self.set_spawn([_x_, _y_])
 
             if button == 4 or self.cut:
@@ -566,39 +566,39 @@ class map(object):
 
                 print(_x_, _y_)
 
-                if objects_display[2].selected_type == 0:
+                if get_obj_display('map_inventory').selected_type == 0:
                     self.map_floor[self.get_block_num(_x_, _y_)] = 'none'
                     self.update_render_floor()
 
-                elif objects_display[2].selected_type == 1:
+                elif get_obj_display('map_inventory').selected_type == 1:
                     self.map_wall[self.get_block_num(_x_, _y_)] = 'none'
                     self.update_render_wall()
 
-                elif objects_display[2].selected_type == 2:
+                elif get_obj_display('map_inventory').selected_type == 2:
                     self.map_water[self.get_block_num(_x_, _y_)] = 'none'
                     self.update_render_water()
 
-                elif objects_display[2].selected_type == 3:
+                elif get_obj_display('map_inventory').selected_type == 3:
                     self.map_vegetation[self.get_block_num(_x_, _y_)] = 'none'
                     self.update_render_vegetation()
 
-                elif objects_display[2].selected_type == 4:
+                elif get_obj_display('map_inventory').selected_type == 4:
                     self.map_ceiling[self.get_block_num(_x_, _y_)] = 'none'
                     self.update_render_ceiling()
                 #######
-                elif objects_display[2].selected_type == 5:
+                elif get_obj_display('map_inventory').selected_type == 5:
                     self.map_other_up[self.get_block_num(_x_, _y_)] = 'none'
                     self.update_render_other_up()
 
-                elif objects_display[2].selected_type == 6:
+                elif get_obj_display('map_inventory').selected_type == 6:
                     self.map_other_down[self.get_block_num(_x_, _y_)] = 'none'
                     self.update_render_other_down()
 
-                elif objects_display[2].selected_type == 7:
+                elif get_obj_display('map_inventory').selected_type == 7:
                     self.map_effect_up[self.get_block_num(_x_, _y_)] = 'none'
                     self.update_render_effect_up()
 
-                elif objects_display[2].selected_type == -1:
+                elif get_obj_display('map_inventory').selected_type == -1:
                     self.del_spawn([_x_, _y_])
 
     def on_mouse_scroll(self, x, y, scroll_x, scroll_y):
