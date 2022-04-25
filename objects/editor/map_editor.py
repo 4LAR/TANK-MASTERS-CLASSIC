@@ -17,6 +17,8 @@ class map(object):
         self.show_celling = False # for TANK MASTERS (no TANK MASTERS CLASSIC)
         self.show_effect_up = True
 
+        self.show_cursor = True
+
         self.show_grid = True
 
         self.cut = False
@@ -120,6 +122,8 @@ class map(object):
         self.temp_image_other_down = None
 
         self.update_render()
+
+        self.select_block_grid_image.sprite.scale = self.scale/2
 
     def get_floor(self, x, y):
         return self.map_floor[self.get_block_num(x, y)]
@@ -369,6 +373,7 @@ class map(object):
 
     def update_camera_pos(self, x=0, y=0):
         self.pos = [self.pos[0] + x, self.pos[1] + y]
+        self.update_pos_cursor()
 
     def exit(self):
         print("SAVE WORLD")
@@ -523,7 +528,7 @@ class map(object):
                 _x_ = int(math.sqrt(x_ ** 2))
                 _y_ = self.world_size[1] - int(math.sqrt(y_ ** 2))
 
-                print(_x_, _y_)
+                #print(_x_, _y_)
 
                 if get_obj_display('map_inventory').selected_type == 0:
                     self.map_floor[self.get_block_num(_x_, _y_)] = 'none'
@@ -564,8 +569,17 @@ class map(object):
         #if keyboard[key.LCTRL]:
         self.scale_map(scroll_y)
 
+    def update_pos_cursor(self):
+        if self.show_cursor:
+            x_ = int( ( ( (self.pos[0] - self.mouse_pos[0])/self.scale )//self.size) ) + 1
+            y_ = int( ( ( (self.pos[1] - self.mouse_pos[1])/self.scale )//self.size) ) + 1
+
+            self.select_block_grid_image.sprite.x = self.pos[0] - (x_ * 8 * self.scale)
+            self.select_block_grid_image.sprite.y = self.pos[1] - (y_ * 8 * self.scale)
+
     def on_mouse_motion(self, x, y, dx, dy):
         self.mouse_pos = [x, y]
+        self.update_pos_cursor()
 
     def scale_map(self, scroll_y):
         if not self.inventory_bool:
@@ -584,6 +598,9 @@ class map(object):
             self.image_effect_up.scale = self.scale
 
             self.image_grid.scale = self.scale
+
+            self.select_block_grid_image.sprite.scale = self.scale/2
+            self.update_pos_cursor()
 
     def draw(self):
         if get_obj_display('editor_gui').layers_buttons[0].flag:
@@ -620,3 +637,6 @@ class map(object):
         if get_obj_display('editor_gui').layers_buttons[6].flag:
             drawp(self.image_grid)
             drawp(self.image_grid)
+
+        if self.show_cursor:
+            drawp(self.select_block_grid_image)
