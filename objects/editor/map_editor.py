@@ -457,10 +457,7 @@ class map(object):
            return self.exit()
 
     def open_inventory(self):
-        if self.inventory_bool:
-            self.inventory_bool = False
-        else:
-            self.inventory_bool = True
+        self.inventory_bool = not self.inventory_bool
 
     def on_mouse_press(self, x, y, button, modifiers):
         if self.press_or_line:
