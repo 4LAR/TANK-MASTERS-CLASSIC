@@ -24,6 +24,8 @@ class map(object):
         self.cut = False
         self.press_or_line = True
 
+        self.press_space = False
+
         self.batch = pyglet.graphics.Batch()
 
         self.range = 5
@@ -395,6 +397,8 @@ class map(object):
                 elif keyboard[key.D]:
                     self.update_camera_pos(x=-speed)
 
+            self.press_space = keyboard[key.SPACE]
+
         self.image_floor.x = self.pos[0]
         self.image_floor.y = self.pos[1]
 
@@ -460,12 +464,16 @@ class map(object):
 
     def on_mouse_press(self, x, y, button, modifiers):
         if self.press_or_line:
-            self.set_or_cut_block(x, y, button)
+            if not self.press_space:
+                self.set_or_cut_block(x, y, button)
 
     def on_mouse_drag(self, x, y, dx, dy, buttons, modifiers):
-        if not self.press_or_line:
+        if not self.press_or_line and not self.press_space:
             button = buttons
             self.set_or_cut_block(x, y, button)
+
+        if self.press_space:
+            self.update_camera_pos(x=dx, y=dy)
 
     def set_or_cut_block(self, x, y, button):
         ok = True
@@ -638,5 +646,5 @@ class map(object):
             drawp(self.image_grid)
             drawp(self.image_grid)
 
-        if self.show_cursor:
+        if self.show_cursor and not self.press_space:
             drawp(self.select_block_grid_image)
