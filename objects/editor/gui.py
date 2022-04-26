@@ -1,21 +1,21 @@
 class editor_gui():
     def __init__(self):
-        # top bar
-
         self.hover = False
+
+        # top bar
 
         self.head = head_menu(draw_user=False)
 
         self.back_button = image_button(
-            -settings.width/15, 
+            settings.width - settings.width/25,
             settings.height - settings.height/6 - (settings.height/10)*(-1),
-            'buttons/button_clear_full_kv.png', 
-            scale=settings.height/160, 
-            center=False, 
-            arg="get_obj_display(\'map\').exit()", 
+            'buttons/button_clear_full_kv.png',
+            scale=settings.height/160,
+            center=False,
+            arg="get_obj_display(\'map\').exit()",
 
-            image_selected='buttons/button_clear_full_kv_selected.png', 
-            text=language.json['menu']['exit'], 
+            image_selected='buttons/button_clear_full_kv_selected.png',
+            text=language.json['menu']['exit'],
             text_color = (150, 150, 150, 255),
             font='pixel.ttf',
             text_indent=settings.height/5,
@@ -31,8 +31,6 @@ class editor_gui():
             image_selected_flag='buttons/button_clear_full_kv_selected.png',
             image_selected='buttons/button_clear_full_kv_selected.png',
             scale=settings.height/160,
-            #function_bool = True,
-            #arg='get_obj_display(\'map_inventory\').inventory_buttons_select(' + str(i) + ')',
 
             text='layers',
             text_color = (150, 150, 150, 255),
@@ -42,6 +40,64 @@ class editor_gui():
             text_size_y=1.2
 
         )
+
+        self.save_button = image_button(
+            settings.width - settings.width/2.9,
+            settings.height - settings.height/6 - (settings.height/10)*(-1),
+            'editor/save_button/button.png',
+            scale=settings.height/160,
+            center=False,
+            #arg="get_obj_display(\'map\').exit()",
+
+            image_selected='editor/save_button/button_selected.png',
+            text='save',
+            text_color = (150, 150, 150, 255),
+            font='pixel.ttf',
+            text_indent=settings.height/40,
+
+            text_size_y=1.2
+        )
+
+        # 0 - drag and drop
+        # 1 - pressing
+        # 2 - clamping
+        self.cursor_type = []
+        for i in range(3):
+            self.cursor_type.append(
+                image_flag(
+                    settings.width/100 + (settings.width/23)*i,
+                    settings.height - settings.height/6 - (settings.height/10)*(-1),
+                    image='buttons/ramka_med/ramka.png',
+                    image_flag='buttons/ramka_med/ramka_selected.png',
+                    image_selected_flag='buttons/ramka_med/ramka_selected.png',
+                    image_selected='buttons/ramka_med/ramka_selected.png',
+
+                    scale=settings.height/240,
+                    center=False,
+
+                    #shadow=graphics_settings.shadows_buttons
+                )
+            )
+
+        # 0 - draw
+        # 1 - delete
+        self.draw_type = []
+        for i in range(2):
+            self.draw_type.append(
+                image_flag(
+                    settings.width/100 + (settings.width/20)*3 + (settings.width/20)*i,
+                    settings.height - settings.height/6 - (settings.height/10)*(-1),
+                    image='buttons/ramka_med/ramka.png',
+                    image_flag='buttons/ramka_med/ramka_selected.png',
+                    image_selected_flag='buttons/ramka_med/ramka_selected.png',
+                    image_selected='buttons/ramka_med/ramka_selected.png',
+
+                    scale=settings.height/240,
+                    center=False,
+
+                    #shadow=graphics_settings.shadows_buttons
+                )
+            )
 
         # right bar
         self.layers_buttons = []
@@ -98,7 +154,7 @@ class editor_gui():
 
     def update(self):
         self.hover = self.show_layers_flag.selected
-        
+
         self.hover = True if self.back_button.selected else self.hover
 
         for b in self.layers_buttons:
@@ -110,6 +166,13 @@ class editor_gui():
         # top bar
         self.show_layers_flag.on_mouse_motion(x, y, dx, dy)
         self.back_button.on_mouse_motion(x, y, dx, dy)
+        self.save_button.on_mouse_motion(x, y, dx, dy)
+
+        for b in self.cursor_type:
+            b.on_mouse_motion(x, y, dx, dy)
+
+        for b in self.draw_type:
+            b.on_mouse_motion(x, y, dx, dy)
 
         # right bar
         if self.show_layers_flag.flag:
@@ -129,6 +192,13 @@ class editor_gui():
         # top bar
         self.show_layers_flag.on_mouse_press(x, y, button, modifiers)
         self.back_button.on_mouse_press(x, y, button, modifiers)
+        self.save_button.on_mouse_press(x, y, button, modifiers)
+
+        for b in self.cursor_type:
+            b.on_mouse_press(x, y, button, modifiers)
+
+        for b in self.draw_type:
+            b.on_mouse_press(x, y, button, modifiers)
 
         # right bar
         if self.show_layers_flag.flag:
@@ -140,6 +210,13 @@ class editor_gui():
         self.head.draw()
         self.show_layers_flag.draw()
         self.back_button.draw()
+        self.save_button.draw()
+
+        for b in self.cursor_type:
+            b.draw()
+
+        for b in self.draw_type:
+            b.draw()
 
         # right bar
         if self.show_layers_flag.flag:
