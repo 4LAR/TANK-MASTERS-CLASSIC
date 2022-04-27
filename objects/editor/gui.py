@@ -22,6 +22,13 @@ class editor_gui():
 
             text_size_y=1.2
         )
+        self.back_button_image = image_label(
+            'editor/exit.png',
+            settings.width - settings.width/30,
+            settings.height - settings.height/6.4 - (settings.height/10)*(-1),
+            scale=settings.height/300,
+            pixel=True
+        )
 
         self.show_layers_flag = image_flag(
             settings.width - settings.width/4.3,
@@ -47,7 +54,8 @@ class editor_gui():
             'editor/save_button/button.png',
             scale=settings.height/160,
             center=False,
-            #arg="get_obj_display(\'map\').exit()",
+
+            arg='get_obj_display(\'map\').save()',
 
             image_selected='editor/save_button/button_selected.png',
             text='save',
@@ -72,12 +80,15 @@ class editor_gui():
                     image_selected_flag='buttons/ramka_med/ramka_selected.png',
                     image_selected='buttons/ramka_med/ramka_selected.png',
 
+                    function_bool=True,
+                    arg='get_obj_display(\'editor_gui\').change_cursor_type(' + str(i) + ')',
+
                     scale=settings.height/240,
                     center=False,
 
-                    #shadow=graphics_settings.shadows_buttons
                 )
             )
+            self.cursor_type[0].flag = True
 
         # 0 - draw
         # 1 - delete
@@ -92,12 +103,16 @@ class editor_gui():
                     image_selected_flag='buttons/ramka_med/ramka_selected.png',
                     image_selected='buttons/ramka_med/ramka_selected.png',
 
+                    function_bool=True,
+                    arg='get_obj_display(\'editor_gui\').change_draw_type(' + str(i) + ')',
+
                     scale=settings.height/240,
                     center=False,
 
-                    #shadow=graphics_settings.shadows_buttons
                 )
             )
+        self.draw_type[0].flag = True
+        
 
         # right bar
         self.layers_buttons = []
@@ -152,12 +167,33 @@ class editor_gui():
         self.font_scale = settings.height//36
         self.pos_text = text_label(settings.width - settings.width/5, settings.height/30, "cursor: 0 0", load_font=True, font='pixel.ttf', size=self.font_scale, anchor_x='left', color = (180, 180, 180, 255))
 
+    def change_cursor_type(self, id):
+        for i in range(len(self.cursor_type)):
+            if (i != id):
+                self.cursor_type[i].flag = False
+
+    def change_draw_type(self, id):
+        for i in range(len(self.draw_type)):
+            if (i != id):
+                self.draw_type[i].flag = False
+
     def update(self):
         self.hover = self.show_layers_flag.selected
 
+        self.hover = True if self.save_button.selected else self.hover
         self.hover = True if self.back_button.selected else self.hover
 
         for b in self.layers_buttons:
+            if b.selected:
+                self.hover = True
+                break
+
+        for b in self.cursor_type:
+            if b.selected:
+                self.hover = True
+                break
+
+        for b in self.draw_type:
             if b.selected:
                 self.hover = True
                 break
@@ -210,6 +246,7 @@ class editor_gui():
         self.head.draw()
         self.show_layers_flag.draw()
         self.back_button.draw()
+        self.back_button_image.draw()
         self.save_button.draw()
 
         for b in self.cursor_type:

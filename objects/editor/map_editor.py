@@ -377,9 +377,12 @@ class map(object):
         self.pos = [self.pos[0] + x, self.pos[1] + y]
         self.update_pos_cursor()
 
-    def exit(self):
+    def save(self):
         print("SAVE WORLD")
         objects_display[0].save_file(self.world_file_name)
+
+    def exit(self):
+        self.save()
         menu()
         background_sound.play('sound/background/forest waterfall.wav')
         return pyglet.event.EVENT_HANDLED
@@ -430,9 +433,7 @@ class map(object):
     def on_key_press(self, symbol, modifiers):
         if modifiers & key.MOD_CTRL:
             if symbol == key.S:
-                print("SAVE WORLD")
-                objects_display[0].save_file(self.world_file_name)
-
+                self.save()
         elif symbol == key.J:
             self.scale_map(1)
 
@@ -460,16 +461,16 @@ class map(object):
         self.inventory_bool = not self.inventory_bool
 
     def on_mouse_press(self, x, y, button, modifiers):
-        if self.press_or_line:
-            if not self.press_space:
+        if get_obj_display('editor_gui').cursor_type[1].flag:
+            if not (self.press_space or get_obj_display('editor_gui').cursor_type[0].flag):
                 self.set_or_cut_block(x, y, button)
 
     def on_mouse_drag(self, x, y, dx, dy, buttons, modifiers):
-        if not self.press_or_line and not self.press_space:
+        if get_obj_display('editor_gui').cursor_type[2].flag and not (self.press_space or get_obj_display('editor_gui').cursor_type[0].flag):
             button = buttons
             self.set_or_cut_block(x, y, button)
 
-        if self.press_space:
+        if self.press_space or get_obj_display('editor_gui').cursor_type[0].flag:
             self.update_camera_pos(x=dx, y=dy)
 
     def set_or_cut_block(self, x, y, button):
@@ -480,7 +481,7 @@ class map(object):
                 break
 
         if not self.inventory_bool and ok and not get_obj_display('editor_gui').hover:
-            if button == 1 and not self.cut:
+            if button == 1 and not get_obj_display('editor_gui').draw_type[1].flag:
                 x_ = int( ( ( (self.pos[0] - x)/self.scale )//self.size) ) + 1
                 y_ = int( ( ( (self.pos[1] - y)/self.scale )//self.size) )
 
@@ -526,7 +527,7 @@ class map(object):
                 elif get_obj_display('map_inventory').selected_type == -1:
                     self.set_spawn([_x_, _y_])
 
-            if button == 4 or self.cut:
+            if button == 4 or get_obj_display('editor_gui').draw_type[1].flag:
                 x_ = int( ( ( (self.pos[0] - x)/self.scale )//self.size) ) + 1
                 y_ = int( ( ( (self.pos[1] - y)/self.scale )//self.size) )
 
@@ -643,5 +644,5 @@ class map(object):
             drawp(self.image_grid)
             drawp(self.image_grid)
 
-        if self.show_cursor and not self.press_space:
+        if self.show_cursor and not(self.press_space or get_obj_display('editor_gui').cursor_type[0].flag):
             drawp(self.select_block_grid_image)
