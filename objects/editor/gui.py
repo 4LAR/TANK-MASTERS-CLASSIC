@@ -2,10 +2,13 @@ class editor_gui():
     def __init__(self):
         self.hover = False
 
+        self.font_scale = settings.height//36
+
         # top bar
 
         self.head = head_menu(draw_user=False)
 
+        # back to menu
         self.back_button = image_button(
             settings.width - settings.width/25,
             settings.height - settings.height/6 - (settings.height/10)*(-1),
@@ -26,10 +29,11 @@ class editor_gui():
             'editor/exit.png',
             settings.width - settings.width/30,
             settings.height - settings.height/6.4 - (settings.height/10)*(-1),
-            scale=settings.height/300,
+            scale=settings.height/150,
             pixel=True
         )
 
+        # layers
         self.show_layers_flag = image_flag(
             settings.width - settings.width/4.3,
             settings.height - settings.height/6 - (settings.height/10)*(-1),
@@ -47,9 +51,17 @@ class editor_gui():
             text_size_y=1.2
 
         )
+        self.show_layers_flag_image = image_label(
+            'editor/layers.png',
+            settings.width - settings.width/4.3 + settings.width/7,
+            settings.height - settings.height/6.4 - (settings.height/10)*(-1),
+            scale=settings.height/150,
+            pixel=True
+        )
 
+        # save
         self.save_button = image_button(
-            settings.width - settings.width/2.9,
+            settings.width - settings.width/2.7,
             settings.height - settings.height/6 - (settings.height/10)*(-1),
             'editor/save_button/button.png',
             scale=settings.height/160,
@@ -65,12 +77,32 @@ class editor_gui():
 
             text_size_y=1.2
         )
+        self.save_button_image = image_label(
+            'editor/save.png',
+            settings.width - settings.width/2.7 + settings.width/12.5,
+            settings.height - settings.height/6.4 - (settings.height/10)*(-1),
+            scale=settings.height/150,
+            pixel=True
+        )
+
+        # last save text
+        self.last_save_text = text_label(settings.width/40, settings.height - settings.height/10, 'last save: None', load_font=True, font='pixel.ttf', size=self.font_scale, anchor_x='left', color = (180, 180, 180, 255))
+
+        # tools
 
         # 0 - drag and drop
         # 1 - pressing
         # 2 - clamping
         self.cursor_type = []
-        for i in range(3):
+        self.cursor_type_img = []
+
+        self.cursor_type_names = [
+            'drag',
+            'pressing',
+            'clamping'
+        ]
+
+        for i in range(len(self.cursor_type_names)):
             self.cursor_type.append(
                 image_flag(
                     settings.width/100 + (settings.width/23)*i,
@@ -88,15 +120,33 @@ class editor_gui():
 
                 )
             )
-            self.cursor_type[0].flag = True
+
+            self.cursor_type_img.append(
+                image_label(
+                    'editor/' + self.cursor_type_names[i] +'.png',
+                    settings.width/100 + (settings.width/23)*i,
+                    settings.height - settings.height/6 - (settings.height/10)*(-1),
+                    scale=settings.height/240,
+                    pixel=True
+                )
+            )
+
+        self.cursor_type[0].flag = True
 
         # 0 - draw
         # 1 - delete
         self.draw_type = []
-        for i in range(2):
+        self.draw_type_img = []
+
+        self.draw_type_names = [
+            'draw',
+            'delete'
+        ]
+
+        for i in range(len(self.draw_type_names)):
             self.draw_type.append(
                 image_flag(
-                    settings.width/100 + (settings.width/20)*3 + (settings.width/20)*i,
+                    settings.width/100 + (settings.width/23)*(len(self.cursor_type_names) + 0.5) + (settings.width/23)*i,
                     settings.height - settings.height/6 - (settings.height/10)*(-1),
                     image='buttons/ramka_med/ramka.png',
                     image_flag='buttons/ramka_med/ramka_selected.png',
@@ -111,8 +161,18 @@ class editor_gui():
 
                 )
             )
+
+            self.draw_type_img.append(
+                image_label(
+                    'editor/' + self.draw_type_names[i] +'.png',
+                    settings.width/100 + (settings.width/23)*(len(self.cursor_type_names) + 0.5) + (settings.width/23)*i,
+                    settings.height - settings.height/6 - (settings.height/10)*(-1),
+                    scale=settings.height/240,
+                    pixel=True
+                )
+            )
+
         self.draw_type[0].flag = True
-        
 
         # right bar
         self.layers_buttons = []
@@ -161,18 +221,19 @@ class editor_gui():
 
                 )
             )
-            self.layers_buttons[i].flag = True
+            self.layers_buttons[i].flag = True if (i != len(self.layers_name)-1) else False
 
         # bottom bar
-        self.font_scale = settings.height//36
         self.pos_text = text_label(settings.width - settings.width/5, settings.height/30, "cursor: 0 0", load_font=True, font='pixel.ttf', size=self.font_scale, anchor_x='left', color = (180, 180, 180, 255))
 
     def change_cursor_type(self, id):
+        self.cursor_type[id].flag = True
         for i in range(len(self.cursor_type)):
             if (i != id):
                 self.cursor_type[i].flag = False
 
     def change_draw_type(self, id):
+        self.draw_type[id].flag = True
         for i in range(len(self.draw_type)):
             if (i != id):
                 self.draw_type[i].flag = False
@@ -217,12 +278,12 @@ class editor_gui():
 
         # bottom bar
         x_ = int( ( ( (get_obj_display('map').pos[0] - x)/get_obj_display('map').scale )//get_obj_display('map').size) ) + 1
-        y_ = int( ( ( (get_obj_display('map').pos[1] - y)/get_obj_display('map').scale )//get_obj_display('map').size) )
+        y_ = int( ( ( (get_obj_display('map').pos[1] - y)/get_obj_display('map').scale )//get_obj_display('map').size) ) - 1
 
-        _x_ = int(math.sqrt(x_ ** 2))
-        _y_ = get_obj_display('map').world_size[1] - int(math.sqrt(y_ ** 2))
+        #_x_ = int(math.sqrt(x_ ** 2))
+        #_y_ = get_obj_display('map').world_size[1] - int(math.sqrt(y_ ** 2))
 
-        self.pos_text.label.text = "cursor: " + str(_x_) + " " + str(_y_)
+        self.pos_text.label.text = "cursor: " + str(-x_) + " " + str(-y_)
 
     def on_mouse_press(self, x, y, button, modifiers):
         # top bar
@@ -246,12 +307,21 @@ class editor_gui():
         self.head.draw()
         self.show_layers_flag.draw()
         self.back_button.draw()
-        self.back_button_image.draw()
         self.save_button.draw()
 
+        self.show_layers_flag_image.draw()
+        self.back_button_image.draw()
+        self.save_button_image.draw()
+
+        self.last_save_text.draw()
+
+        for b in self.cursor_type_img:
+            b.draw()
         for b in self.cursor_type:
             b.draw()
 
+        for d in self.draw_type_img:
+            d.draw()
         for b in self.draw_type:
             b.draw()
 

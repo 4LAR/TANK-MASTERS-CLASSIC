@@ -198,19 +198,19 @@ class map(object):
         self.image_other_up.scale = self.scale
 
     def update_render_grid(self):
-        temp_image_grid = Image.new('RGBA', (self.world_size[0] * self.size, self.world_size[1] * self.size))
+        temp_image_grid = Image.new('RGBA', (self.world_size[0] * self.size * 2, self.world_size[1] * self.size * 2))
         print("UPDATE GRID")
-        resize = (8, 8)
+        resize = (16, 16)
         grid_image = Image.open('img/editor/grid.png').resize(resize, Image.NEAREST).convert("RGBA")
         for y in range(self.world_size[1]):
             for x in range(self.world_size[0]):
-                temp_image_grid.paste(grid_image, (x * self.size, y * self.size))
+                temp_image_grid.paste(grid_image, (x * (self.size*2), y * (self.size*2)))
 
         self.temp_image_grid = temp_image_grid
         raw_image = temp_image_grid.tobytes()
         self.image_grid = pyglet.image.ImageData(temp_image_grid.width, temp_image_grid.height, 'RGBA', raw_image, pitch=-temp_image_grid.width * 4)
         self.image_grid = pyglet.sprite.Sprite(self.image_grid, settings.width//4, settings.height//2)
-        self.image_grid.scale = self.scale
+        self.image_grid.scale = self.scale/2
 
     def update_render_other_down(self, pos=None):
         if pos == None:
@@ -381,6 +381,8 @@ class map(object):
         print("SAVE WORLD")
         objects_display[0].save_file(self.world_file_name)
 
+        get_obj_display('editor_gui').last_save_text.label.text = "last save: " + time.strftime("%H:%M", time.localtime())
+
     def exit(self):
         self.save()
         menu()
@@ -434,10 +436,10 @@ class map(object):
         if modifiers & key.MOD_CTRL:
             if symbol == key.S:
                 self.save()
-        elif symbol == key.J:
+        elif symbol == key.EQUAL:
             self.scale_map(1)
 
-        elif symbol == key.K:
+        elif symbol == key.MINUS:
             self.scale_map(-1)
 
         elif symbol == key.F:
@@ -481,95 +483,86 @@ class map(object):
                 break
 
         if not self.inventory_bool and ok and not get_obj_display('editor_gui').hover:
-            if button == 1 and not get_obj_display('editor_gui').draw_type[1].flag:
-                x_ = int( ( ( (self.pos[0] - x)/self.scale )//self.size) ) + 1
-                y_ = int( ( ( (self.pos[1] - y)/self.scale )//self.size) )
+            x_ = int( ( ( (self.pos[0] - x)/self.scale )//self.size) ) + 1
+            y_ = int( ( ( (self.pos[1] - y)/self.scale )//self.size) )
 
-                _x_ = int(math.sqrt(x_ ** 2))
-                _y_ = self.world_size[1] - int(math.sqrt(y_ ** 2))
+            _x_ = int(math.sqrt(x_ ** 2))
+            _y_ = self.world_size[1] - int(math.sqrt(y_ ** 2))
 
-                #print(_x_, _y_)
-                #print(self.get_block_num(_x_, _y_))
+            if ((0 <= -x_) and (-x_ < self.world_size[0])) and ((0 < -y_) and (-y_ <= self.world_size[1])):
+                if button == 1 and not get_obj_display('editor_gui').draw_type[1].flag:
 
-                # [_x_, _y_]
-                if get_obj_display('map_inventory').selected_type == 0:
-                    self.map_floor[self.get_block_num(_x_, _y_)] = get_obj_display('map_inventory').selected_block + '.' + str(get_obj_display('map_inventory').current_rot)
-                    self.update_render_floor()
+                    if get_obj_display('map_inventory').selected_type == 0:
+                        self.map_floor[self.get_block_num(_x_, _y_)] = get_obj_display('map_inventory').selected_block + '.' + str(get_obj_display('map_inventory').current_rot)
+                        self.update_render_floor()
 
-                elif get_obj_display('map_inventory').selected_type == 1:
-                    self.map_wall[self.get_block_num(_x_, _y_)] = get_obj_display('map_inventory').selected_block + '.' + str(get_obj_display('map_inventory').current_rot)
-                    self.update_render_wall()
+                    elif get_obj_display('map_inventory').selected_type == 1:
+                        self.map_wall[self.get_block_num(_x_, _y_)] = get_obj_display('map_inventory').selected_block + '.' + str(get_obj_display('map_inventory').current_rot)
+                        self.update_render_wall()
 
-                elif get_obj_display('map_inventory').selected_type == 2:
-                    self.map_water[self.get_block_num(_x_, _y_)] = get_obj_display('map_inventory').selected_block + '.' + str(get_obj_display('map_inventory').current_rot)
-                    self.update_render_water()
+                    elif get_obj_display('map_inventory').selected_type == 2:
+                        self.map_water[self.get_block_num(_x_, _y_)] = get_obj_display('map_inventory').selected_block + '.' + str(get_obj_display('map_inventory').current_rot)
+                        self.update_render_water()
 
-                elif get_obj_display('map_inventory').selected_type == 3:
-                    self.map_vegetation[self.get_block_num(_x_, _y_)] = get_obj_display('map_inventory').selected_block + '.' + str(get_obj_display('map_inventory').current_rot)
-                    self.update_render_vegetation()
+                    elif get_obj_display('map_inventory').selected_type == 3:
+                        self.map_vegetation[self.get_block_num(_x_, _y_)] = get_obj_display('map_inventory').selected_block + '.' + str(get_obj_display('map_inventory').current_rot)
+                        self.update_render_vegetation()
 
-                elif get_obj_display('map_inventory').selected_type == 4:
-                    self.map_ceiling[self.get_block_num(_x_, _y_)] = get_obj_display('map_inventory').selected_block + '.' + str(get_obj_display('map_inventory').current_rot)
-                    self.update_render_ceiling()
-                #####
-                elif get_obj_display('map_inventory').selected_type == 5:
-                    self.map_other_up[self.get_block_num(_x_, _y_)] = get_obj_display('map_inventory').selected_block + '.' + str(get_obj_display('map_inventory').current_rot)
-                    self.update_render_other_up()
+                    elif get_obj_display('map_inventory').selected_type == 4:
+                        self.map_ceiling[self.get_block_num(_x_, _y_)] = get_obj_display('map_inventory').selected_block + '.' + str(get_obj_display('map_inventory').current_rot)
+                        self.update_render_ceiling()
+                    #####
+                    elif get_obj_display('map_inventory').selected_type == 5:
+                        self.map_other_up[self.get_block_num(_x_, _y_)] = get_obj_display('map_inventory').selected_block + '.' + str(get_obj_display('map_inventory').current_rot)
+                        self.update_render_other_up()
 
-                elif get_obj_display('map_inventory').selected_type == 6:
-                    self.map_other_down[self.get_block_num(_x_, _y_)] = get_obj_display('map_inventory').selected_block + '.' + str(get_obj_display('map_inventory').current_rot)
-                    self.update_render_other_down()
+                    elif get_obj_display('map_inventory').selected_type == 6:
+                        self.map_other_down[self.get_block_num(_x_, _y_)] = get_obj_display('map_inventory').selected_block + '.' + str(get_obj_display('map_inventory').current_rot)
+                        self.update_render_other_down()
 
-                elif get_obj_display('map_inventory').selected_type == 7:
-                    self.map_effect_up[self.get_block_num(_x_, _y_)] = get_obj_display('map_inventory').selected_block + '.' + str(get_obj_display('map_inventory').current_rot)
-                    self.update_render_effect_up()
+                    elif get_obj_display('map_inventory').selected_type == 7:
+                        self.map_effect_up[self.get_block_num(_x_, _y_)] = get_obj_display('map_inventory').selected_block + '.' + str(get_obj_display('map_inventory').current_rot)
+                        self.update_render_effect_up()
 
-                elif get_obj_display('map_inventory').selected_type == -1:
-                    self.set_spawn([_x_, _y_])
+                    elif get_obj_display('map_inventory').selected_type == -1:
+                        self.set_spawn([_x_, _y_])
 
-            if button == 4 or get_obj_display('editor_gui').draw_type[1].flag:
-                x_ = int( ( ( (self.pos[0] - x)/self.scale )//self.size) ) + 1
-                y_ = int( ( ( (self.pos[1] - y)/self.scale )//self.size) )
+                if button == 4 or get_obj_display('editor_gui').draw_type[1].flag:
 
-                _x_ = int(math.sqrt(x_ ** 2))
-                _y_ = self.world_size[1] - int(math.sqrt(y_ ** 2))
+                    if get_obj_display('map_inventory').selected_type == 0:
+                        self.map_floor[self.get_block_num(_x_, _y_)] = 'none'
+                        self.update_render_floor()
 
-                #print(_x_, _y_)
+                    elif get_obj_display('map_inventory').selected_type == 1:
+                        self.map_wall[self.get_block_num(_x_, _y_)] = 'none'
+                        self.update_render_wall()
 
-                if get_obj_display('map_inventory').selected_type == 0:
-                    self.map_floor[self.get_block_num(_x_, _y_)] = 'none'
-                    self.update_render_floor()
+                    elif get_obj_display('map_inventory').selected_type == 2:
+                        self.map_water[self.get_block_num(_x_, _y_)] = 'none'
+                        self.update_render_water()
 
-                elif get_obj_display('map_inventory').selected_type == 1:
-                    self.map_wall[self.get_block_num(_x_, _y_)] = 'none'
-                    self.update_render_wall()
+                    elif get_obj_display('map_inventory').selected_type == 3:
+                        self.map_vegetation[self.get_block_num(_x_, _y_)] = 'none'
+                        self.update_render_vegetation()
 
-                elif get_obj_display('map_inventory').selected_type == 2:
-                    self.map_water[self.get_block_num(_x_, _y_)] = 'none'
-                    self.update_render_water()
+                    elif get_obj_display('map_inventory').selected_type == 4:
+                        self.map_ceiling[self.get_block_num(_x_, _y_)] = 'none'
+                        self.update_render_ceiling()
+                    #######
+                    elif get_obj_display('map_inventory').selected_type == 5:
+                        self.map_other_up[self.get_block_num(_x_, _y_)] = 'none'
+                        self.update_render_other_up()
 
-                elif get_obj_display('map_inventory').selected_type == 3:
-                    self.map_vegetation[self.get_block_num(_x_, _y_)] = 'none'
-                    self.update_render_vegetation()
+                    elif get_obj_display('map_inventory').selected_type == 6:
+                        self.map_other_down[self.get_block_num(_x_, _y_)] = 'none'
+                        self.update_render_other_down()
 
-                elif get_obj_display('map_inventory').selected_type == 4:
-                    self.map_ceiling[self.get_block_num(_x_, _y_)] = 'none'
-                    self.update_render_ceiling()
-                #######
-                elif get_obj_display('map_inventory').selected_type == 5:
-                    self.map_other_up[self.get_block_num(_x_, _y_)] = 'none'
-                    self.update_render_other_up()
+                    elif get_obj_display('map_inventory').selected_type == 7:
+                        self.map_effect_up[self.get_block_num(_x_, _y_)] = 'none'
+                        self.update_render_effect_up()
 
-                elif get_obj_display('map_inventory').selected_type == 6:
-                    self.map_other_down[self.get_block_num(_x_, _y_)] = 'none'
-                    self.update_render_other_down()
-
-                elif get_obj_display('map_inventory').selected_type == 7:
-                    self.map_effect_up[self.get_block_num(_x_, _y_)] = 'none'
-                    self.update_render_effect_up()
-
-                elif get_obj_display('map_inventory').selected_type == -1:
-                    self.del_spawn([_x_, _y_])
+                    elif get_obj_display('map_inventory').selected_type == -1:
+                        self.del_spawn([_x_, _y_])
 
     def on_mouse_scroll(self, x, y, scroll_x, scroll_y):
         #if keyboard[key.LCTRL]:
@@ -603,7 +596,7 @@ class map(object):
 
             self.image_effect_up.scale = self.scale
 
-            self.image_grid.scale = self.scale
+            self.image_grid.scale = self.scale/2
 
             self.select_block_grid_image.sprite.scale = self.scale/2
             self.update_pos_cursor()
