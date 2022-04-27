@@ -432,10 +432,24 @@ class map(object):
         self.image_grid.y = self.pos[1]
 
 
+    def rotate_block(self, deg=90):
+        get_obj_display('map_inventory').current_rot += deg
+        if get_obj_display('map_inventory').current_rot > 270:
+            get_obj_display('map_inventory').current_rot = 0
+        elif get_obj_display('map_inventory').current_rot < 0:
+            get_obj_display('map_inventory').current_rot = 270
+
+        get_obj_display('map_inventory').update_rot_change_block()
+
     def on_key_press(self, symbol, modifiers):
-        if modifiers & key.MOD_CTRL:
+        if modifiers & key.MOD_SHIFT:
+            if symbol == key.R:
+                self.rotate_block(90)
+
+        elif modifiers & key.MOD_CTRL:
             if symbol == key.S:
                 self.save()
+
         elif symbol == key.EQUAL:
             self.scale_map(1)
 
@@ -446,10 +460,7 @@ class map(object):
             get_obj_display('map_inventory').selected_type = -1
 
         elif symbol == key.R:
-            get_obj_display('map_inventory').current_rot += 90
-            if get_obj_display('map_inventory').current_rot > 270:
-                get_obj_display('map_inventory').current_rot = 0
-            get_obj_display('map_inventory').update_rot_change_block()
+            self.rotate_block(-90)
 
         elif symbol == key.E:
             self.open_inventory()
