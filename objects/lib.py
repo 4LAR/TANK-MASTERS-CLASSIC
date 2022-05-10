@@ -150,6 +150,24 @@ class Sound():
 
 sound = Sound()
 
+class cursor():
+    def __init__(self):
+        self.scale = settings.height/100
+        self.image = image_label('cursor/cursor.png', 0, 0, scale=self.scale, center=False)
+
+    def update_pos(self, x, y):
+        self.image.sprite.x = x - self.image.sprite.width/2
+        self.image.sprite.y = y - self.image.sprite.height/2
+
+    def on_mouse_motion(self, x, y, dx, dy):
+        self.update_pos(x, y)
+
+    def on_mouse_drag(self, x, y, dx, dy, buttons, modifiers):
+        self.update_pos(x, y)
+
+    def draw(self):
+        self.image.draw()
+
 class text_cursor():
     def __init__(self, align='rt', text='', length=settings.width/15):
         self.align = align

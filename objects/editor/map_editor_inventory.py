@@ -203,15 +203,15 @@ class map_inventory():
 
     def on_mouse_scroll(self, x, y, scroll_x, scroll_y):
         pass
-        
+
     def change_block(self, block_type, block_name):
         self.selected_block = block_name
         self.selected_type = block_type
-        self.text.label.text = ((block_name + '.' +  str(self.current_rot)) if not get_obj_display('map').cut else 'cut') + '\n' + ('press' if get_obj_display('map').press_or_line else 'line')
+        self.text.label.text = (block_name + '.' +  str(self.current_rot))
         self.update_image_block()
 
     def update_rot_change_block(self):
-        self.text.label.text = ((self.selected_block + '.' +  str(self.current_rot)) if not get_obj_display('map').cut else 'cut') + '\n' + ('press' if get_obj_display('map').press_or_line else 'line')#self.selected_block + '.' +  str(self.current_rot)
+        self.text.label.text = (self.selected_block + '.' +  str(self.current_rot))
         self.update_image_block()
 
     def on_mouse_motion(self, x, y, dx, dy):

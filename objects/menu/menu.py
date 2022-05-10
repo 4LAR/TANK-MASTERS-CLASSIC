@@ -21,7 +21,7 @@ class background_menu():
         drawp(self.image_background)
 
 class head_menu():
-    def __init__(self, text='', align_top=True, draw_user=True):
+    def __init__(self, text='', align_top=True, draw_user=True, text_x=settings.width/2):
         self.align_top = align_top
         self.draw_user = draw_user
 
@@ -37,7 +37,7 @@ class head_menu():
         self.user_button = image_button(settings.width - settings.width/4.6, -settings.height/13, 'buttons/button_clear_full_kv.png', scale=settings.height/120, center=False, arg='player_info()', image_selected='buttons/button_clear_full_kv_selected.png')
 
         # other
-        self.text = text_label(settings.width/2, settings.height - settings.height/35, text, load_font=True, font='pixel.ttf', size=settings.height//24, anchor_x='center', color = (150, 150, 150, 255))
+        self.text = text_label(text_x, settings.height - settings.height/35, text, load_font=True, font='pixel.ttf', size=settings.height//24, anchor_x='center', color = (150, 150, 150, 255))
 
         image = PIL_resize_image('img/buttons/button_clear.png', (settings.width//2, 16))
 
@@ -172,6 +172,9 @@ def menu():
     add_display(text_label(settings.width/100, settings.height - settings.height/10, 'TANK MASTERS', load_font=True, font='pixel.ttf', size=settings.height//20, anchor_x='left', color = (150, 150, 150, 255), shadow=True, color_shadow=(20, 20, 20, 122), shadow_size=settings.height//20))
     add_display(text_label(settings.width/5, settings.height - settings.height/6.5, 'CLASSIC', load_font=True, font='pixel.ttf', size=settings.height//20, anchor_x='left', color = (150, 150, 150, 255), shadow=True, color_shadow=(20, 20, 20, 122), shadow_size=settings.height//20))
     #add_display(alert())
+
+    # тест курсора
+    #add_display(cursor())
 
     if first_breath_menu:
         add_display(breathing_label(0, 0, settings.width, settings.height, (0, 0, 0), 0, delay=0.01, for_from=255, for_before=0, tick=-5))

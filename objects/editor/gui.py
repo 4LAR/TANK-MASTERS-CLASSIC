@@ -5,8 +5,8 @@ class editor_gui():
         self.font_scale = settings.height//36
 
         # top bar
-
-        self.head = head_menu(draw_user=False)
+        name = get_obj_display('map').world_file_name.split('/')
+        self.head = head_menu(draw_user=False, text=name[len(get_obj_display('map').world_file_name.split('/'))-1], text_x=settings.width/2.5)
 
         # back to menu
         self.back_button = image_button(

@@ -465,7 +465,24 @@ class map(object):
         elif symbol == key.E:
             self.open_inventory()
 
-        get_obj_display('map_inventory').text.label.text = ((get_obj_display('map_inventory').selected_block + '.' +  str(get_obj_display('map_inventory').current_rot)) if not self.cut else 'cut') + '\n' + ('press' if self.press_or_line else 'line')
+        # hotbar
+        # cursor_type
+        elif symbol == key._1:
+            get_obj_display('editor_gui').change_cursor_type(0)
+
+        elif symbol == key._2:
+            get_obj_display('editor_gui').change_cursor_type(1)
+
+        elif symbol == key._3:
+            get_obj_display('editor_gui').change_cursor_type(2)
+
+        #draw_type
+        elif symbol == key.X:
+            get_obj_display('editor_gui').change_draw_type(
+                (1 if get_obj_display('editor_gui').draw_type[0].flag else 0)
+            )
+
+        get_obj_display('map_inventory').text.label.text = (get_obj_display('map_inventory').selected_block + '.' +  str(get_obj_display('map_inventory').current_rot))
 
         if symbol == pyglet.window.key.ESCAPE:
            return self.exit()
