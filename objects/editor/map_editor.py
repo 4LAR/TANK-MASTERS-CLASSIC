@@ -633,14 +633,14 @@ class map(object):
         if get_obj_display('editor_gui').layers_buttons[0].flag:
             drawp(self.image_floor)
 
+        if get_obj_display('editor_gui').layers_buttons[3].flag:
+            drawp(self.image_water)
+
         if get_obj_display('editor_gui').layers_buttons[1].flag:
             drawp(self.image_wall)
 
         if get_obj_display('editor_gui').layers_buttons[2].flag:
             drawp(self.image_other_down)
-
-        if get_obj_display('editor_gui').layers_buttons[3].flag:
-            drawp(self.image_water)
 
         if get_obj_display('editor_gui').layers_buttons[4].flag:
             drawp(self.image_vegetation)
