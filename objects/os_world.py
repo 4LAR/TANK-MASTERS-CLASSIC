@@ -123,77 +123,77 @@ class os_world():
         self.effect_up_img = {} #
 
         # снизу циклы по считыванию названий блоков
-        files_middle_block = os.listdir('img/world/other_up')
+        files_middle_block = os.listdir('assets/img/world/other_up')
         self.other_up_block_name = []
         for block in files_middle_block:
             if block.split('.')[1] == 'png':
                 self.other_up_block_name.append(block.split('.')[0])
 
-        files_middle_block = os.listdir('img/world/other_down')
+        files_middle_block = os.listdir('assets/img/world/other_down')
         self.other_down_block_name = []
         for block in files_middle_block:
             if block.split('.')[1] == 'png':
                 self.other_down_block_name.append(block.split('.')[0])
 
-        files_middle_block = os.listdir('img/world/snow/other_down') # snow
+        files_middle_block = os.listdir('assets/img/world/snow/other_down') # snow
         self.other_down_snow_block_name = []
         for block in files_middle_block:
             if block.split('.')[1] == 'png':
                 self.other_down_snow_block_name.append(block.split('.')[0])
 
-        files_middle_block = os.listdir('img/world/middle')
+        files_middle_block = os.listdir('assets/img/world/middle')
         self.middle_block_name = []
         for block in files_middle_block:
             if block.split('.')[1] == 'png':
                 self.middle_block_name.append(block.split('.')[0])
 
-        files_floor_block = os.listdir('img/world/floor')
+        files_floor_block = os.listdir('assets/img/world/floor')
         self.floor_blocks_name = []
         for block in files_floor_block:
             if block.split('.')[1] == 'png':
                 self.floor_blocks_name.append(block.split('.')[0])
 
-        files_floor_block = os.listdir('img/world/snow/floor') # snow
+        files_floor_block = os.listdir('assets/img/world/snow/floor') # snow
         self.floor_snow_blocks_name = []
         for block in files_floor_block:
             if block.split('.')[1] == 'png':
                 self.floor_snow_blocks_name.append(block.split('.')[0])
 
-        files_wall_block = os.listdir('img/world/wall')
+        files_wall_block = os.listdir('assets/img/world/wall')
         self.wall_block_name = []
         for block in files_wall_block:
             if block.split('.')[1] == 'png':
                 self.wall_block_name.append(block.split('.')[0])
 
-        files_ceiling_block = os.listdir('img/world/ceiling')
+        files_ceiling_block = os.listdir('assets/img/world/ceiling')
         self.ceiling_block_name = []
         for block in files_ceiling_block:
             if block.split('.')[1] == 'png':
                 self.ceiling_block_name.append(block.split('.')[0])
 
-        files_waters_block = os.listdir('img/world/liquid')
+        files_waters_block = os.listdir('assets/img/world/liquid')
         self.water_block_name = []
         for block in files_waters_block:
-            file = os.listdir('img/world/liquid/' + block)
+            file = os.listdir('assets/img/world/liquid/' + block)
             for block_ in file:
                 if block_.split('.')[1] == 'png':
                     self.water_block_name.append(block + '/' + block_.split('.')[0])
 
-        files_waters_block = os.listdir('img/world/snow/liquid') # snow
+        files_waters_block = os.listdir('assets/img/world/snow/liquid') # snow
         self.water_snow_block_name = []
         for block in files_waters_block:
-            file = os.listdir('img/world/snow/liquid/' + block)
+            file = os.listdir('assets/img/world/snow/liquid/' + block)
             for block_ in file:
                 if block_.split('.')[1] == 'png':
                     self.water_snow_block_name.append(block + '/' + block_.split('.')[0])
 
-        files_vegetation_block = os.listdir('img/world/vegetation')
+        files_vegetation_block = os.listdir('assets/img/world/vegetation')
         self.vegetation_block_name = []
         for block in files_vegetation_block:
             if block.split('.')[1] == 'png':
                 self.vegetation_block_name.append(block.split('.')[0])
 
-        files_vegetation_block = os.listdir('img/world/vegetation')
+        files_vegetation_block = os.listdir('assets/img/world/vegetation')
         self.vegetation_snow_block_name = []
         for block in files_vegetation_block:
             if block.split('.')[1] == 'png':
@@ -201,7 +201,7 @@ class os_world():
 
         #
 
-        files_effect_up_name_block = os.listdir('img/world/effect_up')
+        files_effect_up_name_block = os.listdir('assets/img/world/effect_up')
         self.effect_up_name = []
         for block in files_effect_up_name_block:
             if block.split('.')[1] == 'png':
@@ -209,47 +209,47 @@ class os_world():
 
         # снизу циклы для открытия спрайтов
         for block in self.other_up_block_name:
-            self.other_up_block_img[block] = Image.open('img/world/other_up/'+block+'.png').resize(self.resize, Image.NEAREST).convert("RGBA")
+            self.other_up_block_img[block] = Image.open('assets/img/world/other_up/'+block+'.png').resize(self.resize, Image.NEAREST).convert("RGBA")
 
         for block in self.other_down_block_name:
-            self.other_down_block_img[block] = Image.open('img/world/other_down/'+block+'.png').resize(self.resize, Image.NEAREST).convert("RGBA")
+            self.other_down_block_img[block] = Image.open('assets/img/world/other_down/'+block+'.png').resize(self.resize, Image.NEAREST).convert("RGBA")
 
         for block in self.other_down_snow_block_name: # snow
-            self.other_down_snow_block_img[block] = Image.open('img/world/snow/other_down/'+block+'.png').resize(self.resize, Image.NEAREST).convert("RGBA")
+            self.other_down_snow_block_img[block] = Image.open('assets/img/world/snow/other_down/'+block+'.png').resize(self.resize, Image.NEAREST).convert("RGBA")
 
 
         for block in self.middle_block_name:
-            self.middle_block_img[block] = Image.open('img/world/middle/'+block+'.png').resize(self.resize, Image.NEAREST).convert("RGBA")
+            self.middle_block_img[block] = Image.open('assets/img/world/middle/'+block+'.png').resize(self.resize, Image.NEAREST).convert("RGBA")
 
         for block in self.floor_blocks_name:
-            self.floor_blocks_img[block] = Image.open('img/world/floor/'+block+'.png').resize(self.resize, Image.NEAREST).convert("RGBA")
+            self.floor_blocks_img[block] = Image.open('assets/img/world/floor/'+block+'.png').resize(self.resize, Image.NEAREST).convert("RGBA")
 
         for block in self.floor_snow_blocks_name: # зима
-            self.floor_snow_blocks_img[block] = Image.open('img/world/snow/floor/'+block+'.png').resize(self.resize, Image.NEAREST).convert("RGBA")
+            self.floor_snow_blocks_img[block] = Image.open('assets/img/world/snow/floor/'+block+'.png').resize(self.resize, Image.NEAREST).convert("RGBA")
 
         for block in self.wall_block_name:
-            self.wall_block_img[block] = Image.open('img/world/wall/'+block+'.png').resize(self.resize, Image.NEAREST).convert("RGBA")
+            self.wall_block_img[block] = Image.open('assets/img/world/wall/'+block+'.png').resize(self.resize, Image.NEAREST).convert("RGBA")
 
         for block in self.water_block_name:
-            self.water_block_img[block] = Image.open('img/world/liquid/'+block+'.png').resize(self.resize, Image.NEAREST).convert("RGBA")
+            self.water_block_img[block] = Image.open('assets/img/world/liquid/'+block+'.png').resize(self.resize, Image.NEAREST).convert("RGBA")
 
         for block in self.water_snow_block_name: # snow
-            self.water_snow_block_img[block] = Image.open('img/world/snow/liquid/'+block+'.png').resize(self.resize, Image.NEAREST).convert("RGBA")
+            self.water_snow_block_img[block] = Image.open('assets/img/world/snow/liquid/'+block+'.png').resize(self.resize, Image.NEAREST).convert("RGBA")
 
         for block in self.vegetation_block_name:
-            self.vegetation_block_img[block] = Image.open('img/world/vegetation/'+block+'.png').resize(self.resize, Image.NEAREST).convert("RGBA")
+            self.vegetation_block_img[block] = Image.open('assets/img/world/vegetation/'+block+'.png').resize(self.resize, Image.NEAREST).convert("RGBA")
 
             for block in self.vegetation_snow_block_name: # snow
-                self.vegetation_snow_block_img[block] = Image.open('img/world/snow/vegetation/'+block+'.png').resize(self.resize, Image.NEAREST).convert("RGBA")
+                self.vegetation_snow_block_img[block] = Image.open('assets/img/world/snow/vegetation/'+block+'.png').resize(self.resize, Image.NEAREST).convert("RGBA")
 
 
         for block in self.ceiling_block_name:
-            self.ceiling_block_img[block] = Image.open('img/world/ceiling/'+block+'.png').resize(self.resize, Image.NEAREST).convert("RGBA")
+            self.ceiling_block_img[block] = Image.open('assets/img/world/ceiling/'+block+'.png').resize(self.resize, Image.NEAREST).convert("RGBA")
 
         #
 
         for block in self.effect_up_name:
-            self.effect_up_img[block] = Image.open('img/world/effect_up/'+block+'.png').resize(self.resize, Image.NEAREST).convert("RGBA")
+            self.effect_up_img[block] = Image.open('assets/img/world/effect_up/'+block+'.png').resize(self.resize, Image.NEAREST).convert("RGBA")
 
         self.world_size = [64, 64] # размер карты по умолчанию
 
@@ -377,4 +377,4 @@ class os_world():
             print(e)
             return False
 
-        #print(self.map_other_up)
+add_objects_other(os_world())

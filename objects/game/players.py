@@ -170,7 +170,7 @@ class player():
 
         self.death_tank_image = image_label('tanks/body/no_team/' + tanks.bases[self.tank_settings[0]] + '.png', settings.width//2, settings.height//2, scale=self.scale_tank, pixel=False, center=True)
 
-        self.obj_tanks.append(PIL_to_pyglet(get_pil_black_mask(Image.open('img/tanks/body/no_team/' + tanks.bases[self.tank_settings[0]] + '.png').convert("RGBA"), get_obj_display('world').shadow_alpha), self.scale_tank, True))
+        self.obj_tanks.append(PIL_to_pyglet(get_pil_black_mask(Image.open('assets/img/tanks/body/no_team/' + tanks.bases[self.tank_settings[0]] + '.png').convert("RGBA"), get_obj_display('world').shadow_alpha), self.scale_tank, True))
         self.obj_tanks.append([])
         self.obj_tanks[1].append(image_label('tanks/body/no_team/' + tanks.bases[self.tank_settings[0]] + '.png', settings.width//2, settings.height//2, scale=self.scale_tank, pixel=False, center=True))
         self.obj_tanks[1].append(image_label('tanks/body/no_team/' + tanks.bases[self.tank_settings[0]] + '_1.png', settings.width//2, settings.height//2, scale=self.scale_tank, pixel=False, center=True))
@@ -178,7 +178,7 @@ class player():
             self.obj_tanks.append(image_label('tanks/body/' + tanks.teams[self.id] + '/' + tanks.bases[self.tank_settings[0]] + '.png', settings.width//2, settings.height//2, scale=self.scale_tank, pixel=False, center=True))
         else:
             self.obj_tanks.append(image_label('tanks/body/no_team/' + tanks.bases[self.tank_settings[0]] + '_1.png', settings.width//2, settings.height//2, scale=self.scale_tank, pixel=False, center=True))
-        self.obj_tanks.append(PIL_to_pyglet(get_pil_black_mask(Image.open('img/tanks/tower/' + tanks.towers[self.tank_settings[1]] + '.png').convert("RGBA"), get_obj_display('world').shadow_alpha), self.scale_tank, True))
+        self.obj_tanks.append(PIL_to_pyglet(get_pil_black_mask(Image.open('assets/img/tanks/tower/' + tanks.towers[self.tank_settings[1]] + '.png').convert("RGBA"), get_obj_display('world').shadow_alpha), self.scale_tank, True))
 
         if self.tank_settings[1] in [0, 1]:
             self.obj_tanks.append([image_label('tanks/tower/' + tanks.towers[self.tank_settings[1]] + '.png', settings.width//2, settings.height//2, scale=self.scale_tank, pixel=False, center=True)])
@@ -194,7 +194,7 @@ class player():
             self.obj_tanks[4].append(image_label('tanks/tower/' + tanks.towers[self.tank_settings[1]] + '.png', settings.width//2, settings.height//2, scale=self.scale_tank, pixel=False, center=True))
             self.obj_tanks.append([])
             for i in range(self.gun_laser_max_count):
-                self.obj_tanks[5].append(PIL_to_pyglet(get_pil_color_mask(Image.open('img/tanks/tower/' + tanks.towers[self.tank_settings[1]] + '/' + str(i) + '.png').convert("RGBA"), tanks.towers_laser_color[id]), self.scale_tank, True))
+                self.obj_tanks[5].append(PIL_to_pyglet(get_pil_color_mask(Image.open('assets/img/tanks/tower/' + tanks.towers[self.tank_settings[1]] + '/' + str(i) + '.png').convert("RGBA"), tanks.towers_laser_color[id]), self.scale_tank, True))
 
         self.poligon_body = collision.Poly(v(100, 100),
         [

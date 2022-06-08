@@ -8,7 +8,7 @@ class language():
 
     def set_lang(self, lang):
         try:
-            self.json = read_dict('lang/' + lang)
+            self.json = read_dict('assets/lang/' + lang)
             self.lang = lang
 
             return True

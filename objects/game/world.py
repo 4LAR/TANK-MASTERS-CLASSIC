@@ -50,7 +50,7 @@ class world():
         else:
             sound = sound_list[0]
 
-        background_sound.play('sound/background/' + sound)
+        background_sound.play('assets/sound/background/' + sound)
 
         self.world_size = get_obj_other('os_world').world_size
 
@@ -240,8 +240,8 @@ class world():
                 block = self.map_wall[self.get_block_num(x, (self.world_size[1] - 1) - y)]
                 if block != 'none':
                     array_pol = []
-                    if os.path.isfile('img/world/wall/'+block.split('.')[0]+'.info'):
-                        f = open('img/world/wall/'+block.split('.')[0]+'.info', 'r')
+                    if os.path.isfile('assets/img/world/wall/'+block.split('.')[0]+'.info'):
+                        f = open('assets/img/world/wall/'+block.split('.')[0]+'.info', 'r')
                         arr_info = f.read().split('\n')
                         for info in arr_info:
                             array_pol.append(v(int(info.split(' ')[0]) * (self.size_poligon/8)-self.size_poligon/2, int(info.split(' ')[1]) * (self.size_poligon/8)-self.size_poligon/2))
@@ -270,8 +270,8 @@ class world():
                 block = self.map_water[self.get_block_num(x, (self.world_size[1] - 1) - y)]
                 if block != 'none':
                     array_pol = []
-                    if os.path.isfile('img/world/wall/'+block.split('.')[0]+'.info'):
-                        f = open('img/world/wall/'+block.split('.')[0]+'.info', 'r')
+                    if os.path.isfile('assets/img/world/wall/'+block.split('.')[0]+'.info'):
+                        f = open('assets/img/world/wall/'+block.split('.')[0]+'.info', 'r')
                         arr_info = f.read().split('\n')
                         for info in arr_info:
                             array_pol.append(v(int(info.split(' ')[0]) * (self.size_poligon/8)-self.size_poligon/2, int(info.split(' ')[1]) * (self.size_poligon/8)-self.size_poligon/2))

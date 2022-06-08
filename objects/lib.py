@@ -31,7 +31,7 @@ def draw_text_cursor(pos_cursor_x, pos_cursor_y, align='left', text='test', leng
         )
 
 def get_font_size(font, size=14):
-    selected_font = pyglet.font.load('font/' + font, size)
+    selected_font = pyglet.font.load('assets/font/' + font, size)
     return (selected_font.ascent - selected_font.descent, size)
 
 def PIL_to_pyglet(image_pil, scale=1, anchor_bool = False):
@@ -144,7 +144,7 @@ class Sound():
 
     def play(self, music):
         self.sound.next_source()
-        self.sound.queue( pyglet.media.load(('' if self.no_sound else 'sound/') + music) )
+        self.sound.queue( pyglet.media.load(('' if self.no_sound else 'assets/sound/') + music) )
         self.sound.play()
         self.sound_name = music
 
@@ -233,14 +233,14 @@ class read_key_image():
         self.shadow = shadow
         self.color_shadow = color_shadow
 
-        self.image_shadow_obj = PIL_to_pyglet(get_pil_color_mask(Image.open('img/' + self.image).convert("RGBA"), self.color_shadow), scale, False)
+        self.image_shadow_obj = PIL_to_pyglet(get_pil_color_mask(Image.open('assets/img/' + self.image).convert("RGBA"), self.color_shadow), scale, False)
         self.image_shadow_obj.x = x - scale
         self.image_shadow_obj.y = y + scale
 
         self.image_obj = image_label(self.image, x, y, scale=scale, center=False)
         self.image_selected_obj = image_label(self.image_selected, x, y, scale=scale, center=False)
 
-        self.image_shadow_obj = PIL_to_pyglet(get_pil_color_mask(Image.open('img/' + self.image).convert("RGBA"), self.color_shadow), scale, False)
+        self.image_shadow_obj = PIL_to_pyglet(get_pil_color_mask(Image.open('assets/img/' + self.image).convert("RGBA"), self.color_shadow), scale, False)
         self.image_shadow_obj.x = x - scale
         self.image_shadow_obj.y = y + scale
 
@@ -345,7 +345,7 @@ class slider_image():
         self.shadow = shadow
         self.color_shadow = color_shadow
 
-        self.image_shadow_obj = PIL_to_pyglet(get_pil_color_mask(Image.open('img/' + self.image).convert("RGBA"), self.color_shadow), scale, False)
+        self.image_shadow_obj = PIL_to_pyglet(get_pil_color_mask(Image.open('assets/img/' + self.image).convert("RGBA"), self.color_shadow), scale, False)
         self.image_shadow_obj.x = x - scale
         self.image_shadow_obj.y = y + scale
 
@@ -455,7 +455,7 @@ class input_label_image():
         self.shadow = shadow
         self.color_shadow = color_shadow
 
-        self.image_shadow_obj = PIL_to_pyglet(get_pil_color_mask(Image.open('img/' + self.image).convert("RGBA"), self.color_shadow), scale, False)
+        self.image_shadow_obj = PIL_to_pyglet(get_pil_color_mask(Image.open('assets/img/' + self.image).convert("RGBA"), self.color_shadow), scale, False)
         self.image_shadow_obj.x = x - scale
         self.image_shadow_obj.y = y + scale
 
@@ -646,9 +646,9 @@ class text_label(): # класс для прорисовки текста
         self.use = use
 
         if load_font: # использовать ли свой шрифт
-            #pyglet.font.add_file('font/' + font)
-            self.font = pyglet.font.load('font/' + font, size)
-            fnt = ImageFont.truetype('font/' + font, size)
+            #pyglet.font.add_file('assets/font/' + font)
+            self.font = pyglet.font.load('assets/font/' + font, size)
+            fnt = ImageFont.truetype('assets/font/' + font, size)
 
         self.x = x
         self.y = y
@@ -735,13 +735,13 @@ class image_label(): # класс для проприсвки картинки
         self.color_shadow = color_shadow
 
         if self.shadow:
-            self.image_shadow_obj = PIL_to_pyglet(get_pil_color_mask(Image.open('img/' + str(image)).convert("RGBA"), self.color_shadow), scale, False)
+            self.image_shadow_obj = PIL_to_pyglet(get_pil_color_mask(Image.open('assets/img/' + str(image)).convert("RGBA"), self.color_shadow), scale, False)
             self.image_shadow_obj.x = x - scale
             self.image_shadow_obj.y = y + scale
 
         if black_mask:
             if no_image:
-                image = Image.open('img/' + image).convert("RGBA")
+                image = Image.open('assets/img/' + image).convert("RGBA")
             else:
                 image = Image.open(image).convert("RGBA")
             image = get_pil_black_mask(image, alpha_mask)
@@ -752,7 +752,7 @@ class image_label(): # класс для проприсвки картинки
             if no_image:
                 self.image = pyglet.image.load(image)
             else:
-                self.image = pyglet.image.load('img/' + image)
+                self.image = pyglet.image.load('assets/img/' + image)
         if center:
             self.image.anchor_x = self.image.width // 2
             self.image.anchor_y = self.image.height // 2
@@ -888,11 +888,11 @@ class image_flag():
         self.shadow = shadow
         self.color_shadow = color_shadow
 
-        self.image_shadow_obj = PIL_to_pyglet(get_pil_color_mask(Image.open('img/' + self.image).convert("RGBA"), self.color_shadow), scale, False)
+        self.image_shadow_obj = PIL_to_pyglet(get_pil_color_mask(Image.open('assets/img/' + self.image).convert("RGBA"), self.color_shadow), scale, False)
         self.image_shadow_obj.x = x - scale
         self.image_shadow_obj.y = y + scale
 
-        self.image_flag_shadow_obj = PIL_to_pyglet(get_pil_color_mask(Image.open('img/' + self.image_flag).convert("RGBA"), self.color_shadow), scale, False)
+        self.image_flag_shadow_obj = PIL_to_pyglet(get_pil_color_mask(Image.open('assets/img/' + self.image_flag).convert("RGBA"), self.color_shadow), scale, False)
         self.image_flag_shadow_obj.x = x - scale
         self.image_flag_shadow_obj.y = y + scale
 
@@ -1046,7 +1046,7 @@ class image_button():
         self.shadow = shadow
         self.color_shadow = color_shadow
 
-        self.image_shadow_obj = PIL_to_pyglet(get_pil_color_mask(Image.open('img/' + self.image).convert("RGBA"), self.color_shadow), scale, center)
+        self.image_shadow_obj = PIL_to_pyglet(get_pil_color_mask(Image.open('assets/img/' + self.image).convert("RGBA"), self.color_shadow), scale, center)
         self.image_shadow_obj.x = x - scale
         self.image_shadow_obj.y = y + scale
 

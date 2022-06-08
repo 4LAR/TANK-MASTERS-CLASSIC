@@ -14,7 +14,7 @@ class crates():
 
         self.crates_obj_shadow = PIL_to_pyglet(
             get_pil_black_mask(
-                Image.open('img/crates/crate.png').convert("RGBA"),
+                Image.open('assets/img/crates/crate.png').convert("RGBA"),
                 get_obj_display('world').shadow_alpha
             ),
             scale, True

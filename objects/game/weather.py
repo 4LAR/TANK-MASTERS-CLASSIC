@@ -17,7 +17,7 @@ class weather():
             self.deg = 45
 
             self.image_rain = Image.new('RGBA', (settings.width*2, settings.height*2))
-            image = Image.open('img/world/rain/' +
+            image = Image.open('assets/img/world/rain/' +
                 ('rain' if not get_obj_display('game_settings').snow else 'snow')
              + '.png').resize(((settings.height//50)//8, (settings.height//50)), Image.NEAREST).convert("RGBA")
 

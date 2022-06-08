@@ -1,2 +1,2 @@
-python main.py objects
+python main.py -s objects.list -l t
 pause

@@ -1,0 +1,370 @@
+[21:39:27|08-06-22] IMPORT: lib.py
+[21:39:27|08-06-22] IMPORT: main.py
+[21:39:27|08-06-22] IMPORT: setings_game.py
+[21:39:27|08-06-22] IMPORT: libs/console.py
+[21:39:27|08-06-22] IMPORT: os_world.py
+[21:39:27|08-06-22] IMPORT: language.py
+[21:39:27|08-06-22] IMPORT: editor/map_editor.py
+[21:39:27|08-06-22] IMPORT: editor/map_editor_inventory.py
+[21:39:27|08-06-22] IMPORT: editor/gui.py
+[21:39:27|08-06-22] IMPORT: editor/editor.py
+[21:39:27|08-06-22] IMPORT: menu/alert.py
+[21:39:27|08-06-22] IMPORT: menu/first_start.py
+[21:39:27|08-06-22] IMPORT: menu/menu.py
+[21:39:27|08-06-22] IMPORT: game/game_settings.py
+[21:39:27|08-06-22] IMPORT: menu/missions/single.py
+[21:39:27|08-06-22] IMPORT: menu/training.py
+[21:39:27|08-06-22] IMPORT: menu/multiplayer.py
+[21:39:27|08-06-22] IMPORT: menu/select_map_filter.py
+[21:39:27|08-06-22] IMPORT: menu/select_map.py
+[21:39:27|08-06-22] IMPORT: menu/select_tank.py
+[21:39:27|08-06-22] IMPORT: menu/game_setup.py
+[21:39:27|08-06-22] IMPORT: menu/settings.py
+[21:39:27|08-06-22] IMPORT: menu/end_game.py
+[21:39:27|08-06-22] IMPORT: menu/player_info_save.py
+[21:39:27|08-06-22] IMPORT: menu/player_info.py
+[21:39:27|08-06-22] IMPORT: menu/missions/missions.py
+[21:39:27|08-06-22] IMPORT: menu/missions/select_tank.py
+[21:39:27|08-06-22] IMPORT: game/world.py
+[21:39:27|08-06-22] IMPORT: game/crates.py
+[21:39:27|08-06-22] IMPORT: game/wind.py
+[21:39:27|08-06-22] IMPORT: game/players.py
+[21:39:27|08-06-22] IMPORT: game/clouds.py
+[21:39:27|08-06-22] IMPORT: game/points.py
+[21:39:27|08-06-22] IMPORT: game/bullets.py
+[21:39:27|08-06-22] IMPORT: game/smoke.py
+[21:39:27|08-06-22] IMPORT: game/gui.py
+[21:39:27|08-06-22] IMPORT: game/weather.py
+[21:39:27|08-06-22] IMPORT: game/pause.py
+[21:39:27|08-06-22] IMPORT: game/table.py
+[21:39:27|08-06-22] IMPORT: game/loading.py
+[21:39:27|08-06-22] IMPORT: game/game.py
+[21:39:27|08-06-22] IMPORT: netCode/client.py
+[21:39:27|08-06-22] IMPORT: netCode/net_code.py
+[21:39:27|08-06-22] IMPORT: logo.py
+[21:39:27|08-06-22] OTHER ADD: <__main__.setings_game object at 0x0000022A135EC7C0>
+[21:39:27|08-06-22] OTHER ADD: <__main__.Console object at 0x0000022A135ECAC0>
+[21:39:28|08-06-22] OTHER ADD: <__main__.os_world object at 0x0000022A0FA96250>
+[21:39:29|08-06-22] DISPLAY ADD: <__main__.skip object at 0x0000022A0FC1D0A0>
+[21:39:29|08-06-22] DISPLAY ADD: <__main__.label object at 0x0000022A0FC1D100>
+[21:39:29|08-06-22] DISPLAY ADD: <__main__.image_label object at 0x0000022A0FC1D370>
+[21:39:29|08-06-22] DISPLAY ADD: <__main__.breathing_label object at 0x0000022A0FC1D400>
+[21:39:30|08-06-22] DISPLAY CLEAR
+[21:39:30|08-06-22] DISPLAY ADD: <__main__.back object at 0x0000022A7FAEC7C0>
+[21:39:30|08-06-22] DISPLAY ADD: <__main__.background_menu object at 0x0000022A0FC1D3D0>
+[21:39:30|08-06-22] DISPLAY ADD: <__main__.Game_settings object at 0x0000022A12651760>
+[21:39:30|08-06-22] DISPLAY ADD: <__main__.Graphics_settings object at 0x0000022A12651790>
+[21:39:30|08-06-22] DISPLAY ADD: <__main__.world object at 0x0000022A0FC1D850>
+[21:39:31|08-06-22] DISPLAY ADD: <__main__.wind object at 0x0000022A101FE040>
+[21:39:31|08-06-22] DISPLAY ADD: <__main__.walls object at 0x0000022A101FEE80>
+[21:39:31|08-06-22] DISPLAY ADD: <__main__.clouds object at 0x0000022A10204A00>
+[21:39:32|08-06-22] DISPLAY ADD: <__main__.weather object at 0x0000022A10204AC0>
+[21:39:32|08-06-22] DISPLAY ADD: <__main__.head_menu object at 0x0000022A1020B280>
+[21:39:32|08-06-22] DISPLAY ADD: <__main__.image_button object at 0x0000022A10241BE0>
+[21:39:32|08-06-22] DISPLAY ADD: <__main__.image_button object at 0x0000022A1024CF40>
+[21:39:32|08-06-22] DISPLAY ADD: <__main__.image_button object at 0x0000022A10262550>
+[21:39:32|08-06-22] DISPLAY ADD: <__main__.image_button object at 0x0000022A1026F8E0>
+[21:39:32|08-06-22] DISPLAY ADD: <__main__.image_button object at 0x0000022A10277B50>
+[21:39:32|08-06-22] DISPLAY ADD: <__main__.image_button object at 0x0000022A10289D90>
+[21:39:32|08-06-22] DISPLAY ADD: <__main__.head_menu object at 0x0000022A1029A130>
+[21:39:32|08-06-22] DISPLAY ADD: <__main__.text_label object at 0x0000022A12790F70>
+[21:39:32|08-06-22] DISPLAY ADD: <__main__.text_label object at 0x0000022A1029AA90>
+[21:39:32|08-06-22] DISPLAY ADD: <__main__.breathing_label object at 0x0000022A1277CBE0>
+[21:39:34|08-06-22] DISPLAY CLEAR
+[21:39:34|08-06-22] DISPLAY ADD: <__main__.back object at 0x0000022A7FAEC7C0>
+[21:39:34|08-06-22] DISPLAY ADD: <__main__.background_menu object at 0x0000022A0FC1D3D0>
+[21:39:34|08-06-22] DISPLAY ADD: <__main__.Game_settings object at 0x0000022A12651760>
+[21:39:34|08-06-22] DISPLAY ADD: <__main__.Graphics_settings object at 0x0000022A12651790>
+[21:39:34|08-06-22] DISPLAY ADD: <__main__.world object at 0x0000022A0FC1D850>
+[21:39:34|08-06-22] DISPLAY ADD: <__main__.wind object at 0x0000022A101FE040>
+[21:39:34|08-06-22] DISPLAY ADD: <__main__.walls object at 0x0000022A101FEE80>
+[21:39:34|08-06-22] DISPLAY ADD: <__main__.clouds object at 0x0000022A10204A00>
+[21:39:34|08-06-22] DISPLAY ADD: <__main__.weather object at 0x0000022A10204AC0>
+[21:39:34|08-06-22] DISPLAY ADD: <__main__.head_menu object at 0x0000022A0FC1D670>
+[21:39:34|08-06-22] DISPLAY ADD: <__main__.image_button object at 0x0000022A1026F190>
+[21:39:34|08-06-22] DISPLAY ADD: <__main__.image_button object at 0x0000022A102897F0>
+[21:39:34|08-06-22] DISPLAY ADD: <__main__.select_map_buttons object at 0x0000022A10241160>
+[21:39:34|08-06-22] DISPLAY ADD: <__main__.select_map_filter_buttons object at 0x0000022A12791FA0>
+[21:39:34|08-06-22] DISPLAY ADD: <__main__.head_menu object at 0x0000022A127B93A0>
+[21:39:35|08-06-22] DISPLAY CLEAR
+[21:39:35|08-06-22] DISPLAY ADD: <__main__.os_world object at 0x0000022A7FAEC7C0>
+[21:39:35|08-06-22] DISPLAY ADD: <__main__.map object at 0x0000022A11416490>
+[21:39:36|08-06-22] DISPLAY ADD: <__main__.editor_gui object at 0x0000022A11416850>
+[21:39:36|08-06-22] DISPLAY ADD: <__main__.map_inventory object at 0x0000022A13670910>
+[21:39:40|08-06-22] DISPLAY CLEAR
+[21:39:40|08-06-22] DISPLAY ADD: <__main__.back object at 0x0000022A7FAEC7C0>
+[21:39:40|08-06-22] DISPLAY ADD: <__main__.background_menu object at 0x0000022A1025A460>
+[21:39:40|08-06-22] DISPLAY ADD: <__main__.Game_settings object at 0x0000022A12651760>
+[21:39:40|08-06-22] DISPLAY ADD: <__main__.Graphics_settings object at 0x0000022A12651790>
+[21:39:40|08-06-22] DISPLAY ADD: <__main__.world object at 0x0000022A0FC1D850>
+[21:39:40|08-06-22] DISPLAY ADD: <__main__.wind object at 0x0000022A101FE040>
+[21:39:40|08-06-22] DISPLAY ADD: <__main__.walls object at 0x0000022A101FEE80>
+[21:39:40|08-06-22] DISPLAY ADD: <__main__.clouds object at 0x0000022A10204A00>
+[21:39:40|08-06-22] DISPLAY ADD: <__main__.weather object at 0x0000022A10204AC0>
+[21:39:40|08-06-22] DISPLAY ADD: <__main__.head_menu object at 0x0000022A10289700>
+[21:39:40|08-06-22] DISPLAY ADD: <__main__.image_button object at 0x0000022A10289E20>
+[21:39:40|08-06-22] DISPLAY ADD: <__main__.image_button object at 0x0000022A13632250>
+[21:39:40|08-06-22] DISPLAY ADD: <__main__.image_button object at 0x0000022A1362C0D0>
+[21:39:40|08-06-22] DISPLAY ADD: <__main__.image_button object at 0x0000022A136558B0>
+[21:39:40|08-06-22] DISPLAY ADD: <__main__.image_button object at 0x0000022A1365EA90>
+[21:39:40|08-06-22] DISPLAY ADD: <__main__.image_button object at 0x0000022A10277460>
+[21:39:41|08-06-22] DISPLAY ADD: <__main__.head_menu object at 0x0000022A135B8910>
+[21:39:41|08-06-22] DISPLAY ADD: <__main__.text_label object at 0x0000022A136A1EB0>
+[21:39:41|08-06-22] DISPLAY ADD: <__main__.text_label object at 0x0000022A1364E280>
+[21:39:42|08-06-22] DISPLAY CLEAR
+[21:39:42|08-06-22] DISPLAY ADD: <__main__.back object at 0x0000022A7FAEC7C0>
+[21:39:42|08-06-22] DISPLAY ADD: <__main__.background_menu object at 0x0000022A1025A460>
+[21:39:42|08-06-22] DISPLAY ADD: <__main__.Game_settings object at 0x0000022A12651760>
+[21:39:42|08-06-22] DISPLAY ADD: <__main__.Graphics_settings object at 0x0000022A12651790>
+[21:39:42|08-06-22] DISPLAY ADD: <__main__.world object at 0x0000022A0FC1D850>
+[21:39:42|08-06-22] DISPLAY ADD: <__main__.wind object at 0x0000022A101FE040>
+[21:39:42|08-06-22] DISPLAY ADD: <__main__.walls object at 0x0000022A101FEE80>
+[21:39:42|08-06-22] DISPLAY ADD: <__main__.clouds object at 0x0000022A10204A00>
+[21:39:42|08-06-22] DISPLAY ADD: <__main__.weather object at 0x0000022A10204AC0>
+[21:39:42|08-06-22] DISPLAY ADD: <__main__.head_menu object at 0x0000022A135CBDF0>
+[21:39:43|08-06-22] DISPLAY ADD: <__main__.head_menu object at 0x0000022A1025A640>
+[21:39:43|08-06-22] DISPLAY ADD: <__main__.missions object at 0x0000022A10277F40>
+[21:39:43|08-06-22] DISPLAY ADD: <__main__.select_tank_missions object at 0x0000022A102777C0>
+[21:39:43|08-06-22] DISPLAY ADD: <__main__.image_button object at 0x0000022A10277C40>
+[21:39:43|08-06-22] DISPLAY CLEAR
+[21:39:43|08-06-22] DISPLAY ADD: <__main__.back object at 0x0000022A7FAEC7C0>
+[21:39:43|08-06-22] DISPLAY ADD: <__main__.background_menu object at 0x0000022A12829250>
+[21:39:43|08-06-22] DISPLAY ADD: <__main__.Game_settings object at 0x0000022A12651760>
+[21:39:43|08-06-22] DISPLAY ADD: <__main__.Graphics_settings object at 0x0000022A12651790>
+[21:39:43|08-06-22] DISPLAY ADD: <__main__.world object at 0x0000022A0FC1D850>
+[21:39:43|08-06-22] DISPLAY ADD: <__main__.wind object at 0x0000022A101FE040>
+[21:39:43|08-06-22] DISPLAY ADD: <__main__.walls object at 0x0000022A101FEE80>
+[21:39:43|08-06-22] DISPLAY ADD: <__main__.clouds object at 0x0000022A10204A00>
+[21:39:43|08-06-22] DISPLAY ADD: <__main__.weather object at 0x0000022A10204AC0>
+[21:39:43|08-06-22] DISPLAY ADD: <__main__.head_menu object at 0x0000022A1140B4C0>
+[21:39:43|08-06-22] DISPLAY ADD: <__main__.image_button object at 0x0000022A10289AC0>
+[21:39:43|08-06-22] DISPLAY ADD: <__main__.image_button object at 0x0000022A102388E0>
+[21:39:43|08-06-22] DISPLAY ADD: <__main__.image_button object at 0x0000022A13655AF0>
+[21:39:43|08-06-22] DISPLAY ADD: <__main__.image_button object at 0x0000022A135DD2B0>
+[21:39:43|08-06-22] DISPLAY ADD: <__main__.image_button object at 0x0000022A1364E3A0>
+[21:39:43|08-06-22] DISPLAY ADD: <__main__.image_button object at 0x0000022A1027F160>
+[21:39:43|08-06-22] DISPLAY ADD: <__main__.head_menu object at 0x0000022A136499D0>
+[21:39:43|08-06-22] DISPLAY ADD: <__main__.text_label object at 0x0000022A136A96D0>
+[21:39:43|08-06-22] DISPLAY ADD: <__main__.text_label object at 0x0000022A136A12E0>
+[21:39:44|08-06-22] DISPLAY CLEAR
+[21:39:44|08-06-22] DISPLAY ADD: <__main__.back object at 0x0000022A7FAEC7C0>
+[21:39:44|08-06-22] DISPLAY ADD: <__main__.background_menu object at 0x0000022A12829250>
+[21:39:44|08-06-22] DISPLAY ADD: <__main__.Game_settings object at 0x0000022A12651760>
+[21:39:44|08-06-22] DISPLAY ADD: <__main__.Graphics_settings object at 0x0000022A12651790>
+[21:39:44|08-06-22] DISPLAY ADD: <__main__.world object at 0x0000022A0FC1D850>
+[21:39:44|08-06-22] DISPLAY ADD: <__main__.wind object at 0x0000022A101FE040>
+[21:39:44|08-06-22] DISPLAY ADD: <__main__.walls object at 0x0000022A101FEE80>
+[21:39:44|08-06-22] DISPLAY ADD: <__main__.clouds object at 0x0000022A10204A00>
+[21:39:44|08-06-22] DISPLAY ADD: <__main__.weather object at 0x0000022A10204AC0>
+[21:39:44|08-06-22] DISPLAY ADD: <__main__.head_menu object at 0x0000022A1140B4C0>
+[21:39:44|08-06-22] DISPLAY ADD: <__main__.image_button object at 0x0000022A1364E880>
+[21:39:44|08-06-22] DISPLAY ADD: <__main__.head_menu object at 0x0000022A136A1CA0>
+[21:39:44|08-06-22] DISPLAY ADD: <__main__.label object at 0x0000022A135D57F0>
+[21:39:44|08-06-22] DISPLAY ADD: <__main__.text_label object at 0x0000022A135D5640>
+[21:39:44|08-06-22] DISPLAY ADD: <__main__.image_button object at 0x0000022A10238B50>
+[21:39:44|08-06-22] DISPLAY CLEAR
+[21:39:44|08-06-22] DISPLAY ADD: <__main__.back object at 0x0000022A7FAEC7C0>
+[21:39:44|08-06-22] DISPLAY ADD: <__main__.background_menu object at 0x0000022A12829250>
+[21:39:44|08-06-22] DISPLAY ADD: <__main__.Game_settings object at 0x0000022A12651760>
+[21:39:44|08-06-22] DISPLAY ADD: <__main__.Graphics_settings object at 0x0000022A12651790>
+[21:39:44|08-06-22] DISPLAY ADD: <__main__.world object at 0x0000022A0FC1D850>
+[21:39:44|08-06-22] DISPLAY ADD: <__main__.wind object at 0x0000022A101FE040>
+[21:39:44|08-06-22] DISPLAY ADD: <__main__.walls object at 0x0000022A101FEE80>
+[21:39:44|08-06-22] DISPLAY ADD: <__main__.clouds object at 0x0000022A10204A00>
+[21:39:44|08-06-22] DISPLAY ADD: <__main__.weather object at 0x0000022A10204AC0>
+[21:39:44|08-06-22] DISPLAY ADD: <__main__.head_menu object at 0x0000022A119EC0A0>
+[21:39:44|08-06-22] DISPLAY ADD: <__main__.image_button object at 0x0000022A136B7A90>
+[21:39:44|08-06-22] DISPLAY ADD: <__main__.game_setup_flags object at 0x0000022A135D5B20>
+[21:39:44|08-06-22] DISPLAY ADD: <__main__.image_button object at 0x0000022A1373E730>
+[21:39:45|08-06-22] DISPLAY ADD: <__main__.image_button object at 0x0000022A137456D0>
+[21:39:45|08-06-22] DISPLAY ADD: <__main__.head_menu object at 0x0000022A1374E250>
+[21:39:48|08-06-22] DISPLAY ADD: <__main__.breathing_label object at 0x0000022A1374E7C0>
+[21:39:49|08-06-22] DISPLAY CLEAR
+[21:39:49|08-06-22] DISPLAY ADD: <__main__.Game_settings object at 0x0000022A12651760>
+[21:39:49|08-06-22] DISPLAY ADD: <__main__.Graphics_settings object at 0x0000022A12651790>
+[21:39:49|08-06-22] DISPLAY ADD: <__main__.world object at 0x0000022A7FAEC7C0>
+[21:39:49|08-06-22] DISPLAY ADD: <__main__.crates object at 0x0000022A13669CA0>
+[21:39:50|08-06-22] DISPLAY ADD: <__main__.players object at 0x0000022A136CE490>
+[21:39:50|08-06-22] DISPLAY ADD: <__main__.bullets object at 0x0000022A102548E0>
+[21:39:51|08-06-22] DISPLAY ADD: <__main__.wind object at 0x0000022A12791D30>
+[21:39:51|08-06-22] DISPLAY ADD: <__main__.walls object at 0x0000022A1279DA30>
+[21:39:51|08-06-22] DISPLAY ADD: <__main__.smoke object at 0x0000022A1277C6D0>
+[21:39:51|08-06-22] DISPLAY ADD: <__main__.points object at 0x0000022A1289FEE0>
+[21:39:51|08-06-22] DISPLAY ADD: <__main__.clouds object at 0x0000022A1289F700>
+[21:39:51|08-06-22] DISPLAY ADD: <__main__.weather object at 0x0000022A128C4700>
+[21:39:51|08-06-22] DISPLAY ADD: <__main__.gui object at 0x0000022A128C4940>
+[21:39:52|08-06-22] DISPLAY ADD: <__main__.pause object at 0x0000022A128C4BB0>
+[21:39:52|08-06-22] DISPLAY ADD: <__main__.table_game object at 0x0000022A1370F610>
+[21:39:52|08-06-22] DISPLAY ADD: <__main__.breathing_label object at 0x0000022A19C41C10>
+[21:40:00|08-06-22] DISPLAY CLEAR
+[21:40:00|08-06-22] DISPLAY ADD: <__main__.back object at 0x0000022A7FAEC7C0>
+[21:40:00|08-06-22] DISPLAY ADD: <__main__.background_menu object at 0x0000022A1378A430>
+[21:40:00|08-06-22] DISPLAY ADD: <__main__.Game_settings object at 0x0000022A12651760>
+[21:40:00|08-06-22] DISPLAY ADD: <__main__.Graphics_settings object at 0x0000022A12651790>
+[21:40:01|08-06-22] DISPLAY ADD: <__main__.world object at 0x0000022A1378A820>
+[21:40:02|08-06-22] DISPLAY ADD: <__main__.wind object at 0x0000022A135EC130>
+[21:40:02|08-06-22] DISPLAY ADD: <__main__.walls object at 0x0000022A136C2340>
+[21:40:02|08-06-22] DISPLAY ADD: <__main__.clouds object at 0x0000022A136C23D0>
+[21:40:02|08-06-22] DISPLAY ADD: <__main__.weather object at 0x0000022A1020B0A0>
+[21:40:02|08-06-22] DISPLAY ADD: <__main__.head_menu object at 0x0000022A1020B1F0>
+[21:40:02|08-06-22] DISPLAY ADD: <__main__.image_button object at 0x0000022A10126820>
+[21:40:03|08-06-22] DISPLAY ADD: <__main__.game_setup_flags object at 0x0000022A136B15E0>
+[21:40:03|08-06-22] DISPLAY ADD: <__main__.image_button object at 0x0000022A19C84100>
+[21:40:03|08-06-22] DISPLAY ADD: <__main__.image_button object at 0x0000022A19C90610>
+[21:40:03|08-06-22] DISPLAY ADD: <__main__.head_menu object at 0x0000022A19C99190>
+[21:40:04|08-06-22] DISPLAY CLEAR
+[21:40:04|08-06-22] DISPLAY ADD: <__main__.back object at 0x0000022A7FAEC7C0>
+[21:40:04|08-06-22] DISPLAY ADD: <__main__.background_menu object at 0x0000022A137153A0>
+[21:40:04|08-06-22] DISPLAY ADD: <__main__.Game_settings object at 0x0000022A12651760>
+[21:40:04|08-06-22] DISPLAY ADD: <__main__.Graphics_settings object at 0x0000022A12651790>
+[21:40:04|08-06-22] DISPLAY ADD: <__main__.world object at 0x0000022A0FC1D970>
+[21:40:05|08-06-22] DISPLAY ADD: <__main__.wind object at 0x0000022A1140B5E0>
+[21:40:05|08-06-22] DISPLAY ADD: <__main__.walls object at 0x0000022A119D9F10>
+[21:40:05|08-06-22] DISPLAY ADD: <__main__.clouds object at 0x0000022A137D6250>
+[21:40:06|08-06-22] DISPLAY ADD: <__main__.weather object at 0x0000022A12829EB0>
+[21:40:06|08-06-22] DISPLAY ADD: <__main__.head_menu object at 0x0000022A101CC730>
+[21:40:06|08-06-22] DISPLAY ADD: <__main__.image_button object at 0x0000022A10265F10>
+[21:40:06|08-06-22] DISPLAY ADD: <__main__.image_button object at 0x0000022A13747670>
+[21:40:06|08-06-22] DISPLAY ADD: <__main__.image_button object at 0x0000022A19C230A0>
+[21:40:06|08-06-22] DISPLAY ADD: <__main__.image_button object at 0x0000022A1378B9D0>
+[21:40:06|08-06-22] DISPLAY ADD: <__main__.image_button object at 0x0000022A19C26790>
+[21:40:06|08-06-22] DISPLAY ADD: <__main__.image_button object at 0x0000022A13715850>
+[21:40:06|08-06-22] DISPLAY ADD: <__main__.head_menu object at 0x0000022A135A5490>
+[21:40:06|08-06-22] DISPLAY ADD: <__main__.text_label object at 0x0000022A19C4D6D0>
+[21:40:06|08-06-22] DISPLAY ADD: <__main__.text_label object at 0x0000022A135ABE80>
+[21:40:07|08-06-22] DISPLAY CLEAR
+[21:40:07|08-06-22] DISPLAY ADD: <__main__.back object at 0x0000022A7FAEC7C0>
+[21:40:07|08-06-22] DISPLAY ADD: <__main__.background_menu object at 0x0000022A12694310>
+[21:40:07|08-06-22] DISPLAY ADD: <__main__.Game_settings object at 0x0000022A12651760>
+[21:40:07|08-06-22] DISPLAY ADD: <__main__.Graphics_settings object at 0x0000022A12651790>
+[21:40:07|08-06-22] DISPLAY ADD: <__main__.world object at 0x0000022A0FC1D970>
+[21:40:07|08-06-22] DISPLAY ADD: <__main__.wind object at 0x0000022A1140B5E0>
+[21:40:07|08-06-22] DISPLAY ADD: <__main__.walls object at 0x0000022A119D9F10>
+[21:40:07|08-06-22] DISPLAY ADD: <__main__.clouds object at 0x0000022A137D6250>
+[21:40:07|08-06-22] DISPLAY ADD: <__main__.weather object at 0x0000022A12829EB0>
+[21:40:07|08-06-22] DISPLAY ADD: <__main__.head_menu object at 0x0000022A0FC48A60>
+[21:40:07|08-06-22] DISPLAY ADD: <__main__.image_button object at 0x0000022A19C23220>
+[21:40:07|08-06-22] DISPLAY ADD: <__main__.image_button object at 0x0000022A19C41FD0>
+[21:40:07|08-06-22] DISPLAY ADD: <__main__.select_map_buttons object at 0x0000022A10265A30>
+[21:40:07|08-06-22] DISPLAY ADD: <__main__.select_map_filter_buttons object at 0x0000022A13638EE0>
+[21:40:07|08-06-22] DISPLAY ADD: <__main__.head_menu object at 0x0000022A1377F3A0>
+[21:40:08|08-06-22] DISPLAY CLEAR
+[21:40:08|08-06-22] DISPLAY ADD: <__main__.back object at 0x0000022A7FAEC7C0>
+[21:40:09|08-06-22] DISPLAY ADD: <__main__.background_menu object at 0x0000022A12694310>
+[21:40:09|08-06-22] DISPLAY ADD: <__main__.Game_settings object at 0x0000022A12651760>
+[21:40:09|08-06-22] DISPLAY ADD: <__main__.Graphics_settings object at 0x0000022A12651790>
+[21:40:09|08-06-22] DISPLAY ADD: <__main__.world object at 0x0000022A0FC1D970>
+[21:40:09|08-06-22] DISPLAY ADD: <__main__.wind object at 0x0000022A1140B5E0>
+[21:40:09|08-06-22] DISPLAY ADD: <__main__.walls object at 0x0000022A119D9F10>
+[21:40:09|08-06-22] DISPLAY ADD: <__main__.clouds object at 0x0000022A137D6250>
+[21:40:09|08-06-22] DISPLAY ADD: <__main__.weather object at 0x0000022A12829EB0>
+[21:40:09|08-06-22] DISPLAY ADD: <__main__.head_menu object at 0x0000022A128B02B0>
+[21:40:09|08-06-22] DISPLAY ADD: <__main__.image_button object at 0x0000022A1375D070>
+[21:40:09|08-06-22] DISPLAY ADD: <__main__.image_button object at 0x0000022A135CA2E0>
+[21:40:09|08-06-22] DISPLAY ADD: <__main__.image_button object at 0x0000022A10222EE0>
+[21:40:09|08-06-22] DISPLAY ADD: <__main__.select_tank_buttons object at 0x0000022A13715EB0>
+[21:40:09|08-06-22] DISPLAY ADD: <__main__.head_menu object at 0x0000022A10262940>
+[21:40:12|08-06-22] DISPLAY ADD: <__main__.breathing_label object at 0x0000022A1028ED90>
+[21:40:13|08-06-22] DISPLAY CLEAR
+[21:40:13|08-06-22] DISPLAY ADD: <__main__.Game_settings object at 0x0000022A12651760>
+[21:40:13|08-06-22] DISPLAY ADD: <__main__.Graphics_settings object at 0x0000022A12651790>
+[21:40:13|08-06-22] DISPLAY ADD: <__main__.world object at 0x0000022A7FAEC7C0>
+[21:40:13|08-06-22] DISPLAY ADD: <__main__.crates object at 0x0000022A135B7A60>
+[21:40:13|08-06-22] DISPLAY ADD: <__main__.players object at 0x0000022A135CE430>
+[21:40:13|08-06-22] DISPLAY ADD: <__main__.bullets object at 0x0000022A127DCF70>
+[21:40:15|08-06-22] DISPLAY ADD: <__main__.wind object at 0x0000022A127D3220>
+[21:40:15|08-06-22] DISPLAY ADD: <__main__.walls object at 0x0000022A1357A3D0>
+[21:40:15|08-06-22] DISPLAY ADD: <__main__.smoke object at 0x0000022A1357A190>
+[21:40:15|08-06-22] DISPLAY ADD: <__main__.points object at 0x0000022A135609A0>
+[21:40:15|08-06-22] DISPLAY ADD: <__main__.clouds object at 0x0000022A135609D0>
+[21:40:16|08-06-22] DISPLAY ADD: <__main__.weather object at 0x0000022A13560A90>
+[21:40:16|08-06-22] DISPLAY ADD: <__main__.gui object at 0x0000022A13564220>
+[21:40:16|08-06-22] DISPLAY ADD: <__main__.pause object at 0x0000022A128ABBB0>
+[21:40:16|08-06-22] DISPLAY ADD: <__main__.table_game object at 0x0000022A101AC2E0>
+[21:40:16|08-06-22] DISPLAY ADD: <__main__.breathing_label object at 0x0000022A10175730>
+[21:40:57|08-06-22] DISPLAY CLEAR
+[21:40:57|08-06-22] DISPLAY ADD: <__main__.back object at 0x0000022A19C9B220>
+[21:40:57|08-06-22] DISPLAY ADD: <__main__.background_menu object at 0x0000022A19C9B280>
+[21:40:57|08-06-22] DISPLAY ADD: <__main__.Game_settings object at 0x0000022A12651760>
+[21:40:57|08-06-22] DISPLAY ADD: <__main__.Graphics_settings object at 0x0000022A12651790>
+[21:40:57|08-06-22] DISPLAY ADD: <__main__.world object at 0x0000022A0FC1D970>
+[21:40:57|08-06-22] DISPLAY ADD: <__main__.wind object at 0x0000022A1140B5E0>
+[21:40:57|08-06-22] DISPLAY ADD: <__main__.walls object at 0x0000022A119D9F10>
+[21:40:57|08-06-22] DISPLAY ADD: <__main__.clouds object at 0x0000022A137D6250>
+[21:40:57|08-06-22] DISPLAY ADD: <__main__.weather object at 0x0000022A12829EB0>
+[21:40:57|08-06-22] DISPLAY ADD: <__main__.head_menu object at 0x0000022A19C9B070>
+[21:40:57|08-06-22] DISPLAY ADD: <__main__.image_button object at 0x0000022A1362C070>
+[21:40:57|08-06-22] DISPLAY ADD: <__main__.image_button object at 0x0000022A1024C2E0>
+[21:40:57|08-06-22] DISPLAY ADD: <__main__.select_map_buttons object at 0x0000022A102540A0>
+[21:40:57|08-06-22] DISPLAY ADD: <__main__.select_map_filter_buttons object at 0x0000022A1362CE80>
+[21:40:57|08-06-22] DISPLAY ADD: <__main__.head_menu object at 0x0000022A1279D7C0>
+[21:40:58|08-06-22] DISPLAY CLEAR
+[21:40:58|08-06-22] DISPLAY ADD: <__main__.back object at 0x0000022A19C90F10>
+[21:40:58|08-06-22] DISPLAY ADD: <__main__.background_menu object at 0x0000022A1375E310>
+[21:40:58|08-06-22] DISPLAY ADD: <__main__.Game_settings object at 0x0000022A12651760>
+[21:40:58|08-06-22] DISPLAY ADD: <__main__.Graphics_settings object at 0x0000022A12651790>
+[21:40:58|08-06-22] DISPLAY ADD: <__main__.world object at 0x0000022A0FC1D970>
+[21:40:58|08-06-22] DISPLAY ADD: <__main__.wind object at 0x0000022A1140B5E0>
+[21:40:58|08-06-22] DISPLAY ADD: <__main__.walls object at 0x0000022A119D9F10>
+[21:40:58|08-06-22] DISPLAY ADD: <__main__.clouds object at 0x0000022A137D6250>
+[21:40:58|08-06-22] DISPLAY ADD: <__main__.weather object at 0x0000022A12829EB0>
+[21:40:58|08-06-22] DISPLAY ADD: <__main__.head_menu object at 0x0000022A19C9B220>
+[21:40:58|08-06-22] DISPLAY ADD: <__main__.image_button object at 0x0000022A1019F730>
+[21:40:58|08-06-22] DISPLAY ADD: <__main__.image_button object at 0x0000022A128B6B80>
+[21:40:58|08-06-22] DISPLAY ADD: <__main__.image_button object at 0x0000022A12771D60>
+[21:40:58|08-06-22] DISPLAY ADD: <__main__.image_button object at 0x0000022A101FEFD0>
+[21:40:59|08-06-22] DISPLAY ADD: <__main__.image_button object at 0x0000022A127C8A00>
+[21:40:59|08-06-22] DISPLAY ADD: <__main__.image_button object at 0x0000022A127D0970>
+[21:40:59|08-06-22] DISPLAY ADD: <__main__.head_menu object at 0x0000022A13747D60>
+[21:40:59|08-06-22] DISPLAY ADD: <__main__.text_label object at 0x0000022A19C31610>
+[21:40:59|08-06-22] DISPLAY ADD: <__main__.text_label object at 0x0000022A12865520>
+[21:41:00|08-06-22] DISPLAY CLEAR
+[21:41:00|08-06-22] DISPLAY ADD: <__main__.back object at 0x0000022A19C90F10>
+[21:41:00|08-06-22] DISPLAY ADD: <__main__.background_menu object at 0x0000022A19C9B070>
+[21:41:00|08-06-22] DISPLAY ADD: <__main__.Game_settings object at 0x0000022A12651760>
+[21:41:00|08-06-22] DISPLAY ADD: <__main__.Graphics_settings object at 0x0000022A12651790>
+[21:41:00|08-06-22] DISPLAY ADD: <__main__.world object at 0x0000022A0FC1D970>
+[21:41:00|08-06-22] DISPLAY ADD: <__main__.wind object at 0x0000022A1140B5E0>
+[21:41:00|08-06-22] DISPLAY ADD: <__main__.walls object at 0x0000022A119D9F10>
+[21:41:00|08-06-22] DISPLAY ADD: <__main__.clouds object at 0x0000022A137D6250>
+[21:41:00|08-06-22] DISPLAY ADD: <__main__.weather object at 0x0000022A12829EB0>
+[21:41:00|08-06-22] DISPLAY ADD: <__main__.head_menu object at 0x0000022A19C9B670>
+[21:41:00|08-06-22] DISPLAY ADD: <__main__.image_button object at 0x0000022A1289B1F0>
+[21:41:01|08-06-22] DISPLAY ADD: <__main__.game_settings_page object at 0x0000022A127D0100>
+[21:41:01|08-06-22] DISPLAY ADD: <__main__.head_menu object at 0x0000022A136F14F0>
+[21:41:03|08-06-22] DISPLAY CLEAR
+[21:41:03|08-06-22] DISPLAY ADD: <__main__.back object at 0x0000022A19C90F10>
+[21:41:03|08-06-22] DISPLAY ADD: <__main__.background_menu object at 0x0000022A12829250>
+[21:41:03|08-06-22] DISPLAY ADD: <__main__.Game_settings object at 0x0000022A12651760>
+[21:41:03|08-06-22] DISPLAY ADD: <__main__.Graphics_settings object at 0x0000022A12651790>
+[21:41:03|08-06-22] DISPLAY ADD: <__main__.world object at 0x0000022A0FC1D970>
+[21:41:03|08-06-22] DISPLAY ADD: <__main__.wind object at 0x0000022A1140B5E0>
+[21:41:03|08-06-22] DISPLAY ADD: <__main__.walls object at 0x0000022A119D9F10>
+[21:41:03|08-06-22] DISPLAY ADD: <__main__.clouds object at 0x0000022A137D6250>
+[21:41:03|08-06-22] DISPLAY ADD: <__main__.weather object at 0x0000022A12829EB0>
+[21:41:04|08-06-22] DISPLAY ADD: <__main__.head_menu object at 0x0000022A101CCB80>
+[21:41:04|08-06-22] DISPLAY ADD: <__main__.image_button object at 0x0000022A101FEFD0>
+[21:41:04|08-06-22] DISPLAY ADD: <__main__.image_button object at 0x0000022A1369BEB0>
+[21:41:04|08-06-22] DISPLAY ADD: <__main__.image_button object at 0x0000022A1362C700>
+[21:41:04|08-06-22] DISPLAY ADD: <__main__.image_button object at 0x0000022A12791550>
+[21:41:04|08-06-22] DISPLAY ADD: <__main__.image_button object at 0x0000022A1026FC10>
+[21:41:04|08-06-22] DISPLAY ADD: <__main__.image_button object at 0x0000022A127906A0>
+[21:41:04|08-06-22] DISPLAY ADD: <__main__.head_menu object at 0x0000022A10295D60>
+[21:41:04|08-06-22] DISPLAY ADD: <__main__.text_label object at 0x0000022A135B85E0>
+[21:41:04|08-06-22] DISPLAY ADD: <__main__.text_label object at 0x0000022A1377F0A0>
+[21:41:04|08-06-22] DISPLAY CLEAR
+[21:41:04|08-06-22] DISPLAY ADD: <__main__.back object at 0x0000022A19C90F10>
+[21:41:04|08-06-22] DISPLAY ADD: <__main__.background_menu object at 0x0000022A12829250>
+[21:41:04|08-06-22] DISPLAY ADD: <__main__.Game_settings object at 0x0000022A12651760>
+[21:41:04|08-06-22] DISPLAY ADD: <__main__.Graphics_settings object at 0x0000022A12651790>
+[21:41:04|08-06-22] DISPLAY ADD: <__main__.world object at 0x0000022A0FC1D970>
+[21:41:04|08-06-22] DISPLAY ADD: <__main__.wind object at 0x0000022A1140B5E0>
+[21:41:04|08-06-22] DISPLAY ADD: <__main__.walls object at 0x0000022A119D9F10>
+[21:41:04|08-06-22] DISPLAY ADD: <__main__.clouds object at 0x0000022A137D6250>
+[21:41:04|08-06-22] DISPLAY ADD: <__main__.weather object at 0x0000022A12829EB0>
+[21:41:05|08-06-22] DISPLAY ADD: <__main__.head_menu object at 0x0000022A19C9B670>
+[21:41:05|08-06-22] DISPLAY ADD: <__main__.head_menu object at 0x0000022A136FEDC0>
+[21:41:05|08-06-22] DISPLAY ADD: <__main__.label object at 0x0000022A127E3370>
+[21:41:05|08-06-22] DISPLAY ADD: <__main__.text_label object at 0x0000022A127E3BE0>
+[21:41:05|08-06-22] DISPLAY ADD: <__main__.image_button object at 0x0000022A13705DC0>
+[21:41:05|08-06-22] DISPLAY ADD: <__main__.image_button object at 0x0000022A127C0640>

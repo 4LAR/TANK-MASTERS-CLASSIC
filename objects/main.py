@@ -12,7 +12,7 @@ pyglet.gl.glEnable (GL_LINE_SMOOTH)
 pyglet.gl.glEnable(pyglet.gl.GL_BLEND)
 pyglet.gl.glBlendFunc(pyglet.gl.GL_SRC_ALPHA, pyglet.gl.GL_ONE_MINUS_SRC_ALPHA)
 
-pyglet.font.add_file('font/pixel.ttf')
+pyglet.font.add_file('assets/font/pixel.ttf')
 
 v = collision.Vector # для создания полигонов
 

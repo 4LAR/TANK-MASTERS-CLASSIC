@@ -1,7 +1,8 @@
 lib.py
-os_world.py
 main.py
-console.py
+setings_game.py
+libs/console.py
+os_world.py
 language.py
 editor/map_editor.py
 editor/map_editor_inventory.py

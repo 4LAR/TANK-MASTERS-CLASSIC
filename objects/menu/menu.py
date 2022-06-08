@@ -5,7 +5,7 @@ class background_menu():
         width = 16
         height = 9
 
-        background_image = Image.open('img/background.png').resize(resize, Image.NEAREST).convert("RGBA")
+        background_image = Image.open('assets/img/background.png').resize(resize, Image.NEAREST).convert("RGBA")
         self.temp_image_background = Image.new('RGBA', (width * size, height * size))
         for y in range(height):
             for x in range(width):
@@ -39,7 +39,7 @@ class head_menu():
         # other
         self.text = text_label(text_x, settings.height - settings.height/35, text, load_font=True, font='pixel.ttf', size=settings.height//24, anchor_x='center', color = (150, 150, 150, 255))
 
-        image = PIL_resize_image('img/buttons/button_clear.png', (settings.width//2, 16))
+        image = PIL_resize_image('assets/img/buttons/button_clear.png', (settings.width//2, 16))
 
         raw_image = image.tobytes()
         if graphics_settings.shadows_buttons and not self.align_top:
@@ -94,7 +94,7 @@ class back():
 
 
 background_sound = Sound(loop=True, no_sound=True)
-background_sound.play('sound/background/forest waterfall.wav')
+background_sound.play('assets/sound/background/forest waterfall.wav')
 
 first_breath_menu = True
 

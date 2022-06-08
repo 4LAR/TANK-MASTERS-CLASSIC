@@ -201,7 +201,7 @@ class map(object):
         temp_image_grid = Image.new('RGBA', (self.world_size[0] * self.size * 2, self.world_size[1] * self.size * 2))
         print("UPDATE GRID")
         resize = (16, 16)
-        grid_image = Image.open('img/editor/grid.png').resize(resize, Image.NEAREST).convert("RGBA")
+        grid_image = Image.open('assets/img/editor/grid.png').resize(resize, Image.NEAREST).convert("RGBA")
         for y in range(self.world_size[1]):
             for x in range(self.world_size[0]):
                 temp_image_grid.paste(grid_image, (x * (self.size*2), y * (self.size*2)))
@@ -386,7 +386,7 @@ class map(object):
     def exit(self):
         self.save()
         menu()
-        background_sound.play('sound/background/forest waterfall.wav')
+        background_sound.play('assets/sound/background/forest waterfall.wav')
         return pyglet.event.EVENT_HANDLED
 
     def update(self):

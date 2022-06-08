@@ -5,7 +5,7 @@
 
 import time
 
-window.set_icon(pyglet.image.load('img/stone_engine.png'))
+window.set_icon(pyglet.image.load('assets/img/stone_engine.png'))
 
 time.sleep(1)
 

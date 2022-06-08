@@ -1,9 +1,0 @@
-
-log.txt
-settings.txt
-*.pyc
-main.spec
-main.exe
-objects.pkl
-game_settings.txt
-KEY_BINDS.json

@@ -1,0 +1,68 @@
+[Game]
+name = PLAYER
+draw_logo = True
+language = en
+
+[Sound]
+use_sound_general = True
+use_sound_buttons = True
+use_sound_tanks = True
+use_sound_background = True
+sound_volume_buttons = 0.07
+sound_volume_tanks = 0.08
+sound_volume_background = 0.62
+
+[Graphics]
+animated_water = False
+draw_clouds = True
+draw_leaf = True
+draw_traces = False
+max_traces = 20
+draw_shadows = True
+better_shadows = True
+draw_smoke = True
+game_in_menu = True
+map_in_menu = arcade/Castle
+paralax_in_menu = True
+shadows_buttons = True
+
+[Game_setup]
+scatter_bool = True
+wind_deg = -45
+wind_bool = True
+wind_power = 100
+random_wind = False
+crates_bool = True
+rain = True
+snow = True
+random_weather = False
+time_bool = True
+time_set_min = 2
+time_set_sec = 0
+collide_players = True
+random_tanks_bool = False
+education = False
+
+[Map_filter]
+death_match_filter = True
+capture_flag_filter = True
+resource_capture_filter = True
+
+[Tank_MPL]
+p1_use = True
+p1_bot = False
+p1_body = 0
+p1_tower = 1
+p2_use = True
+p2_bot = True
+p2_body = 0
+p2_tower = 1
+p3_use = True
+p3_bot = True
+p3_body = 0
+p3_tower = 1
+p4_use = True
+p4_bot = True
+p4_body = 0
+p4_tower = 1
+

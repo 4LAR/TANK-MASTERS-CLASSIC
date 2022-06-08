@@ -15,7 +15,7 @@ class wind():
 
         size = get_obj_display('world').size
 
-        image = Image.open('img/world/' +
+        image = Image.open('assets/img/world/' +
             ('snow/leaf' if get_obj_display('game_settings').snow else 'leaf')
          + '.png').resize((size, size), Image.NEAREST).convert("RGBA")
 

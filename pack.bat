@@ -1,2 +1,0 @@
-python pack.py
-pause
