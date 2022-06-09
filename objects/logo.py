@@ -7,8 +7,6 @@ import time
 
 window.set_icon(pyglet.image.load('assets/img/stone_engine.png'))
 
-time.sleep(1)
-
 class skip():
 	def __init__(self, type=0):
 		self.type = type
