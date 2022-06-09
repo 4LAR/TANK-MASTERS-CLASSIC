@@ -1,2 +1,2 @@
-python main.py -s objects.list -p true
+python engine/main.py -s objects.list -p true
 pause

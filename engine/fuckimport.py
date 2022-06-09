@@ -43,19 +43,20 @@ class fuck_import(console_term):
             ).split('\n')
 
             for file_name in file_objects:
-                if (len(file_name) > 0):
-                    if (file_name.split('.')[1] == 'list'):
-                        self.read(file_name.split('.')[0])
-                    else:
-                        self.files.append(
-                            [
-                                (name + '.list').replace( # название и путь у файлу
-                                    name.split('/')[len(name.split('/'))-1] + '.list',
-                                    file_name
-                                ),
-                                0 # количество строк в файле (по умалочанию 0)
-                            ]
-                        )
+                if not ('#' in file_name):
+                    if (len(file_name) > 0):
+                        if (file_name.split('.')[1] == 'list'):
+                            self.read(file_name.split('.')[0])
+                        else:
+                            self.files.append(
+                                [
+                                    (name + '.list').replace( # название и путь у файлу
+                                        name.split('/')[len(name.split('/'))-1] + '.list',
+                                        file_name
+                                    ),
+                                    0 # количество строк в файле (по умалочанию 0)
+                                ]
+                            )
 
             self.read_file_bool = True
 
