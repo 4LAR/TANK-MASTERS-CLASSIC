@@ -1,10 +1,12 @@
 class player_info_class():
     def __init__(self):
-        self.kills = 0
+        self.kills = [0, 0, 0, 0]
+        self.death = [0, 0, 0, 0]
+        self.wins  = [0, 0, 0, 0]
 
 class player_info_save():
     def __init__(self):
-        self.path = 'info.pkl'
+        self.path = 'info'
         self.info = None
 
         self.read()
@@ -22,3 +24,5 @@ class player_info_save():
         except:
             self.info = player_info_class()
             self.save()
+
+player_info_save = player_info_save()

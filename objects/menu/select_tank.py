@@ -141,10 +141,10 @@ class select_tank_buttons():
                 image_flag(
                     settings.width/100 + (i * settings.width/4),
                     settings.height - settings.height/5,
-                    image='menu/select tank/flag.png',
-                    image_flag='menu/select tank/flag_selected.png',
-                    image_selected_flag='menu/select tank/flag_hover_selected.png',
-                    image_selected='menu/select tank/flag_hover.png',
+                    image='buttons/flag_small/flag.png',
+                    image_flag='buttons/flag_small/flag_selected.png',
+                    image_selected_flag='buttons/flag_small/flag_hover_selected.png',
+                    image_selected='buttons/flag_small/flag_hover.png',
                     scale=settings.height/160, shadow=graphics_settings.shadows_buttons
 
                 )
@@ -155,10 +155,10 @@ class select_tank_buttons():
                 image_flag(
                     settings.width/100 + (i * settings.width/4),
                     settings.height - settings.height/3.34,
-                    image='menu/select tank/flag.png',
-                    image_flag='menu/select tank/flag_selected.png',
-                    image_selected_flag='menu/select tank/flag_hover_selected.png',
-                    image_selected='menu/select tank/flag_hover.png',
+                    image='buttons/flag_small/flag.png',
+                    image_flag='buttons/flag_small/flag_selected.png',
+                    image_selected_flag='buttons/flag_small/flag_hover_selected.png',
+                    image_selected='buttons/flag_small/flag_hover.png',
                     scale=settings.height/160, shadow=graphics_settings.shadows_buttons
 
                 )

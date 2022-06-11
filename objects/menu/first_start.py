@@ -15,7 +15,7 @@ def first_name():
         add_game_in_menu()
 
     # background
-    
+
     add_display(
             label(
                 settings.width/60,
@@ -25,7 +25,7 @@ def first_name():
                 (0, 0, 0), alpha=120
             )
         )
-        
+
     add_display(
         text_label(
             settings.width/45,
@@ -46,7 +46,7 @@ def first_name():
                 (0, 0, 0), alpha=120
             )
         )
-        
+
     add_display(
         text_label(
             settings.width/45 + settings.width/2,
@@ -57,7 +57,7 @@ def first_name():
             color = (150, 150, 150, 255)
         )
     )
-    
+
     # buttons
     add_display(image_button(settings.width - (settings.height/120 * 48), settings.height/10, 'buttons/button_clear_left.png', scale=settings.height/120, center=False, function=save_name, image_selected='buttons/button_clear_left_selected.png', text=language.json['menu']['continue'], text_indent= settings.height//25, shadow=graphics_settings.shadows_buttons))
 
@@ -67,7 +67,7 @@ def first_name():
             settings.height - settings.height/3.5 - (settings.height/8) * 0.5,
             'buttons/button_clear_2_reverse.png', 'buttons/button_clear_selected_2_reverse.png',
             scale=settings.height/160, color_text=(150, 150, 150, 255),
-            text='name', pre_text='PLAYER', font='pixel.ttf',
+            text='name', pre_text=os.getlogin(), font='pixel.ttf',
             text_indent=settings.height/12, text_input_indent=settings.height/6, shadow=graphics_settings.shadows_buttons
         )
     )
