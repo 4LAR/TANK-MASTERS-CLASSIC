@@ -33,7 +33,7 @@ class map_list_class():
                         if os.path.exists('maps/' + type_maps + '/' + file + '/logo.png'):
                             self.map_logos.append('maps/' + type_maps + '/' + file + '/logo.png')
                         else:
-                            self.map_logos.append('img/file_not_found.png')
+                            self.map_logos.append('assets/img/file_not_found.png')
             except:
                 pass
 

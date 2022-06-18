@@ -721,6 +721,8 @@ class image_label(): # класс для проприсвки картинки
         #print(self.rotation)
 
     def __init__(self, image, x, y, scale_x = 1, scale_y = 1, scale = 1, visible=True, rotation=0, alpha=255, pixel=False, center=False, black_mask=False, alpha_mask=0, batch=None, group=None, no_image=False, shadow=False, color_shadow=(0, 0, 0, 128)):
+        self.image_name = image
+
         self.x = x
         self.y = y
         self.size_x = scale_y
