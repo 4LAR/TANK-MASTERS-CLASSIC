@@ -75,6 +75,11 @@ from settings import *
 from fps_monitor import *
 from check_exception import *
 
+display = pyglet.canvas.Display()
+screen = display.get_default_screen()
+mode = screen.get_modes()  # Получаем первый доступный режим
+print(mode)
+
 game_args = game_args()
 console_term = console_term(game_args.args.log)
 fuck_import = fuck_import()
@@ -293,18 +298,18 @@ else:
                 window = pyglet.window.Window(
                     settings.width, settings.height,
                     style=pyglet.window.Window.WINDOW_STYLE_BORDERLESS,
-                    vsync=True
+                    vsync=False
                 )
             elif settings.full_screen == 2: # полный экран
                 window = pyglet.window.Window(
                     settings.width, settings.height,
                     fullscreen=settings.full_screen,
-                    vsync=True
+                    vsync=False
                 )
             else: # окно с рамками
                 window = pyglet.window.Window(
                     settings.width, settings.height,
-                    vsync=True
+                    vsync=False
                 )
 
         window.set_caption(version_engine)
@@ -325,7 +330,7 @@ else:
         try:
 
             exec(CODE)
-            pyglet.clock.schedule_interval(update, 1/settings.fps)
+            pyglet.clock.schedule_interval(update, 1/165)
             pyglet.app.run()
 
         except Exception as e:

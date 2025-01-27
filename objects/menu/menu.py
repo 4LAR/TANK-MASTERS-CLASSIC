@@ -29,12 +29,12 @@ class head_menu():
         self.version_text = text_label(settings.width/100, settings.height/40, version_engine + ' | ' + version, load_font=True, font='pixel.ttf', size=settings.height//48, anchor_x='left', color = (150, 150, 150, 255))
 
         #user
-        self.name_user_text = text_label(settings.width - settings.width/20, settings.height/35, str(user_game_settings.name), load_font=True, font='pixel.ttf', size=settings.height//36, anchor_x='right', color = (150, 150, 150, 255))
-        self.user_ico = image_label('gui/ico/user_ico.png',
-            settings.width - settings.width/4.9, settings.height/80,
-            scale=settings.height/300, pixel=True
-        )
-        self.user_button = image_button(settings.width - settings.width/4.6, -settings.height/13, 'buttons/button_clear_full_kv.png', scale=settings.height/120, center=False, arg='player_info()', image_selected='buttons/button_clear_full_kv_selected.png')
+        # self.name_user_text = text_label(settings.width - settings.width/20, settings.height/35, str(user_game_settings.name), load_font=True, font='pixel.ttf', size=settings.height//36, anchor_x='right', color = (150, 150, 150, 255))
+        # self.user_ico = image_label('gui/ico/user_ico.png',
+        #     settings.width - settings.width/4.9, settings.height/80,
+        #     scale=settings.height/300, pixel=True
+        # )
+        # self.user_button = image_button(settings.width - settings.width/4.6, -settings.height/13, 'buttons/button_clear_full_kv.png', scale=settings.height/120, center=False, arg='player_info()', image_selected='buttons/button_clear_full_kv_selected.png')
 
         # other
         self.text = text_label(text_x, settings.height - settings.height/35, text, load_font=True, font='pixel.ttf', size=settings.height//24, anchor_x='center', color = (150, 150, 150, 255))
@@ -54,13 +54,13 @@ class head_menu():
         )
         self.sprite.scale = settings.height/130
 
-    def on_mouse_press(self, x, y, button, modifiers):
-        if (self.draw_user and not self.align_top):
-            return self.user_button.on_mouse_press(x, y, button, modifiers)
-
-    def on_mouse_motion(self, x, y, dx, dy):
-        if (self.draw_user and not self.align_top):
-            self.user_button.on_mouse_motion(x, y, dx, dy)
+    # def on_mouse_press(self, x, y, button, modifiers):
+    #     if (self.draw_user and not self.align_top):
+    #         return self.user_button.on_mouse_press(x, y, button, modifiers)
+    #
+    # def on_mouse_motion(self, x, y, dx, dy):
+    #     if (self.draw_user and not self.align_top):
+    #         self.user_button.on_mouse_motion(x, y, dx, dy)
 
     def draw(self):
         if graphics_settings.shadows_buttons and not self.align_top:
@@ -73,10 +73,10 @@ class head_menu():
         if not self.align_top:
             self.version_text.draw()
 
-        if (self.draw_user and not self.align_top):
-            self.user_button.draw()
-            drawp(self.user_ico)
-            self.name_user_text.draw()
+        # if (self.draw_user and not self.align_top):
+        #     self.user_button.draw()
+        #     drawp(self.user_ico)
+        #     self.name_user_text.draw()
 
 class back():
     def __init__(self, function=None, arg=None):
@@ -165,8 +165,9 @@ def menu():
     add_display(image_button(settings.width - (settings.height/120 * 48), settings.height - settings.height/3, 'buttons/button_clear_left.png', scale=settings.height/120, center=False, arg='select_map(editor=True)', function=play_menu, image_selected='buttons/button_clear_left_selected.png', text=language.json['menu']['editor'], text_indent=settings.height/8, shadow=graphics_settings.shadows_buttons))
     add_display(image_button(settings.width - (settings.height/120 * 48), settings.height - settings.height/2, 'buttons/button_clear_left.png', scale=settings.height/120, center=False, function=settings_menu, image_selected='buttons/button_clear_left_selected.png', text=language.json['menu']['settings'], text_indent=settings.height/10, shadow=graphics_settings.shadows_buttons))
     add_display(image_button(0, settings.height - settings.height/3, 'buttons/button_clear.png', scale=settings.height/120, center=False, arg='select_map(editor=False)', function=play_menu, image_selected='buttons/button_clear_selected.png', text=language.json['menu']['arcade'], text_indent= settings.height//100, shadow=graphics_settings.shadows_buttons))
-    add_display(image_button(0, settings.height - settings.height/2, 'buttons/button_clear.png', scale=settings.height/120, center=False, arg='single_game()', image_selected='buttons/button_clear_selected.png', text=language.json['menu']['missions'], text_indent= settings.height//100, shadow=graphics_settings.shadows_buttons))
-    add_display(image_button(0, settings.height - settings.height/1.5, 'buttons/button_clear.png', scale=settings.height/120, center=False, arg='training()', image_selected='buttons/button_clear_selected.png', text=language.json['menu']['training'], text_indent= settings.height//100, shadow=graphics_settings.shadows_buttons))
+    # add_display(image_button(0, settings.height - settings.height/2, 'buttons/button_clear.png', scale=settings.height/120, center=False, arg='single_game()', image_selected='buttons/button_clear_selected.png', text=language.json['menu']['missions'], text_indent= settings.height//100, shadow=graphics_settings.shadows_buttons))
+    # add_display(image_button(0, settings.height - settings.height/1.5, 'buttons/button_clear.png', scale=settings.height/120, center=False, arg='training()', image_selected='buttons/button_clear_selected.png', text=language.json['menu']['training'], text_indent= settings.height//100, shadow=graphics_settings.shadows_buttons))
+    add_display(image_button(0, settings.height - settings.height/2, 'buttons/button_clear.png', scale=settings.height/120, center=False, arg='training()', image_selected='buttons/button_clear_selected.png', text=language.json['menu']['training'], text_indent= settings.height//100, shadow=graphics_settings.shadows_buttons))
     add_display(image_button(settings.width - (settings.height/120 * 48), settings.height/10, 'buttons/button_clear_left.png', scale=settings.height/120, center=False, text=language.json['menu']['exit'], image_selected='buttons/button_clear_left_selected.png', arg='exit_alert()', text_indent= settings.height/6, shadow=graphics_settings.shadows_buttons))
     add_display(head_menu(align_top=False))
     add_display(text_label(settings.width/100, settings.height - settings.height/10, 'TANK MASTERS', load_font=True, font='pixel.ttf', size=settings.height//20, anchor_x='left', color = (150, 150, 150, 255), shadow=True, color_shadow=(20, 20, 20, 122), shadow_size=settings.height//20))

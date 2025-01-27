@@ -27,7 +27,7 @@ class game_settings_page():
 
     def read_settings(self):
         # game
-        self.settings_buttons[0][0].change_text(str(user_game_settings.name))
+        # self.settings_buttons[0][0].change_text(str(user_game_settings.name))
 
         self.settings_buttons[0][1].flag = settings.show_fps
         self.settings_buttons[0][2].flag = settings.console
@@ -77,7 +77,7 @@ class game_settings_page():
         # 4 - draw leaf
 
         # game
-        user_game_settings.name = self.settings_buttons[0][0].text_obj.text_label.label.text
+        # user_game_settings.name = self.settings_buttons[0][0].text_obj.text_label.label.text
 
         settings.show_fps = self.settings_buttons[0][1].flag
         settings.console = self.settings_buttons[0][2].flag
@@ -331,7 +331,8 @@ class game_settings_page():
                 'buttons/button_clear_2_reverse.png', 'buttons/button_clear_selected_2_reverse.png',
                 scale=settings.height/160, color_text=(150, 150, 150, 255),
                 text='name', pre_text='PLAYER', font='pixel.ttf',
-                text_indent=settings.height/12, text_input_indent=settings.height/6, shadow=graphics_settings.shadows_buttons
+                text_indent=settings.height/12, text_input_indent=settings.height/6, shadow=graphics_settings.shadows_buttons,
+                use=False
             )
         )
 
@@ -397,7 +398,8 @@ class game_settings_page():
                 settings.height - settings.height/3.5 - (settings.height/8) * 0.7,
                 settings.width / 2.55,
                 settings.height/5,
-                (0, 0, 0), alpha=120
+                (0, 0, 0), alpha=120,
+                use=False
             )
         )
 
@@ -419,7 +421,8 @@ class game_settings_page():
                 'multiplayer',
                 load_font=True, font='pixel.ttf',
                 size=settings.height//24, anchor_x='left', anchor_y='bottom',
-                color = (150, 150, 150, 255)
+                color = (150, 150, 150, 255),
+                use=False
             )
         )
 

@@ -61,7 +61,8 @@ def hide_cursor():
     window.set_mouse_visible(False)
 
 def main():
-    if FIRST_START:
-        first_name()
-    else:
-        menu()
+    # if FIRST_START:
+    #     first_name()
+    # else:
+    #     menu()
+    menu()

@@ -274,7 +274,8 @@ class game_setup_flags():
                 font='pixel.ttf',
                 text_indent=settings.height/8, shadow=graphics_settings.shadows_buttons,
 
-                use=self.traning
+                # use=self.traning
+                use=False
 
             )
         )
@@ -339,7 +340,8 @@ class game_setup_flags():
                 #settings.height/3.25,
                 (0, 0, 0), alpha=120,
 
-                use=self.traning
+                # use=self.traning
+                use=False
             )
         )
 
@@ -352,7 +354,8 @@ class game_setup_flags():
                 size=settings.height//24, anchor_x='left', anchor_y='bottom',
                 color = (150, 150, 150, 255),
 
-                use=self.traning
+                # use=self.traning
+                use=False
             )
         )
 

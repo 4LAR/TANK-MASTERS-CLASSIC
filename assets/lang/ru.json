@@ -15,46 +15,43 @@
     "create_map": "создать карту",
     "map_name": "имя карты",
     "create": "создать",
-    "continue": "continue"
+    "continue": "продолжить"
   },
   "settings": {
     "game": {
-      "page": "game",
+      "page": "игра",
       "": ""
     },
     "display": {
-      "display": "display",
+      "display": "дисплей",
       "": ""
     },
     "sound": {
-      "sound": "sound",
+      "sound": "звук",
       "": ""
     },
     "graphics": {
-      "graphics": "graphics",
+      "graphics": "графика",
       "": ""
     },
     "keyboard": {
-      "keyboard": "keyboard",
+      "keyboard": "клавиатура",
       "": ""
     }
   },
   "game_setup": {
-    "gameplay": "gameplay",
-    "weather": "weather",
-    "players": "players",
-    "scatter": "scatter",
-    "wind": "wind",
-    "crates": "crates",
-    "rain": "rain",
-    "snow": "snow",
-    "timer": "timer",
-    "minutes": "minutes",
-    "seconds": "seconds",
-    "players_collide": "players collide",
-    "random_tanks": "random tanks"
+    "gameplay": "геймплей",
+    "weather": "погода",
+    "players": "игроки",
+    "scatter": "разброс",
+    "wind": "ветер",
+    "crates": "ящики",
+    "rain": "дождь",
+    "snow": "снег",
+    "timer": "таймер",
+    "minutes": "минуты",
+    "seconds": "секунды",
+    "players_collide": "столкновение игроков",
+    "random_tanks": "случайные танки"
   }
-
-
-
 }

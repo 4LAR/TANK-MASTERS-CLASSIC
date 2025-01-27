@@ -25,4 +25,4 @@ class player_info_save():
             self.info = player_info_class()
             self.save()
 
-player_info_save = player_info_save()
+# player_info_save = player_info_save()
